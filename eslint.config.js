@@ -6,22 +6,42 @@ import prettier from 'eslint-config-prettier'
 
 export default ts.config(
   {
-    ignores: ['dist/**/*'], // default:["**/node_modules/", ".git/"]
+    // https://eslint.org/docs/latest/use/configure/configuration-files#globally-ignoring-files-with-ignores
+    ignores: ['dist/**/*'],
   },
   {
+    // https://eslint.org/docs/latest/use/configure/language-options
     languageOptions: {
-      ecmaVersion: 'latest', // default
-      sourceType: 'module', // default
+      ecmaVersion: 'latest',
+      sourceType: 'module',
       globals: {
         ...globals.browser,
         ...globals.node,
       },
     },
   },
+  // https://eslint.org/docs/latest/use/configure/configuration-files#using-predefined-configurations
   js.configs.recommended,
   ...ts.configs.recommended,
   ...ts.configs.stylistic,
   ...astro.configs.recommended,
   ...astro.configs['jsx-a11y-recommended'],
-  prettier
+  prettier,
+  {
+    rules: {
+      // https://typescript-eslint.io/rules/no-unused-vars/
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          args: 'all',
+          argsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
+    },
+  }
 )
