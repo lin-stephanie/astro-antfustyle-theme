@@ -38,7 +38,7 @@
   "lint-staged": {
     "*": [
       "eslint",
-      "prettier  --write"
+      "prettier  --write --ignore-unknown"
     ]
   }
 }
