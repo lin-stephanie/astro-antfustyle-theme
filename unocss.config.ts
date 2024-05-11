@@ -7,6 +7,10 @@ import {
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
+import { navBar, socials } from './src/blog-config.json'
+
+const navIcons = navBar.map((item) => `i-${item.icon}`)
+const socialIcons = socials.map((item) => `i-${item.icon}`)
 
 export default defineConfig({
   /* define utility classes and the resulting CSS */
@@ -20,10 +24,17 @@ export default defineConfig({
     presetUno(),
     presetAttributify({
       strict: true,
-      prefix: 'u:',
+      prefix: 'u-',
       prefixedOnly: true,
     }),
-    presetIcons(),
+    presetIcons({
+      extraProperties: {
+        'display': 'inline-block',
+        'height': '1.2em',
+        'width': '1.2em',
+        'vertical-align': 'text-bottom',
+      },
+    }),
     presetWebFonts(),
   ],
 
@@ -31,5 +42,5 @@ export default defineConfig({
   transformers: [transformerDirectives(), transformerVariantGroup()],
 
   /* work around the limitation of dynamically constructed utilities */
-  safelist: [],
+  safelist: [...navIcons, ...socialIcons],
 })

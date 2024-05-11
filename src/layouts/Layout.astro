@@ -1,10 +1,11 @@
 ---
 import '@unocss/reset/tailwind.css'
+import '~/styles/global.css'
 
-import Head from '~components/Head.astro'
-import Header from '~components/Header.astro'
-import Footer from '~components/Footer.astro'
-import { SITE } from '~configs'
+import Head from '~/components/Head.astro'
+import NavBar from '~/components/NavBar.astro'
+import Footer from '~/components/Footer.astro'
+import { site } from '~/blog-config.json'
 
 interface Props {
   title: string
@@ -18,13 +19,17 @@ const { title, description } = Astro.props
 <!doctype html>
 <html lang="en">
   <head>
-    <Head title={`${title} - ${SITE.NAME}`} author={SITE.NAME} {description} />
+    <Head
+      title={`${title} - ${site.name}`}
+      author={site.author}
+      {description}
+    />
   </head>
-  <body>
-    <Header />
-    <main>
+  <body class="relative font-sans text-gray-700 dark:text-gray-200">
+    <NavBar />
+    <main class="of-x-hidden px-7 py-10">
       <slot />
+      <Footer />
     </main>
-    <Footer />
   </body>
 </html>

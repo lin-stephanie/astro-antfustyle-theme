@@ -1,4 +1,8 @@
 /// <reference types="astro/client" />
+/**
+ * @see {@link https://docs.astro.build/en/guides/typescript/#infer-getstaticpaths-types}
+ */
+/// <reference types="astro/astro-jsx" />
 
 /**
  * @description Declares style attributes for UnoCSS's Attributify Mode to enable TypeScript integration.
@@ -9,7 +13,7 @@ import type {
   AttributifyNames,
 } from 'unocss/preset-attributify'
 
-type Prefix = 'u:' // change it to your prefix
+type Prefix = 'u-' // change it to your prefix
 
 declare global {
   namespace astroHTML.JSX {

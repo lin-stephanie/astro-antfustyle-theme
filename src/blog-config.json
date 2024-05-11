@@ -1,0 +1,55 @@
+{
+  "$schema": "./blog-config-schema.json",
+  "site": {
+    "name": "AntfuStyle Blog Template",
+    "author": "Stephanie Lin"
+  },
+  "navBar": [
+    {
+      "type": "rwd",
+      "path": "/blog",
+      "prompt": "Blog",
+      "text": "Blog",
+      "icon": "ri-article-line"
+    },
+    {
+      "type": "rwd",
+      "path": "/projects",
+      "prompt": "Projects",
+      "text": "Projects",
+      "icon": "ri-lightbulb-line"
+    },
+    {
+      "type": "icon",
+      "path": "/demos",
+      "prompt": "Demos",
+      "icon": "ri-screenshot-line"
+    },
+    {
+      "type": "icon",
+      "path": "/chat",
+      "prompt": "Contact Me",
+      "icon": "ri-chat-1-line"
+    }
+  ],
+  "socials": [
+    {
+      "name": "Twitter",
+      "href": "https://twitter.com/ASTRO_org",
+      "icon": "ri-twitter-x-fill",
+      "rwd": false
+    },
+    {
+      "name": "Github Repo",
+      "href": "https://github.com/lin-stephanie",
+      "icon": "uil-github-alt",
+      "rwd": false
+    }
+  ],
+  "metadata": {
+    "home": {
+      "title": "Home",
+      "description": "Astro AntfuStyle Blog Demo"
+    }
+  }
+}

@@ -1,0 +1,86 @@
+---
+import Link from '~/components/base/Link.astro'
+
+// import LogoButton from '~/components/widgets/LogoButton.astro'
+import ToTopButton from '~/components/widgets/ToTopButton.astro'
+// import ToggleTheme from '~/components/widgets/ToggleTheme.astro'
+
+import { navBar, socials } from '~/blog-config.json'
+---
+
+<header class="z-40">
+  <!-- <LogoButton /> -->
+  <ToTopButton />
+  <nav class="nav">
+    <div class="spacer"></div>
+    <div class="right print:op-0">
+      {
+        navBar.map((item) => {
+          if (item.type === 'rwd') {
+            return (
+              <Link href={item.path} title={item.prompt}>
+                <span class="lt-md:hidden">{item.text}</span>
+                <div class={`md:hidden i-${item.icon}`} />
+              </Link>
+            )
+          } else if (item.type === 'icon') {
+            return (
+              <Link href={item.path} title={item.prompt}>
+                <div class={`i-${item.icon}`} />
+              </Link>
+            )
+          } else if (item.type === 'text') {
+            return (
+              <Link href={item.path} title={item.prompt}>
+                <span>{item.text}</span>
+              </Link>
+            )
+          }
+        })
+      }
+      {
+        socials.map((item) => {
+          return (
+            <Link
+              title={item.name}
+              href={item.href}
+              external={true}
+              class={item.rwd ? 'lt-md:hidden' : ''}
+            >
+              <div class={`i-${item.icon}`} />
+            </Link>
+          )
+        })
+      }
+      <!-- <a href="/feed.xml" target="_blank" title="RSS" class="lt-md:hidden">
+        <div i-la-rss-square style="font-size:1.25rem; margin: 0 -0.125rem;">
+        </div>
+      </a> -->
+      <!-- <ToggleTheme /> -->
+    </div>
+  </nav>
+</header>
+
+<style>
+  .nav {
+    display: grid;
+    grid-template-columns: auto max-content;
+
+    width: 100%;
+    padding: 2rem;
+  }
+
+  .nav > * {
+    margin: auto;
+  }
+
+  .nav .right {
+    display: grid;
+    gap: 1.2rem;
+    grid-auto-flow: column;
+  }
+
+  .nav .right > * {
+    margin: auto;
+  }
+</style>
