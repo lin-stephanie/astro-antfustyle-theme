@@ -1,9 +1,5 @@
 import dayjs from 'dayjs'
-import type {
-  CollectionEntry,
-  ContentEntryMap,
-  // InferEntrySchema,
-} from 'astro:content'
+import type { CollectionEntry, ContentEntryMap } from 'astro:content'
 
 /* misc */
 export function formatDate(d: string | Date, showYear = true) {
@@ -28,23 +24,13 @@ export function isSameYear(
 /* items */
 type EntryKey = keyof ContentEntryMap
 
-type EntryWithData<T extends EntryKey> = CollectionEntry<T> & {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: Record<string, any>
-  // data: InferEntrySchema<"posts">
-}
+type Acc = Record<string, CollectionEntry<EntryKey>[]>
 
-type Acc<T extends EntryKey> = Record<string, CollectionEntry<T>[]>
-
-export const getPublishedItems = <T extends EntryKey>(
-  items: EntryWithData<T>[]
-) => {
+export const getPublishedItems = (items: CollectionEntry<EntryKey>[]) => {
   return items.filter((item) => !item.data.draft)
 }
 
-export const getSortedItems = <T extends EntryKey>(
-  items: EntryWithData<T>[]
-) => {
+export const getSortedItems = (items: CollectionEntry<EntryKey>[]) => {
   const publishedItems = getPublishedItems(items)
 
   return publishedItems.sort(
@@ -52,42 +38,16 @@ export const getSortedItems = <T extends EntryKey>(
   )
 }
 
-export const groupItemsByYear = <T extends EntryKey>(
-  items: EntryWithData<T>[]
-) => {
+export const groupItemsByYear = (items: CollectionEntry<EntryKey>[]) => {
   const sortedItems = getSortedItems(items)
 
-  return sortedItems.reduce((acc: Acc<T>, item) => {
+  return sortedItems.reduce((acc: Acc, item) => {
     const year = item.data.date.getFullYear().toString()
     acc[year] ? acc[year].push(item) : (acc[year] = [item])
     return acc
   }, {})
 }
 
-export const getYears = (items: Acc<keyof ContentEntryMap>) => {
+export const getYears = (items: Acc) => {
   return Object.keys(items).sort((a, b) => parseInt(b) - parseInt(a))
 }
-
-/* export const getPublishedItems = async <T extends EntryKey>(entryType: T) => {
-  const items = await getCollection(entryType)
-
-  return items.filter((item) => !item.data.draft)
-}
-
-export const getSortedItems = async <T extends EntryKey>(entryType: T) => {
-  const publishedItems = await getPublishedItems(entryType)
-
-  return publishedItems.sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-  )
-}
-
-export const groupitemsByYear = async <T extends EntryKey>(entryType: T) => {
-  const sortedItems = await getSortedItems(entryType)
-
-  return sortedItems.reduce((acc: Acc<T>, item) => {
-    const year = item.data.date.getFullYear().toString()
-    acc[year] ? acc[year].push(item) : (acc[year] = [item])
-    return acc
-  }, {})
-} */
