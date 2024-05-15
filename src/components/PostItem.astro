@@ -1,0 +1,91 @@
+---
+import Link from '~/components/base/Link.astro'
+import type { CollectionEntry, ContentEntryMap } from 'astro:content'
+import { formatDate } from '~/utils'
+
+interface Props {
+  tab: string
+  idx: number
+  post: CollectionEntry<keyof ContentEntryMap>
+}
+
+const { tab, idx, post } = Astro.props
+const { data: frontmatter } = post
+---
+
+<div
+  class="slide-enter"
+  style={{
+    '--enter-stage': idx,
+    '--enter-step': '60ms',
+  }}
+>
+  <Link
+    class="link"
+    href={frontmatter.redirect ? frontmatter.redirect : `/${tab}/${post.slug}`}
+    external={frontmatter.redirect ? true : false}
+  >
+    <li
+      u-flex="~ items-center gap-2 lt-md:(col items-start)"
+      class="no-underline"
+    >
+      <div u-flex="~ gap-2" class="text-lg leading-1.2em">
+        <span class="align-middle">{frontmatter.title}</span>
+        {
+          frontmatter.redirect && (
+            <span
+              u-i-carbon-arrow-up-right
+              u-flex="none"
+              class="ml--1.5 op-50 align-middle text-xs"
+              title="External"
+            />
+          )
+        }
+      </div>
+      <div flex="~ gap-2 items-center">
+        {
+          frontmatter.video && (
+            <span
+              u-i-ri-film-line
+              u-flex="none"
+              class=" op-50 align-middle"
+              title="Provided in video"
+            />
+          )
+        }
+        {
+          frontmatter.radio && (
+            <span
+              u-i-ri-radio-line
+              u-flex="none"
+              class=" op-50 align-middle"
+              title="Provided in radio"
+            />
+          )
+        }
+        <span class="op-50 text-sm ws-nowrap">
+          {formatDate(frontmatter.date, false)}
+        </span>
+        {
+          frontmatter.duration && (
+            <span class=" op-40 text-sm ws-nowrap">
+              · {frontmatter.duration}
+            </span>
+          )
+        }
+        {
+          frontmatter.platform && (
+            <span class=" op-40 text-sm ws-nowrap">{frontmatter.platform}</span>
+          )
+        }
+      </div>
+    </li>
+  </Link>
+</div>
+
+<style>
+  .link {
+    @apply: block border-b-none! mb-6 mt-2 font-normal;
+    transition: opacity 0.2s ease;
+  }
+</style>

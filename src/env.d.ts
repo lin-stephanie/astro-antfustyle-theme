@@ -1,4 +1,10 @@
 /// <reference types="astro/client" />
+
+/**
+ * @see {@link https://docs.astro.build/en/tutorials/add-content-collections/#create-a-collection-for-your-blog-posts}
+ */
+/// <reference path="../.astro/types.d.ts" />
+
 /**
  * @see {@link https://docs.astro.build/en/guides/typescript/#infer-getstaticpaths-types}
  */

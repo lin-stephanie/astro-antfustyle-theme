@@ -1,13 +1,17 @@
 ---
 import Link from '~/components/base/Link.astro'
+import { site } from '~/blog-config.json'
 ---
 
-<Link
+<!-- <Link
   class="w-12 h-12 absolute xl:fixed m-5 select-none outline-none"
   href="/"
   focusable="false"
 >
-  <!-- <Logo /> -->
+  <Logo />
+</Link> -->
+<Link href="/" class="xl:fixed absolute w-12 h-12 m-5 outline-none select-none">
+  <div class="font-600">{site.name}</div>
 </Link>
 
 <style>

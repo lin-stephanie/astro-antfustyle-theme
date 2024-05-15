@@ -8,21 +8,19 @@ interface Props extends HTMLAttributes<'a'> {
   children: HTMLElement | HTMLElement[] | string
 }
 
-const { href, title, external = false, ...attrs } = Astro.props
+const { href, title, external = false, ...rest } = Astro.props
 ---
 
-<a {href} {title} target={external ? '_blank' : '_self'} {...attrs}>
+<a {href} {title} target={external ? '_blank' : '_self'} {...rest}>
   <slot />
 </a>
 
 <style>
   a {
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-    transition: opacity 0.2s ease;
     opacity: 0.6;
-    outline: none;
+    cursor: pointer;
+    /* color: inherit; */
+    text-decoration: none;
   }
 
   a:hover {

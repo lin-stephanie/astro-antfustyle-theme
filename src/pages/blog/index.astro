@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '~/layouts/BaseLayout.astro'
+import { metadata } from '~/blog-config.json'
+import Categorizer from '~/components/base/Categorizer.astro'
+import PostItem from '~/components/PostItem.astro'
+import { isSameYear, getYear } from '~/utils'
+
+const { title, description } = metadata.blog
+
+const posts = await getCollection('blog')
+
+const sortedPosts = posts
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+---
+
+<BaseLayout {title} {description}>
+  <article>
+    <div class="prose slide-enter-content m-auto">
+      <ul>
+        {
+          sortedPosts.length === 0 ? (
+            <div class="py-2 op-50">nothing here yet</div>
+          ) : (
+            sortedPosts.map((post, idx) => (
+              <>
+                {!isSameYear(
+                  post.data.date,
+                  sortedPosts[idx - 1]?.data.date
+                ) && (
+                  <Categorizer
+                    {idx}
+                    text={getYear(post.data.date).toString()}
+                  />
+                )}
+                <PostItem tab={'blog'} {idx} {post} />
+              </>
+            ))
+          )
+        }
+      </ul>
+    </div>
+  </article>
+</BaseLayout>

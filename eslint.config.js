@@ -42,6 +42,11 @@ export default ts.config(
           ignoreRestSiblings: true,
         },
       ],
+      // https://typescript-eslint.io/rules/triple-slash-reference/
+      '@typescript-eslint/triple-slash-reference': [
+        'error',
+        { path: 'always' },
+      ],
     },
   }
 )

@@ -1,7 +1,7 @@
 {
   "$schema": "./blog-config-schema.json",
   "site": {
-    "name": "AntfuStyle Blog Template",
+    "name": "Astro AntfuStyle",
     "author": "Stephanie Lin"
   },
   "navBar": [
@@ -47,9 +47,13 @@
     }
   ],
   "metadata": {
-    "home": {
-      "title": "Home",
-      "description": "Astro AntfuStyle Blog Demo"
+    "about": {
+      "title": "About",
+      "description": "About"
+    },
+    "blog": {
+      "title": "Blog",
+      "description": "Blog"
     }
   }
 }

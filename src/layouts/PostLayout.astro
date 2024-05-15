@@ -1,0 +1,31 @@
+---
+import { formatDate } from '~/utils'
+import BaseLayout from './BaseLayout.astro'
+import type { CollectionEntry, ContentEntryMap } from 'astro:content'
+
+interface Props {
+  post: CollectionEntry<keyof ContentEntryMap>
+}
+
+const { post } = Astro.props
+const { data: frontmatter } = post
+---
+
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+  <div class="m-auto mb-8 prose">
+    <h1 class="mb-0 slide-enter-50">
+      {frontmatter.title}
+    </h1>
+    {
+      frontmatter.date && (
+        <p class="opacity-50 mt-6! slide-enter-50">
+          {formatDate(frontmatter.date)}
+          {frontmatter.duration && <span>· {frontmatter.duration}</span>}
+        </p>
+      )
+    }
+    <article>
+      <slot />
+    </article>
+  </div>
+</BaseLayout>

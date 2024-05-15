@@ -1,0 +1,26 @@
+---
+interface Props {
+  idx: number
+  text: string
+}
+
+const { idx, text } = Astro.props
+---
+
+<div
+  class="relative h-20
+    pointer-events-none select-none
+    slide-enter"
+  style={{
+    '--enter-stage': idx - 2,
+    '--enter-step': '60ms',
+  }}
+>
+  <span
+    class="absolute left--3rem top--2rem
+      op10
+      text-8em font-bold color-transparent text-stroke-2 text-stroke-hex-aaa"
+  >
+    {text}
+  </span>
+</div>

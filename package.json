@@ -21,6 +21,7 @@
     "@iconify/json": "^2.2.207",
     "@typescript-eslint/parser": "^7.8.0",
     "@unocss/reset": "^0.59.4",
+    "dayjs": "^1.11.11",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-astro": "^1.1.2",

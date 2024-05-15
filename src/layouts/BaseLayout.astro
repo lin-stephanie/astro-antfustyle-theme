@@ -1,6 +1,8 @@
 ---
 import '@unocss/reset/tailwind.css'
-import '~/styles/global.css'
+import '~/styles/main.css'
+import '~/styles/prose.css'
+import '~/styles/markdown.css'
 
 import Head from '~/components/Head.astro'
 import NavBar from '~/components/NavBar.astro'
@@ -9,8 +11,7 @@ import { site } from '~/blog-config.json'
 
 interface Props {
   title: string
-  author: string
-  description: string
+  description?: string
 }
 
 const { title, description } = Astro.props
@@ -22,12 +23,12 @@ const { title, description } = Astro.props
     <Head
       title={`${title} - ${site.name}`}
       author={site.author}
-      {description}
+      description={description || ''}
     />
   </head>
   <body class="relative font-sans text-gray-700 dark:text-gray-200">
     <NavBar />
-    <main class="of-x-hidden px-7 py-10">
+    <main class="px-7 py-10">
       <slot />
       <Footer />
     </main>

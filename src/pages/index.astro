@@ -1,28 +1,72 @@
 ---
-import Layout from '~/layouts/Layout.astro'
-import { metadata, site } from '~/blog-config.json'
+import BaseLayout from '~/layouts/BaseLayout.astro'
+import { metadata } from '~/blog-config.json'
+
+const { title, description } = metadata.about
 ---
 
-<Layout
-  title={metadata.home.title}
-  description={metadata.home.description}
-  author={site.author}
->
+<BaseLayout {title} {description}>
   <main>
-    <h1>
-      Astro 的目标是使所有 Web 开发者都对它易于理解。Astro
-      被设计成熟悉和平易近人的感觉，无论技能水平或过去的 Web 开发经验如何。
-      Astro 的 .astro UI 语言是 HTML 的超集：任何有效的 HTML 都是有效的 Astro
-      模板语法！因此，如果你能编写 HTML，你就可以编写 Astro
-      组件！但是，它还结合了我们从其他组件语言中借用的一些我们最喜欢的功能，如
-      JSX 表达式（React）和默认使用 CSS 作用域（Svelte 和 Vue）。这种与 HTML
-      的相似性也使得使用渐进式增强和常见的可访问性模式变得更加容易而无额外开销。
-      我们然后确保你还可以使用你已经了解的最喜欢的 UI
-      组件语言，甚至可以复用你可能已经有的组件。React、Preact、Svelte、Vue、Solid、Lit
-      和其他的，包括 Web components，都被支持在 Astro 项目中编写 UI 组件。
-    </h1>
+    <article>
+      The term “component island” was first coined by Etsy’s frontend architect
+      Katie Sylor-Miller in 2019. This idea was then expanded on and documented
+      in this post by Preact creator Jason Miller on August 11, 2020. The
+      general idea of an “Islands” architecture is deceptively simple: render
+      HTML pages on the server, and inject placeholders or slots around highly
+      dynamic regions […] that can then be “hydrated” on the client into small
+      self-contained widgets, reusing their server-rendered initial HTML. —
+      Jason Miller, Creator of Preact The technique that this architectural
+      pattern builds on is also known as partial or selective hydration. In
+      contrast, most JavaScript-based web frameworks hydrate & render an entire
+      website as one large JavaScript application (also known as a single-page
+      application, or SPA). SPAs provide simplicity and power but suffer from
+      page-load performance problems due to heavy client-side JavaScript usage.
+      SPAs have their place, even embedded inside an Astro page. But, SPAs lack
+      the native ability to selectively and strategically hydrate, making them a
+      heavy-handed choice for most projects on the web today. Astro became
+      popular as the first mainstream JavaScript web framework with selective
+      hydration built-in, using that component islands pattern first coined by
+      Sylor-Miller. The term “component island” was first coined by Etsy’s
+      frontend architect Katie Sylor-Miller in 2019. This idea was then expanded
+      on and documented in this post by Preact creator Jason Miller on August
+      11, 2020. The general idea of an “Islands” architecture is deceptively
+      simple: render HTML pages on the server, and inject placeholders or slots
+      around highly dynamic regions […] that can then be “hydrated” on the
+      client into small self-contained widgets, reusing their server-rendered
+      initial HTML. — Jason Miller, Creator of Preact The technique that this
+      architectural pattern builds on is also known as partial or selective
+      hydration. In contrast, most JavaScript-based web frameworks hydrate &
+      render an entire website as one large JavaScript application (also known
+      as a single-page application, or SPA). SPAs provide simplicity and power
+      but suffer from page-load performance problems due to heavy client-side
+      JavaScript usage. SPAs have their place, even embedded inside an Astro
+      page. But, SPAs lack the native ability to selectively and strategically
+      hydrate, making them a heavy-handed choice for most projects on the web
+      today. Astro became popular as the first mainstream JavaScript web
+      framework with selective hydration built-in, using that component islands
+      pattern first coined by Sylor-Miller. The term “component island” was
+      first coined by Etsy’s frontend architect Katie Sylor-Miller in 2019. This
+      idea was then expanded on and documented in this post by Preact creator
+      Jason Miller on August 11, 2020. The general idea of an “Islands”
+      architecture is deceptively simple: render HTML pages on the server, and
+      inject placeholders or slots around highly dynamic regions […] that can
+      then be “hydrated” on the client into small self-contained widgets,
+      reusing their server-rendered initial HTML. — Jason Miller, Creator of
+      Preact The technique that this architectural pattern builds on is also
+      known as partial or selective hydration. In contrast, most
+      JavaScript-based web frameworks hydrate & render an entire website as one
+      large JavaScript application (also known as a single-page application, or
+      SPA). SPAs provide simplicity and power but suffer from page-load
+      performance problems due to heavy client-side JavaScript usage. SPAs have
+      their place, even embedded inside an Astro page. But, SPAs lack the native
+      ability to selectively and strategically hydrate, making them a
+      heavy-handed choice for most projects on the web today. Astro became
+      popular as the first mainstream JavaScript web framework with selective
+      hydration built-in, using that component islands pattern first coined by
+      Sylor-Miller.
+    </article>
   </main>
-</Layout>
+</BaseLayout>
 
 <style>
   main {
