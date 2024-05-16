@@ -14,7 +14,14 @@ const socialIcons = socials.map((item) => `i-${item.icon}`)
 
 export default defineConfig({
   /* define utility classes and the resulting CSS */
-  rules: [],
+  rules: [
+    [
+      /^slide-enter-(\d+)$/,
+      ([_, n]) => ({
+        '--enter-stage': n,
+      }),
+    ],
+  ],
 
   /* combine multiple rules */
   shortcuts: [],
@@ -35,7 +42,12 @@ export default defineConfig({
         'vertical-align': 'text-bottom',
       },
     }),
-    presetWebFonts(),
+    presetWebFonts({
+      fonts: {
+        sans: 'Inter:400,600,800',
+        mono: 'DM Mono:400,600',
+      },
+    }),
   ],
 
   /* provides a unified interface to transform source code in order to support conventions */

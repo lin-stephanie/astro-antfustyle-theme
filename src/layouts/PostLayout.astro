@@ -25,7 +25,9 @@ const { data: frontmatter } = post
       )
     }
     <article>
-      <slot />
+      <div class="prose m-auto slide-enter-content">
+        <slot />
+      </div>
     </article>
   </div>
 </BaseLayout>

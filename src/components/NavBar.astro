@@ -19,7 +19,7 @@ import { navBar, socials } from '~/blog-config.json'
             return (
               <Link class="link" href={item.path} title={item.prompt}>
                 <span class="lt-md:hidden">{item.text}</span>
-                <div class={`md:hidden i-${item.icon}`} />
+                <div class={`i-${item.icon} md:hidden `} />
               </Link>
             )
           } else if (item.type === 'icon') {
