@@ -17,6 +17,9 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
     devDependencies:
+      '@astrojs/markdown-remark':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@eslint/js':
         specifier: ^9.1.1
         version: 9.2.0
@@ -56,6 +59,9 @@ importers:
       prettier-plugin-astro:
         specifier: ^0.13.0
         version: 0.13.0
+      rehype-autolink-headings:
+        specifier: ^7.1.0
+        version: 7.1.0
       simple-git-hooks:
         specifier: ^2.11.1
         version: 2.11.1
@@ -2907,6 +2913,12 @@ packages:
         integrity: sha512-Er/Iixbc7IEa7r/XLtuG52zoqn/b3Xng/w6aZQ0xGVxzhw5xUFxcRqdPzP6yFi/4HBYRaifaI5fQ1RH8n0ZeOQ==,
       }
 
+  hast-util-heading-rank@3.0.0:
+    resolution:
+      {
+        integrity: sha512-EJKb8oMUXVHcWZTDepnr+WNbfnXKFNf9duMesmr4S8SXTJBJ9M4Yok08pu9vxdJwdlGRhVumk9mEhkEvKGifwA==,
+      }
+
   hast-util-is-element@3.0.0:
     resolution:
       {
@@ -4318,6 +4330,12 @@ packages:
         integrity: sha512-NcDiDkTLuPR+++OCKB0nWafEmhg/Da8aUPLPMQbK+bxKKCm1/S5he+AqYa4PlMCVBalb4/yxIRub6qkEx5yJbw==,
       }
     engines: { node: '>= 0.4' }
+
+  rehype-autolink-headings@7.1.0:
+    resolution:
+      {
+        integrity: sha512-rItO/pSdvnvsP4QRB1pmPiNHUskikqtPojZKJPPPAVx9Hj8i8TwMBhofrrAYRhYOOBZH9tgmG5lPqDLuIWPWmw==,
+      }
 
   rehype-parse@9.0.0:
     resolution:
@@ -7388,6 +7406,10 @@ snapshots:
       vfile-location: 5.0.2
       web-namespaces: 2.0.1
 
+  hast-util-heading-rank@3.0.0:
+    dependencies:
+      '@types/hast': 3.0.4
+
   hast-util-is-element@3.0.0:
     dependencies:
       '@types/hast': 3.0.4
@@ -8350,6 +8372,15 @@ snapshots:
       define-properties: 1.2.1
       es-errors: 1.3.0
       set-function-name: 2.0.2
+
+  rehype-autolink-headings@7.1.0:
+    dependencies:
+      '@types/hast': 3.0.4
+      '@ungap/structured-clone': 1.2.0
+      hast-util-heading-rank: 3.0.0
+      hast-util-is-element: 3.0.0
+      unified: 11.0.4
+      unist-util-visit: 5.0.0
 
   rehype-parse@9.0.0:
     dependencies:

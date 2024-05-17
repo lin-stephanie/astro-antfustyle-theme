@@ -32,7 +32,7 @@ export default defineConfig({
     presetAttributify({
       strict: true,
       prefix: 'u-',
-      prefixedOnly: true,
+      prefixedOnly: false,
     }),
     presetIcons({
       extraProperties: {

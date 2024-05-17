@@ -1,20 +1,31 @@
-.dark .shiki,
-.dark .shiki span {
-  color: var(--s-dark, inherit);
+/* Shiki */
+.dark .astro-code,
+.dark .astro-code span {
+  color: var(--shiki-dark, inherit) !important;
+}
+
+.dark .astro-code {
+  background-color: #0e0e0e !important;
+}
+
+/* html:not(.dark) .astro-code,
+html:not(.dark) .astro-code span {
+  color: var(--shiki-light, inherit);
+} */
+
+html:not(.dark) .astro-code {
+  background-color: #fafafa !important;
+}
+
+/* Twoslash */
+/* .dark .astro-code,
+.dark .astro-code span {
   --twoslash-popup-bg: #191919;
   --twoslash-border-color: #8884;
 }
-.dark .shiki {
-  background-color: #0e0e0e;
-}
 
-html:not(.dark) .shiki {
-  background-color: #fafafa;
-}
-
-html:not(.dark) .shiki,
-html:not(.dark) .shiki span {
-  color: var(--s-light, inherit);
+html:not(.dark) .astro-code,
+html:not(.dark) .astro-code span {
   --twoslash-popup-bg: #fafafa;
 }
 
@@ -33,16 +44,16 @@ html:not(.dark) .shiki span {
 
 .twoslash-query-presisted .twoslash-popup-info {
   transform: translate(0, 1.6em);
-}
+} */
 
 /* Prose */
-.prose pre:not(.shiki) {
+.prose pre:not(.astro-code) {
   padding: 0;
   margin: 0;
   background: transparent;
 }
 
-.prose .shiki {
+.prose .astro-code {
   font-family: 'DM Mono', 'Input Mono', 'Fira Code', monospace;
   font-size: 0.92em;
   line-height: 1.4;
@@ -96,6 +107,7 @@ html.dark .prose {
   --fg-deeper: #fff;
 }
 
+/* PostItem */
 /* a.item {
   transition: 0.2s all ease-out;
   text-decoration: none;
@@ -107,6 +119,7 @@ a.item:hover {
   opacity: 1;
 } */
 
+/* rehype-autolink-headings */
 a.header-anchor {
   float: left;
   margin-top: 0.125em;
