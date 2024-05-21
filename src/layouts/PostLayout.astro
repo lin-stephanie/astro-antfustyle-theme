@@ -18,7 +18,7 @@ const { data: frontmatter } = post
     </h1>
     {
       frontmatter.date && (
-        <p class="opacity-50 mt--6! slide-enter-50">
+        <p class="mt--6! opacity-50 slide-enter-50">
           {formatDate(frontmatter.date)}
           {frontmatter.duration && <span>· {frontmatter.duration}</span>}
         </p>

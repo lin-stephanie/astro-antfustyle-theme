@@ -125,10 +125,10 @@ a.header-anchor {
   margin-top: 0.125em;
   margin-left: -1.2em;
   padding-right: 0.5em;
-  font-size: 0.85em;
-  opacity: 0;
-  text-decoration: none;
   border: 0 !important;
+  opacity: 0;
+  font-size: 0.85em;
+  text-decoration: none;
 }
 
 a.header-anchor:hover,

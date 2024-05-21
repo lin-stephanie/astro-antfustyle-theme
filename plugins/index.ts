@@ -9,10 +9,11 @@ export const rehypePlugins: RehypePlugins = [
   [
     rehypeAutolinkHeadings,
     {
+      behavior: 'prepend', // default
       properties: {
-        ariaHidden: 'true',
-        tabIndex: -1,
         class: 'header-anchor',
+        ariaHidden: 'true', // default
+        tabIndex: -1, // default
       },
       content: {
         type: 'text',
