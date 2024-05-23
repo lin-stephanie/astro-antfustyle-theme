@@ -1,0 +1,17 @@
+---
+import Link from '~/components/base/Link.astro'
+
+const href = Astro.url.pathname.split('/').slice(0, -1).join('/') || '/'
+---
+
+<div class="prose slide-enter m-auto mt-8 mb-8 animate-delay-500 print:hidden">
+  <br />
+  <span class="op-50 font-mono"> &gt; </span>
+  <Link class="link" {href}>cd .. </Link>
+</div>
+
+<style>
+  .link {
+    @apply: op-50 font-mono hover:op-75;
+  }
+</style>

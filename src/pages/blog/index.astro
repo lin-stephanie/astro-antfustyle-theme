@@ -4,6 +4,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro'
 import { metadata } from '~/blog-config.json'
 import Categorizer from '~/components/base/Categorizer.astro'
 import PostItem from '~/components/PostItem.astro'
+import BackLink from '~/components/widgets/BackLink.astro'
 import { isSameYear, getYear } from '~/utils'
 
 const { title, description } = metadata.blog
@@ -40,6 +41,7 @@ const sortedPosts = posts
           )
         }
       </ul>
+      <BackLink />
     </div>
   </article>
 </BaseLayout>

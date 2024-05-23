@@ -1,6 +1,7 @@
 ---
 import { formatDate } from '~/utils'
 import BaseLayout from './BaseLayout.astro'
+import BackLink from '~/components/widgets/BackLink.astro'
 import type { CollectionEntry, ContentEntryMap } from 'astro:content'
 
 interface Props {
@@ -29,5 +30,6 @@ const { data: frontmatter } = post
         <slot />
       </div>
     </article>
+    <BackLink />
   </div>
 </BaseLayout>
