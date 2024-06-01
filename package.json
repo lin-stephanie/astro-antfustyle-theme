@@ -9,10 +9,11 @@
     "preview": "astro preview",
     "format": "prettier . --write --ignore-unknown --cache",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0 --cache",
-    "lint:fix": "eslint . --fix --cache"
+    "lint:fix": "eslint . --fix --cache",
+    "prepare": "simple-git-hooks"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.10",
+    "@astrojs/check": "^0.7.0",
     "astro": "^4.6.4",
     "typescript": "^5.4.5"
   },
@@ -21,7 +22,7 @@
     "@eslint/js": "^9.1.1",
     "@iconify/json": "^2.2.207",
     "@typescript-eslint/parser": "^7.8.0",
-    "@unocss/reset": "^0.59.4",
+    "@unocss/reset": "^0.60.4",
     "dayjs": "^1.11.11",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
@@ -30,11 +31,11 @@
     "globals": "^15.1.0",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
-    "prettier-plugin-astro": "^0.13.0",
+    "prettier-plugin-astro": "^0.14.0",
     "rehype-autolink-headings": "^7.1.0",
     "simple-git-hooks": "^2.11.1",
     "typescript-eslint": "^7.8.0",
-    "unocss": "^0.59.4"
+    "unocss": "^0.60.4"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
@@ -44,5 +45,8 @@
       "eslint",
       "prettier --write --ignore-unknown"
     ]
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
