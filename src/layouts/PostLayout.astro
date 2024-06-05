@@ -1,6 +1,5 @@
 ---
 import { formatDate } from '~/utils'
-import BaseLayout from './BaseLayout.astro'
 import BackLink from '~/components/widgets/BackLink.astro'
 import type { CollectionEntry, ContentEntryMap } from 'astro:content'
 
@@ -12,24 +11,22 @@ const { post } = Astro.props
 const { data: frontmatter } = post
 ---
 
-<BaseLayout title={frontmatter.title} description={frontmatter.description}>
-  <div class="m-auto mb-8 prose">
-    <h1 class="mb-0 slide-enter-50">
-      {frontmatter.title}
-    </h1>
-    {
-      frontmatter.date && (
-        <p class="mt--6! opacity-50 slide-enter-50">
-          {formatDate(frontmatter.date)}
-          {frontmatter.duration && <span>· {frontmatter.duration}</span>}
-        </p>
-      )
-    }
-    <article>
-      <div class="prose m-auto slide-enter-content">
-        <slot />
-      </div>
-    </article>
-    <BackLink />
-  </div>
-</BaseLayout>
+<div class="m-auto mb-8 prose">
+  <h1 class="mb-0 slide-enter-50">
+    {frontmatter.title}
+  </h1>
+  {
+    frontmatter.date && (
+      <p class="mt--6! opacity-50 slide-enter-50">
+        {formatDate(frontmatter.date)}
+        {frontmatter.duration && <span>· {frontmatter.duration}</span>}
+      </p>
+    )
+  }
+  <article>
+    <div class="prose m-auto slide-enter-content">
+      <slot />
+    </div>
+  </article>
+  <BackLink />
+</div>

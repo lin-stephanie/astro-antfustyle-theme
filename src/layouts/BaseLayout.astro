@@ -7,14 +7,17 @@ import '~/styles/markdown.css'
 import Head from '~/components/Head.astro'
 import NavBar from '~/components/NavBar.astro'
 import Footer from '~/components/Footer.astro'
+// import Background from '~/components/Background.astro'
+
 import { site } from '~/blog-config.json'
 
 interface Props {
   title: string
   description?: string
+  bgType?: string
 }
 
-const { title, description } = Astro.props
+const { title, description /* bgType */ } = Astro.props
 ---
 
 <!doctype html>
@@ -27,6 +30,7 @@ const { title, description } = Astro.props
     />
   </head>
   <body class="relative font-sans text-gray-700 dark:text-gray-200">
+    <!-- {bgType && <Background type={bgType} />} -->
     <NavBar />
     <main class="px-7 py-10">
       <slot />
