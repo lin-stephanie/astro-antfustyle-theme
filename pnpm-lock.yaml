@@ -13,6 +13,9 @@ importers:
       astro:
         specifier: ^4.6.4
         version: 4.9.2(typescript@5.4.5)
+      nprogress:
+        specifier: ^0.2.0
+        version: 0.2.0
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -26,6 +29,9 @@ importers:
       '@iconify/json':
         specifier: ^2.2.207
         version: 2.2.215
+      '@types/nprogress':
+        specifier: ^0.2.3
+        version: 0.2.3
       '@typescript-eslint/parser':
         specifier: ^7.8.0
         version: 7.11.0(eslint@8.57.0)(typescript@5.4.5)
@@ -1489,6 +1495,12 @@ packages:
     resolution:
       {
         integrity: sha512-ABoYdNQ/kBSsLvZAekMhIPMQ3YUZvavStpKYs7BjLLuKVmIMA0LUgZ7b54zzuWJRbHF80v1cNf4r90Vd6eMQDg==,
+      }
+
+  '@types/nprogress@0.2.3':
+    resolution:
+      {
+        integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==,
       }
 
   '@types/unist@2.0.10':
@@ -4166,6 +4178,12 @@ packages:
       }
     engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
 
+  nprogress@0.2.0:
+    resolution:
+      {
+        integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==,
+      }
+
   object-inspect@1.13.1:
     resolution:
       {
@@ -6425,6 +6443,8 @@ snapshots:
     dependencies:
       '@types/unist': 2.0.10
 
+  '@types/nprogress@0.2.3': {}
+
   '@types/unist@2.0.10': {}
 
   '@types/unist@3.0.2': {}
@@ -8458,6 +8478,8 @@ snapshots:
   npm-run-path@5.3.0:
     dependencies:
       path-key: 4.0.0
+
+  nprogress@0.2.0: {}
 
   object-inspect@1.13.1: {}
 

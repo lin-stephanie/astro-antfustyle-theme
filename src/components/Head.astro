@@ -50,3 +50,15 @@ const { title, author, description, image = '/astro.jpg' } = Astro.props
 <!-- Font preloads -->
 
 <ViewTransitions />
+
+<script>
+  import nprogress from 'nprogress'
+
+  document.addEventListener('astro:before-preparation', () => {
+    nprogress.start()
+  })
+
+  document.addEventListener('astro:page-load', () => {
+    nprogress.done()
+  })
+</script>

@@ -47,7 +47,6 @@ export function useRafFn(
   let rafId: null | number = null
 
   function loop(timestamp: DOMHighResTimeStamp) {
-    console.log('loop')
     if (!isActive) return
 
     if (!previousFrameTimestamp) previousFrameTimestamp = timestamp
@@ -69,15 +68,12 @@ export function useRafFn(
       isActive = true
       previousFrameTimestamp = 0
       rafId = requestAnimationFrame(loop)
-      console.log('resume rafId', rafId)
     }
   }
 
   function pause() {
-    console.log('pause')
     isActive = false
     if (rafId !== null) {
-      console.log('pause rafId', rafId)
       cancelAnimationFrame(rafId)
       rafId = null
     }

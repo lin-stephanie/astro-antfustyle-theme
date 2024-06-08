@@ -15,12 +15,14 @@
   "dependencies": {
     "@astrojs/check": "^0.7.0",
     "astro": "^4.6.4",
+    "nprogress": "^0.2.0",
     "typescript": "^5.4.5"
   },
   "devDependencies": {
     "@astrojs/markdown-remark": "^5.1.0",
     "@eslint/js": "^9.1.1",
     "@iconify/json": "^2.2.207",
+    "@types/nprogress": "^0.2.3",
     "@typescript-eslint/parser": "^7.8.0",
     "@unocss/reset": "^0.60.4",
     "dayjs": "^1.11.11",

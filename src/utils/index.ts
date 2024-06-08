@@ -59,8 +59,6 @@ export function initCanvas(
   height = 400,
   _dpi?: number
 ) {
-  console.log('init')
-
   const ctx = canvas.getContext('2d')!
 
   const dpr = window.devicePixelRatio || 1
