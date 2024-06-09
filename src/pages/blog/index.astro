@@ -5,6 +5,7 @@ import { metadata } from '~/blog-config.json'
 import Categorizer from '~/components/base/Categorizer.astro'
 import PostItem from '~/components/PostItem.astro'
 import BackLink from '~/components/widgets/BackLink.astro'
+import NavTabs from '~/components/NavTabs.astro'
 import { isSameYear, getYear } from '~/utils'
 
 const { title, description } = metadata.blog
@@ -19,6 +20,7 @@ const sortedPosts = posts
 <BaseLayout {title} {description}>
   <article>
     <div class="prose slide-enter-content m-auto">
+      <NavTabs />
       <ul>
         {
           sortedPosts.length === 0 ? (

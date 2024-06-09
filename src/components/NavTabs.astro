@@ -1,0 +1,47 @@
+---
+import Link from '~/components/base/Link.astro'
+---
+
+<div id="nav-tabs" class="prose m-auto mb-8 select-none">
+  <div u-flex="~ gap-3 lt-sm:(col wrap gap-1) " class="mb-0 text-3xl">
+    <Link href="/blog" class="!border-none"> Blog </Link>
+    <Link href="/talks" class="!border-none"> Talks </Link>
+    <Link href="/podcasts" class="!border-none"> Podcasts </Link>
+    <Link href="/streams" class="!border-none"> Streams </Link>
+    <Link href="/notes" class="!border-none"> Notes </Link>
+  </div>
+</div>
+
+<style>
+  .tabs__a--active {
+    opacity: 1;
+  }
+
+  .tabs__a--inactive {
+    opacity: 0.2;
+  }
+
+  .tabs__a--inactive:hover {
+    opacity: 0.5;
+  }
+</style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const tabs = document.querySelectorAll('#nav-tabs a')
+
+    if (tabs.length === 0) return
+
+    const currentPath = window.location.pathname
+
+    tabs.forEach((tab) => {
+      if (currentPath === tab.getAttribute('href')) {
+        tab.classList.remove('tabs__a--inactive')
+        tab.classList.add('tabs__a--active')
+      } else {
+        tab.classList.remove('tabs__a--active')
+        tab.classList.add('tabs__a--inactive')
+      }
+    })
+  })
+</script>
