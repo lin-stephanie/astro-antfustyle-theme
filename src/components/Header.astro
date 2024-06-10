@@ -1,0 +1,38 @@
+---
+import { formatDate } from '~/utils'
+import type { PostFrontmatter } from '~/content/schema'
+
+interface Props {
+  frontmatter: PostFrontmatter
+  wrapperClass?: string
+}
+
+const { frontmatter, wrapperClass } = Astro.props
+---
+
+<header class=`prose m-auto mb-8 ${wrapperClass}`>
+  <h1 class="slide-enter-50 mb-0">
+    {frontmatter.title}
+  </h1>
+  {
+    frontmatter.date && (
+      <p class="slide-enter-50 mt--6! opacity-50">
+        {formatDate(frontmatter.date)}
+        {frontmatter.duration && <span>· {frontmatter.duration}</span>}
+      </p>
+    )
+  }
+  {
+    frontmatter.subtitle && (
+      <p class="slide-enter mt--6! opacity-50 italic">{frontmatter.subtitle}</p>
+    )
+  }
+  {
+    frontmatter.draft && (
+      <p class="slide-enter px-4 py-2 b-l-3 b-orange-4 bg-orange-4:10 text-orange-4">
+        This is a draft post not shown by default in production. To display it
+        and add a custom message, modify the <code>drafPost</code> option.
+      </p>
+    )
+  }
+</header>

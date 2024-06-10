@@ -3,6 +3,7 @@ title: Icons in Pure CSS
 description: The icon solution in pure CSS.
 duration: 10min
 date: 2021-10-31T16:00:00Z
+draft: true
 ---
 
 [[toc]]
@@ -47,7 +48,7 @@ With that, we could use any images inlined in CSS with a single class.
 <div class="my-icon"></div>
 ```
 
-<div i-twemoji-grinning-face text-5xl my-auto mx-4 />
+<div i-twemoji-grinning-face text-5xl my-auto mx-4 ></div>
 </div>
 
 It's indeed an interesting idea. However, this is more like an image instead of an icon. To me, an icon has to be scalable and colorable (if it's monochrome).
@@ -143,10 +144,10 @@ Instead of using the icon as a background image and figuring out a way to color 
 }
 ```
 
-<div pt-4 />
-<div text-sky text-xl>This is a blue text, with the blue icon <div i-uil-cloud-showers-heavy /><div i-uil:wind /></div>
-<div text-lime text-xl>Green <div i-uil:trees /><div i-uil:desert /></div>
-<div text-orange text-xl>Orange <div i-uil:restaurant /><div i-uil:store-alt /></div>
+<div pt-4 ></div>
+<div text-sky text-xl>This is a blue text, with the blue icon <div i-uil-cloud-showers-heavy ></div><div i-uil:wind ></div></div>
+<div text-lime text-xl>Green <div i-uil:trees ></div><div i-uil:desert ></div></div>
+<div text-orange text-xl>Orange <div i-uil:restaurant ></div><div i-uil:store-alt ></div></div>
 
 ### Icons with Colors
 
@@ -154,10 +155,10 @@ We made the monochrome icons colorable but now it problem comes to the icons wit
 
 <div text-4xl inline-flex gap-2 py-4 px-8 bg-gray-400:15 rounded>
 <div text-base my-auto>Icon:</div>
-<div i-twemoji:astonished-face />
+<div i-twemoji:astonished-face ></div>
 
 <div text-base my-auto ml-4>Masked:</div>
-<div i-ph:circle-fill style="transform: scale(1.3)" />
+<div i-ph:circle-fill style="transform: scale(1.3)" ></div>
 </div>
 
 Yes, I might say it's hard for one approach to cover all the cases.
@@ -201,7 +202,7 @@ Here are some showcases of what we end up with:
 
 <div text-xl all:mx-1 all:my-2 all:vertical-middle>
 
-<span op60 text-sm inline-block w-40 text-right>Material Design</span> <div i-ic:baseline-account-circle /> <div i-ic:baseline-card-membership /> <div i-ic:baseline-verified text-green5 /> <div i-ic:outline-explore text-sky5 /> <br><span op60 text-sm inline-block w-40 text-right>Carbon</span> <div i-carbon:chart-multitype /> <div i-carbon:network-4 /> <div i-carbon:wind-gusts /> <div i-carbon:collaborate /> <br><span op60 text-sm inline-block w-40 text-right>Tabler</span> <div i-tabler:building-carousel /> <div i-tabler:circle-square /> <div i-tabler:color-swatch /> <div i-tabler:cut /> <br><span op60 text-sm inline-block w-40 text-right>Twemoji</span> <div i-twemoji:grinning-face-with-smiling-eyes /> <div i-twemoji:face-in-clouds /> <div i-twemoji:weary-cat /> <div i-twemoji:teacup-without-handle /> <br><span op60 text-sm inline-block w-40 text-right>Logos</span> <div i-logos:vue /> <div i-logos:blender /> <div i-logos:chrome /> <div i-logos:codepen-icon />
+<span op60 text-sm inline-block w-40 text-right>Material Design</span> <div i-ic:baseline-account-circle ></div> <div i-ic:baseline-card-membership ></div> <div i-ic:baseline-verified text-green5 ></div> <div i-ic:outline-explore text-sky5 ></div> <br><span op60 text-sm inline-block w-40 text-right>Carbon</span> <div i-carbon:chart-multitype ></div> <div i-carbon:network-4 ></div> <div i-carbon:wind-gusts ></div> <div i-carbon:collaborate ></div> <br><span op60 text-sm inline-block w-40 text-right>Tabler</span> <div i-tabler:building-carousel ></div> <div i-tabler:circle-square ></div> <div i-tabler:color-swatch ></div> <div i-tabler:cut ></div> <br><span op60 text-sm inline-block w-40 text-right>Twemoji</span> <div i-twemoji:grinning-face-with-smiling-eyes ></div> <div i-twemoji:face-in-clouds ></div> <div i-twemoji:weary-cat ></div> <div i-twemoji:teacup-without-handle ></div> <br><span op60 text-sm inline-block w-40 text-right>Logos</span> <div i-logos:vue ></div> <div i-logos:blender ></div> <div i-logos:chrome ></div> <div i-logos:codepen-icon ></div>
 
 </div>
 
