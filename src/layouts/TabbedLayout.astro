@@ -1,18 +1,36 @@
 ---
 import Link from '~/components/base/Link.astro'
+import type { NavTabsItems } from '~/types'
+
+interface Props {
+  items: NavTabsItems
+}
+
+const { items } = Astro.props
 ---
 
-<div id="nav-tabs" class="prose m-auto mb-8 select-none">
-  <div u-flex="~ gap-3 lt-sm:(col wrap gap-1) " class="mb-0 text-3xl">
-    <Link href="/blog" class="!border-none"> Blog </Link>
-    <Link href="/talks" class="!border-none"> Talks </Link>
-    <Link href="/podcasts" class="!border-none"> Podcasts </Link>
-    <Link href="/streams" class="!border-none"> Streams </Link>
-    <Link href="/notes" class="!border-none"> Notes </Link>
+<article>
+  <div class="prose slide-enter-content m-auto">
+    <div id="nav-tabs" class="prose m-auto mb-8 select-none">
+      <div u-flex="~ gap-3 lt-sm:(col wrap gap-1) " class="mb-0 text-3xl">
+        {
+          items.map((item) => (
+            <Link class="link" href={item.href}>
+              {item.label}
+            </Link>
+          ))
+        }
+      </div>
+    </div>
+    <slot />
   </div>
-</div>
+</article>
 
 <style>
+  .link {
+    border-style: none !important;
+  }
+
   .tabs__a--active {
     opacity: 1;
   }

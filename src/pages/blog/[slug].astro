@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
 import BaseLayout from '~/layouts/BaseLayout.astro'
-import PostLayout from '~/layouts/PostLayout.astro'
+import StandardLayout from '~/layouts/StandardLayout.astro'
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => {
@@ -20,7 +20,7 @@ const { Content } = await post.render()
 ---
 
 <BaseLayout title={frontmatter.title} description={frontmatter.description}>
-  <PostLayout {post}>
+  <StandardLayout {post}>
     <Content />
-  </PostLayout>
+  </StandardLayout>
 </BaseLayout>

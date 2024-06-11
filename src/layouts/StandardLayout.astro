@@ -1,13 +1,14 @@
 ---
 import { formatDate } from '~/utils'
-import type { PostFrontmatter } from '~/content/schema'
+import type { CollectionEntry, ContentEntryMap } from 'astro:content'
 
 interface Props {
-  frontmatter: PostFrontmatter
+  post: CollectionEntry<keyof ContentEntryMap>
   wrapperClass?: string
 }
 
-const { frontmatter, wrapperClass } = Astro.props
+const { post, wrapperClass } = Astro.props
+const { data: frontmatter } = post
 ---
 
 <header class=`prose m-auto mb-8 ${wrapperClass}`>
@@ -36,3 +37,8 @@ const { frontmatter, wrapperClass } = Astro.props
     )
   }
 </header>
+<article>
+  <div class="prose slide-enter-content m-auto">
+    <slot />
+  </div>
+</article>
