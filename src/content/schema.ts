@@ -1,6 +1,7 @@
 import { z } from 'astro:content'
 
-export const postsSchema = z
+/* posts */
+export const postSchema = z
   .object({
     date: z.coerce.date(),
     title: z.string(),
@@ -15,4 +16,27 @@ export const postsSchema = z
   })
   .strict()
 
-export type PostFrontmatter = z.infer<typeof postsSchema>
+export type PostSchema = z.infer<typeof postSchema>
+
+/* projects */
+const projectSchema = z.object({
+  name: z.string(),
+  link: z.string().url({ message: 'Invalid url.' }),
+  desc: z.string(),
+  icon: z.string().regex(/^i-[\w-]+(:[\w-]+)?$/, {
+    message:
+      "Icon must be in the format 'i-<collection>-<icon>' or 'i-<collection>:<icon>' as per Unocss specifications.",
+  }),
+})
+
+const groupSchema = z.record(z.array(projectSchema))
+
+export const projectsSchema = z.object({
+  title: z.string(),
+  subtitle: z.string().optional(),
+  projects: groupSchema,
+})
+
+export type ProjectSchema = z.infer<typeof projectSchema>
+export type GrouptSchema = z.infer<typeof groupSchema>
+export type ProjectsSchema = z.infer<typeof projectsSchema>

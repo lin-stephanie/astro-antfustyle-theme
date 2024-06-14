@@ -1,0 +1,31 @@
+---
+import { getEntry /* getCollection */ } from 'astro:content'
+
+import BaseLayout from '~/layouts/BaseLayout.astro'
+import WideLayout from '~/layouts/WideLayout.astro'
+import Categorizer from '~/components/Categorizer.astro'
+import ProjectGroup from '~/components/ProjectGroup.astro'
+
+import { metadata } from '~/blog-config.json'
+
+const { title, description } = metadata.projects
+
+// const projects = await getCollection('projects')
+const entry = await getEntry('projects', 'data')
+// console.log('entry', entry)
+
+const { projects } = entry.data
+---
+
+<BaseLayout {title} {description}>
+  <WideLayout {entry}>
+    {
+      Object.keys(projects).map((key, idx) => (
+        <div class="slide-enter" style={{ '--enter-stage': idx + 1 }}>
+          <Categorizer text={key} {idx} needId={true} wide={true} />
+          <ProjectGroup items={projects[key]} />
+        </div>
+      ))
+    }
+  </WideLayout>
+</BaseLayout>

@@ -1,0 +1,60 @@
+---
+import Link from '~/components/base/Link.astro'
+import type { ProjectSchema } from '~/content/schema'
+
+interface Props {
+  items: ProjectSchema[]
+}
+
+const { items } = Astro.props
+---
+
+<div
+  u-grid="~ cols-3 lt-lg:cols-2 lt-sm:cols-1 gap-4"
+  class="project-grid w-max max-w-500 py-2 mx-auto"
+>
+  {
+    items.map((item, _) => (
+      <Link
+        class="link relative flex items-center"
+        href={item.link}
+        title={item.name}
+        external={true}
+      >
+        <div class="pt-2 pr-5">
+          <div class={`icon ${item.icon}`} />
+        </div>
+        <div class="flex-auto">
+          <div class="text-normal">{item.name}</div>
+          <div class="opacity-50 text-sm font-normal ">{item.desc}</div>
+        </div>
+      </Link>
+    ))
+  }
+</div>
+
+<style>
+  .icon {
+    opacity: 0.5;
+    line-height: 2.25rem;
+    font-size: 1.875rem;
+    filter: saturate(0);
+  }
+
+  /* .link:hover .icon {
+    filter: saturate(1);
+  } */
+
+  .link {
+    width: 350px;
+    max-width: 100%;
+    padding: 0.5rem 0.875rem 0.875rem;
+    border-radius: 6px;
+    background: transparent;
+    font-size: 1.1rem;
+  }
+
+  .link:hover {
+    background: #88888811;
+  }
+</style>

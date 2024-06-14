@@ -16,16 +16,16 @@ const { data: frontmatter } = post
     {frontmatter.title}
   </h1>
   {
+    frontmatter.subtitle && (
+      <p class="slide-enter mt--6! opacity-50 italic">{frontmatter.subtitle}</p>
+    )
+  }
+  {
     frontmatter.date && (
       <p class="slide-enter-50 mt--6! opacity-50">
         {formatDate(frontmatter.date)}
         {frontmatter.duration && <span>· {frontmatter.duration}</span>}
       </p>
-    )
-  }
-  {
-    frontmatter.subtitle && (
-      <p class="slide-enter mt--6! opacity-50 italic">{frontmatter.subtitle}</p>
     )
   }
   {

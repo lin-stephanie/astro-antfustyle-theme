@@ -54,6 +54,10 @@
     "blog": {
       "title": "Blog",
       "description": "Blog"
+    },
+    "projects": {
+      "title": "Projects",
+      "description": "List of projects that I am proud of"
     }
   }
 }

@@ -1,13 +1,18 @@
 ---
+import { slug } from '~/utils'
+
 interface Props {
   idx: number
   text: string
+  needId?: boolean
+  wide?: boolean
 }
 
-const { idx, text } = Astro.props
+const { idx, text, needId = false, wide = false } = Astro.props
 ---
 
 <div
+  {...needId ? { id: slug(text) } : {}}
   class="relative h-20
     pointer-events-none select-none
     slide-enter"
@@ -16,11 +21,23 @@ const { idx, text } = Astro.props
     '--enter-step': '60ms',
   }}
 >
-  <span
-    class="absolute left--3rem top--2rem
-      op10
-      text-8em font-bold color-transparent text-stroke-2 text-stroke-hex-aaa"
-  >
-    {text}
-  </span>
+  {
+    !wide ? (
+      <span
+        class="absolute left--12 top--8
+          op-10
+          text-8em text-stroke-2 text-stroke-hex-aaa font-bold color-transparent"
+      >
+        {text}
+      </span>
+    ) : (
+      <span
+        class="absolute left--4 top-0
+          op-35 dark:op-20
+          text-5em lt-lg:text-4.5em lt-sm:(text-3.2em top-3) text-stroke-1.5 text-stroke-hex-aaa font-bold color-transparent leading-1em"
+      >
+        {text}
+      </span>
+    )
+  }
 </div>

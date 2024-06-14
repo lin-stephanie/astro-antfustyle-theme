@@ -7,10 +7,13 @@ import {
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
+import { extractIconsStartingWithI } from './src/utils'
 import { navBar, socials } from './src/blog-config.json'
+import projecstData from './src/content/projects/data.json'
 
 const navIcons = navBar.map((item) => `i-${item.icon}`)
 const socialIcons = socials.map((item) => `i-${item.icon}`)
+const projectIcons = extractIconsStartingWithI(projecstData.projects)
 
 export default defineConfig({
   /* define utility classes and the resulting CSS */
@@ -54,5 +57,5 @@ export default defineConfig({
   transformers: [transformerDirectives(), transformerVariantGroup()],
 
   /* work around the limitation of dynamically constructed utilities */
-  safelist: [...navIcons, ...socialIcons],
+  safelist: [...navIcons, ...socialIcons, ...projectIcons],
 })

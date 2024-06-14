@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import type { CollectionEntry, ContentEntryMap } from 'astro:content'
+import type { GrouptSchema } from '~/content/schema'
 
 /* time */
 export function formatDate(d: string | Date, showYear = true) {
@@ -82,4 +83,36 @@ export function polar2cart(x = 0, y = 0, r = 0, theta = 0) {
   const dx = r * Math.cos(theta)
   const dy = r * Math.sin(theta)
   return [x + dx, y + dy]
+}
+
+/* projects */
+export function slug(text: string) {
+  return text.toLowerCase().replace(/[\s\\/]+/g, '-')
+}
+
+export function extractIconsStartingWithI(data: GrouptSchema): string[] {
+  const icons: string[] = []
+
+  for (const key in data) {
+    const projects = data[key]
+    projects.forEach((project) => {
+      if (project.icon && project.icon.startsWith('i')) {
+        icons.push(project.icon)
+      }
+    })
+  }
+
+  return icons
+}
+
+export async function loadIconComponent(name: string) {
+  if (!name) return null
+  try {
+    const module = await import(`./components/icon/${name}.astro`)
+    return module.default
+  } catch (error) {
+    throw new Error(`Icon component loading failed for ${name}: ${error}`)
+    // console.error("Icon Component loading failed:", error);
+    // return null;
+  }
 }

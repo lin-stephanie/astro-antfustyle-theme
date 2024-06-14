@@ -4,12 +4,12 @@ import type { CollectionEntry, ContentEntryMap } from 'astro:content'
 import { formatDate } from '~/utils'
 
 interface Props {
-  tab: string
+  collection: string
   idx: number
   post: CollectionEntry<keyof ContentEntryMap>
 }
 
-const { tab, idx, post } = Astro.props
+const { collection, idx, post } = Astro.props
 const { data: frontmatter } = post
 ---
 
@@ -22,7 +22,9 @@ const { data: frontmatter } = post
 >
   <Link
     class="link"
-    href={frontmatter.redirect ? frontmatter.redirect : `/${tab}/${post.slug}`}
+    href={frontmatter.redirect
+      ? frontmatter.redirect
+      : `/${collection}/${post.slug}`}
     external={frontmatter.redirect ? true : false}
   >
     <li
