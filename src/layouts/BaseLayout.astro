@@ -10,7 +10,7 @@ import BackLink from '~/components/widgets/BackLink.astro'
 import Footer from '~/components/Footer.astro'
 // import Background from '~/components/Background.astro'
 
-import { site } from '~/blog-config.json'
+import config from '~/config'
 
 interface Props {
   title: string
@@ -19,6 +19,7 @@ interface Props {
 }
 
 const { title, description /* bgType */ } = Astro.props
+const { site } = config
 ---
 
 <!doctype html>

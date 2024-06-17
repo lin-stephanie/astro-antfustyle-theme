@@ -4,7 +4,9 @@ import LogoButton from '~/components/widgets/LogoButton.astro'
 import ToTopButton from '~/components/widgets/ToTopButton.astro'
 import ToggleTheme from '~/components/widgets/ToggleTheme.astro'
 
-import { navBar, socials } from '~/blog-config.json'
+import config from '~/config'
+
+const { socials, navBar } = config.site
 ---
 
 <header class="z-40">
@@ -19,13 +21,13 @@ import { navBar, socials } from '~/blog-config.json'
             return (
               <Link class="link" href={item.path} title={item.prompt}>
                 <span class="lt-md:hidden">{item.text}</span>
-                <div class={`md:hidden i-${item.icon}`} />
+                <div class={`md:hidden ${item.icon}`} />
               </Link>
             )
           } else if (item.type === 'icon') {
             return (
               <Link class="link" href={item.path} title={item.prompt}>
-                <div class={`i-${item.icon}`} />
+                <div class={`${item.icon}`} />
               </Link>
             )
           } else if (item.type === 'text') {
@@ -46,7 +48,7 @@ import { navBar, socials } from '~/blog-config.json'
               external={true}
               class={item.rwd ? 'lt-md:hidden' : ''}
             >
-              <div class={`i-${item.icon}`} />
+              <div class={`${item.icon}`} />
             </Link>
           )
         })

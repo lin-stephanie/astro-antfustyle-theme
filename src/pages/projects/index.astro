@@ -6,9 +6,9 @@ import WideLayout from '~/layouts/WideLayout.astro'
 import Categorizer from '~/components/Categorizer.astro'
 import ProjectGroup from '~/components/ProjectGroup.astro'
 
-import { metadata } from '~/blog-config.json'
+import config from '~/config'
 
-const { title, description } = metadata.projects
+const { title, description } = config.pages.projects
 
 // const projects = await getCollection('projects')
 const entry = await getEntry('projects', 'data')

@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro'
-import { metadata } from '~/blog-config.json'
+import config from '~/config'
 
-const { title, description } = metadata.about
+const { title, description } = config.pages.about
 ---
 
 <BaseLayout {title} {description} bgType="plum">

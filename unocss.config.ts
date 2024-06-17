@@ -7,12 +7,18 @@ import {
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
-import { extractIconsStartingWithI } from './src/utils'
-import { navBar, socials } from './src/blog-config.json'
-import projecstData from './src/content/projects/data.json'
 
-const navIcons = navBar.map((item) => `i-${item.icon}`)
-const socialIcons = socials.map((item) => `i-${item.icon}`)
+import { extractIconsStartingWithI } from './src/utils'
+import projecstData from './src/content/projects/data.json'
+import config from './src/config'
+
+const { socials, navBar } = config.site
+
+const navIcons = navBar
+  .filter((item) => item.type !== 'text')
+  // @ts-expect-error (for Property 'icon' does not exist on type 'TextNavItem'.ts(2339))
+  .map((item) => item.icon)
+const socialIcons = socials.map((item) => item.icon)
 const projectIcons = extractIconsStartingWithI(projecstData.projects)
 
 export default defineConfig({
