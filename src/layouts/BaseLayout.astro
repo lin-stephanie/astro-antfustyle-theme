@@ -26,7 +26,7 @@ const { site } = config
 <html lang="en">
   <head>
     <Head
-      title={`${title} - ${site.name}`}
+      title={title ? `${title} - ${site.name}` : site.name}
       author={site.author}
       description={description || ''}
     />
@@ -36,8 +36,15 @@ const { site } = config
     <NavBar />
     <main class="px-7 py-10">
       <slot />
-      <!-- <ShareLink /> -->
-      <BackLink />
+      {
+        Astro.url.pathname !== '/' && (
+          <div class="prose slide-enter m-auto mt-8 mb-8 animate-delay-1000! print:hidden">
+            <slot name="share" />
+            <br />
+            <BackLink />
+          </div>
+        )
+      }
       <Footer />
     </main>
   </body>

@@ -2,6 +2,7 @@ import type { Config } from './types'
 
 const config: Config = {
   site: {
+    url: 'http://example.com',
     name: 'Astro AntfuStyle Theme',
     author: 'Stephanie Lin',
     socials: [
@@ -49,7 +50,7 @@ const config: Config = {
   },
   pages: {
     about: {
-      title: 'About',
+      title: '',
       description: 'About',
     },
     blog: {
@@ -60,6 +61,19 @@ const config: Config = {
       title: 'Projects',
       description: 'Projects',
     },
+    404: {
+      title: '',
+      description: 'Not Found',
+    },
+  },
+  features: {
+    share: [
+      true,
+      {
+        twitter: '@ste7lin',
+        mastodon: '@antfu@m.webtoo.ls',
+      },
+    ],
   },
 }
 

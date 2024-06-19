@@ -4,17 +4,8 @@ import Link from '~/components/base/Link.astro'
 const href = Astro.url.pathname.split('/').slice(0, -1).join('/') || '/'
 ---
 
-{
-  Astro.url.pathname !== '/' && (
-    <div class="prose slide-enter m-auto mt-8 mb-8 animate-delay-1000! print:hidden">
-      <br />
-      <span class="op-50 font-mono"> &gt; </span>
-      <Link class="link" {href}>
-        cd ..
-      </Link>
-    </div>
-  )
-}
+<span class="op-50 font-mono"> &gt; </span>
+<Link class="link" {href}> cd .. </Link>
 
 <style>
   .link {

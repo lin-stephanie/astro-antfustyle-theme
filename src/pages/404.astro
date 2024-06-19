@@ -1,12 +1,16 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro'
+import config from '~/config'
+
+const { title, description } = config.pages.about
 ---
 
-<BaseLayout title="404 Not Found">
+<BaseLayout {title} {description}>
   <article>
     <div class="prose slide-enter-content m-auto">
       <h1 id="404" tabindex="-1">
-        404<a href="#404" class="header-anchor" aria-hidden="true">#</a>
+        404
+        <a href="#404" class="header-anchor" aria-hidden="true"> # </a>
       </h1>
       <p>Nice to meet you tho!</p>
     </div>
