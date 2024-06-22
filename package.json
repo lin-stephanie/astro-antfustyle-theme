@@ -10,7 +10,8 @@
     "format": "prettier . --write --ignore-unknown --cache",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0 --cache",
     "lint:fix": "eslint . --fix --cache",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks",
+    "postbuild": "pagefind --site dist"
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
@@ -32,6 +33,7 @@
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "globals": "^15.1.0",
     "lint-staged": "^15.2.2",
+    "pagefind": "^1.1.0",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.14.0",
     "rehype-autolink-headings": "^7.1.0",
@@ -44,8 +46,7 @@
   },
   "lint-staged": {
     "*": [
-      "eslint",
-      "prettier --write --ignore-unknown"
+      "eslint"
     ]
   },
   "engines": {

@@ -105,14 +105,35 @@ export function extractIconsStartingWithI(data: GrouptSchema): string[] {
   return icons
 }
 
-export async function loadIconComponent(name: string) {
-  if (!name) return null
-  try {
-    const module = await import(`./components/icon/${name}.astro`)
-    return module.default
-  } catch (error) {
-    throw new Error(`Icon component loading failed for ${name}: ${error}`)
-    // console.error("Icon Component loading failed:", error);
-    // return null;
-  }
+/* global */
+export function getUrl(...paths: string[]): string {
+  const baseUrl = import.meta.env.BASE_URL
+  const fullPath = [baseUrl, ...paths].join('/').replace(/\/+/g, '/')
+
+  return fullPath
+}
+
+export function setClickOutsideToClose(
+  panels: { id: string; ignores: string[] }[]
+) {
+  document.addEventListener('click', (event: MouseEvent) => {
+    panels.forEach((panel: { id: string; ignores: string[] }) => {
+      const panelEl = document.getElementById(panel.id)
+      if (!panelEl) return
+
+      const target = event.target
+
+      const isClickedOutside =
+        target instanceof Node &&
+        !panelEl.contains(target) &&
+        !panel.ignores.some((ignoreId) => {
+          const ignoreEl = document.getElementById(ignoreId)
+          return ignoreEl?.contains(target)
+        })
+
+      if (isClickedOutside) {
+        panelEl.classList.add('float-panel-closed')
+      }
+    })
+  })
 }

@@ -75,7 +75,7 @@ html:not(.dark) .astro-code span {
   --fg-light: #888;
   --fg: #555;
   --fg-deep: #222;
-  --fg-deeper: #000;
+  --fg-deeper: var(--c-text);
 
   color: var(--fg);
 }
@@ -104,10 +104,10 @@ html.dark .prose {
   --fg-light: #888;
   --fg: #bbb;
   --fg-deep: #ddd;
-  --fg-deeper: #fff;
+  --fg-deeper: var(--c-text);
 }
 
-/* PostItem */
+/* PostItem, ProjectItem */
 /* a.item {
   transition: 0.2s all ease-out;
   text-decoration: none;

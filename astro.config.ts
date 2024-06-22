@@ -22,6 +22,7 @@ export default defineConfig({
     rehypePlugins,
   },
   vite: {
+    base: '/',
     plugins: [
       // ... other Vite plugins
     ],

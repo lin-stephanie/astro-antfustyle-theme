@@ -24,16 +24,14 @@ const elkUrl =
 {
   show && (
     <>
-      <span op-50 font-mono>
-        &gt;
-      </span>
-      <span op-50>comment on</span>
+      <span class="op-50 font-mono">&gt;</span>
+      <span class="op-50">comment on</span>
       {tweetUrl && (
         <Link class="link" href={tweetUrl} external={true}>
           twitter
         </Link>
       )}
-      {tweetUrl && elkUrl && <span op-25>/</span>}
+      {tweetUrl && elkUrl && <span class="op-25">/</span>}
       {elkUrl && (
         <Link class="link" href={elkUrl} external={true}>
           mastodon
