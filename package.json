@@ -46,7 +46,8 @@
   },
   "lint-staged": {
     "*": [
-      "eslint"
+      "eslint",
+      "prettier --write --ignore-unknown"
     ]
   },
   "engines": {

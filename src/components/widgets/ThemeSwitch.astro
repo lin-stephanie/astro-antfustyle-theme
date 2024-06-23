@@ -2,43 +2,33 @@
 
 ---
 
-<button
-  id="toggle-theme"
-  class="op-60 hover:op-100"
-  title="Toggle Color Scheme"
->
+<button id="theme-switch" class="op-60 hover:op-100" title="Toggle Light/Dark">
   <div u-i-ri-sun-line u-dark:i-ri-moon-line></div>
 </button>
 
-<script>
-  document.addEventListener('astro:after-swap', () => {
-    localStorage.theme === 'light'
+<script is:inline data-astro-rerun>
+  function initTheme() {
+    let theme
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+      theme = localStorage.theme
+    } else {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'dark'
+      } else {
+        theme = 'light'
+      }
+      window.localStorage.setItem('theme', theme)
+    }
+    theme === 'light'
       ? document.documentElement.classList.remove('dark')
       : document.documentElement.classList.add('dark')
-  })
+  }
+
+  initTheme()
 </script>
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    const theme = (() => {
-      if (
-        typeof localStorage !== 'undefined' &&
-        localStorage.getItem('theme')
-      ) {
-        return localStorage.getItem('theme')!
-      }
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return 'dark'
-      }
-      return 'light'
-    })()
-
-    theme === 'light'
-      ? document.documentElement.classList.remove('dark')
-      : document.documentElement.classList.add('dark')
-
-    window.localStorage.setItem('theme', theme)
-
     const handleToggle = (event: MouseEvent) => {
       let isDark: boolean
 
@@ -89,7 +79,7 @@
       })
     }
 
-    const toggleThemeButton = document.getElementById('toggle-theme')
+    const toggleThemeButton = document.getElementById('theme-switch')
     toggleThemeButton?.addEventListener('click', (event) => handleToggle(event))
   })
 </script>

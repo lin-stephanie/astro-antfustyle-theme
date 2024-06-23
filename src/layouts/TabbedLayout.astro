@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { items } = Astro.props
+const path = Astro.url.pathname
 ---
 
 <article>
@@ -15,7 +16,16 @@ const { items } = Astro.props
       <div u-flex="~ gap-3 lt-sm:(col wrap gap-1) " class="mb-0 text-3xl">
         {
           items.map((item) => (
-            <Link class="link" href={item.href}>
+            <Link
+              class:list={[
+                'link',
+                {
+                  'tabs__a--active': path === item.href,
+                  'tabs__a--inactive': path !== item.href,
+                },
+              ]}
+              href={item.href}
+            >
               {item.label}
             </Link>
           ))
@@ -43,23 +53,3 @@ const { items } = Astro.props
     opacity: 0.5;
   }
 </style>
-
-<script>
-  document.addEventListener('astro:page-load', () => {
-    const tabs = document.querySelectorAll('#nav-tabs a')
-
-    if (tabs.length === 0) return
-
-    const currentPath = window.location.pathname
-
-    tabs.forEach((tab) => {
-      if (currentPath === tab.getAttribute('href')) {
-        tab.classList.remove('tabs__a--inactive')
-        tab.classList.add('tabs__a--active')
-      } else {
-        tab.classList.remove('tabs__a--active')
-        tab.classList.add('tabs__a--inactive')
-      }
-    })
-  })
-</script>

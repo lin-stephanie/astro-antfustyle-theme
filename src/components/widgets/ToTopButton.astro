@@ -16,7 +16,6 @@
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    /* handle click */
     const handleClick = (event: MouseEvent) => {
       event.preventDefault()
       window.scrollTo({
@@ -27,16 +26,13 @@
 
     const toTopButton = document.getElementById('to-top-button')
     toTopButton?.addEventListener('click', (event) => handleClick(event))
+  })
 
-    /* listen for scrolling */
+  const handleScroll = () => {
     const scrollThreshold = 300
+    const toTopButton = document.getElementById('to-top-button')
 
-    function handleScroll() {
-      if (!toTopButton) {
-        console.error('Element with id "to-top-button" not found.')
-        return
-      }
-
+    if (toTopButton) {
       const scrollY = window.scrollY || document.documentElement.scrollTop
 
       if (scrollY <= scrollThreshold) {
@@ -47,8 +43,7 @@
         toTopButton.style.pointerEvents = 'auto'
       }
     }
+  }
 
-    window.addEventListener('scroll', handleScroll)
-    handleScroll()
-  })
+  window.addEventListener('scroll', handleScroll)
 </script>
