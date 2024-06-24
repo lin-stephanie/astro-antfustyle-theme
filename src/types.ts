@@ -1,3 +1,22 @@
+/* misc */
+export type Fn = () => void
+
+export interface NavTabsItem {
+  href: string
+  label: string
+}
+
+export type NavTabsItems = [NavTabsItem, NavTabsItem, ...NavTabsItem[]]
+
+export const items: NavTabsItems = [
+  { href: '/blog', label: 'Blog' },
+  { href: '/talks', label: 'Talks' },
+  { href: '/podcasts', label: 'Podcasts' },
+  { href: '/streams', label: 'Streams' },
+  { href: '/notes', label: 'Notes' },
+]
+
+/* customize */
 type Mentioned = `@${string}` | ''
 type Icon = `i-${string}-${string}` | `i-${string}:${string}`
 
@@ -155,6 +174,13 @@ interface PageMetadata {
    * Set the page description for meta tags.
    */
   description: string
+
+  /**
+   * Set the page background.
+   *
+   * If not defined or set to an empty string, no background is added to the page.
+   */
+  bgType?: 'plum' | 'dot' | 'rose' | 'snow'
 }
 
 type PagesConfig = Record<string, PageMetadata>
@@ -178,12 +204,14 @@ export interface ShareConfig {
 
   /**
    * Set the Twitter username for mentions. Must start with '@'.
+   *
    * If set to an empty string, the social platform is excluded from sharing options.
    */
   twitter: Mentioned
 
   /**
    * Set the Twitter username for mentions. Must start with '@'.
+   *
    * If set to an empty string, the social platform is excluded from sharing options.
    */
   mastodon: Mentioned
@@ -209,21 +237,3 @@ export interface Config {
    */
   features: FeaturesConfig
 }
-
-/* misc */
-export type Fn = () => void
-
-export interface NavTabsItem {
-  href: string
-  label: string
-}
-
-export type NavTabsItems = [NavTabsItem, NavTabsItem, ...NavTabsItem[]]
-
-export const items: NavTabsItems = [
-  { href: '/blog', label: 'Blog' },
-  { href: '/talks', label: 'Talks' },
-  { href: '/podcasts', label: 'Podcasts' },
-  { href: '/streams', label: 'Streams' },
-  { href: '/notes', label: 'Notes' },
-]

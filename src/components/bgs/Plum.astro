@@ -5,11 +5,103 @@
 <canvas id="bg-plum" width="400" height="400"></canvas>
 
 <script>
-  import { useRafFn } from '~/hooks'
   import { initCanvas, polar2cart } from '~/utils'
   import type { Fn } from '~/types'
 
+  let rafId: number | null = null
+
   document.addEventListener('astro:page-load', () => {
+    /* Canvas drawing logic (recursively draw each branch) */
+    function step(
+      x: number,
+      y: number,
+      rad: number,
+      counter: { value: number } = { value: 0 }
+    ) {
+      // drawing a branch
+      const length = random() * len
+      const [nx, ny] = polar2cart(x, y, length, rad)
+      ctx.beginPath()
+      ctx.moveTo(x, y)
+      ctx.lineTo(nx, ny)
+      ctx.stroke()
+      counter.value += 1
+
+      // out of bounds then return
+      if (nx < -100 || nx > width + 100 || ny < -100 || ny > height + 100)
+        return
+
+      // otherwise continue drawring
+      const rad1 = rad + random() * r15
+      const rad2 = rad - random() * r15
+      const rate = counter.value <= threshold ? 0.8 : 0.5
+      // left branch
+      if (random() < rate) pendingSteps.push(() => step(nx, ny, rad1, counter))
+      // right branch
+      if (random() < rate) pendingSteps.push(() => step(nx, ny, rad2, counter))
+    }
+
+    /* RAF callback functions */
+    function frame() {
+      const now = performance.now()
+      if (now - lastTime < interval) return
+      lastTime = now
+
+      const steps: Fn[] = []
+      // 50% chance to keep the step for the next frame, to create a more organic look
+      pendingSteps = pendingSteps.filter((i) => {
+        if (Math.random() > 0.5) {
+          steps.push(i)
+          return false
+        }
+        return true
+      })
+      steps.forEach((fn) => fn())
+    }
+
+    /* Start animation loop */
+    function startFrame() {
+      rafId = requestAnimationFrame(() => {
+        // if the condition is satisfied then continue, otherwise cancel the animation loop
+        if (pendingSteps.length) {
+          frame()
+          startFrame()
+        } else {
+          if (rafId) {
+            cancelAnimationFrame(rafId)
+            rafId = null
+          }
+        }
+      })
+    }
+
+    /* Start drawing */
+    function start() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      pendingSteps = [
+        () => step(randomMiddle() * width, -5, r90),
+        () => step(randomMiddle() * width, height + 5, -r90),
+        () => step(-5, randomMiddle() * height, 0),
+        () => step(width + 5, randomMiddle() * height, r180),
+      ]
+      if (width < 640) pendingSteps = pendingSteps.slice(0, 2)
+
+      startFrame()
+    }
+
+    /* Prepare to create dynamic plum on canvas */
+    // after switching pages, stop the last drawing that was started but has not yet finished.
+    if (rafId) {
+      cancelAnimationFrame(rafId)
+      rafId = null
+    }
+
+    const canvas = document.getElementById('bg-plum') as HTMLCanvasElement
+    // this callback is re-executed each time you navigate,
+    // it needs to be returned early in a page that does not have the component
+    if (!canvas) return
+
     const r180 = Math.PI
     const r90 = Math.PI / 2
     const r15 = Math.PI / 12
@@ -20,95 +112,14 @@
     const { random } = Math
     const randomMiddle = () => random() * 0.6 + 0.2
 
-    let steps: Fn[] = []
-    let prevSteps: Fn[] = []
-
-    /* Canvas drawing logic (recursively draw each branch) */
-    function step(
-      x: number,
-      y: number,
-      rad: number,
-      counter: { value: number } = { value: 0 }
-    ) {
-      const length = random() * len
-      counter.value += 1
-
-      const [nx, ny] = polar2cart(x, y, length, rad)
-
-      ctx.beginPath()
-      ctx.moveTo(x, y)
-      ctx.lineTo(nx, ny)
-      ctx.stroke()
-
-      const rad1 = rad + random() * r15
-      const rad2 = rad - random() * r15
-
-      // out of bounds
-      if (nx < -100 || nx > width + 100 || ny < -100 || ny > height + 100)
-        return
-
-      const rate = counter.value <= threshold ? 0.8 : 0.5
-
-      // left branch
-      if (random() < rate) steps.push(() => step(nx, ny, rad1, counter))
-
-      // right branch
-      if (random() < rate) steps.push(() => step(nx, ny, rad2, counter))
-    }
-
-    /* RAF callback functions */
-    function frame() {
-      const now = performance.now()
-      if (now - lastTime < interval) return
-
-      prevSteps = steps
-      steps = []
-      lastTime = now
-
-      if (!prevSteps.length) {
-        controls.pause()
-      }
-
-      // execute all the steps from the previous frame
-      prevSteps.forEach((i) => {
-        // 50% chance to keep the step for the next frame, to create a more organic look
-        if (random() < 0.5) steps.push(i)
-        else i()
-      })
-    }
-
-    /* Start drawing */
-    function start() {
-      controls.pause()
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      prevSteps = []
-      steps = [
-        () => step(randomMiddle() * width, -5, r90),
-        () => step(randomMiddle() * width, height + 5, -r90),
-        () => step(-5, randomMiddle() * height, 0),
-        () => step(width + 5, randomMiddle() * height, r180),
-      ]
-      if (width < 500) steps = steps.slice(0, 2)
-
-      controls.resume()
-    }
-
-    /* Create dynamic plum on canvas */
-    const canvas = document.getElementById('bg-plum') as HTMLCanvasElement
-
-    if (!canvas) return
+    let pendingSteps: Fn[]
+    let lastTime = performance.now()
 
     const width = window.innerWidth
     const height = window.innerHeight
-
     const { ctx } = initCanvas(canvas, width, height)
     ctx.lineWidth = 1
     ctx.strokeStyle = color
-
-    let lastTime = performance.now()
-    // initialize RAF control
-    const controls = useRafFn(frame, { immediate: false })
 
     start()
   })

@@ -1,11 +1,11 @@
 ---
-import ArtPlum from '~/components/bgs/Plum.astro'
+import Plum from '~/components/bgs/Plum.astro'
 
 interface Props {
   type: string
 }
 
-// const { type } = Astro.props
+const { type } = Astro.props
 ---
 
 <div
@@ -15,5 +15,5 @@ interface Props {
   style="mask-image: radial-gradient(circle, transparent, black);
     --webkit-mask-image: radial-gradient(circle, transparent, black)"
 >
-  <ArtPlum />
+  {type === 'plum' && <Plum />}
 </div>

@@ -2,10 +2,10 @@
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import config from '~/config'
 
-const { title, description } = config.pages.about
+const { title, description, bgType } = config.pages.about
 ---
 
-<BaseLayout {title} {description} bgType="plum">
+<BaseLayout {title} {description} {bgType}>
   <main>
     <article>
       The term “component island” was first coined by Etsy’s frontend architect
