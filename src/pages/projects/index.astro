@@ -8,7 +8,7 @@ import ProjectGroup from '~/components/ProjectGroup.astro'
 
 import config from '~/config'
 
-const { title, description } = config.pages.projects
+const { title, description, bgType } = config.pages.projects
 
 // const projects = await getCollection('projects')
 const entry = await getEntry('projects', 'data')
@@ -17,7 +17,7 @@ const entry = await getEntry('projects', 'data')
 const { projects } = entry.data
 ---
 
-<BaseLayout {title} {description}>
+<BaseLayout {title} {description} {bgType}>
   <WideLayout {entry}>
     {
       Object.keys(projects).map((key, idx) => (

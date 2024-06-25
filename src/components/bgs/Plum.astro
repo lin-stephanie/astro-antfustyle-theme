@@ -2,7 +2,16 @@
 
 ---
 
-<canvas id="bg-plum" width="400" height="400"></canvas>
+<div
+  id="plum"
+  class="z--1 fixed top-0 bottom-0 left-0 right-0
+    pointer-events-none
+    print:hidden"
+  style="mask-image: radial-gradient(circle, transparent, black);
+    --webkit-mask-image: radial-gradient(circle, transparent, black)"
+>
+  <canvas id="plum-canvas" width="400" height="400"></canvas>
+</div>
 
 <script>
   import { initCanvas, polar2cart } from '~/utils'
@@ -19,7 +28,7 @@
       counter: { value: number } = { value: 0 }
     ) {
       // drawing a branch
-      const length = random() * len
+      const length = random() * LEN
       const [nx, ny] = polar2cart(x, y, length, rad)
       ctx.beginPath()
       ctx.moveTo(x, y)
@@ -32,9 +41,9 @@
         return
 
       // otherwise continue drawring
-      const rad1 = rad + random() * r15
-      const rad2 = rad - random() * r15
-      const rate = counter.value <= threshold ? 0.8 : 0.5
+      const rad1 = rad + random() * R15
+      const rad2 = rad - random() * R15
+      const rate = counter.value <= THRESHOLD ? 0.8 : 0.5
       // left branch
       if (random() < rate) pendingSteps.push(() => step(nx, ny, rad1, counter))
       // right branch
@@ -44,7 +53,7 @@
     /* RAF callback functions */
     function frame() {
       const now = performance.now()
-      if (now - lastTime < interval) return
+      if (now - lastTime < INTERVAL) return
       lastTime = now
 
       const steps: Fn[] = []
@@ -80,10 +89,10 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       pendingSteps = [
-        () => step(randomMiddle() * width, -5, r90),
-        () => step(randomMiddle() * width, height + 5, -r90),
+        () => step(randomMiddle() * width, -5, R90),
+        () => step(randomMiddle() * width, height + 5, -R90),
         () => step(-5, randomMiddle() * height, 0),
-        () => step(width + 5, randomMiddle() * height, r180),
+        () => step(width + 5, randomMiddle() * height, R180),
       ]
       if (width < 640) pendingSteps = pendingSteps.slice(0, 2)
 
@@ -97,18 +106,19 @@
       rafId = null
     }
 
-    const canvas = document.getElementById('bg-plum') as HTMLCanvasElement
     // this callback is re-executed each time you navigate,
     // it needs to be returned early in a page that does not have the component
-    if (!canvas) return
+    const div = document.getElementById('plum')
+    if (!div) return
 
-    const r180 = Math.PI
-    const r90 = Math.PI / 2
-    const r15 = Math.PI / 12
-    const color = '#88888825'
-    const threshold = 30
-    const len = 6
-    const interval = 1000 / 40
+    const R180 = Math.PI
+    const R90 = Math.PI / 2
+    const R15 = Math.PI / 12
+    const COLOR = '#88888825'
+    const THRESHOLD = 30
+    const LEN = 6
+    const INTERVAL = 1000 / 40
+
     const { random } = Math
     const randomMiddle = () => random() * 0.6 + 0.2
 
@@ -117,9 +127,10 @@
 
     const width = window.innerWidth
     const height = window.innerHeight
+    const canvas = document.getElementById('plum-canvas') as HTMLCanvasElement
     const { ctx } = initCanvas(canvas, width, height)
     ctx.lineWidth = 1
-    ctx.strokeStyle = color
+    ctx.strokeStyle = COLOR
 
     start()
   })

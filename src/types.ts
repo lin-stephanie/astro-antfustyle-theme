@@ -180,7 +180,7 @@ interface PageMetadata {
    *
    * If not defined or set to an empty string, no background is added to the page.
    */
-  bgType?: 'plum' | 'dot' | 'rose' | 'snow'
+  bgType?: 'plum' | 'dots' | 'rose' | 'snow'
 }
 
 type PagesConfig = Record<string, PageMetadata>

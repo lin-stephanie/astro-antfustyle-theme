@@ -52,6 +52,7 @@ const config: Config = {
     about: {
       title: '',
       description: 'About',
+      // bgType: 'plum',
     },
     blog: {
       title: 'Blog',
@@ -60,6 +61,7 @@ const config: Config = {
     projects: {
       title: 'Projects',
       description: 'Projects',
+      // bgType: 'dots',
     },
     404: {
       title: '',

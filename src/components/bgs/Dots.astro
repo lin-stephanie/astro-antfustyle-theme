@@ -1,0 +1,84 @@
+---
+
+---
+
+<div
+  id="bg-dots"
+  class="z--1 fixed top-0 bottom-0 left-0 right-0
+    pointer-events-none
+    print:hidden dark:invert"
+>
+</div>
+
+<script>
+  import p5 from 'p5'
+
+  let p5Instance: p5 | null = null
+
+  document.addEventListener('astro:page-load', () => {
+    /* Prepare to create dynamic dots on canvas */
+    // after switching pages, stop the last drawing that was started but has not yet finished.
+    if (p5Instance) {
+      p5Instance.remove()
+      p5Instance = null
+    }
+
+    const div = document.getElementById('bg-dots')
+    if (!div) return
+
+    const sketch = (p: p5) => {
+      const SCALE = 200
+      const LENGTH = 10
+      const SPACING = 15
+
+      const width = window.innerWidth
+      const height = window.innerHeight
+
+      const existingPoints = new Set<string>()
+      const points: { x: number; y: number; opacity: number }[] = []
+
+      function getForceOnPoint(x: number, y: number, z: number) {
+        return (p.noise(x / SCALE, y / SCALE, z) - 0.5) * 2 * p.TWO_PI
+      }
+
+      function getLength(x: number, y: number, t: number) {
+        return (p.noise(x / SCALE, y / SCALE, t * 2) + 0.5) * LENGTH
+      }
+
+      function addPoints() {
+        for (let x = -SPACING / 2; x < width + SPACING; x += SPACING) {
+          for (let y = -SPACING / 2; y < height + SPACING; y += SPACING) {
+            const id = `${x}-${y}`
+            if (existingPoints.has(id)) continue
+            existingPoints.add(id)
+            points.push({ x, y, opacity: Math.random() * 0.5 + 0.5 })
+          }
+        }
+      }
+
+      p.setup = () => {
+        p.createCanvas(width, height)
+        p.background('#ffffff')
+        addPoints()
+      }
+
+      p.draw = () => {
+        p.background('#ffffff')
+
+        const t = +new Date() / 10000
+        for (const point of points) {
+          const { x, y } = point
+          const rad = getForceOnPoint(x, y, t)
+          const length = getLength(x, y, t)
+          const nx = x + p.cos(rad) * length
+          const ny = y + p.sin(rad) * length
+          // prettier-ignore
+          p.stroke(200, 200, 200, (Math.abs(p.cos(rad)) * 0.8 + 0.2) * point.opacity * 255)
+          p.circle(nx, ny, 1)
+        }
+      }
+    }
+
+    p5Instance = new p5(sketch, div)
+  })
+</script>
