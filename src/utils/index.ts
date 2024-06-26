@@ -53,7 +53,7 @@ export function getYears(items: Acc) {
   return Object.keys(items).sort((a, b) => parseInt(b) - parseInt(a))
 }
 
-/* canvas */
+/* bgs */
 export function initCanvas(
   canvas: HTMLCanvasElement,
   width = 400,
@@ -81,6 +81,14 @@ export function polar2cart(x = 0, y = 0, r = 0, theta = 0) {
   const dy = r * Math.sin(theta)
 
   return [x + dx, y + dy]
+}
+
+export function getRandom(min: number, max: number) {
+  return Math.random() * (max - min) + min
+}
+
+export function getRandomPercentage(min: number, max: number) {
+  return (Math.random() * (max - min) + min).toFixed(2) + '%'
 }
 
 /* projects */

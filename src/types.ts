@@ -1,6 +1,8 @@
 /* misc */
 export type Fn = () => void
 
+export type Range = [number, number]
+
 export interface NavTabsItem {
   href: string
   label: string
@@ -180,7 +182,7 @@ interface PageMetadata {
    *
    * If not defined or set to an empty string, no background is added to the page.
    */
-  bgType?: 'plum' | 'dots' | 'rose' | 'snow'
+  bgType?: 'plum' | 'dot' | 'rose' | 'snow'
 }
 
 type PagesConfig = Record<string, PageMetadata>

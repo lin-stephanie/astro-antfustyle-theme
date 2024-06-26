@@ -10,7 +10,7 @@ import config from '~/config'
 import { isSameYear, getYear } from '~/utils'
 import { items } from '~/types'
 
-const { title, description } = config.pages.blog
+const { title, description, bgType } = config.pages.blog
 
 const posts = await getCollection('blog')
 
@@ -19,7 +19,7 @@ const sortedPosts = posts
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 ---
 
-<BaseLayout {title} {description}>
+<BaseLayout {title} {description} {bgType}>
   <TabbedLayout {items}>
     <ul>
       {

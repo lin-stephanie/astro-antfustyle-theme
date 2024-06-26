@@ -1,0 +1,86 @@
+---
+const roses = [
+  { id: 1, petals: 28, scale: 0.01, rotation: 80 },
+  { id: 2, petals: 26, scale: 0.005, rotation: 80 },
+  { id: 3, petals: 30, scale: 0.02, rotation: 80 },
+]
+---
+
+<div
+  id="rose"
+  class="z--1 fixed top-0 bottom-0 left-0 right-0
+    w-full h-full
+    op-50 dark:op-100
+    pointer-events-none
+    print:hidden dark:invert"
+  style="mask-image: radial-gradient(circle, transparent, black);
+    --webkit-mask-image: radial-gradient(circle, transparent, black)"
+>
+  {
+    roses.map((rose) => (
+      <div
+        id={`rose-${rose.id}`}
+        class="absolute w-200px h-200px op-0 translate--50%"
+      >
+        {Array.from({ length: rose.petals }, (_, i) => (
+          <div
+            class="petal absolute left-50%
+              h-full w-full
+              transition-(transform duration-40000) origin-bottom-center
+              before:(content-empty
+                absolute w-full h-full border-(solid 0.8 #88888860)
+                rounded-(tl-[50%_35%] br-[35%_50%] tr-[45%] bl-[10%])
+                bg-radial-gradient-95 dark:bg-radial-gradient-85
+                transform-rotate-[-45deg])"
+            style={{
+              'z-index': rose.petals - i,
+              'transform': `scale(${i * rose.scale}, ${i * rose.scale}) rotate(${i * rose.rotation}deg)`,
+            }}
+          />
+        ))}
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  import { getRandom, getRandomPercentage } from '~/utils'
+  import type { Range } from '~/types'
+
+  document.addEventListener('astro:page-load', () => {
+    const div = document.getElementById('rose')
+    if (!div) return
+
+    const animateRose = (
+      roseId: string,
+      topRange: Range,
+      leftRange: Range,
+      scaleRange: Range,
+      rotationRange: Range
+    ) => {
+      const rose = document.getElementById(roseId)
+      if (!rose) return
+      const petals = rose.querySelectorAll(`#${roseId} .petal`)
+
+      rose.style.top = `${getRandomPercentage(...topRange)}`
+      rose.style.left = `${getRandomPercentage(...leftRange)}`
+      rose.style.opacity = '1'
+
+      const r = 80
+      const scaleBase = getRandom(...scaleRange)
+      const rotationBase = getRandom(...rotationRange)
+
+      petals.forEach((petal, index) => {
+        const scaleValue = (index + 1) * scaleBase
+        const rotateValue = (index + 1) * (r + rotationBase)
+
+        // @ts-expect-error (for Property 'style' does not exist on type 'Element'.ts(2339))
+        petal.style.transform = `scale(${scaleValue}, ${scaleValue}) rotate(${rotateValue}deg)`
+      })
+    }
+
+    animateRose('rose-1', [-10, -5], [10, 20], [0.04, 0.06], [-3, 3])
+    animateRose('rose-2', [80, 85], [-5, 5], [0.02, 0.04], [-3, 3])
+    animateRose('rose-3', [45, 65], [85, 90], [0.05, 0.07], [-3, 3])
+  })
+</script>

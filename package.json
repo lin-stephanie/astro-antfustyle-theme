@@ -5,7 +5,7 @@
   "scripts": {
     "astro": "astro",
     "build": "astro check && astro build",
-    "dev": "astro dev",
+    "dev": "astro dev --open",
     "preview": "astro preview",
     "format": "prettier . --write --ignore-unknown --cache",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0 --cache",

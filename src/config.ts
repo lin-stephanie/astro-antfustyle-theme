@@ -57,11 +57,12 @@ const config: Config = {
     blog: {
       title: 'Blog',
       description: 'Blog',
+      // bgType: 'rose',
     },
     projects: {
       title: 'Projects',
       description: 'Projects',
-      // bgType: 'dots',
+      // bgType: 'dot',
     },
     404: {
       title: '',

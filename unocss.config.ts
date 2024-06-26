@@ -30,6 +30,14 @@ export default defineConfig({
         '--enter-stage': n,
       }),
     ],
+    [
+      /^bg-radial-gradient-(\d+)$/,
+      ([, n]) => {
+        return {
+          'background-image': `radial-gradient(ellipse at bottom left, #ffffff 0%, #fefefe 70%, #88888855 ${n}%)`,
+        }
+      },
+    ],
   ],
 
   /* combine multiple rules */
