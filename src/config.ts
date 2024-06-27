@@ -67,6 +67,7 @@ const config: Config = {
     404: {
       title: '',
       description: 'Not Found',
+      // bgType: 'particle',
     },
   },
   features: {

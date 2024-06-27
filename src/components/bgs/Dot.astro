@@ -16,8 +16,7 @@
   let p5Instance: p5 | null = null
 
   document.addEventListener('astro:page-load', () => {
-    /* Prepare to create dynamic dots on canvas */
-    // after switching pages, stop the last drawing that was started but has not yet finished.
+    // after switching pages, stop the animation loop.
     if (p5Instance) {
       p5Instance.remove()
       p5Instance = null
@@ -27,6 +26,7 @@
     if (!div) return
 
     const sketch = (p: p5) => {
+      const BACKGROUND = '#fff'
       const SCALE = 200
       const LENGTH = 10
       const SPACING = 15
@@ -58,12 +58,12 @@
 
       p.setup = () => {
         p.createCanvas(width, height)
-        p.background('#ffffff')
+        p.background(BACKGROUND)
         addPoints()
       }
 
       p.draw = () => {
-        p.background('#ffffff')
+        p.background(BACKGROUND)
 
         const t = +new Date() / 10000
         for (const point of points) {

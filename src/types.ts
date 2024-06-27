@@ -3,6 +3,15 @@ export type Fn = () => void
 
 export type Range = [number, number]
 
+export interface Particle {
+  x: number
+  y: number
+  velocity: {
+    x: number
+    y: number
+  }
+}
+
 export interface NavTabsItem {
   href: string
   label: string
@@ -182,7 +191,7 @@ interface PageMetadata {
    *
    * If not defined or set to an empty string, no background is added to the page.
    */
-  bgType?: 'plum' | 'dot' | 'rose' | 'snow'
+  bgType?: 'plum' | 'dot' | 'rose' | 'particle'
 }
 
 type PagesConfig = Record<string, PageMetadata>

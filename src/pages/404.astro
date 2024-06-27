@@ -2,10 +2,10 @@
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import config from '~/config'
 
-const { title, description } = config.pages.about
+const { title, description, bgType } = config.pages['404']
 ---
 
-<BaseLayout {title} {description}>
+<BaseLayout {title} {description} {bgType}>
   <article>
     <div class="prose slide-enter-content m-auto">
       <h1 id="404" tabindex="-1">
