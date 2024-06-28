@@ -8,10 +8,12 @@ export default defineConfig({
   site: config.site.url,
   integrations: [
     UnoCSS({
-      injectReset: true, // or a path to the reset file
+      // https://unocss.dev/integrations/astro#style-reset
+      injectReset: true,
     }),
   ],
   markdown: {
+    // https://docs.astro.build/en/guides/markdown-content/#shiki-configuration
     shikiConfig: {
       themes: {
         light: 'vitesse-light',

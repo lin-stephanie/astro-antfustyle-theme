@@ -77,6 +77,9 @@ importers:
       rehype-autolink-headings:
         specifier: ^7.1.0
         version: 7.1.0
+      rehype-external-links:
+        specifier: ^3.0.0
+        version: 3.0.0
       simple-git-hooks:
         specifier: ^2.11.1
         version: 2.11.1
@@ -3326,6 +3329,13 @@ packages:
       }
     engines: { node: '>= 0.4' }
 
+  is-absolute-url@4.0.1:
+    resolution:
+      {
+        integrity: sha512-/51/TKE88Lmm7Gc4/8btclNXWS+g50wXhYJq8HWIBAGUBnoAdRu1aXeh364t/O7wXDAcTJDP8PNuNKWUDWie+A==,
+      }
+    engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
+
   is-array-buffer@3.0.4:
     resolution:
       {
@@ -4628,6 +4638,12 @@ packages:
     resolution:
       {
         integrity: sha512-rItO/pSdvnvsP4QRB1pmPiNHUskikqtPojZKJPPPAVx9Hj8i8TwMBhofrrAYRhYOOBZH9tgmG5lPqDLuIWPWmw==,
+      }
+
+  rehype-external-links@3.0.0:
+    resolution:
+      {
+        integrity: sha512-yp+e5N9V3C6bwBeAC4n796kc86M4gJCdlVhiMTxIrJG5UHDMh+PJANf9heqORJbt1nrCbDwIlAZKjANIaVBbvw==,
       }
 
   rehype-parse@9.0.0:
@@ -7923,6 +7939,8 @@ snapshots:
       hasown: 2.0.2
       side-channel: 1.0.6
 
+  is-absolute-url@4.0.1: {}
+
   is-array-buffer@3.0.4:
     dependencies:
       call-bind: 1.0.7
@@ -8799,6 +8817,15 @@ snapshots:
       hast-util-heading-rank: 3.0.0
       hast-util-is-element: 3.0.0
       unified: 11.0.4
+      unist-util-visit: 5.0.0
+
+  rehype-external-links@3.0.0:
+    dependencies:
+      '@types/hast': 3.0.4
+      '@ungap/structured-clone': 1.2.0
+      hast-util-is-element: 3.0.0
+      is-absolute-url: 4.0.1
+      space-separated-tokens: 2.0.2
       unist-util-visit: 5.0.0
 
   rehype-parse@9.0.0:

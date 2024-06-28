@@ -39,6 +39,7 @@
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.14.0",
     "rehype-autolink-headings": "^7.1.0",
+    "rehype-external-links": "^3.0.0",
     "simple-git-hooks": "^2.11.1",
     "typescript-eslint": "^7.8.0",
     "unocss": "^0.60.4"
