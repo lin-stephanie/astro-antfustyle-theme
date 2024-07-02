@@ -78,6 +78,12 @@ const config: Config = {
         mastodon: '@antfu@m.webtoo.ls',
       },
     ],
+    toc: [
+      true,
+      {
+        position: 'left',
+      },
+    ],
   },
 }
 

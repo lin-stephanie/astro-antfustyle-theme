@@ -1,8 +1,11 @@
 ---
 import { getCollection } from 'astro:content'
-import ShareLink from '~/components/widgets/ShareLink.astro'
+
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
+import Toc from '~/components/toc/Toc.astro'
+import ShareLink from '~/components/widgets/ShareLink.astro'
+
 import config from '~/config'
 
 export async function getStaticPaths() {
@@ -18,18 +21,18 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props
 const { data: frontmatter } = post
-const { Content } = await post.render()
+const { Content, headings } = await post.render()
 
-/* share */
-const share = config.features.share
+const { share, toc } = config.features
 ---
 
 <BaseLayout title={frontmatter.title} description={frontmatter.description}>
+  {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
   <StandardLayout {post}>
     <Content />
   </StandardLayout>
   {
-    Array.isArray(share) && share[0] && (
+    Array.isArray(share) && share[0] && frontmatter.share && (
       <ShareLink
         slot="share"
         show={frontmatter.duration ? true : false}

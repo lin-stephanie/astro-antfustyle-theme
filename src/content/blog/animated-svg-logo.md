@@ -2,6 +2,8 @@
 title: Animated SVG Logo
 duration: 10min
 date: 2023-07-19T00:00:00.000+00:00
+toc: false
+share: false
 ---
 
 I recently replaced the logo on the top left corner with an animated SVG:

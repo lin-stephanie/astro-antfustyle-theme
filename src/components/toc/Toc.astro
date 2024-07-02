@@ -1,0 +1,48 @@
+---
+import config from '~/config'
+import TocItem from './TocItem.astro'
+import { generateToc, slug } from '~/utils'
+import type { MarkdownHeading } from 'astro'
+
+interface Props {
+  headings?: MarkdownHeading[]
+  category?: string[]
+  style?: string
+}
+
+let position = 'left'
+if (Array.isArray(config.features.toc) && config.features.toc[0]) {
+  position = config.features.toc[1].position
+}
+
+const { headings = [], category = [], style } = Astro.props
+const toc = generateToc(headings)
+---
+
+<aside>
+  <nav
+    class:list={[
+      'table-of-contents',
+      {
+        'table-of-contents-right': position === 'right',
+      },
+    ]}
+    {style}
+  >
+    <div class="table-of-contents-anchor">
+      {position === 'left' && <div u-i-ri-menu-2-fill />}
+      {position === 'right' && <div u-i-ri-menu-3-fill />}
+    </div>
+    <ul>
+      {!!toc.length && toc.map((heading) => <TocItem {heading} />)}
+      {
+        !!category.length &&
+          category.map((heading) => (
+            <li>
+              <a href={`#${slug(heading)}`}>{heading}</a>
+            </li>
+          ))
+      }
+    </ul>
+  </nav>
+</aside>

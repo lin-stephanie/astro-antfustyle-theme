@@ -1,29 +1,36 @@
 ---
-import { getEntry /* getCollection */ } from 'astro:content'
+import { getEntry } from 'astro:content'
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import WideLayout from '~/layouts/WideLayout.astro'
+import Toc from '~/components/toc/Toc.astro'
 import Categorizer from '~/components/Categorizer.astro'
 import ProjectGroup from '~/components/ProjectGroup.astro'
 
 import config from '~/config'
 
 const { title, description, bgType } = config.pages.projects
+const { toc } = config.features
 
-// const projects = await getCollection('projects')
 const entry = await getEntry('projects', 'data')
-// console.log('entry', entry)
-
-const { projects } = entry.data
+const { data: frontmatter } = entry
 ---
 
 <BaseLayout {title} {description} {bgType}>
   <WideLayout {entry}>
     {
-      Object.keys(projects).map((key, idx) => (
+      Array.isArray(toc) && toc[0] && frontmatter.toc && (
+        <Toc
+          category={Object.keys(frontmatter.projects)}
+          style={toc[1].position === 'right' ? 'text-align:end' : ''}
+        />
+      )
+    }
+    {
+      Object.keys(frontmatter.projects).map((key, idx) => (
         <div class="slide-enter" style={{ '--enter-stage': idx + 1 }}>
           <Categorizer text={key} {idx} needId={true} wide={true} />
-          <ProjectGroup items={projects[key]} />
+          <ProjectGroup items={frontmatter.projects[key]} />
         </div>
       ))
     }

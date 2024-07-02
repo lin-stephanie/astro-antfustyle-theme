@@ -205,19 +205,19 @@ html:not(.dark) [img-dark] {
 /* Overrides Floating Vue */
 .v-popper--theme-dropdown .v-popper__inner,
 .v-popper--theme-tooltip .v-popper__inner {
-  --at-apply: bg-base color-base text-base rounded border border-base shadow;
+  --uno: 'bg-base color-base text-base rounded border border-base shadow';
   box-shadow: 0 6px 30px #0000001a;
 }
 
 .v-popper--theme-tooltip .v-popper__arrow-inner,
 .v-popper--theme-dropdown .v-popper__arrow-inner {
   visibility: visible;
-  --at-apply: border-white dark-border-black;
+  --uno: 'border-white dark-border-black';
 }
 
 .v-popper--theme-tooltip .v-popper__arrow-outer,
 .v-popper--theme-dropdown .v-popper__arrow-outer {
-  --at-apply: border-base;
+  --uno: 'border-base';
 }
 
 .v-popper--theme-tooltip.v-popper--shown,

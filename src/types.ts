@@ -32,20 +32,24 @@ type Mentioned = `@${string}` | ''
 type Icon = `i-${string}-${string}` | `i-${string}:${string}`
 
 interface Socials {
-  /** The name of the social platform, displayed when hovered over. */
+  /**
+   * Set the name of the social platform, displayed when hovered over.
+   */
   name: string
 
-  /** The URL to the social platform profile. */
+  /**
+   * Set the URL to the social platform profile.
+   */
   href: string
 
   /**
-   * The icon for the social platform.
+   * Set the icon for the social platform.
    *
+   * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
    * as per {@link https://unocss.dev/presets/icons Unocss} specs.
    *
    * @example "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
-   *
    *
    * @see Check all available icons: https://icones.js.org/
    */
@@ -65,69 +69,87 @@ interface BaseNavItem {
    */
   path: string
 
-  /** Show the role of the item when hovered over. */
+  /**
+   * Set prompt content for mouse hover.
+   */
   prompt?: string
 }
 
 interface TextNavItem extends BaseNavItem {
   /**
    * Navigation item where type is 'text'.
+   *
+   * @description
    * Only text is shown regardless of the viewport size.
    *
+   * @remark
    * Requires `text` to be configured.
    */
   type: 'text'
 
-  /** The text displayed for the navigation item. */
+  /**
+   * Set the text displayed for the navigation item.
+   */
   text: string
 }
 
 interface IconNavItem extends BaseNavItem {
   /**
-   * Navigation item where type is 'icon'.
+   * Navigation item of type is 'icon'.
+   *
+   * @description
    * Only an icon is shown regardless of the viewport size.
    *
+   * @remark
    * Requires `icon` to be configured.
    */
   type: 'icon'
+
   /**
-   * The icon displayed for the navigation item. Required if `type` is 'icon' or 'rwd'.
+   * Set the icon displayed for the navigation item. Required if `type` is 'icon' or 'rwd'.
    *
+   * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
    * as per {@link https://unocss.dev/presets/icons Unocss} specs.
    *
-   * @example "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
+   * @example
+   * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
    *
-   *
-   * @see Check all available icons: https://icones.js.org/
+   * @see
+   * Check all available icons: https://icones.js.org/
    */
   icon: Icon
 }
 
 interface ResponsiveNavItem extends BaseNavItem {
   /**
-   * Navigation item where type is 'rwd' (responsive).
-   * Responsive type, showing text when the viewport width exceeds 768px and icons otherwise.
+   * Navigation item of type is 'rwd' (responsive).
    *
+   * @description
+   * Displays text when viewport width is over 768px and icons otherwise.
+   *
+   * @remark
    * Requires both `text` and `icon` to be configured.
    */
   type: 'rwd'
 
   /**
-   * The text displayed for the navigation item. Required if `type` is 'text' or 'rwd'.
+   * Set the text displayed for the navigation item. Required if `type` is 'text' or 'rwd'.
    */
   text: string
 
   /**
-   * The icon displayed for the navigation item. Required if `type` is 'icon' or 'rwd'.
+   * Set the icon displayed for the navigation item. Required if `type` is 'icon' or 'rwd'.
    *
+   * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
    * as per {@link https://unocss.dev/presets/icons Unocss} specs.
    *
-   * @example "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
+   * @example
+   * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
    *
-   *
-   * @see Check all available icons: https://icones.js.org/
+   * @see
+   * Check all available icons: https://icones.js.org/
    */
   icon: Icon
 }
@@ -160,14 +182,16 @@ interface SiteConfig {
 
   /**
    * Set the structure of the page navigation bar.
+   *
+   * @description
    * The configuration order corresponds to the display order on the page.
    *
-   * The `NavItem` can be one of three types, each enforcing required fields based on the `type` property.
-   *
-   * The `type` of navigation item.
-   *  - 'text': Only text is shown regardless of the viewport size.
-   *  - 'icon': Only an icon is shown regardless of the viewport size.
-   *  - 'rwd': Responsive type, showing text when the viewport width exceeds 768px and icons otherwise.
+   * @property {string} `type` - Set the type of navigation item:
+   *  - "text": Only text is shown regardless of the viewport size.
+   *  - "icon": Only an icon is shown regardless of the viewport size.
+   *  - "rwd": Responsive type, showing text when the viewport width exceeds 768px and icons otherwise.
+   * @property {string} `text` - Set the text displayed for the navigation item. Required if `type` is 'text' or 'rwd'.
+   * @property {string} `icon` - Set the icon displayed for the navigation item. Required if `type` is 'icon' or 'rwd'.
    */
   navBar: NavItem[]
 }
@@ -177,6 +201,7 @@ interface PageMetadata {
    * Set the page title to format with {@link SiteConfig.name} as `<title> - <name>`
    * for use in title and meta tags.
    *
+   * @description
    * If set to an empty string, displays only `<name>`.
    */
   title: string
@@ -189,6 +214,7 @@ interface PageMetadata {
   /**
    * Set the page background.
    *
+   * @description
    * If not defined or set to an empty string, no background is added to the page.
    */
   bgType?: 'plum' | 'dot' | 'rose' | 'particle'
@@ -200,22 +226,9 @@ type FeatureConfig<T> = false | [boolean, T]
 
 export interface ShareConfig {
   /**
-   * The template for pre-filled text used when visitors share the article on social platforms.
-   *
-   * It can include two placeholders:
-   *  - {@you}: Your username on social platforms, replaced with configurations from
-   *    the {@link twitter} and mastodon settings.
-   *  - {url}: The automatically generated link shared by the visitor.
-   *
-   * @example
-   * "Reading {@you}'s {url} \n\n I think..."
-   *
-   */
-  // template: string
-
-  /**
    * Set the Twitter username for mentions. Must start with '@'.
    *
+   * @description
    * If set to an empty string, the social platform is excluded from sharing options.
    */
   twitter: Mentioned
@@ -223,19 +236,40 @@ export interface ShareConfig {
   /**
    * Set the Twitter username for mentions. Must start with '@'.
    *
+   * @description
    * If set to an empty string, the social platform is excluded from sharing options.
    */
   mastodon: Mentioned
+}
+
+export interface TocConfig {
+  /**
+   * Set the display position of the table of contents.
+   */
+  position: 'left' | 'right'
 }
 
 interface FeaturesConfig {
   /**
    * Enable and configure the sharing feature, which allows visitors to share content to social platforms.
    *
-   * If enabled, posts with a 'duration' field in the frontmatter will have sharing links appended to the bottom.
-   *
+   * @description
+   * If enabled, share links appear at the bottom of all posts.
+   * Disable for a specific post by setting the `share` field in the frontmatter to `false`.
    */
   share: FeatureConfig<ShareConfig>
+
+  /**
+   * Enable and configure the toc feature, which allows visitors to share content to social platforms.
+   *
+   * @description
+   * If enabled, both the `/blog/[slug]` and `/projects` pages will automatically include a TOC.
+   * Disable for a specific post or the `/projects` page by setting the `toc` field in the frontmatter to `false`.
+   *
+   * @remarks
+   * The TOC automatically hides when the viewport width less than 1024px.
+   */
+  toc: FeatureConfig<TocConfig>
 }
 
 export interface Config {

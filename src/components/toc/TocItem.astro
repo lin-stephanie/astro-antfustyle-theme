@@ -1,0 +1,33 @@
+---
+import type { TocHeading } from '~/utils'
+
+interface Props {
+  heading: TocHeading
+}
+
+const { heading } = Astro.props
+const { slug, children, text } = heading
+---
+
+<li>
+  {
+    slug && (
+      <a
+        href={`#${slug}`}
+        title={text}
+        aria-label={`Scroll to section: ${text}`}
+      >
+        {text}
+      </a>
+    )
+  }
+  {
+    !!children.length && (
+      <ul>
+        {children.map((subheading) => (
+          <Astro.self heading={subheading} />
+        ))}
+      </ul>
+    )
+  }
+</li>

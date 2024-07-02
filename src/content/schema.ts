@@ -13,6 +13,8 @@ export const postSchema = z
     duration: z.string().optional(),
     platform: z.string().optional(),
     draft: z.boolean().optional(),
+    share: z.boolean().optional().default(true),
+    toc: z.boolean().optional().default(true),
   })
   .strict()
 
@@ -35,6 +37,7 @@ export const projectsSchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
   projects: groupSchema,
+  toc: z.boolean().optional().default(true),
 })
 
 export type ProjectSchema = z.infer<typeof projectSchema>

@@ -19,6 +19,7 @@ export default defineConfig({
         light: 'vitesse-light',
         dark: 'vitesse-dark',
       },
+      wrap: false,
     },
     remarkPlugins,
     rehypePlugins,
