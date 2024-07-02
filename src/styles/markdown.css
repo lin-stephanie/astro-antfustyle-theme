@@ -196,13 +196,12 @@ h6:focus .header-anchor {
   position: fixed;
   top: 130px;
   bottom: 0;
-  left: 17.2px;
+  left: 20px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 
   width: 250px;
-  height: max-content;
 
   font-size: 0.8em;
   --uno: 'lt-lg:hidden';
@@ -251,7 +250,7 @@ h6:focus .header-anchor {
   padding-left: 0.8rem;
   margin-top: 0.5em;
 
-  line-height: 1.8em;
+  line-height: 1.6em;
 }
 
 .table-of-contents ul > li > a {
