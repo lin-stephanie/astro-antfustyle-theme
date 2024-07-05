@@ -12,7 +12,7 @@ export const postSchema = z
     radio: z.boolean().optional(),
     duration: z.string().optional(),
     platform: z.string().optional(),
-    draft: z.boolean().optional(),
+    draft: z.boolean().optional().default(false),
     share: z.boolean().optional().default(true),
     toc: z.boolean().optional().default(true),
   })

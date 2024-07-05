@@ -28,7 +28,9 @@ const { data: frontmatter } = post
   {
     frontmatter.date && (
       <p class="slide-enter-50 mt--6! opacity-50">
-        {formatDate(frontmatter.date)}
+        <time datetime={frontmatter.date.toISOString()}>
+          {formatDate(frontmatter.date.toISOString())}
+        </time>
         {frontmatter.duration && <span>· {frontmatter.duration}</span>}
       </p>
     )
@@ -36,8 +38,9 @@ const { data: frontmatter } = post
   {
     frontmatter.draft && (
       <p class="slide-enter px-4 py-2 b-l-3 b-orange-4 bg-orange-4:10 text-orange-4">
-        This is a draft post not shown by default in production. To display it
-        and add a custom message, modify the <code>drafPost</code> option.
+        This is a draft post that will not be published in production. Set the
+        post's <code>draft</code> field in frontmatter to <code>false</code> or
+        remove it to publish the post.
       </p>
     )
   }

@@ -12,11 +12,13 @@ import { items } from '~/types'
 
 const { title, description, bgType } = config.pages.blog
 
-const posts = await getCollection('blog')
+const posts = await getCollection('blog', ({ data }) => {
+  return import.meta.env.PROD ? data.draft !== true : true
+})
 
-const sortedPosts = posts
-  .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+const sortedPosts = posts.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+)
 ---
 
 <BaseLayout {title} {description} {bgType}>

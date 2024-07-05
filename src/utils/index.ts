@@ -1,10 +1,11 @@
 /* time */
 import dayjs from 'dayjs'
 
-export function formatDate(d: string | Date, showYear = true) {
+export function formatDate(d: Date | string, showYear = true) {
   const date = dayjs(d)
 
-  if (!showYear || date.year() === dayjs().year()) return date.format('MMM D')
+  if (!showYear /* || date.year() === dayjs().year() */)
+    return date.format('MMM D')
 
   return date.format('MMM D, YYYY')
 }
