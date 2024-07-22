@@ -3,7 +3,7 @@ import UnoCSS from 'unocss/astro'
 import { remarkPlugins, rehypePlugins } from './plugins'
 import config from './src/config'
 
-// https://astro.build/config
+// https://docs.astro.build/en/reference/configuration-reference/
 export default defineConfig({
   site: config.site.url,
   integrations: [

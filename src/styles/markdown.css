@@ -315,3 +315,16 @@ h6:focus .header-anchor {
   width: 1.6em;
   border-radius: 50%;
 }
+
+/* Rehype Callouts */
+.callout {
+  padding-left: 16px;
+}
+
+.callout .callout-icon {
+  padding-right: 2px;
+}
+
+.callout p:last-child {
+  margin-bottom: 0;
+}

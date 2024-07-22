@@ -1,7 +1,7 @@
 {
   "name": "astor-antfustyle-blog",
+  "version": "0.0.0",
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
     "astro": "astro",
     "build": "astro check && astro build",
@@ -39,6 +39,7 @@
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.14.0",
     "rehype-autolink-headings": "^7.1.0",
+    "rehype-callouts": "^1.0.3",
     "rehype-external-links": "^3.0.0",
     "simple-git-hooks": "^2.11.1",
     "typescript-eslint": "^7.8.0",
@@ -54,6 +55,6 @@
     ]
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "^18.0.0 || >=20.0.0"
   }
 }

@@ -1,4 +1,5 @@
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
+import rehypeCallouts from 'rehype-callouts'
 import rehypeExternalLinks from 'rehype-external-links'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import type { RemarkPlugins, RehypePlugins } from 'astro'
@@ -8,6 +9,13 @@ export const remarkPlugins: RemarkPlugins = []
 export const rehypePlugins: RehypePlugins = [
   // https://docs.astro.build/en/guides/markdown-content/#heading-ids-and-plugins
   rehypeHeadingIds,
+  // https://github.com/lin-stephanie/rehype-callouts
+  [
+    rehypeCallouts,
+    {
+      theme: 'obsidian',
+    },
+  ],
 
   // https://github.com/rehypejs/rehype-external-links
   [

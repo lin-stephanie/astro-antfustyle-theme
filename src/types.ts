@@ -77,7 +77,7 @@ interface BaseNavItem {
 
 interface TextNavItem extends BaseNavItem {
   /**
-   * Navigation item where type is 'text'.
+   * Specifies the navigation item where type is 'text'.
    *
    * @description
    * Only text is shown regardless of the viewport size.
@@ -95,7 +95,7 @@ interface TextNavItem extends BaseNavItem {
 
 interface IconNavItem extends BaseNavItem {
   /**
-   * Navigation item of type is 'icon'.
+   * Specifies the navigation item of type is 'icon'.
    *
    * @description
    * Only an icon is shown regardless of the viewport size.
@@ -123,7 +123,7 @@ interface IconNavItem extends BaseNavItem {
 
 interface ResponsiveNavItem extends BaseNavItem {
   /**
-   * Navigation item of type is 'rwd' (responsive).
+   * Specifies the navigation item of type is 'rwd' (responsive).
    *
    * @description
    * Displays text when viewport width is over 768px and icons otherwise.
