@@ -1,5 +1,7 @@
 import { defineConfig } from 'astro/config'
 import UnoCSS from 'unocss/astro'
+import astroExpressiveCode from 'astro-expressive-code'
+
 import { remarkPlugins, rehypePlugins } from './plugins'
 import config from './src/config'
 
@@ -11,16 +13,10 @@ export default defineConfig({
       // https://unocss.dev/integrations/astro#style-reset
       injectReset: true,
     }),
+    astroExpressiveCode(),
   ],
   markdown: {
-    // https://docs.astro.build/en/guides/markdown-content/#shiki-configuration
-    shikiConfig: {
-      themes: {
-        light: 'vitesse-light',
-        dark: 'vitesse-dark',
-      },
-      wrap: false,
-    },
+    syntaxHighlight: false,
     remarkPlugins,
     rehypePlugins,
   },
