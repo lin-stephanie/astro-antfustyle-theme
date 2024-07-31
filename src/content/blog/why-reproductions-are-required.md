@@ -5,17 +5,19 @@ duration: 9min
 date: 2022-05-30T16:00:00Z
 ---
 
-[[toc]]
-
-> [中文 Chinese Version](/posts/why-reproductions-are-required-zh)
-
 If you have ever browsed the issue lists in my repos or created one, you might sometimes see I reply with the following comment and then close the issue:
 
-<figure>
+<!-- <figure>
 <img src="/images/issue-close-without-repro-light.png" img-light rounded-lg>
 <img src="/images/issue-close-without-repro-dark.png" img-dark rounded-lg>
 <figcaption>We temporarily close this due to the lack of enough information. Please provide a <a href="https://stackoverflow.com/help/minimal-reproducible-example" target="_blank">minimal reproduction</a> to reopen the issue. Thanks.</figcaption>
-</figure>
+</figure> -->
+
+:::image-figure[We temporarily close this due to the lack of enough information. Please provide a minimal reproduction to reopen the issue. Thanks.]
+![](../../assets/why-reproductions-are-required/issue-close-without-repro-light.png)(class:img-light)
+
+![](../../assets/why-reproductions-are-required/issue-close-without-repro-dark.png)(class:img-dark)
+:::
 
 I'd first say sorry if it ever makes you feel unpleasant. In this post, let me try to explain the reason behind it.
 
@@ -33,11 +35,17 @@ Yeah, that sounds scary. But luckily, things are not that bad in real practice. 
 
 Software once written, is never finished. Maintainance plays a crucial role to keep a project "alive", getting bug or security fixes on time, and being sustainable in the long run. Things like triaging issues, reviewing PRs, and discussions could take a lot of effort from maintainers. While in open source projects, the ratios of user-to-maintainer are commonly unbalanced. Many popular projects might only have one or two maintainers behind the scene. As a project grows and gains more users, the number of tasks required to maintain the project may easily go beyond one’s capacity.
 
-<figure>
+<!-- <figure>
 <img src="/images/github-inbox-light.png" img-light rounded-lg>
 <img src="/images/github-inbox-dark.png" img-dark rounded-lg>
 <figcaption>My inbox of GitHub notifications</figcaption>
-</figure>
+</figure> -->
+
+:::image-figure[My inbox of GitHub notifications]
+![](../../assets/why-reproductions-are-required/github-inbox-light.png)(class:img-light)
+
+![](../../assets/why-reproductions-are-required/github-inbox-dark.png)(class:img-dark)
+:::
 
 ## Why Reproduction
 

@@ -1,10 +1,20 @@
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
+import remarkDirective from 'remark-directive'
+import remarkImageContainer from './remark-image-directive'
+import remarkImgattr from 'remark-imgattr'
+
 import rehypeCallouts from 'rehype-callouts'
 import rehypeExternalLinks from 'rehype-external-links'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import type { RemarkPlugins, RehypePlugins } from 'astro'
 
-export const remarkPlugins: RemarkPlugins = []
+export const remarkPlugins: RemarkPlugins = [
+  // https://github.com/remarkjs/remark-directive
+  remarkDirective,
+  remarkImageContainer,
+  // https://github.com/OliverSpeir/remark-imgattr
+  remarkImgattr,
+]
 
 export const rehypePlugins: RehypePlugins = [
   // https://docs.astro.build/en/guides/markdown-content/#heading-ids-and-plugins

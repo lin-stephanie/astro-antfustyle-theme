@@ -11,7 +11,8 @@
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0 --cache",
     "lint:fix": "eslint . --fix --cache",
     "prepare": "simple-git-hooks",
-    "postbuild": "pagefind --site dist"
+    "postbuild": "pagefind --site dist",
+    "postinstall": "pnpm add -D sharp"
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
@@ -25,6 +26,7 @@
     "@expressive-code/plugin-collapsible-sections": "^0.35.3",
     "@expressive-code/plugin-line-numbers": "^0.35.3",
     "@iconify/json": "^2.2.207",
+    "@types/mdast": "^4.0.4",
     "@types/nprogress": "^0.2.3",
     "@types/p5": "^1.7.6",
     "@typescript-eslint/parser": "^7.8.0",
@@ -37,6 +39,7 @@
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "globals": "^15.1.0",
     "lint-staged": "^15.2.2",
+    "mdast-util-directive": "^3.0.0",
     "p5": "^1.9.4",
     "pagefind": "^1.1.0",
     "prettier": "^3.2.5",
@@ -44,8 +47,12 @@
     "rehype-autolink-headings": "^7.1.0",
     "rehype-callouts": "^1.0.3",
     "rehype-external-links": "^3.0.0",
+    "remark-directive": "^3.0.0",
+    "remark-imgattr": "^1.0.5",
+    "sharp": "^0.33.4",
     "simple-git-hooks": "^2.11.1",
     "typescript-eslint": "^7.8.0",
+    "unist-util-visit": "^5.0.0",
     "unocss": "^0.60.4"
   },
   "simple-git-hooks": {

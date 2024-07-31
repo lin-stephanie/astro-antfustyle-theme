@@ -5,10 +5,6 @@ duration: 25min
 date: 2024-03-16T12:00:00.000+00:00
 ---
 
-[[toc]]
-
-> [中文翻译 Chinese Version](/posts/mental-health-oss-zh)
-
 > **TL;DR**: I am doing great and not going anywhere. Having some pressure but still holding up and trying to improve. Thank you and don't worry!
 
 This is the 4th year since I have started doing Open Source. To be completely honest, I began to feel things were getting out of my capacity more and more often. I am still not sure if I have ever been through actual [burnout](https://www.darlingdowns.health.qld.gov.au/about-us/our-stories/feature-articles/signs-you-might-be-experiencing-a-burnout-and-how-to-regain-balance-in-your-life#:~:text=Burnout%20is%20a%20state%20of,an%20increasing%20sense%20of%20hopelessness) or not, but I surely have experienced the ups and downs of my productivity and motivation periodically.
@@ -81,10 +77,14 @@ This is actually the topic that drove me to write this blog post.
 
 Let's start with this ["Iron Triangle"](https://en.wikipedia.org/wiki/Project_management_triangle) of <b important-text-hex-E3B65E>Velocity</b>, <b important-text-hex-D777B1>Scope</b> and <b important-text-hex-80BEDF>Quality</b>. <br><span op50>(typicall they are Quality/Speed/Cost where I made a few adjustments here)</span>
 
-<figure>
+<!-- <figure>
   <img src="/images/oss-mental-iron-triangle.svg" />
   <figcaption text-center>The Iron Triangle of Velocity-Scope-Quality</figcaption>
-</figure>
+</figure> -->
+
+:::image-figure{style="text-align:center"}
+![The Iron Triangle of Velocity-Scope-Quality](../../assets/mental-health-oss/oss-mental-iron-triangle.svg)
+:::
 
 Usually, people would say -- in these three factors, you can **only pick two**. If you want to deliver a project faster, you might have to sacrifice the quality or have a smaller scope of features. If you want to have a high-quality and feature-rich product, you might have to sacrifice speed to deliver good stuff slowly, and so on.
 

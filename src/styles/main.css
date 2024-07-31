@@ -85,13 +85,14 @@ h2 + p > em:first-child {
   font-size: 0.9em;
 }
 
-.dark [img-light] {
+/* why-reproductions-are-required */
+/* .dark [img-light] {
   display: none;
 }
 
 html:not(.dark) [img-dark] {
   display: none;
-}
+} */
 
 /* Slide Enter */
 @keyframes slide-enter {

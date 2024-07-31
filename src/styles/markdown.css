@@ -60,16 +60,17 @@ html:not(.dark) .astro-code span {
   margin: 0.5em 0;
 } */
 
-.prose img {
+/* .prose img {
   width: 100%;
-}
+} */
 
-.prose p > img {
+/* pages/posts/ai-qrcode-101.md */
+/* .prose p > img {
   width: 100%;
   --uno: 'shadow rounded-lg';
   transform: scale(1.05);
   margin: 2.6em 0;
-}
+} */
 
 .prose {
   --fg-light: #888;
@@ -370,4 +371,26 @@ h6:focus .header-anchor {
 
 .expressive-code .gutter .ln {
   padding-inline: 1ch !important;
+}
+
+/* Image */
+.prose img {
+  margin-inline: auto;
+}
+
+.prose figure img,
+.prose figure p {
+  margin-block: 0;
+}
+
+.prose p > img {
+  border-radius: 0.5rem;
+}
+
+.dark .img-light {
+  display: none;
+}
+
+html:not(.dark) .img-dark {
+  display: none;
 }

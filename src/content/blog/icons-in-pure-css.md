@@ -9,11 +9,8 @@ date: 2021-10-31
 # date: 2021-10-31T16:00:00-08:00
 # date: "2021-10-31T16:00:00-08:00"
 draft: true
+share: false
 ---
-
-[[toc]]
-
-> [中文 Chinese Version](/posts/icons-in-pure-css-zh)
 
 In my previous post about [Reimagine Atomic CSS](/posts/reimagine-atomic-css#pure-css-icons), I introduced a preset of [UnoCSS](https://github.com/antfu/unocss) that provides the ability to **use any icons on-demand in purely CSS**. Today in this post, I'd like to share with you how we made it possible.
 
@@ -205,11 +202,7 @@ And it works surprisingly well! You know, it's now behavior similar to the thing
 
 Here are some showcases of what we end up with:
 
-<div text-xl all:mx-1 all:my-2 all:vertical-middle>
-
-<span op60 text-sm inline-block w-40 text-right>Material Design</span> <div i-ic:baseline-account-circle ></div> <div i-ic:baseline-card-membership ></div> <div i-ic:baseline-verified text-green5 ></div> <div i-ic:outline-explore text-sky5 ></div> <br><span op60 text-sm inline-block w-40 text-right>Carbon</span> <div i-carbon:chart-multitype ></div> <div i-carbon:network-4 ></div> <div i-carbon:wind-gusts ></div> <div i-carbon:collaborate ></div> <br><span op60 text-sm inline-block w-40 text-right>Tabler</span> <div i-tabler:building-carousel ></div> <div i-tabler:circle-square ></div> <div i-tabler:color-swatch ></div> <div i-tabler:cut ></div> <br><span op60 text-sm inline-block w-40 text-right>Twemoji</span> <div i-twemoji:grinning-face-with-smiling-eyes ></div> <div i-twemoji:face-in-clouds ></div> <div i-twemoji:weary-cat ></div> <div i-twemoji:teacup-without-handle ></div> <br><span op60 text-sm inline-block w-40 text-right>Logos</span> <div i-logos:vue ></div> <div i-logos:blender ></div> <div i-logos:chrome ></div> <div i-logos:codepen-icon ></div>
-
-</div>
+<div text-xl all:mx-1 all:my-2 all:vertical-middle><span op60 text-sm inline-block w-40 text-right>Material Design</span><div i-ic:baseline-account-circle></div> <div i-ic:baseline-card-membership ></div><div i-ic:baseline-verified text-green5 ></div><div i-ic:outline-explore text-sky5 ></div><br><span op60 text-sm inline-block w-40 text-right>Carbon</span> <div i-carbon:chart-multitype ></div> <div i-carbon:network-4 ></div> <div i-carbon:wind-gusts ></div> <div i-carbon:collaborate ></div> <br><span op60 text-sm inline-block w-40 text-right>Tabler</span> <div i-tabler:building-carousel ></div> <div i-tabler:circle-square ></div> <div i-tabler:color-swatch ></div> <div i-tabler:cut ></div> <br><span op60 text-sm inline-block w-40 text-right>Twemoji</span> <div i-twemoji:grinning-face-with-smiling-eyes ></div> <div i-twemoji:face-in-clouds ></div> <div i-twemoji:weary-cat ></div> <div i-twemoji:teacup-without-handle ></div> <br><span op60 text-sm inline-block w-40 text-right>Logos</span> <div i-logos:vue ></div> <div i-logos:blender ></div> <div i-logos:chrome ></div> <div i-logos:codepen-icon ></div></div>
 
 To see and find all the icons available, you can check out my other project [Icônes](https://icones.js.org/).
 

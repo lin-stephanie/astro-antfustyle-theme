@@ -5,8 +5,6 @@ date: 2020-10-21T16:00:00.000Z
 duration: 8min
 ---
 
-[[toc]]
-
 > [Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) is a JavaScript language feature introduced in ES6 which I would assume you already familiar with it before moving on.
 
 We see it quite useful in many scenarios, for example, value swapping, named arguments, objects shallow merging, array slicing, etc. Today I would like to share some of my immature thoughts on "destructuring" in some web frameworks.

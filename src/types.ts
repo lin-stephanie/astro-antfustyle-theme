@@ -51,7 +51,7 @@ interface Socials {
    *
    * @example "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
    *
-   * @see Check all available icons: https://icones.js.org/
+   * @see {@link  https://icones.js.org/ Check all available icons}
    */
   icon: Icon
 
@@ -115,8 +115,7 @@ interface IconNavItem extends BaseNavItem {
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
    *
-   * @see
-   * Check all available icons: https://icones.js.org/
+   * @see {@link  https://icones.js.org/ Check all available icons}
    */
   icon: Icon
 }
@@ -148,8 +147,7 @@ interface ResponsiveNavItem extends BaseNavItem {
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
    *
-   * @see
-   * Check all available icons: https://icones.js.org/
+   * @see {@link  https://icones.js.org/ Check all available icons}
    */
   icon: Icon
 }

@@ -22,7 +22,7 @@ Since there are too many repositories to keep track of, why don't we let notific
 
 Same as many of you, I get a lot of notifications every day.
 
-![](https://talks.antfu.me/2023/github-notifications/notifications-count.png)
+![](https://talks.antfu.me/2023/github-notifications/notifications-count.png)(style: border-radius:0.5rem; transform:scale(1.05); margin:2.6em 0)
 
 This could look quite scary. Well don't worries, the number is made up. But we know that if we leave them there, the number will only grow and eventually hit the point that would make you feel overwhelmed. Which is something I believe we all want to avoid.
 
@@ -70,7 +70,7 @@ Then also smaller things like new commits pushed to a working-in-progress PRs, o
 
 Following these rules, I have been manually dismiss them for a long while, until someday I feel it's still a lot of work to do so. So, I wrote a userscript, a piece of JavaScript you injected into GitHub on your local to automate this. It's called <GitHubLink repo="antfu/refined-github-notifications" />. Be aware it's quite hacky and opinionated, but I wish it could be a good starting point for you to build your own automation.
 
-![](https://talks.antfu.me/2023/github-notifications/notifications-refined.png)
+![](https://talks.antfu.me/2023/github-notifications/notifications-refined.png)(style: border-radius:0.5rem; transform:scale(1.05); margin:2.6em 0)
 
 It does a few things, that I see a huge improvement to my workflow. First, it automatically dismiss the "unrelated" notifications I just mentioned.
 
