@@ -40,6 +40,7 @@
     "globals": "^15.1.0",
     "lint-staged": "^15.2.2",
     "mdast-util-directive": "^3.0.0",
+    "medium-zoom": "^1.1.0",
     "p5": "^1.9.4",
     "pagefind": "^1.1.0",
     "prettier": "^3.2.5",
@@ -60,8 +61,7 @@
   },
   "lint-staged": {
     "*": [
-      "eslint",
-      "prettier --write --ignore-unknown"
+      "eslint"
     ]
   },
   "engines": {

@@ -22,7 +22,8 @@
       "files": "*.astro",
       "options": {
         "parser": "astro",
-        "astroAllowShorthand": true
+        "astroAllowShorthand": true,
+        "astroSkipFrontmatter": false
       }
     }
   ]

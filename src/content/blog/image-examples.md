@@ -22,7 +22,7 @@ share: true
 <!-- Image stored in public/images/ -->
 <!-- Use the file path relative to public/ -->
 
-![Astro](/astro.jpg)
+![Astro](/astro.jpg)(class:no-zoom)
 
 <!-- Remote image on another server -->
 <!-- Use the full URL of the image -->
@@ -49,7 +49,8 @@ share: true
 :::
 
 :::image-figure[We temporarily close this due to the lack of enough information. Please provide a minimal reproduction to reopen the issue. Thanks.]
-![](../../assets/why-reproductions-are-required/issue-close-without-repro-light.png)(class:img-light)
+![](../../assets/why-reproductions-are-required/issue-close-without-repro-light.png)(class:img-light no-zoom)
+
 ![](../../assets/why-reproductions-are-required/issue-close-without-repro-dark.png)(class:img-dark)
 :::
 

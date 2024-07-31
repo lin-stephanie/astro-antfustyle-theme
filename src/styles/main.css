@@ -29,7 +29,7 @@ html {
 }
 
 #nprogress .bar {
-  z-index: 1031;
+  z-index: 50;
   position: fixed;
   top: 0;
   left: 0;

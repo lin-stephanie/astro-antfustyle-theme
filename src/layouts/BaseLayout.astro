@@ -1,6 +1,7 @@
 ---
 import '@unocss/reset/tailwind.css'
 import 'rehype-callouts/theme/obsidian'
+import 'medium-zoom/dist/style.css'
 
 import '~/styles/main.css'
 import '~/styles/prose.css'
@@ -33,6 +34,7 @@ const { site } = config
       description={description || ''}
     />
   </head>
+
   <body class="relative font-sans text-gray-700 dark:text-gray-200">
     {bgType && <Background type={bgType} />}
     <NavBar />
@@ -49,5 +51,34 @@ const { site } = config
       }
       <Footer />
     </main>
+    <script>
+      /* nprogress */
+      import nprogress from 'nprogress'
+
+      document.addEventListener('astro:before-preparation', () => {
+        nprogress.start()
+      })
+
+      document.addEventListener('astro:page-load', () => {
+        nprogress.done()
+      })
+
+      /* medium-zoom */
+      // https://github.com/francoischalifour/medium-zoom/pull/206
+      // Astro's View Transitions feature deletes styles and class names injected by
+      // medium-zoom when navigating to a new page, which causes the zoom effect to
+      // disappear after page transition, so import css and js files separately and
+      // re-attach the zoom effect.
+      import mediumZoom from 'medium-zoom/dist/pure'
+
+      const zoom = mediumZoom({
+        background: 'rgb(0 0 0 / 0.8)',
+      })
+
+      document.addEventListener('astro:page-load', () => {
+        zoom.detach()
+        zoom.attach('.prose img:not(.no-zoom):not(a img)')
+      })
+    </script>
   </body>
 </html>

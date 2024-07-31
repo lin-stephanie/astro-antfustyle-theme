@@ -193,7 +193,7 @@ h6:focus .header-anchor {
 
 /* Toc */
 .table-of-contents {
-  z-index: 200;
+  z-index: 100;
   position: fixed;
   top: 130px;
   bottom: 0;
@@ -393,4 +393,10 @@ h6:focus .header-anchor {
 
 html:not(.dark) .img-dark {
   display: none;
+}
+
+/* Medium-Zoom */
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+  z-index: 400;
 }
