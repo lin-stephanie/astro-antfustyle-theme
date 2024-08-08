@@ -5,16 +5,20 @@ export const postSchema = z
   .object({
     date: z.coerce.date(),
     title: z.string(),
-    subtitle: z.string().optional(),
-    description: z.string().optional(),
-    redirect: z.string().optional(),
-    video: z.boolean().optional(),
-    radio: z.boolean().optional(),
-    duration: z.string().optional(),
-    platform: z.string().optional(),
-    draft: z.boolean().optional().default(false),
-    share: z.boolean().optional().default(true),
-    toc: z.boolean().optional().default(true),
+    subtitle: z.string().default(''),
+    description: z.string().default(''),
+    redirect: z.string().url('Invalid url.').optional(),
+    video: z.boolean().default(false),
+    radio: z.boolean().default(false),
+    platform: z.string().default(''),
+    duration: z.string().default(''),
+    draft: z.boolean().default(false),
+    share: z.boolean().default(true),
+    toc: z.boolean().default(true),
+    ogImage: z
+      .string()
+      .regex(/^\/og-images\//, "ogImage must start with '/og-images/'.")
+      .optional(),
   })
   .strict()
 
@@ -25,10 +29,12 @@ const projectSchema = z.object({
   name: z.string(),
   link: z.string().url({ message: 'Invalid url.' }),
   desc: z.string(),
-  icon: z.string().regex(/^i-[\w-]+(:[\w-]+)?$/, {
-    message:
-      "Icon must be in the format 'i-<collection>-<icon>' or 'i-<collection>:<icon>' as per Unocss specifications.",
-  }),
+  icon: z
+    .string()
+    .regex(
+      /^i-[\w-]+(:[\w-]+)?$/,
+      "Icon must be in the format 'i-<collection>-<icon>' or 'i-<collection>:<icon>' as per Unocss specifications."
+    ),
 })
 
 const groupSchema = z.record(z.array(projectSchema))

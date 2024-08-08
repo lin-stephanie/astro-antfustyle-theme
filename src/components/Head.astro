@@ -1,16 +1,22 @@
 ---
 import { ViewTransitions } from 'astro:transitions'
+import config from '~/config'
 
 interface Props {
   title: string
-  author: string
   description: string
-  image?: string
+  ogImage?: string
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const { title, description, ogImage } = Astro.props
 
-const { title, author, description, image = '/astro.jpg' } = Astro.props
+const titleSeparator = '-'
+const siteTitle = title
+  ? `${title} ${titleSeparator} ${config.site.name}`
+  : config.site.name
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const ogImageURL = new URL(ogImage ?? '/og-images/fallback.jpg', Astro.url).href
 ---
 
 <!-- Global Metadata -->
@@ -20,10 +26,10 @@ const { title, author, description, image = '/astro.jpg' } = Astro.props
 <meta name="generator" content={Astro.generator} />
 
 <!-- Primary Meta Tags -->
-<title>{title}</title>
-<meta name="title" content={title} />
+<title>{siteTitle}</title>
+<meta name="title" content={siteTitle} />
 <meta name="description" content={description} />
-<meta name="author" content={author} />
+<meta name="author" content={config.site.author} />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -36,16 +42,16 @@ const { title, author, description, image = '/astro.jpg' } = Astro.props
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={title} />
+<meta property="og:title" content={siteTitle} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image" content={ogImageURL} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
+<meta property="twitter:title" content={siteTitle} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta property="twitter:image" content={ogImageURL} />
 
 <!-- Font preloads -->
 

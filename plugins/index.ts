@@ -1,7 +1,8 @@
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import remarkDirective from 'remark-directive'
-import remarkImageContainer from './remark-image-directive'
+import remarkImageContainer from './remark-image-container'
 import remarkImgattr from 'remark-imgattr'
+import remarkGenerateOgImage from './remark-generate-og-image'
 
 import rehypeCallouts from 'rehype-callouts'
 import rehypeExternalLinks from 'rehype-external-links'
@@ -14,6 +15,7 @@ export const remarkPlugins: RemarkPlugins = [
   remarkImageContainer,
   // https://github.com/OliverSpeir/remark-imgattr
   remarkImgattr,
+  remarkGenerateOgImage,
 ]
 
 export const rehypePlugins: RehypePlugins = [
