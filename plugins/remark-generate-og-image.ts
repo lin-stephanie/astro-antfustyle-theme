@@ -1,11 +1,32 @@
-import sharp from 'sharp'
 import chalk from 'chalk'
-import { mkdir } from 'node:fs/promises'
-import { existsSync, readFileSync } from 'node:fs'
-import { basename, dirname, join } from 'node:path'
-import { getCurrentFormattedTime } from '../src/utils'
+import satori from 'satori'
+import { Resvg } from '@resvg/resvg-js'
+import type { SatoriOptions } from 'satori'
 
-const svgTemplate = readFileSync('plugins/templates/og-plum.svg', 'utf-8')
+import { basename, dirname, join } from 'node:path'
+import { readFileSync, existsSync, writeFileSync } from 'node:fs'
+import { mkdir } from 'node:fs/promises'
+
+import { getCurrentFormattedTime } from '../src/utils'
+import { ogImageMarkup } from './og-template/markup'
+import config from '../src/config'
+import type { BgType } from '../src/types'
+
+const Inter = readFileSync('plugins/og-template/Inter-Regular-24pt.ttf')
+
+const satoriOptions: SatoriOptions = {
+  // debug: true,
+  width: 1200,
+  height: 630,
+  fonts: [
+    {
+      name: 'Inter',
+      weight: 400,
+      style: 'normal',
+      data: Inter,
+    },
+  ],
+}
 
 function checkFileExistsInDir(path: string, filename: string) {
   const fullPath = join(process.cwd(), path, filename)
@@ -13,32 +34,22 @@ function checkFileExistsInDir(path: string, filename: string) {
   return existsSync(fullPath)
 }
 
-async function generateOgImage(title: string, output: string) {
+async function generateOgImage(title: string, bgType: BgType, output: string) {
   await mkdir(dirname(output), { recursive: true })
-
-  const lines = title.split(/(.{0,35})(?:\s|$)/g).filter(Boolean)
-  const data: Record<string, string> = {
-    line1: lines[0],
-    line2: lines[1],
-    line3: lines[2],
-  }
-
-  const svg = svgTemplate.replace(
-    /\{\{([^}]+)}}/g,
-    (_, name) => data[name] || ''
-  )
 
   console.log(
     `${chalk.black(getCurrentFormattedTime())} ${chalk.green(`Generating ${output}...`)}`
   )
 
   try {
-    await sharp(Buffer.from(svg))
-      .resize(1200 * 1.1, 630 * 1.1)
-      .png()
-      .toFile(output)
+    const svg = await satori(ogImageMarkup(title, bgType), satoriOptions)
+    const png = new Resvg(svg).render().asPng()
+    writeFileSync(output, png)
   } catch (e) {
-    console.error(`Failed to generate og image for '${basename(output)}'`, e)
+    console.error(
+      `${chalk.black(getCurrentFormattedTime())} ${chalk.red(`[ERROR] Failed to generate og image for '${basename(output)}.'`)}`
+    )
+    console.error(e)
   }
 }
 
@@ -64,8 +75,6 @@ function remarkGenerateOgImage() {
     // check if it has been generated
     const extname = file.extname
     const nameWithoutExt = basename(filename, extname)
-    // const match = filename.match(/^(.+?)\.(md|mdx)$/)
-    // const nameWithoutExt = match[1]
     // 'public/og-images' is equivalent to './public/og-images' and relative to the cwd
     if (checkFileExistsInDir('public/og-images', `${nameWithoutExt}.png`))
       return
@@ -79,26 +88,32 @@ function remarkGenerateOgImage() {
       ogImage &&
       !checkFileExistsInDir('public/og-images', basename(ogImage))
     ) {
-      /* console.log(
-        `\x1b[90m${getCurrentFormattedTime()}\x1b[0m \x1b[33m[WARN] The image specified by the 'ogImage' field in '${filename}' was not found in the 'public/og-image' directory. No new og image will be generated for '${filename}'. Please verify.\x1b[0m`
-      ) */
-      console.log(
+      console.warn(
         `${chalk.black(getCurrentFormattedTime())} ${chalk.yellow(`[WARN] The '${ogImage}' specified in '${filename}' was not found. No new og image will be generated for '${filename}'. Please verify.`)}\n  ${chalk.bold('Hint:')} See ${chalk.cyan.underline('https://docs.astro.build/en/getting-started/')} for more information on og image.`
       )
+      /* console.warn(
+        `\x1b[90m${getCurrentFormattedTime()}\x1b[0m \x1b[33m[WARN] The image specified by the 'ogImage' field in '${filename}' was not found in the 'public/og-image' directory. No new og image will be generated for '${filename}'. Please verify.\x1b[0m`
+      ) */
       return
     }
 
     // get frontmatter title
     const title = file.data.astro.frontmatter.title
     if (!title.trim().length) {
-      console.log(
+      console.warn('test')
+      console.warn(
         `${chalk.black(getCurrentFormattedTime())} ${chalk.yellow(`[WARN] The 'title' field in the '${filename}' frontmatter is an empty string.`)}`
       )
     }
 
+    // get bgType
+    const dirname = basename(file.dirname)
+    const bgType = config.pages[dirname].bgType ?? 'plum'
+
     // generate og images
     await generateOgImage(
       title.trim(),
+      bgType,
       `public/og-images/${nameWithoutExt}.png`
     )
 

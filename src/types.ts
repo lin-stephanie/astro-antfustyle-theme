@@ -30,6 +30,7 @@ export const items: NavTabsItems = [
 /* customize */
 type Mentioned = `@${string}` | ''
 type Icon = `i-${string}-${string}` | `i-${string}:${string}`
+export type BgType = 'plum' | 'dot' | 'rose' | 'particle'
 
 interface Socials {
   /**
@@ -215,7 +216,7 @@ interface PageMetadata {
    * @description
    * If not defined or set to an empty string, no background is added to the page.
    */
-  bgType?: 'plum' | 'dot' | 'rose' | 'particle'
+  bgType?: BgType
 }
 
 type PagesConfig = Record<string, PageMetadata>

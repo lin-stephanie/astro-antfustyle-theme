@@ -55,7 +55,7 @@ export function getYears(items: Acc) {
   return Object.keys(items).sort((a, b) => parseInt(b) - parseInt(a))
 }
 
-/* bgs */
+/* background */
 export function initCanvas(
   canvas: HTMLCanvasElement,
   width = 400,
@@ -208,7 +208,7 @@ export function generateToc(
   return toc
 }
 
-/* log */
+/* plugin */
 export function getCurrentFormattedTime() {
   const now = new Date()
   const hours = now.getHours().toString().padStart(2, '0')

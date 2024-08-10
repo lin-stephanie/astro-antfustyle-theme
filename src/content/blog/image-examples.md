@@ -22,7 +22,7 @@ share: true
 <!-- Image stored in public/images/ -->
 <!-- Use the file path relative to public/ -->
 
-![Astro](/og-images/fallback.jpg)(class:no-zoom)
+![Astro](/og-images/og-image.png)(class:no-zoom)
 
 <!-- Remote image on another server -->
 <!-- Use the full URL of the image -->

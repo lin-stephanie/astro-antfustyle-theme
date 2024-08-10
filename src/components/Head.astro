@@ -16,7 +16,7 @@ const siteTitle = title
   : config.site.name
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
-const ogImageURL = new URL(ogImage ?? '/og-images/fallback.jpg', Astro.url).href
+const ogImageURL = new URL(ogImage ?? '/og-images/og-image.jpg', Astro.url).href
 ---
 
 <!-- Global Metadata -->
