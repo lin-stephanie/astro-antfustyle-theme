@@ -241,11 +241,43 @@ export interface ShareConfig {
   mastodon: Mentioned
 }
 
-export interface TocConfig {
+interface TocConfig {
   /**
    * Set the display position of the table of contents.
    */
   position: 'left' | 'right'
+}
+
+interface OgImageConfig {
+  /**
+   * Set the name of the author or brand associated with the content.
+   *
+   * @description
+   * Used to display above the title to enhance recognition.
+   */
+  authorOrBrand: string
+
+  /**
+   * Set title for fallback OG image.
+   *
+   * @description
+   * A fallback OG image is the default image used when the specified or auto-generated OG image is missing,
+   * ensuring that any page shared on social platforms displays an image.
+   *
+   * @remarks
+   * The fallback OG image is stored at `/public/og-images/og-image.png`.
+   * Delete the existing file to regenerate.
+   */
+  fallbackTitle: string
+
+  /**
+   * Set the fallback background for automatically generated OG images.
+   *
+   * @description
+   * The automatically generated OG images will default to the page's {@link PageMetadata.bgType} for
+   * the background. If not set, the background will use the type specified in this field.
+   */
+  fallbackBgType: BgType
 }
 
 interface FeaturesConfig {
@@ -259,7 +291,7 @@ interface FeaturesConfig {
   share: FeatureConfig<ShareConfig>
 
   /**
-   * Enable and configure the toc feature, which allows visitors to share content to social platforms.
+   * Enable and configure the TOC feature.
    *
    * @description
    * If enabled, both the `/blog/[slug]` and `/projects` pages will automatically include a TOC.
@@ -269,6 +301,18 @@ interface FeaturesConfig {
    * The TOC automatically hides when the viewport width less than 1024px.
    */
   toc: FeatureConfig<TocConfig>
+
+  /**
+   * Enable and configure the automatic OG image generation feature.
+   *
+   * @description
+   * If enabled, auto-generate OG images for Markdown/MDX files lacking ogImage
+   * in frontmatter and store in `/public/og-images`.
+   *
+   * @remarks
+   * Only available for pages generated from Markdown/MDX, as the process is implemented through remark plugin.
+   */
+  ogImage: FeatureConfig<OgImageConfig>
 }
 
 export interface Config {

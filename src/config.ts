@@ -84,6 +84,15 @@ const config: Config = {
         position: 'left',
       },
     ],
+    ogImage: [
+      false,
+      {
+        authorOrBrand: 'Astro AntfuStyle Theme',
+        fallbackTitle:
+          'A customizable, feature-rich Astro theme for blog and portfolio',
+        fallbackBgType: 'plum',
+      },
+    ],
   },
 }
 

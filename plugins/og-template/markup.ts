@@ -1,9 +1,12 @@
 import { html } from 'satori-html'
-import config from '../../src/config'
 import backgroundBase64 from './base64'
 import type { BgType } from '../../src/types'
 
-export const ogImageMarkup = (title: string, bgType: BgType) => {
+export const ogImageMarkup = (
+  source: string,
+  title: string,
+  bgType: BgType
+) => {
   if (!['plum', 'dot', 'rose', 'particle'].includes(bgType))
     throw new Error(
       "The value of 'bgType' must be one of the following: 'plum', 'dot', 'rose', 'particle'."
@@ -53,7 +56,7 @@ export const ogImageMarkup = (title: string, bgType: BgType) => {
       </div>
 
       <div tw="flex flex-col" style="gap: 10px">
-        <div tw="text-[#858585] text-2.1rem">${config.site.name}</div>
+        <div tw="text-[#858585] text-2.1rem">${source}</div>
         <div tw="text-white text-3.1rem leading-relaxed mr-18">${title}</div>
       </div>
     </div>

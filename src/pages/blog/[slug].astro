@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props
 const { data: frontmatter } = post
-const { Content, headings, remarkPluginFrontmatter } = await post.render()
+const { Content, headings } = await post.render()
 
 const { share, toc } = config.features
 ---
@@ -29,7 +29,7 @@ const { share, toc } = config.features
 <BaseLayout
   title={frontmatter.title}
   description={frontmatter.description}
-  ogImage={frontmatter.ogImage ?? remarkPluginFrontmatter.ogImage}
+  ogImage={frontmatter.ogImage}
 >
   {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
   <StandardLayout {post}>

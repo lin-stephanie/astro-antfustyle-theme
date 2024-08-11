@@ -208,7 +208,7 @@ export function generateToc(
   return toc
 }
 
-/* plugin */
+/* log */
 export function getCurrentFormattedTime() {
   const now = new Date()
   const hours = now.getHours().toString().padStart(2, '0')

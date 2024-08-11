@@ -1,5 +1,7 @@
 ---
 import { ViewTransitions } from 'astro:transitions'
+import { basename } from 'node:path'
+import { checkFileExistsInDir } from '../../plugins/remark-generate-og-image'
 import config from '~/config'
 
 interface Props {
@@ -16,7 +18,16 @@ const siteTitle = title
   : config.site.name
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
-const ogImageURL = new URL(ogImage ?? '/og-images/og-image.jpg', Astro.url).href
+const generatedOgImage = checkFileExistsInDir(
+  'public/og-images',
+  `${basename(Astro.url.pathname)}.png`
+)
+  ? `/og-images/${basename(Astro.url.pathname)}.png`
+  : undefined
+const ogImageURL = new URL(
+  (ogImage ?? generatedOgImage) || '/og-images/og-image.png',
+  Astro.url
+).href
 ---
 
 <!-- Global Metadata -->

@@ -28,13 +28,18 @@ const satoriOptions: SatoriOptions = {
   ],
 }
 
-function checkFileExistsInDir(path: string, filename: string) {
+export function checkFileExistsInDir(path: string, filename: string) {
   const fullPath = join(process.cwd(), path, filename)
 
   return existsSync(fullPath)
 }
 
-async function generateOgImage(title: string, bgType: BgType, output: string) {
+async function generateOgImage(
+  source: string,
+  title: string,
+  bgType: BgType,
+  output: string
+) {
   await mkdir(dirname(output), { recursive: true })
 
   console.log(
@@ -42,7 +47,10 @@ async function generateOgImage(title: string, bgType: BgType, output: string) {
   )
 
   try {
-    const svg = await satori(ogImageMarkup(title, bgType), satoriOptions)
+    const svg = await satori(
+      ogImageMarkup(source, title, bgType),
+      satoriOptions
+    )
     const png = new Resvg(svg).render().asPng()
     writeFileSync(output, png)
   } catch (e) {
@@ -59,9 +67,27 @@ async function generateOgImage(title: string, bgType: BgType, output: string) {
  * @see https://github.com/vfile/vfile
  */
 function remarkGenerateOgImage() {
+  // get config
+  const ogImage = config.features.ogImage
+  if (!(Array.isArray(ogImage) && ogImage[0])) return
+
+  const sourceConfig = ogImage[1].authorOrBrand
+  const titleConfig = ogImage[1].fallbackTitle
+  const bgTypeConfig = ogImage[1].fallbackBgType
+
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   return async (_tree, file) => {
+    // regenerate fallback
+    if (!checkFileExistsInDir('public/og-images', 'og-image.png')) {
+      await generateOgImage(
+        sourceConfig,
+        titleConfig,
+        bgTypeConfig,
+        'public/og-images/og-image.png'
+      )
+    }
+
     // check filename
     const filename = file.basename
     if (!filename || !(filename.endsWith('.md') || filename.endsWith('.mdx')))
@@ -97,10 +123,9 @@ function remarkGenerateOgImage() {
       return
     }
 
-    // get frontmatter title
+    // get title
     const title = file.data.astro.frontmatter.title
     if (!title.trim().length) {
-      console.warn('test')
       console.warn(
         `${chalk.black(getCurrentFormattedTime())} ${chalk.yellow(`[WARN] The 'title' field in the '${filename}' frontmatter is an empty string.`)}`
       )
@@ -108,17 +133,15 @@ function remarkGenerateOgImage() {
 
     // get bgType
     const dirname = basename(file.dirname)
-    const bgType = config.pages[dirname].bgType ?? 'plum'
+    const bgType = config.pages[dirname].bgType ?? bgTypeConfig
 
     // generate og images
     await generateOgImage(
+      sourceConfig,
       title.trim(),
       bgType,
       `public/og-images/${nameWithoutExt}.png`
     )
-
-    // add frontmatter
-    file.data.astro.frontmatter.ogImage = `/og-images/${nameWithoutExt}.png`
   }
 }
 
