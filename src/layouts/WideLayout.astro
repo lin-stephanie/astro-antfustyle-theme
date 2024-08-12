@@ -14,15 +14,15 @@ const { data } = entry
     {data.title}
   </h1>
 </header>
-<article>
-  <div class="max-w-300 mx-auto">
-    {
-      data.subtitle && (
-        <p class="mt--6! mb-5 opacity-50 text-lg text-center italic">
-          {data.subtitle}
-        </p>
-      )
-    }
-    <slot />
-  </div>
+<article class="max-w-300 mx-auto">
+  <!-- <div > -->
+  {
+    data.subtitle && (
+      <p class="mt--6! mb-5 opacity-50 text-lg text-center italic">
+        {data.subtitle}
+      </p>
+    )
+  }
+  <slot />
+  <!-- </div> -->
 </article>

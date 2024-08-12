@@ -24,7 +24,7 @@ const { data: frontmatter } = post
     class="link"
     href={frontmatter.redirect
       ? frontmatter.redirect
-      : `/${collection}/${post.slug}`}
+      : `/${collection}/${post.slug}/`}
     external={frontmatter.redirect ? true : false}
   >
     <li

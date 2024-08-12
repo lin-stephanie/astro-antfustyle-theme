@@ -217,3 +217,8 @@ export function getCurrentFormattedTime() {
 
   return `${hours}:${minutes}:${seconds}`
 }
+
+/* path */
+export function ensureTrailingSlash(pathname: string): string {
+  return pathname.endsWith('/') ? pathname : pathname + '/'
+}

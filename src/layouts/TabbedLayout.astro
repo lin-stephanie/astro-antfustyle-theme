@@ -1,5 +1,6 @@
 ---
 import Link from '~/components/base/Link.astro'
+import { ensureTrailingSlash } from '~/utils'
 import type { NavTabsItems } from '~/types'
 
 interface Props {
@@ -7,33 +8,31 @@ interface Props {
 }
 
 const { items } = Astro.props
-const path = Astro.url.pathname
+
+const currentPath = ensureTrailingSlash(Astro.url.pathname)
+const isActive = (href: string) => currentPath === ensureTrailingSlash(href)
 ---
 
-<article>
-  <div class="prose slide-enter-content m-auto">
-    <div id="nav-tabs" class="prose m-auto mb-8 select-none animate-none!">
-      <div u-flex="~ gap-3 lt-sm:(col wrap gap-1) " class="mb-0 text-3xl">
-        {
-          items.map((item) => (
-            <Link
-              class:list={[
-                'link',
-                {
-                  'tabs__a--active': path === item.href,
-                  'tabs__a--inactive': path !== item.href,
-                },
-              ]}
-              href={item.href}
-            >
-              {item.label}
-            </Link>
-          ))
-        }
-      </div>
+<article class="prose slide-enter-content m-auto">
+  <nav id="nav-tabs" class="prose m-auto mb-8 select-none animate-none!">
+    <div u-flex="~ gap-3 lt-sm:(col wrap gap-1) " class="mb-0 text-3xl">
+      {
+        items.map((item) => (
+          <Link
+            class:list={{
+              'link': true,
+              'tabs__a--active': isActive(item.href),
+              'tabs__a--inactive': !isActive(item.href),
+            }}
+            href={ensureTrailingSlash(item.href)}
+          >
+            {item.label}
+          </Link>
+        ))
+      }
     </div>
-    <slot />
-  </div>
+  </nav>
+  <slot />
 </article>
 
 <style>

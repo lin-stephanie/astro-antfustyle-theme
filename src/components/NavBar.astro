@@ -6,6 +6,7 @@ import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
 import SearchSwitch from '~/components/widgets/SearchSwitch.astro'
 
 import config from '~/config'
+import { ensureTrailingSlash } from '~/utils'
 
 const { socials, navBar } = config.site
 ---
@@ -17,28 +18,20 @@ const { socials, navBar } = config.site
     <div class="spacer"></div>
     <div class="right print:op-0">
       {
-        navBar.map((item) => {
-          if (item.type === 'rwd') {
-            return (
-              <Link class="link" href={item.path} title={item.prompt}>
-                <span class="lt-md:hidden">{item.text}</span>
-                <div class={`md:hidden ${item.icon}`} />
-              </Link>
-            )
-          } else if (item.type === 'icon') {
-            return (
-              <Link class="link" href={item.path} title={item.prompt}>
-                <div class={`${item.icon}`} />
-              </Link>
-            )
-          } else if (item.type === 'text') {
-            return (
-              <Link class="link" href={item.path} title={item.prompt}>
-                <span>{item.text}</span>
-              </Link>
-            )
-          }
-        })
+        navBar.map((item) => (
+          <Link
+            class="link"
+            href={ensureTrailingSlash(item.path)}
+            title={item.prompt}
+          >
+            {item.type === 'rwd' && (
+              <span class="lt-md:hidden">{item.text}</span>
+              <div class={`md:hidden ${item.icon}`} />
+            )}
+            {item.type === 'icon' && <div class={item.icon} />}
+            {item.type === 'text' && <span>{item.text}</span>}
+          </Link>
+        ))
       }
       {
         socials.map((item) => {
