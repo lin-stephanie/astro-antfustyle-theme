@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config'
-import UnoCSS from 'unocss/astro'
+import unocss from 'unocss/astro'
 import astroExpressiveCode from 'astro-expressive-code'
 
 import { remarkPlugins, rehypePlugins } from './plugins'
@@ -9,7 +9,7 @@ import config from './src/config'
 export default defineConfig({
   site: config.site.url,
   integrations: [
-    UnoCSS({
+    unocss({
       // https://unocss.dev/integrations/astro#style-reset
       injectReset: true,
     }),

@@ -16,7 +16,8 @@ import { getUrl } from '~/utils'
   id="search-panel"
   class="float-panel-closed
     z-200 fixed top-20 right-8
-    w-30rem p-2 rounded-lg lt-md:(w-90% left-5% right-5%)
+    grid grid-rows-[auto_1fr]
+    w-30rem max-h-80vh p-2 rounded-lg lt-md:(w-90% left-5% right-5%)
     bg-[var(--c-bg)] shadow-c"
   tabindex="-1"
 >
@@ -35,7 +36,7 @@ import { getUrl } from '~/utils'
       autocomplete="off"
     />
   </div>
-  <div id="search-results"></div>
+  <div id="search-results" class="overflow-y-auto"></div>
 </div>
 
 <style is:global>
@@ -137,6 +138,76 @@ import { getUrl } from '~/utils'
 
 <script>
   const fakeResults = [
+    {
+      url: '/',
+      meta: {
+        title: 'Simulated Search Result in Dev Env',
+      },
+      excerpt: 'Mock data is used to simulate pagefind search <mark>in development</mark>, where files required for indexing exist only in memory.',
+    },
+    {
+      url: '/',
+      meta: {
+        title: 'Testing Search Functionality in Prod Env',
+      },
+      excerpt: 'Try running <mark>pnpm build && pnpm preview</mark> instead.',
+    },
+    {
+      url: '/',
+      meta: {
+        title: 'Simulated Search Result in Dev Env',
+      },
+      excerpt: 'Mock data is used to simulate pagefind search <mark>in development</mark>, where files required for indexing exist only in memory.',
+    },
+    {
+      url: '/',
+      meta: {
+        title: 'Testing Search Functionality in Prod Env',
+      },
+      excerpt: 'Try running <mark>pnpm build && pnpm preview</mark> instead.',
+    },
+    {
+      url: '/',
+      meta: {
+        title: 'Simulated Search Result in Dev Env',
+      },
+      excerpt: 'Mock data is used to simulate pagefind search <mark>in development</mark>, where files required for indexing exist only in memory.',
+    },
+    {
+      url: '/',
+      meta: {
+        title: 'Testing Search Functionality in Prod Env',
+      },
+      excerpt: 'Try running <mark>pnpm build && pnpm preview</mark> instead.',
+    },
+    {
+      url: '/',
+      meta: {
+        title: 'Simulated Search Result in Dev Env',
+      },
+      excerpt: 'Mock data is used to simulate pagefind search <mark>in development</mark>, where files required for indexing exist only in memory.',
+    },
+    {
+      url: '/',
+      meta: {
+        title: 'Testing Search Functionality in Prod Env',
+      },
+      excerpt: 'Try running <mark>pnpm build && pnpm preview</mark> instead.',
+    },
+    {
+      url: '/',
+      meta: {
+        title: 'Simulated Search Result in Dev Env',
+      },
+      excerpt: 'Mock data is used to simulate pagefind search <mark>in development</mark>, where files required for indexing exist only in memory.',
+    },
+    {
+      url: '/',
+      meta: {
+        title: 'Testing Search Functionality in Prod Env',
+      },
+      excerpt: 'Try running <mark>pnpm build && pnpm preview</mark> instead.',
+    },
     {
       url: '/',
       meta: {
