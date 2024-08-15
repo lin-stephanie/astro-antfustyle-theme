@@ -1,7 +1,7 @@
 ---
 title: Image Examples
 duration: 3min
-date: 2024-07-29
+created: 2024-07-29
 toc: false
 share: true
 ---

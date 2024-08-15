@@ -1,7 +1,7 @@
 ---
 title: Callout Examples
 duration: 3min
-date: 2024-07-22
+created: 2024-07-22
 toc: false
 share: true
 ---

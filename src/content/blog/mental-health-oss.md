@@ -2,7 +2,7 @@
 title: Mental Health in Open Source
 description: Some of my thoughts on my mental health during my journey in Open Source
 duration: 25min
-date: 2024-03-16T12:00:00.000+00:00
+created: 2024-03-16T12:00:00.000+00:00
 ---
 
 > **TL;DR**: I am doing great and not going anywhere. Having some pressure but still holding up and trying to improve. Thank you and don't worry!

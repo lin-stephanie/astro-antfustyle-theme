@@ -1,6 +1,6 @@
 ---
 title: Introducing ESLint Config Inspector
-date: 2024-04-05T16:00:00Z
+created: 2024-04-05T16:00:00Z
 duration: 5min
 redirect: https://eslint.org/blog/2024/04/eslint-config-inspector/
 ---

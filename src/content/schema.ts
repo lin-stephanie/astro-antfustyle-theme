@@ -3,22 +3,23 @@ import { z } from 'astro:content'
 /* posts */
 export const postSchema = z
   .object({
-    date: z.coerce.date(),
     title: z.string(),
     subtitle: z.string().default(''),
     description: z.string().default(''),
-    redirect: z.string().url('Invalid url.').optional(),
-    video: z.boolean().default(false),
+    created: z.coerce.date(),
+    lastModified: z.coerce.date().optional(),
     radio: z.boolean().default(false),
+    video: z.boolean().default(false),
     platform: z.string().default(''),
     duration: z.string().default(''),
-    draft: z.boolean().default(false),
-    share: z.boolean().default(true),
     toc: z.boolean().default(true),
+    share: z.boolean().default(true),
     ogImage: z
       .string()
       .regex(/^\/og-images\//, "ogImage must start with '/og-images/'.")
       .optional(),
+    redirect: z.string().url('Invalid url.').optional(),
+    draft: z.boolean().default(false),
   })
   .strict()
 
@@ -27,8 +28,8 @@ export type PostSchema = z.infer<typeof postSchema>
 /* projects */
 const projectSchema = z.object({
   name: z.string(),
-  link: z.string().url({ message: 'Invalid url.' }),
   desc: z.string(),
+  link: z.string().url('Invalid url.'),
   icon: z
     .string()
     .regex(
@@ -37,15 +38,15 @@ const projectSchema = z.object({
     ),
 })
 
-const groupSchema = z.record(z.array(projectSchema))
+const projectGroupsSchema = z.record(z.array(projectSchema))
 
 export const projectsSchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
-  projects: groupSchema,
+  projects: projectGroupsSchema,
   toc: z.boolean().optional().default(true),
 })
 
 export type ProjectSchema = z.infer<typeof projectSchema>
-export type GrouptSchema = z.infer<typeof groupSchema>
+export type ProjectGroupsSchema = z.infer<typeof projectGroupsSchema>
 export type ProjectsSchema = z.infer<typeof projectsSchema>

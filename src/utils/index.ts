@@ -23,10 +23,8 @@ export function isSameYear(
 
 /* items */
 import type { CollectionEntry, ContentEntryMap } from 'astro:content'
-import type { GrouptSchema } from '~/content/schema'
 
 type EntryKey = keyof ContentEntryMap
-
 type Acc = Record<string, CollectionEntry<EntryKey>[]>
 
 export function getPublishedItems(items: CollectionEntry<EntryKey>[]) {
@@ -37,7 +35,7 @@ export function getSortedItems(items: CollectionEntry<EntryKey>[]) {
   const publishedItems = getPublishedItems(items)
 
   return publishedItems.sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+    (a, b) => b.data.created.valueOf() - a.data.created.valueOf()
   )
 }
 
@@ -45,7 +43,7 @@ export function groupItemsByYear(items: CollectionEntry<EntryKey>[]) {
   const sortedItems = getSortedItems(items)
 
   return sortedItems.reduce((acc: Acc, item) => {
-    const year = item.data.date.getFullYear().toString()
+    const year = item.data.created.getFullYear().toString()
     acc[year] ? acc[year].push(item) : (acc[year] = [item])
     return acc
   }, {})
@@ -94,11 +92,13 @@ export function getRandomPercentage(min: number, max: number) {
 }
 
 /* projects */
+import type { ProjectGroupsSchema } from '~/content/schema'
+
 export function slug(text: string) {
   return text.toLowerCase().replace(/[\s\\/]+/g, '-')
 }
 
-export function extractIconsStartingWithI(data: GrouptSchema): string[] {
+export function extractIconsStartingWithI(data: ProjectGroupsSchema): string[] {
   const icons: string[] = []
 
   for (const key in data) {

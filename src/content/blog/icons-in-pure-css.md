@@ -2,12 +2,7 @@
 title: Icons in Pure CSS
 description: The icon solution in pure CSS.
 duration: 10min
-date: 2021-10-31
-# date: 2021/10/31
-# date: 2021-10-31T16:00:00Z
-# date: 2021-10-31T16:00:00+08:00
-# date: 2021-10-31T16:00:00-08:00
-# date: "2021-10-31T16:00:00-08:00"
+created: 2021-10-31
 draft: true
 share: false
 ---

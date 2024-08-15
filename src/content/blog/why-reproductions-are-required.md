@@ -2,7 +2,7 @@
 title: Why Reproductions are Required
 description: My thoughts on why reproductions are important in open source.
 duration: 9min
-date: 2022-05-30T16:00:00Z
+created: 2022-05-30T16:00:00Z
 ---
 
 If you have ever browsed the issue lists in my repos or created one, you might sometimes see I reply with the following comment and then close the issue:

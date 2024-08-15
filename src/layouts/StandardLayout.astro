@@ -22,16 +22,23 @@ const { data: frontmatter } = post
   </h1>
   {
     frontmatter.subtitle && (
-      <p class="slide-enter mt--6! opacity-50 italic">{frontmatter.subtitle}</p>
+      <p class="slide-enter mt--6! mb-8! opacity-50 italic">
+        {frontmatter.subtitle}
+      </p>
     )
   }
   {
-    frontmatter.date && (
+    frontmatter.created && (
       <p class="slide-enter-50 mt--6! opacity-50">
-        <time datetime={frontmatter.date.toISOString()}>
-          {formatDate(frontmatter.date.toISOString())}
+        <time datetime={frontmatter.created.toISOString()}>
+          {formatDate(frontmatter.created.toISOString())}
         </time>
         {frontmatter.duration && <span>· {frontmatter.duration}</span>}
+        {frontmatter.lastModified && (
+          <time datetime={frontmatter.lastModified.toISOString()}>
+            | Last updated: {formatDate(frontmatter.lastModified.toISOString())}
+          </time>
+        )}
       </p>
     )
   }

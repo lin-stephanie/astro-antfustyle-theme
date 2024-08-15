@@ -1,7 +1,7 @@
 ---
 title: Code Examples
 duration: 3min
-date: 2024-07-25
+created: 2024-07-25
 toc: false
 share: true
 ---

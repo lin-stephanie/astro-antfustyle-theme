@@ -17,7 +17,7 @@ const posts = await getCollection('blog', ({ data }) => {
 })
 
 const sortedPosts = posts.sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  (a, b) => b.data.created.valueOf() - a.data.created.valueOf()
 )
 ---
 
@@ -30,8 +30,14 @@ const sortedPosts = posts.sort(
         ) : (
           sortedPosts.map((post, idx) => (
             <>
-              {!isSameYear(post.data.date, sortedPosts[idx - 1]?.data.date) && (
-                <Categorizer {idx} text={getYear(post.data.date).toString()} />
+              {!isSameYear(
+                post.data.created,
+                sortedPosts[idx - 1]?.data.created
+              ) && (
+                <Categorizer
+                  {idx}
+                  text={getYear(post.data.created).toString()}
+                />
               )}
               <PostItem collection={'blog'} {idx} {post} />
             </>
