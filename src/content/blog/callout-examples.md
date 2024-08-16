@@ -1,6 +1,5 @@
 ---
 title: Callout Examples
-duration: 3min
 created: 2024-07-22
 toc: false
 share: true

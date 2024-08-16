@@ -9,6 +9,13 @@ interface Props {
 
 const { post, wrapperClass } = Astro.props
 const { data: frontmatter } = post
+const { remarkPluginFrontmatter } = await post.render()
+
+const created = frontmatter.created.toISOString()
+const lastModified =
+  frontmatter.lastModified && frontmatter.lastModified.toISOString()
+const minutesRead =
+  frontmatter.minutesRead || remarkPluginFrontmatter.minutesRead
 ---
 
 <header class=`prose m-auto mb-8 ${wrapperClass}`>
@@ -30,13 +37,11 @@ const { data: frontmatter } = post
   {
     frontmatter.created && (
       <p class="slide-enter-50 mt--6! opacity-50">
-        <time datetime={frontmatter.created.toISOString()}>
-          {formatDate(frontmatter.created.toISOString())}
-        </time>
-        {frontmatter.duration && <span>· {frontmatter.duration}</span>}
-        {frontmatter.lastModified && (
-          <time datetime={frontmatter.lastModified.toISOString()}>
-            | Last updated: {formatDate(frontmatter.lastModified.toISOString())}
+        <time datetime={created}>{formatDate(created)}</time>
+        {minutesRead !== 0 && <span>· {minutesRead} min</span>}
+        {lastModified && (
+          <time datetime={lastModified}>
+            | Last updated: {formatDate(lastModified)}
           </time>
         )}
       </p>

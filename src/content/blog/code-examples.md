@@ -1,6 +1,5 @@
 ---
 title: Code Examples
-duration: 3min
 created: 2024-07-25
 toc: false
 share: true

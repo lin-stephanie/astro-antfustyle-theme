@@ -3,11 +3,10 @@ import Link from '~/components/base/Link.astro'
 import type { ShareConfig } from '~/types'
 
 interface Props {
-  show: boolean
   config: ShareConfig
 }
 
-const { show, config } = Astro.props
+const { config } = Astro.props
 
 const tweet = 'https://twitter.com/intent/tweet?text='
 const elk = 'https://elk.zone/intent/post?text='
@@ -21,23 +20,21 @@ const elkUrl =
   `${elk}${encodeURIComponent(`Reading ${config.mastodon}'s ${Astro.url}\n\nI think...`)}`
 ---
 
+<span class="op-50 font-mono">&gt;</span>
+<span class="op-50">comment on</span>
 {
-  show && (
-    <>
-      <span class="op-50 font-mono">&gt;</span>
-      <span class="op-50">comment on</span>
-      {tweetUrl && (
-        <Link class="link" href={tweetUrl} external={true}>
-          twitter
-        </Link>
-      )}
-      {tweetUrl && elkUrl && <span class="op-25">/</span>}
-      {elkUrl && (
-        <Link class="link" href={elkUrl} external={true}>
-          mastodon
-        </Link>
-      )}
-    </>
+  tweetUrl && (
+    <Link class="link" href={tweetUrl} external={true}>
+      twitter
+    </Link>
+  )
+}
+{tweetUrl && elkUrl && <span class="op-25">/</span>}
+{
+  elkUrl && (
+    <Link class="link" href={elkUrl} external={true}>
+      mastodon
+    </Link>
   )
 }
 

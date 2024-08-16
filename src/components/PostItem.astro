@@ -11,6 +11,10 @@ interface Props {
 
 const { collection, idx, post } = Astro.props
 const { data: frontmatter } = post
+const { remarkPluginFrontmatter } = await post.render()
+
+const minutesRead =
+  frontmatter.minutesRead || remarkPluginFrontmatter.minutesRead
 ---
 
 <div
@@ -69,15 +73,15 @@ const { data: frontmatter } = post
           {formatDate(frontmatter.created, false)}
         </span>
         {
-          frontmatter.duration && (
-            <span class="op-40 text-sm ws-nowrap">
-              · {frontmatter.duration}
-            </span>
+          minutesRead !== 0 && (
+            <span class="op-40 text-sm ws-nowrap">· {minutesRead} min</span>
           )
         }
         {
           frontmatter.platform && (
-            <span class="op-40 text-sm ws-nowrap">{frontmatter.platform}</span>
+            <span class="op-40 text-sm ws-nowrap">
+              · {frontmatter.platform}
+            </span>
           )
         }
       </div>

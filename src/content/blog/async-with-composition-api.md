@@ -2,7 +2,7 @@
 title: Async with Composition API
 description: Notes about the caveat when using async functions in Vue Composition API.
 created: 2021-07-16T08:00:00.000+00:00
-duration: 17min
+minutesRead: 17
 ---
 
 There is a major caveat when working with asynchronous functions in Vue Composition API, that I believe many of you have ever come across. I have acknowledged it for a while from somewhere, but every time I want to have a detailed reference and share to others, I can't find it's documented anywhere. So, I am thinking about writing one, with a detailed explanation while sorting out the possible solutions for you.

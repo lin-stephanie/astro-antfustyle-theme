@@ -1,6 +1,5 @@
 ---
 title: Image Examples
-duration: 3min
 created: 2024-07-29
 toc: false
 share: true

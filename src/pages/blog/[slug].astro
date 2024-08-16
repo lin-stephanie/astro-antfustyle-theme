@@ -37,11 +37,7 @@ const { share, toc } = config.features
   </StandardLayout>
   {
     Array.isArray(share) && share[0] && frontmatter.share && (
-      <ShareLink
-        slot="share"
-        show={frontmatter.duration ? true : false}
-        config={share[1]}
-      />
+      <ShareLink slot="share" config={share[1]} />
     )
   }
 </BaseLayout>

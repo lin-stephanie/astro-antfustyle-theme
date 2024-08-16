@@ -1,7 +1,7 @@
 ---
 title: Why I don't use Prettier
 description: The reason why I don't use Prettier in my projects.
-duration: 12min
+minutesRead: 12
 created: 2022-10-01T00:00:00Z
 ---
 

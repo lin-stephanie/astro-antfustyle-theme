@@ -3,7 +3,7 @@ title: Development Experience with Nuxt
 description: Development Experience with Nuxt - Vue Amsterdam 2023
 created: 2023-02-09
 video: true
-duration: 25min
+minutesRead: 25
 ---
 
 > Slides: [PDF](https://antfu.me/talks/2023-02-09) | [SPA](https://talks.antfu.me/2023/nuxt-devtools/)

@@ -8,10 +8,10 @@ export const postSchema = z
     description: z.string().default(''),
     created: z.coerce.date(),
     lastModified: z.coerce.date().optional(),
+    minutesRead: z.number().optional(),
     radio: z.boolean().default(false),
     video: z.boolean().default(false),
     platform: z.string().default(''),
-    duration: z.string().default(''),
     toc: z.boolean().default(true),
     share: z.boolean().default(true),
     ogImage: z

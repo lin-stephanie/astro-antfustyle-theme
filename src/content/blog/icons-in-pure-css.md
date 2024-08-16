@@ -1,7 +1,7 @@
 ---
 title: Icons in Pure CSS
 description: The icon solution in pure CSS.
-duration: 10min
+minutesRead: 10
 created: 2021-10-31
 draft: true
 share: false

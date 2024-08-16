@@ -2,6 +2,7 @@ import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import remarkDirective from 'remark-directive'
 import remarkImageContainer from './remark-image-container'
 import remarkImgattr from 'remark-imgattr'
+import remarkReadingTime from './remark-reading-time'
 import remarkGenerateOgImage from './remark-generate-og-image'
 
 import rehypeCallouts from 'rehype-callouts'
@@ -17,6 +18,7 @@ export const remarkPlugins: RemarkPlugins = [
   remarkImageContainer,
   // https://github.com/OliverSpeir/remark-imgattr
   remarkImgattr,
+  remarkReadingTime,
   ...(Array.isArray(config.features.ogImage) && config.features.ogImage[0]
     ? [remarkGenerateOgImage]
     : []),
