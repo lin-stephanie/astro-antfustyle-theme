@@ -6,11 +6,10 @@ import WideLayout from '~/layouts/WideLayout.astro'
 import Toc from '~/components/toc/Toc.astro'
 import Categorizer from '~/components/Categorizer.astro'
 import ProjectGroup from '~/components/ProjectGroup.astro'
+import { PAGES, FEATURES } from '~/config'
 
-import config from '~/config'
-
-const { title, description, bgType } = config.pages.projects
-const { toc } = config.features
+const { title, description, bgType } = PAGES.projects
+const { toc } = FEATURES
 
 const entry = await getEntry('projects', 'data')
 const { data: frontmatter } = entry

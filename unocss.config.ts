@@ -8,17 +8,15 @@ import {
   transformerVariantGroup,
 } from 'unocss'
 
-import { extractIconsStartingWithI } from './src/utils'
 import projecstData from './src/content/projects/data.json'
-import config from './src/config'
+import { extractIconsStartingWithI } from './src/utils'
+import { SITE, SOCIALS } from './src/config'
+import type { IconNavItem, ResponsiveNavItem } from './src/types'
 
-const { socials, navBar } = config.site
-
-const navIcons = navBar
+const navIcons = SITE.navBar
   .filter((item) => item.type !== 'text')
-  // @ts-expect-error (for Property 'icon' does not exist on type 'TextNavItem'.ts(2339))
-  .map((item) => item.icon)
-const socialIcons = socials.map((item) => item.icon)
+  .map((item) => (item as IconNavItem | ResponsiveNavItem).icon)
+const socialIcons = SOCIALS.map((item) => item.icon)
 const projectIcons = extractIconsStartingWithI(projecstData.projects)
 
 export default defineConfig({

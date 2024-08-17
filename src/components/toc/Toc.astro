@@ -1,7 +1,7 @@
 ---
-import config from '~/config'
 import TocItem from './TocItem.astro'
 import { generateToc, slug } from '~/utils'
+import { FEATURES } from '~/config'
 import type { MarkdownHeading } from 'astro'
 
 interface Props {
@@ -11,8 +11,8 @@ interface Props {
 }
 
 let position = 'left'
-if (Array.isArray(config.features.toc) && config.features.toc[0]) {
-  position = config.features.toc[1].position
+if (Array.isArray(FEATURES.toc) && FEATURES.toc[0]) {
+  position = FEATURES.toc[1].position
 }
 
 const { headings = [], category = [], style } = Astro.props

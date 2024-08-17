@@ -9,7 +9,7 @@ import { mkdir } from 'node:fs/promises'
 
 import { getCurrentFormattedTime } from '../src/utils'
 import { ogImageMarkup } from './og-template/markup'
-import config from '../src/config'
+import { PAGES, FEATURES } from '../src/config'
 import type { BgType } from '../src/types'
 
 const Inter = readFileSync('plugins/og-template/Inter-Regular-24pt.ttf')
@@ -68,7 +68,7 @@ async function generateOgImage(
  */
 function remarkGenerateOgImage() {
   // get config
-  const ogImage = config.features.ogImage
+  const ogImage = FEATURES.ogImage
   if (!(Array.isArray(ogImage) && ogImage[0])) return
 
   const sourceConfig = ogImage[1].authorOrBrand
@@ -133,7 +133,7 @@ function remarkGenerateOgImage() {
 
     // get bgType
     const dirname = basename(file.dirname)
-    const bgType = config.pages[dirname].bgType ?? bgTypeConfig
+    const bgType = PAGES[dirname].bgType ?? bgTypeConfig
 
     // generate og images
     await generateOgImage(

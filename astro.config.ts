@@ -3,11 +3,11 @@ import unocss from 'unocss/astro'
 import astroExpressiveCode from 'astro-expressive-code'
 
 import { remarkPlugins, rehypePlugins } from './plugins'
-import config from './src/config'
+import { SITE } from './src/config'
 
 // https://docs.astro.build/en/reference/configuration-reference/
 export default defineConfig({
-  site: config.site.url,
+  site: SITE.website,
   integrations: [
     unocss({
       // https://unocss.dev/integrations/astro#style-reset

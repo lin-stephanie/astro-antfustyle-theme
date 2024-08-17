@@ -2,22 +2,25 @@
 import { ViewTransitions } from 'astro:transitions'
 import { basename } from 'node:path'
 import { checkFileExistsInDir } from '../../plugins/remark-generate-og-image'
-import config from '~/config'
+import { SITE } from '~/config'
 
 interface Props {
   title: string
-  description: string
+  description?: string
   ogImage?: string
 }
 
 const { title, description, ogImage } = Astro.props
 
 const titleSeparator = '-'
-const siteTitle = title
-  ? `${title} ${titleSeparator} ${config.site.name}`
-  : config.site.name
+const pageTitle = title
+  ? `${title} ${titleSeparator} ${SITE.title}`
+  : SITE.title
+
+const pageDescription = description || SITE.description
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+
 const generatedOgImage = checkFileExistsInDir(
   'public/og-images',
   `${basename(Astro.url.pathname)}.png`
@@ -37,10 +40,10 @@ const ogImageURL = new URL(
 <meta name="generator" content={Astro.generator} />
 
 <!-- Primary Meta Tags -->
-<title>{siteTitle}</title>
-<meta name="title" content={siteTitle} />
-<meta name="description" content={description} />
-<meta name="author" content={config.site.author} />
+<title>{pageTitle}</title>
+<meta name="title" content={pageTitle} />
+<meta name="description" content={pageDescription} />
+<meta name="author" content={SITE.author} />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -53,15 +56,15 @@ const ogImageURL = new URL(
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={siteTitle} />
-<meta property="og:description" content={description} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={pageDescription} />
 <meta property="og:image" content={ogImageURL} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={siteTitle} />
-<meta property="twitter:description" content={description} />
+<meta property="twitter:title" content={pageTitle} />
+<meta property="twitter:description" content={pageDescription} />
 <meta property="twitter:image" content={ogImageURL} />
 
 <!-- Font preloads -->

@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro'
-import config from '~/config'
+import { PAGES } from '~/config'
 
-const { title, description, bgType } = config.pages['404']
+const { title, description, bgType } = PAGES['404']
 ---
 
 <BaseLayout {title} {description} {bgType}>

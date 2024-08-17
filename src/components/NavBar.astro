@@ -5,10 +5,8 @@ import ToTopButton from '~/components/widgets/ToTopButton.astro'
 import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
 import SearchSwitch from '~/components/widgets/SearchSwitch.astro'
 
-import config from '~/config'
+import { SITE, SOCIALS } from '~/config'
 import { ensureTrailingSlash } from '~/utils'
-
-const { socials, navBar } = config.site
 ---
 
 <header class="z-40">
@@ -18,7 +16,7 @@ const { socials, navBar } = config.site
     <div class="spacer"></div>
     <div class="right print:op-0">
       {
-        navBar.map((item) => (
+        SITE.navBar.map((item) => (
           <Link
             class="link"
             href={ensureTrailingSlash(item.path)}
@@ -34,10 +32,10 @@ const { socials, navBar } = config.site
         ))
       }
       {
-        socials.map((item) => {
+        SOCIALS.map((item) => {
           return (
             <Link
-              title={item.name}
+              title={item.title}
               href={item.href}
               external={true}
               class={item.rwd ? 'lt-md:hidden' : ''}

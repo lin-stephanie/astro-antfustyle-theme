@@ -9,7 +9,7 @@ import rehypeCallouts from 'rehype-callouts'
 import rehypeExternalLinks from 'rehype-external-links'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
-import config from '../src/config'
+import { FEATURES } from '../src/config'
 import type { RemarkPlugins, RehypePlugins } from 'astro'
 
 export const remarkPlugins: RemarkPlugins = [
@@ -19,7 +19,7 @@ export const remarkPlugins: RemarkPlugins = [
   // https://github.com/OliverSpeir/remark-imgattr
   remarkImgattr,
   remarkReadingTime,
-  ...(Array.isArray(config.features.ogImage) && config.features.ogImage[0]
+  ...(Array.isArray(FEATURES.ogImage) && FEATURES.ogImage[0]
     ? [remarkGenerateOgImage]
     : []),
 ]

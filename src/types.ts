@@ -1,4 +1,4 @@
-/* misc */
+/* MISC */
 export type Fn = () => void
 
 export type Range = [number, number]
@@ -27,14 +27,141 @@ export const items: NavTabsItems = [
   { href: '/notes', label: 'Notes' },
 ]
 
-/* customize */
-type Mentioned = `@${string}` | ''
+/* SITE */
 type Icon = `i-${string}-${string}` | `i-${string}:${string}`
-export type BgType = 'plum' | 'dot' | 'rose' | 'particle'
 
-/**
- * Set the social media links.
- */
+interface BaseNavItem {
+  /**
+   * Set the navigation item's URL, which must start with `/`.
+   */
+  path: string
+
+  /**
+   * Set prompt content for mouse hover.
+   */
+  prompt?: string
+}
+
+interface TextNavItem extends BaseNavItem {
+  /**
+   * Specifies the navigation item where type is 'text'.
+   *
+   * @description
+   * Only text is shown regardless of the viewport size.
+   *
+   * @remark
+   * Requires `text` to be configured.
+   */
+  type: 'text'
+
+  /**
+   * Set the text displayed for the navigation item.
+   */
+  text: string
+}
+
+export interface IconNavItem extends BaseNavItem {
+  /**
+   * Specifies the navigation item of type is 'icon'.
+   *
+   * @description
+   * Only an icon is shown regardless of the viewport size.
+   *
+   * @remark
+   * Requires `icon` to be configured.
+   */
+  type: 'icon'
+
+  /**
+   * Set the icon displayed for the navigation item. Required if `type` is 'icon' or 'rwd'.
+   *
+   * @description
+   * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
+   * as per {@link https://unocss.dev/presets/icons Unocss} specs.
+   *
+   * @example
+   * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
+   *
+   * @see {@link  https://icones.js.org/ Check all available icons}
+   */
+  icon: Icon
+}
+
+export interface ResponsiveNavItem extends BaseNavItem {
+  /**
+   * Specifies the navigation item of type is 'rwd' (responsive).
+   *
+   * @description
+   * Displays text when viewport width is over 768px and icons otherwise.
+   *
+   * @remark
+   * Requires both `text` and `icon` to be configured.
+   */
+  type: 'rwd'
+
+  /**
+   * Set the text displayed for the navigation item. Required if `type` is 'text' or 'rwd'.
+   */
+  text: string
+
+  /**
+   * Set the icon displayed for the navigation item. Required if `type` is 'icon' or 'rwd'.
+   *
+   * @description
+   * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
+   * as per {@link https://unocss.dev/presets/icons Unocss} specs.
+   *
+   * @example
+   * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
+   *
+   * @see {@link  https://icones.js.org/ Check all available icons}
+   */
+  icon: Icon
+}
+
+type NavItem = TextNavItem | IconNavItem | ResponsiveNavItem
+
+export interface Site {
+  /**
+   * Set your final deployed URL, which will be passed to the
+   * {@link https://docs.astro.build/en/reference/configuration-reference/#site site config} in Astro,
+   * used for generating canonical URLs and more, found in `astro.config.ts`.
+   */
+  website: string
+
+  /**
+   * Set the site name to format with {@link PageMetadata.title} as `<pageTitle> - <siteTitle>`
+   * for title and meta tags, found in `src/components/Head.astro`.
+   */
+  title: string
+
+  /**
+   * Set the default content for meta tags, found in `src/components/Head.astro`.
+   */
+  description: string
+
+  /**
+   * Set the author name for meta tags, found in `src/components/Head.astro`.
+   */
+  author: string
+
+  /**
+   * Set the website navigation bar, found in `src/components/NavBar.astro`.
+   *
+   * @description
+   * The configuration order corresponds to the display order on the page.
+   *
+   * @property {string} `type` - Set the type of navigation item:
+   *  - 'text': Only text is shown regardless of the viewport size.
+   *  - 'icon': Only an icon is shown regardless of the viewport size.
+   *  - 'rwd': Responsive type, showing text when the viewport width exceeds 768px and icons otherwise.
+   * @property {string} `text` - Set the text displayed for the navigation item. Required if `type` is 'text' or 'rwd'.
+   * @property {string} `icon` - Set the icon displayed for the navigation item. Required if `type` is 'icon' or 'rwd'.
+   */
+  navBar: NavItem[]
+}
+
+/* SOCIALS */
 export interface Socials {
   /**
    * Set a brief description to show where the link leads, displayed when hovered over.
@@ -73,136 +200,13 @@ export interface Socials {
   rwd?: boolean
 }
 
-interface BaseNavItem {
-  /**
-   * Set the navigation item's URL, which must start with `/`.
-   */
-  path: string
-
-  /**
-   * Set prompt content for mouse hover.
-   */
-  prompt?: string
-}
-
-interface TextNavItem extends BaseNavItem {
-  /**
-   * Specifies the navigation item where type is 'text'.
-   *
-   * @description
-   * Only text is shown regardless of the viewport size.
-   *
-   * @remark
-   * Requires `text` to be configured.
-   */
-  type: 'text'
-
-  /**
-   * Set the text displayed for the navigation item.
-   */
-  text: string
-}
-
-interface IconNavItem extends BaseNavItem {
-  /**
-   * Specifies the navigation item of type is 'icon'.
-   *
-   * @description
-   * Only an icon is shown regardless of the viewport size.
-   *
-   * @remark
-   * Requires `icon` to be configured.
-   */
-  type: 'icon'
-
-  /**
-   * Set the icon displayed for the navigation item. Required if `type` is 'icon' or 'rwd'.
-   *
-   * @description
-   * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
-   * as per {@link https://unocss.dev/presets/icons Unocss} specs.
-   *
-   * @example
-   * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
-   *
-   * @see {@link  https://icones.js.org/ Check all available icons}
-   */
-  icon: Icon
-}
-
-interface ResponsiveNavItem extends BaseNavItem {
-  /**
-   * Specifies the navigation item of type is 'rwd' (responsive).
-   *
-   * @description
-   * Displays text when viewport width is over 768px and icons otherwise.
-   *
-   * @remark
-   * Requires both `text` and `icon` to be configured.
-   */
-  type: 'rwd'
-
-  /**
-   * Set the text displayed for the navigation item. Required if `type` is 'text' or 'rwd'.
-   */
-  text: string
-
-  /**
-   * Set the icon displayed for the navigation item. Required if `type` is 'icon' or 'rwd'.
-   *
-   * @description
-   * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
-   * as per {@link https://unocss.dev/presets/icons Unocss} specs.
-   *
-   * @example
-   * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
-   *
-   * @see {@link  https://icones.js.org/ Check all available icons}
-   */
-  icon: Icon
-}
-
-export type NavItem = TextNavItem | IconNavItem | ResponsiveNavItem
-
-interface SiteConfig {
-  /**
-   * Set your final deployed URL, which will be passed to the
-   * {@link https://docs.astro.build/en/reference/configuration-reference/#site site config} in Astro,
-   * used for generating canonical URLs and more.
-   */
-  url: string
-
-  /**
-   * Set the site name to format with {@link PageMetadata.title} as `<title> - <name>`
-   * for use in title and meta tags.
-   */
-  name: string
-
-  /**
-   * Set the author name for use in meta tags.
-   */
-  author: string
-
-  /**
-   * Set the structure of the page navigation bar.
-   *
-   * @description
-   * The configuration order corresponds to the display order on the page.
-   *
-   * @property {string} `type` - Set the type of navigation item:
-   *  - "text": Only text is shown regardless of the viewport size.
-   *  - "icon": Only an icon is shown regardless of the viewport size.
-   *  - "rwd": Responsive type, showing text when the viewport width exceeds 768px and icons otherwise.
-   * @property {string} `text` - Set the text displayed for the navigation item. Required if `type` is 'text' or 'rwd'.
-   * @property {string} `icon` - Set the icon displayed for the navigation item. Required if `type` is 'icon' or 'rwd'.
-   */
-  navBar: NavItem[]
-}
+/* PAGES */
+export type BgType = 'plum' | 'dot' | 'rose' | 'particle'
 
 interface PageMetadata {
   /**
-   * Set the page title to format with {@link SiteConfig.name} as `<title> - <name>`
-   * for use in title and meta tags.
+   * Set the page title to format with {@link Site.title} as `<pageTitle> - <siteTitle>`
+   * for title and meta tags.
    *
    * @description
    * If set to an empty string, displays only `<name>`.
@@ -211,8 +215,11 @@ interface PageMetadata {
 
   /**
    * Set the page description for meta tags.
+   *
+   * @description
+   * If not defined or set to an empty string, the {@link Site.description} will be used directly.
    */
-  description: string
+  description?: string
 
   /**
    * Set the page background.
@@ -223,7 +230,10 @@ interface PageMetadata {
   bgType?: BgType
 }
 
-type PagesConfig = Record<string, PageMetadata>
+export type Pages = Record<string, PageMetadata>
+
+/* FEATURES */
+type Mentioned = `@${string}` | ''
 
 type FeatureConfig<T> = false | [boolean, T]
 
@@ -312,7 +322,7 @@ interface OgImageConfig {
   fallbackBgType: BgType
 }
 
-interface FeaturesConfig {
+export interface Features {
   /**
    * Enable and configure the sharing feature, which allows visitors to share content to social platforms.
    *
@@ -345,15 +355,4 @@ interface FeaturesConfig {
    * Only available for pages generated from Markdown/MDX, as the process is implemented through remark plugin.
    */
   ogImage: FeatureConfig<OgImageConfig>
-}
-
-export interface Config {
-  site: SiteConfig
-  pages: PagesConfig
-  /**
-   * Configure whether to enable certain special features on the website, configuration method:
-   *  - Set to `false` or `[false, {...}]` to disable this feature.
-   *  - Set to `[true, {...}]` to enable and configure this feature.
-   */
-  features: FeaturesConfig
 }
