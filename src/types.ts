@@ -32,11 +32,20 @@ type Mentioned = `@${string}` | ''
 type Icon = `i-${string}-${string}` | `i-${string}:${string}`
 export type BgType = 'plum' | 'dot' | 'rose' | 'particle'
 
-interface Socials {
+/**
+ * Set the social media links.
+ */
+export interface Socials {
   /**
-   * Set the name of the social platform, displayed when hovered over.
+   * Set a brief description to show where the link leads, displayed when hovered over.
+   *
+   * @description
+   * You can use template literals to reference other configuration items.
+   *
+   * @example
+   * `${SITE.author}'s Github`
    */
-  name: string
+  title: string
 
   /**
    * Set the URL to the social platform profile.
@@ -175,11 +184,6 @@ interface SiteConfig {
   author: string
 
   /**
-   * Set the social media links.
-   */
-  socials: Socials[]
-
-  /**
    * Set the structure of the page navigation bar.
    *
    * @description
@@ -225,20 +229,48 @@ type FeatureConfig<T> = false | [boolean, T]
 
 export interface ShareConfig {
   /**
-   * Set the Twitter username for mentions. Must start with '@'.
+   * Set whether to include Twitter for sharing,
+   * If enabled, optionally configure a Twitter username to be mentioned:
+   *  - Set to `false` or `[false, '@userName']` to exclude.
+   *  - Set to `[true, '@userName']` to include.
    *
    * @description
-   * If set to an empty string, the social platform is excluded from sharing options.
+   * The Twitter username must start with `@`.
+   * If set to an empty string, '@userName' will be excluded from the shared text.
    */
-  twitter: Mentioned
+  twitter: FeatureConfig<Mentioned>
 
   /**
-   * Set the Twitter username for mentions. Must start with '@'.
+   * Set whether to include Mastodon for sharing,
+   * If enabled, optionally configure a Mastodon username to be mentioned:
+   *  - Set to `false` or `[false, '@userName@serverName']` to exclude.
+   *  - Set to `[true, '@userName@serverName']` to include.
    *
    * @description
-   * If set to an empty string, the social platform is excluded from sharing options.
+   * The Mastodon username must start with `@`.
+   * If set to an empty string, '@userName@serverName' will be excluded from the shared text.
    */
-  mastodon: Mentioned
+  mastodon: FeatureConfig<Mentioned>
+
+  /**
+   * Set whether to include Telegram for sharing.
+   */
+  telegram: boolean
+
+  /**
+   * Set whether to include Facebook for sharing.
+   */
+  facebook: boolean
+
+  /**
+   * Set whether to include WhatsApp for sharing.
+   */
+  whatsapp: boolean
+
+  /**
+   * Set whether to include Pinterest for sharing.
+   */
+  pinterest: boolean
 }
 
 interface TocConfig {

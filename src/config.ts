@@ -1,24 +1,10 @@
-import type { Config } from './types'
+import type { Config, Socials } from './types'
 
 const config: Config = {
   site: {
     url: 'http://example.com',
     name: 'Astro AntfuStyle Theme',
     author: 'Stephanie Lin',
-    socials: [
-      {
-        name: 'Twitter',
-        href: 'https://twitter.com/ASTRO_org',
-        icon: 'i-ri-twitter-x-fill',
-        rwd: false,
-      },
-      {
-        name: 'Github Repo',
-        href: 'https://github.com/lin-stephanie',
-        icon: 'i-uil-github-alt',
-        rwd: false,
-      },
-    ],
     navBar: [
       {
         type: 'rwd',
@@ -74,8 +60,12 @@ const config: Config = {
     share: [
       true,
       {
-        twitter: '@ste7lin',
-        mastodon: '@antfu@m.webtoo.ls',
+        twitter: [true, '@ste7lin'],
+        mastodon: [true, '@ste7lin@fairy.id'],
+        telegram: false,
+        whatsapp: false,
+        facebook: false,
+        pinterest: false,
       },
     ],
     toc: [
@@ -95,5 +85,20 @@ const config: Config = {
     ],
   },
 }
+
+export const SOCIALS: Socials[] = [
+  {
+    title: `${config.site.author}'s Twitter`,
+    href: 'https://twitter.com/ASTRO_org',
+    icon: 'i-ri-twitter-x-fill',
+    rwd: false,
+  },
+  {
+    title: `${config.site.name}'s Github Repo`,
+    href: 'https://github.com/lin-stephanie',
+    icon: 'i-uil-github-alt',
+    rwd: false,
+  },
+]
 
 export default config
