@@ -32,7 +32,10 @@ type Icon = `i-${string}-${string}` | `i-${string}:${string}`
 
 interface BaseNavItem {
   /**
-   * Set the navigation item's URL, which must start with `/`.
+   * Set the navigation path, which must start with `/`.
+   *
+   * @example
+   * '/blog'、'/blog/'
    */
   path: string
 

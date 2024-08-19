@@ -6,13 +6,22 @@ import TabbedLayout from '~/layouts/TabbedLayout.astro'
 import Categorizer from '~/components/Categorizer.astro'
 import PostItem from '~/components/PostItem.astro'
 
-import { PAGES } from '~/config'
+import type { ContentEntryMap } from 'astro:content'
+import type { BgType } from '~/types'
+
 import { isSameYear, getYear } from '~/utils'
 import { items } from '~/types'
 
-const { title, description, bgType } = PAGES.blog
+interface Props {
+  collectionType: keyof ContentEntryMap
+  title: string
+  description?: string
+  bgType?: BgType
+}
 
-const posts = await getCollection('blog', ({ data }) => {
+const { collectionType, title, description, bgType } = Astro.props
+
+const posts = await getCollection(collectionType, ({ data }) => {
   return import.meta.env.PROD ? data.draft !== true : true
 })
 

@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config'
+import mdx from '@astrojs/mdx'
 import unocss from 'unocss/astro'
 import astroExpressiveCode from 'astro-expressive-code'
 
@@ -14,6 +15,7 @@ export default defineConfig({
       injectReset: true,
     }),
     astroExpressiveCode(),
+    mdx(),
   ],
   markdown: {
     syntaxHighlight: false,

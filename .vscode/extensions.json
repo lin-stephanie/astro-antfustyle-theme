@@ -10,7 +10,10 @@
     "astro-build.astro-vscode",
 
     // https://marketplace.visualstudio.com/items?itemName=antfu.unocss
-    "antfu.unocss"
+    "antfu.unocss",
+
+    // https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx
+    "unifiedjs.vscode-mdx"
   ],
   "unwantedRecommendations": []
 }

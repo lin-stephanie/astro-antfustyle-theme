@@ -1,0 +1,12 @@
+---
+title: Blog
+description: Blog
+---
+
+import PostList from '~/components/PostList.astro'
+
+<PostList
+  collectionType="blog"
+  title={frontmatter.title}
+  description={frontmatter.description}
+/>
