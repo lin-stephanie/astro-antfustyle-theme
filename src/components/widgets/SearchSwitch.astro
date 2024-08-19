@@ -188,17 +188,16 @@ import { getUrl } from '~/utils'
 {import.meta.env.PROD &&
   <script is:inline define:vars={{scriptUrl: getUrl('/pagefind/pagefind.js')}}>
     async function loadPagefind() {
-        const pagefind = await import(scriptUrl)
+      const pagefind = await import(scriptUrl)
 
-        await pagefind.options({
-            'excerptLength': 20
-        })
+      await pagefind.options({
+          'excerptLength': 20
+      })
 
-        pagefind.init()
-        window.pagefind = pagefind
-        pagefind.search('')
+      pagefind.init()
+      window.pagefind = pagefind
+      pagefind.search('')
     }
 
     if (!window.pagefind) loadPagefind()
-  </script>
-}
+  </script>}

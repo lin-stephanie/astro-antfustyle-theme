@@ -6,6 +6,10 @@ import prettier from 'eslint-config-prettier'
 
 export default ts.config(
   {
+    // https://eslint.org/docs/latest/use/configure/configuration-files#globally-ignoring-files-with-ignores
+    ignores: ['dist/', '.astro/', '.local/'],
+  },
+  {
     // https://eslint.org/docs/latest/use/configure/language-options
     languageOptions: {
       ecmaVersion: 'latest',
@@ -15,8 +19,6 @@ export default ts.config(
         ...globals.node,
       },
     },
-    // https://eslint.org/docs/latest/use/configure/configuration-files#globally-ignoring-files-with-ignores
-    ignores: ['dist/**/*'],
   },
   // https://eslint.org/docs/latest/use/configure/configuration-files#using-predefined-configurations
   js.configs.recommended,
@@ -44,6 +46,11 @@ export default ts.config(
       '@typescript-eslint/triple-slash-reference': [
         'error',
         { path: 'always' },
+      ],
+      // https://eslint.org/docs/latest/rules/no-unused-expressions
+      '@typescript-eslint/no-unused-expressions': [
+        'error',
+        { allowTernary: true },
       ],
     },
   }

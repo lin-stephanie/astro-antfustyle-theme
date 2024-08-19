@@ -23,8 +23,10 @@ import { ensureTrailingSlash } from '~/utils'
             title={item.prompt}
           >
             {item.type === 'rwd' && (
-              <span class="lt-md:hidden">{item.text}</span>
-              <div class={`md:hidden ${item.icon}`} />
+              <>
+                <span class="lt-md:hidden">{item.text}</span>
+                <div class={`md:hidden ${item.icon}`} />
+              </>
             )}
             {item.type === 'icon' && <div class={item.icon} />}
             {item.type === 'text' && <span>{item.text}</span>}
