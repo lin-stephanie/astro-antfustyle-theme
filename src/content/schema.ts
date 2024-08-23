@@ -1,9 +1,27 @@
 import { z } from 'astro:content'
 
-/* posts */
+/* Pages*/
+export const pageSchema = z.object({
+  title: z.string().describe('Set the title of the blog post'),
+  description: z.string().default(''),
+  bgType: z
+    .enum(['plum', 'dot', 'rose', 'particle'])
+    .describe(
+      'Set the page background. If not defined or set to an empty string, no background is added to the page.'
+    )
+    .optional(),
+  ogImage: z
+    .string()
+    .regex(/^\/og-images\//, "ogImage must start with '/og-images/'.")
+    .optional(),
+})
+
+export type PageSchema = z.infer<typeof pageSchema>
+
+/* Posts */
 export const postSchema = z
   .object({
-    title: z.string(),
+    title: z.string().max(60).describe('Set the title of the blog post'),
     subtitle: z.string().default(''),
     description: z.string().default(''),
     created: z.coerce.date(),
@@ -25,7 +43,7 @@ export const postSchema = z
 
 export type PostSchema = z.infer<typeof postSchema>
 
-/* projects */
+/* Projects */
 const projectSchema = z.object({
   name: z.string(),
   desc: z.string(),

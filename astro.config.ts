@@ -29,4 +29,8 @@ export default defineConfig({
     ],
     // ... other Vite options
   },
+  experimental: {
+    contentLayer: true,
+    contentIntellisense: true,
+  },
 })

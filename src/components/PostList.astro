@@ -6,14 +6,14 @@ import TabbedLayout from '~/layouts/TabbedLayout.astro'
 import Categorizer from '~/components/Categorizer.astro'
 import PostItem from '~/components/PostItem.astro'
 
-import type { ContentEntryMap } from 'astro:content'
+import type { ContentCollectionKey } from 'astro:content'
 import type { BgType } from '~/types'
 
 import { isSameYear, getYear } from '~/utils'
 import { items } from '~/types'
 
 interface Props {
-  collectionType: keyof ContentEntryMap
+  collectionType: ContentCollectionKey
   title: string
   description?: string
   bgType?: BgType
@@ -48,7 +48,7 @@ const sortedPosts = posts.sort(
                   text={getYear(post.data.created).toString()}
                 />
               )}
-              <PostItem collection={'blog'} {idx} {post} />
+              <PostItem collection={collectionType} {idx} {post} />
             </>
           ))
         )

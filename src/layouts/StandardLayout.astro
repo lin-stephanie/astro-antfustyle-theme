@@ -1,9 +1,9 @@
 ---
 import { formatDate } from '~/utils'
-import type { CollectionEntry, ContentEntryMap } from 'astro:content'
+import type { CollectionEntry, ContentCollectionKey } from 'astro:content'
 
 interface Props {
-  post: CollectionEntry<keyof ContentEntryMap>
+  post: CollectionEntry<ContentCollectionKey>
   wrapperClass?: string
 }
 
