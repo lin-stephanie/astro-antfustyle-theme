@@ -1,6 +1,7 @@
 import { glob } from 'astro/loaders'
 import { defineCollection } from 'astro:content'
-import { postSchema, projectsSchema, pageSchema } from './schema'
+import { feedLoader } from '@ascorbic/feed-loader'
+import { pageSchema, postSchema, projectsSchema, streamsSchema } from './schema'
 
 const pages = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/pages' }),
@@ -17,4 +18,20 @@ const projects = defineCollection({
   schema: projectsSchema,
 })
 
-export const collections = { pages, blog, projects }
+const streams = defineCollection({
+  type: 'data',
+  schema: streamsSchema,
+})
+
+const feeds = defineCollection({
+  loader: feedLoader({
+    url: 'https://astro.build/rss.xml',
+  }),
+})
+
+const changelog = defineCollection({
+  type: 'content',
+  schema: postSchema,
+})
+
+export const collections = { pages, blog, projects, streams, feeds, changelog }

@@ -18,6 +18,7 @@
     "nprogress": "^0.2.0"
   },
   "devDependencies": {
+    "@ascorbic/feed-loader": "^1.0.0",
     "@astrojs/check": "^0.9.3",
     "@astrojs/markdown-remark": "^5.2.0",
     "@astrojs/mdx": "^3.1.3",

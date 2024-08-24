@@ -1,0 +1,179 @@
+---
+import { getCollection, getEntry } from 'astro:content'
+import Categorizer from '~/components/Categorizer.astro'
+import ContentItem from '~/components/ListItem.astro'
+import { isSameYear, getYear } from '~/utils'
+
+import type {
+  CollectionEntry,
+  ContentCollectionKey,
+  DataCollectionKey,
+} from 'astro:content'
+import type { StreamGroupsSchema } from '~/content/schema'
+
+interface Props {
+  collectionType: ContentCollectionKey | DataCollectionKey
+}
+
+const { collectionType } = Astro.props
+
+if (!['blog', 'feeds', 'streams'].includes(collectionType))
+  throw new Error(
+    `The '${collectionType}' collection type does not belong to 'blog', 'feeds', or 'streams'.`
+  )
+
+/* Posts */
+let postItems: CollectionEntry<ContentCollectionKey>[]
+let sortedPostItems: CollectionEntry<ContentCollectionKey>[] = []
+
+if (collectionType === 'blog') {
+  postItems = await getCollection(collectionType, ({ data }) => {
+    return import.meta.env.PROD ? data.draft !== true : true
+  })
+
+  sortedPostItems = postItems.sort(
+    (a, b) => b.data.created.valueOf() - a.data.created.valueOf()
+  )
+}
+
+/* Feeds */
+let feedItems: CollectionEntry<'feeds'>[]
+let sortedFeedItems: CollectionEntry<'feeds'>[] = []
+
+if (collectionType === 'feeds') {
+  feedItems = await getCollection(collectionType)
+
+  sortedFeedItems = feedItems.sort((a, b) => {
+    if (!a.data.pubdate || !b.data.pubdate)
+      throw new Error("Feed item is missing 'pubdate' field.")
+
+    return b.data.pubdate.valueOf() - a.data.pubdate.valueOf()
+  })
+}
+
+/* Streams */
+let streamItems: StreamGroupsSchema
+let sortedStreamItems: StreamGroupsSchema = []
+
+if (collectionType === 'streams') {
+  const streamData = await getEntry(collectionType, 'data')
+  streamItems = streamData.data.streams
+
+  sortedStreamItems = streamItems.sort(
+    (a, b) => b.date.valueOf() - a.date.valueOf()
+  )
+}
+---
+
+{
+  collectionType === 'blog' && (
+    <ul>
+      {sortedPostItems.length === 0 ? (
+        <div class="py-2 op-50">nothing here yet</div>
+      ) : (
+        sortedPostItems.map(async (item, idx) => {
+          const { data, slug } = item
+          const { remarkPluginFrontmatter } = await item.render()
+          const minutesRead =
+            data.minutesRead || remarkPluginFrontmatter.minutesRead
+
+          return (
+            <>
+              {!isSameYear(
+                data.created,
+                sortedPostItems[idx - 1]?.data.created
+              ) && (
+                <Categorizer {idx} text={getYear(data.created).toString()} />
+              )}
+              <ContentItem
+                {idx}
+                {collectionType}
+                redirect={data.redirect}
+                postSlug={slug}
+                title={data.title}
+                video={data.video}
+                radio={data.radio}
+                date={data.created}
+                {minutesRead}
+                platform={data.platform}
+              />
+            </>
+          )
+        })
+      )}
+    </ul>
+  )
+}
+
+{
+  collectionType === 'feeds' && (
+    <ul>
+      {sortedFeedItems.length === 0 ? (
+        <div class="py-2 op-50">nothing here yet</div>
+      ) : (
+        sortedFeedItems.map((item, idx) => {
+          const { data } = item
+          if (!data.link)
+            throw new Error(
+              `Feed item with id '${item.id}' is missing 'link' field.`
+            )
+          if (!data.title)
+            throw new Error(
+              `Feed item with id '${item.id}' is missing 'title' field.`
+            )
+
+          return (
+            <>
+              {!isSameYear(
+                item.data.pubdate as Date,
+                sortedFeedItems[idx - 1]?.data.pubdate as Date
+              ) && (
+                <Categorizer
+                  {idx}
+                  text={getYear(item.data.pubdate as Date).toString()}
+                />
+              )}
+              <ContentItem
+                {idx}
+                {collectionType}
+                redirect={item.data.link as string}
+                title={item.data.title as string}
+                date={item.data.pubdate as Date | string}
+              />
+            </>
+          )
+        })
+      )}
+    </ul>
+  )
+}
+
+{
+  collectionType === 'streams' && (
+    <ul>
+      {sortedStreamItems.length === 0 ? (
+        <div class="py-2 op-50">nothing here yet</div>
+      ) : (
+        sortedStreamItems.map((item, idx) => {
+          return (
+            <>
+              {!isSameYear(item.date, sortedStreamItems[idx - 1]?.date) && (
+                <Categorizer {idx} text={getYear(item.date).toString()} />
+              )}
+              <ContentItem
+                {idx}
+                {collectionType}
+                redirect={item.link}
+                title={item.title}
+                video={item.video}
+                radio={item.radio}
+                date={item.date}
+                platform={item.platform}
+              />
+            </>
+          )
+        })
+      )}
+    </ul>
+  )
+}

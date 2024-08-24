@@ -1,6 +1,6 @@
 ---
-title: Guides
-description: Guides
+title: Changelog
+description: Changelog
 ---
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
@@ -8,7 +8,5 @@ import TabbedLayout from '~/layouts/TabbedLayout.astro'
 import List from '~/components/List.astro'
 
 <BaseLayout title={frontmatter.title} description={frontmatter.description}>
-  <TabbedLayout>
-    <List collectionType="blog" />
-  </TabbedLayout>
+  <TabbedLayout>{/* <List collectionType="changelog" /> */}</TabbedLayout>
 </BaseLayout>

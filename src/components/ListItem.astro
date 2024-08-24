@@ -1,20 +1,32 @@
 ---
 import Link from '~/components/base/Link.astro'
 import { formatDate } from '~/utils'
-import type { CollectionEntry, ContentEntryMap } from 'astro:content'
 
 interface Props {
-  collection: string
   idx: number
-  post: CollectionEntry<keyof ContentEntryMap>
+  collectionType: string
+  redirect?: string
+  postSlug?: string
+  title: string
+  video?: boolean
+  radio?: boolean
+  date: string | Date
+  minutesRead?: number
+  platform?: string
 }
 
-const { collection, idx, post } = Astro.props
-const { data: frontmatter } = post
-const { remarkPluginFrontmatter } = await post.render()
-
-const minutesRead =
-  frontmatter.minutesRead || remarkPluginFrontmatter.minutesRead
+const {
+  idx,
+  redirect,
+  collectionType,
+  postSlug,
+  title,
+  video,
+  radio,
+  date,
+  minutesRead,
+  platform,
+} = Astro.props
 ---
 
 <div
@@ -26,19 +38,17 @@ const minutesRead =
 >
   <Link
     class="link"
-    href={frontmatter.redirect
-      ? frontmatter.redirect
-      : `/${collection}/${post.slug}/`}
-    external={frontmatter.redirect ? true : false}
+    href={redirect ?? `/${collectionType}/${postSlug}/`}
+    external={redirect ? true : false}
   >
     <li
       u-flex="~ items-center gap-2 lt-md:(col items-start)"
       class="no-underline"
     >
       <div u-flex="~ gap-2" class="text-lg leading-1.2em">
-        <span class="align-middle">{frontmatter.title}</span>
+        <span class="align-middle">{title}</span>
         {
-          frontmatter.redirect && (
+          redirect && (
             <span
               u-i-carbon-arrow-up-right
               u-flex="none"
@@ -50,7 +60,7 @@ const minutesRead =
       </div>
       <div flex="~ gap-2 items-center">
         {
-          frontmatter.video && (
+          video && (
             <span
               u-i-ri-film-line
               u-flex="none"
@@ -60,7 +70,7 @@ const minutesRead =
           )
         }
         {
-          frontmatter.radio && (
+          radio && (
             <span
               u-i-ri-radio-line
               u-flex="none"
@@ -70,20 +80,14 @@ const minutesRead =
           )
         }
         <span class="op-50 text-sm ws-nowrap">
-          {formatDate(frontmatter.created, false)}
+          {formatDate(date, false)}
         </span>
         {
-          minutesRead !== 0 && (
+          typeof minutesRead === 'number' && minutesRead > 0 && (
             <span class="op-40 text-sm ws-nowrap">· {minutesRead} min</span>
           )
         }
-        {
-          frontmatter.platform && (
-            <span class="op-40 text-sm ws-nowrap">
-              · {frontmatter.platform}
-            </span>
-          )
-        }
+        {platform && <span class="op-40 text-sm ws-nowrap">· {platform}</span>}
       </div>
     </li>
   </Link>

@@ -1,4 +1,4 @@
-import type { Site, Socials, Pages, Features } from './types'
+import type { Site, Socials, Pages, Layouts, Features } from './types'
 
 export const SITE: Site = {
   website: 'http://example.com',
@@ -72,6 +72,15 @@ export const PAGES: Pages = {
     description: 'Not Found',
     // bgType: 'particle',
   },
+}
+
+export const LAYOUTS: Layouts = {
+  tabbedLayoutTabs: [
+    { title: 'Guides', path: '/blog' },
+    { title: 'Changelog', path: '/changelog' },
+    { title: 'AstroBlog', path: '/feeds' },
+    { title: 'AstroStreams', path: '/streams' },
+  ],
 }
 
 /**

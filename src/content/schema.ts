@@ -2,12 +2,26 @@ import { z } from 'astro:content'
 
 /* Pages*/
 export const pageSchema = z.object({
-  title: z.string().describe('Set the title of the blog post'),
-  description: z.string().default(''),
+  title: z
+    .string()
+    .describe(
+      'Set the page title to format with `SITE.title` as `<pageTitle> - <siteTitle>` for title, meta tags, and for automatically generating OG images. If set to an empty string, displays only `<siteTitle>`.'
+    ),
+  description: z.string().default(
+    `Set the page description for meta tags. If not defined or set to an empty string,
+      the 'SITE.description' will be used directly.`
+  ),
+  subtitle: z
+    .string()
+    .optional()
+    .describe(
+      'Set the `subtitle` to display below the title if additional explanations are needed.'
+    ),
   bgType: z
     .enum(['plum', 'dot', 'rose', 'particle'])
     .describe(
-      'Set the page background. If not defined or set to an empty string, no background is added to the page.'
+      `Set the page background. If not defined or set to an empty string,
+        no background is added to the page.`
     )
     .optional(),
   ogImage: z
@@ -68,3 +82,22 @@ export const projectsSchema = z.object({
 export type ProjectSchema = z.infer<typeof projectSchema>
 export type ProjectGroupsSchema = z.infer<typeof projectGroupsSchema>
 export type ProjectsSchema = z.infer<typeof projectsSchema>
+
+/* Stremas */
+const streamSchema = z.object({
+  title: z.string(),
+  date: z.coerce.date(),
+  link: z.string().url('Invalid url.'),
+  radio: z.boolean().default(false),
+  video: z.boolean().default(false),
+  platform: z.string().default(''),
+})
+
+const streamGroupsSchema = z.array(streamSchema)
+
+export const streamsSchema = z.object({
+  streams: streamGroupsSchema,
+})
+
+export type StreamGroupsSchema = z.infer<typeof streamGroupsSchema>
+export type StreamsSchema = z.infer<typeof streamsSchema>

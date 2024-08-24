@@ -1,13 +1,21 @@
 ---
 import Link from '~/components/base/Link.astro'
 import { ensureTrailingSlash } from '~/utils'
-import type { NavTabsItems } from '~/types'
+import { LAYOUTS } from '~/config'
+import type { Tabs } from '~/types'
 
 interface Props {
-  items: NavTabsItems
+  subtitle?: string
 }
 
-const { items } = Astro.props
+const { subtitle } = Astro.props
+
+let tabs: Tabs
+if (!LAYOUTS.tabbedLayoutTabs) {
+  throw new Error('LAYOUTS.tabbedLayoutTabs is not configured.')
+} else {
+  tabs = LAYOUTS.tabbedLayoutTabs
+}
 
 const currentPath = ensureTrailingSlash(Astro.url.pathname)
 const isActive = (href: string) => currentPath === ensureTrailingSlash(href)
@@ -17,20 +25,21 @@ const isActive = (href: string) => currentPath === ensureTrailingSlash(href)
   <nav id="nav-tabs" class="prose m-auto mb-8 select-none animate-none!">
     <div u-flex="~ gap-3 lt-sm:(col wrap gap-1) " class="mb-0 text-3xl">
       {
-        items.map((item) => (
+        tabs.map((tab) => (
           <Link
             class:list={{
               'link': true,
-              'tabs__a--active': isActive(item.href),
-              'tabs__a--inactive': !isActive(item.href),
+              'tabs__a--active': isActive(tab.path),
+              'tabs__a--inactive': !isActive(tab.path),
             }}
-            href={ensureTrailingSlash(item.href)}
+            href={ensureTrailingSlash(tab.path)}
           >
-            {item.label}
+            {tab.title}
           </Link>
         ))
       }
     </div>
+    {subtitle && <p class="opacity-60 mt-4! text-md italic">{subtitle}</p>}
   </nav>
   <slot />
 </article>

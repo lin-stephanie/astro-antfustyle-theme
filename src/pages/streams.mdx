@@ -1,6 +1,7 @@
 ---
-title: Guides
-description: Guides
+title: Astro Stream
+description: Astro Stream
+subtitle: Demonstration of displaying Astro Streams with local JSON data
 ---
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
@@ -8,7 +9,7 @@ import TabbedLayout from '~/layouts/TabbedLayout.astro'
 import List from '~/components/List.astro'
 
 <BaseLayout title={frontmatter.title} description={frontmatter.description}>
-  <TabbedLayout>
-    <List collectionType="blog" />
+  <TabbedLayout subtitle={frontmatter.subtitle}>
+    <List collectionType="streams" />
   </TabbedLayout>
 </BaseLayout>

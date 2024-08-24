@@ -12,23 +12,10 @@ export interface Particle {
   }
 }
 
-export interface NavTabsItem {
-  href: string
-  label: string
-}
-
-export type NavTabsItems = [NavTabsItem, NavTabsItem, ...NavTabsItem[]]
-
-export const items: NavTabsItems = [
-  { href: '/blog', label: 'Blog' },
-  { href: '/talks', label: 'Talks' },
-  { href: '/podcasts', label: 'Podcasts' },
-  { href: '/streams', label: 'Streams' },
-  { href: '/notes', label: 'Notes' },
-]
-
 /* SITE */
+type Url = `http://${string}` | `https://${string}`
 type Icon = `i-${string}-${string}` | `i-${string}:${string}`
+type Path = `/${string}`
 
 interface BaseNavItem {
   /**
@@ -37,7 +24,7 @@ interface BaseNavItem {
    * @example
    * '/blog'、'/blog/'
    */
-  path: string
+  path: Path
 
   /**
    * Set prompt content for mouse hover.
@@ -130,7 +117,7 @@ export interface Site {
    * {@link https://docs.astro.build/en/reference/configuration-reference/#site site config} in Astro,
    * used for generating canonical URLs and more, found in `astro.config.ts`.
    */
-  website: string
+  website: Url
 
   /**
    * Set the site name to format with {@link PageMetadata.title} as `<pageTitle> - <siteTitle>`
@@ -235,9 +222,36 @@ interface PageMetadata {
 
 export type Pages = Record<string, PageMetadata>
 
+/* LAYLOUT */
+interface Tab {
+  /**
+   * Set the display title of the tab.
+   */
+  title: string
+
+  /**
+   * Set the navigation path associated with the tab, which must start with `/`.
+   *
+   * @example
+   * '/blog'、'/blog/'
+   */
+  path: Path
+}
+export type Tabs = [Tab, Tab, ...Tab[]]
+
+export interface Layouts {
+  /**
+   * Enable and configure for tabs within a tabbed layout, used in `src/layouts/TabbedLayout.astro`.
+   *
+   * @description
+   * If your website does not use the `TabbedLayout`, you can set it to `false`; however,
+   * configuration is required before using this layout.
+   */
+  tabbedLayoutTabs: false | Tabs
+}
+
 /* FEATURES */
 type Mentioned = `@${string}` | ''
-
 type FeatureConfig<T> = false | [boolean, T]
 
 export interface ShareConfig {

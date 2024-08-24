@@ -1,0 +1,75 @@
+{
+  "$schema": "../../../.astro/collections/streams.schema.json",
+  "streams": [
+    {
+      "title": "Astro in 100 Seconds",
+      "date": "2021-07-16",
+      "link": "https://www.youtube.com/watch?v=dsTXcSeAZq8",
+      "video": true,
+      "platform": "YouTube"
+    },
+    {
+      "title": "I Tried Astro and I LOVE IT - 5 Reasons You Will TOO!",
+      "date": "2022-08-30",
+      "link": "https://www.youtube.com/watch?v=wND4lSml31A",
+      "video": true,
+      "platform": "YouTube"
+    },
+    {
+      "title": "Everything You Need to Know about Astro",
+      "date": "2023-09-19",
+      "link": "https://www.youtube.com/watch?v=rRxuVOutmFQ",
+      "video": true,
+      "platform": "YouTube"
+    },
+    {
+      "title": "You Don’t Know How to SSR",
+      "date": "2024-02-16",
+      "link": "https://gitnation.com/contents/you-dont-know-how-to-ssr",
+      "video": true,
+      "platform": "GitNation"
+    },
+    {
+      "title": "View Transitions: Fact vs. Fiction",
+      "date": "2023-10-20",
+      "link": "https://www.youtube.com/watch?v=iT-3amHK7tA",
+      "video": true,
+      "platform": "YouTube"
+    },
+    {
+      "title": "Astro and MDX for digital gardening",
+      "date": "2023-11-08",
+      "link": "https://podrocket.logrocket.com/astro-mdx-kathleen-mcmahon",
+      "radio": true,
+      "platform": "PodRocket"
+    },
+    {
+      "title": "Astro Launches an Integrated Database",
+      "date": "2024-03-18",
+      "link": "https://shoptalkshow.com/607/",
+      "radio": true,
+      "platform": "ShopTalk"
+    },
+    {
+      "title": "Building faster websites with Astro",
+      "date": "2023-01-20",
+      "link": "https://www.youtube.com/watch?v=0eka27P4Pr4",
+      "video": true,
+      "platform": "YouTube"
+    },
+    {
+      "title": "Astro Web Framework Crash Course",
+      "date": "2023-09-29",
+      "link": "https://www.youtube.com/watch?v=e-hTm5VmofI",
+      "video": true,
+      "platform": "YouTube"
+    },
+    {
+      "title": "Astro Quick Start Course | Build an SSR Blog",
+      "date": "2023-12-19",
+      "link": "https://www.youtube.com/watch?v=XoIHKO6AkoM",
+      "video": true,
+      "platform": "YouTube"
+    }
+  ]
+}
