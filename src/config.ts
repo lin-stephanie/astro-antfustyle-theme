@@ -81,6 +81,7 @@ export const LAYOUTS: Layouts = {
     { title: 'AstroBlog', path: '/feeds' },
     { title: 'AstroStreams', path: '/streams' },
   ],
+  groupItemCols: 3,
 }
 
 /**

@@ -1,0 +1,16 @@
+---
+title: Projects
+description: Projects
+subtitle: Tech Stack & Credits for the Astro AntfuStyle theme
+toc: true
+---
+
+import BaseLayout from '~/layouts/BaseLayout.astro'
+import WideLayout from '~/layouts/WideLayout.astro'
+import Group from '~/components/Group.astro'
+
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+  <WideLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
+    <Group pageToc={frontmatter.toc} />
+  </WideLayout>
+</BaseLayout>

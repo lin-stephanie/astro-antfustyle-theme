@@ -1,5 +1,6 @@
 ---
 import Link from '~/components/base/Link.astro'
+import { LAYOUTS } from '~/config'
 import type { ProjectSchema } from '~/content/schema'
 
 interface Props {
@@ -7,11 +8,18 @@ interface Props {
 }
 
 const { items } = Astro.props
+const { groupItemCols } = LAYOUTS
 ---
 
 <div
-  u-grid="~ cols-3 lt-lg:cols-2 lt-sm:cols-1 gap-4"
-  class="project-grid w-max max-w-500 py-2 mx-auto"
+  u-grid="~ lt-lg:cols-2 lt-sm:cols-1 gap-4"
+  class:list={[
+    'group-item',
+    {
+      'grid-cols-2': groupItemCols === 2,
+      'grid-cols-3': groupItemCols === 3,
+    },
+  ]}
 >
   {
     items.map((item, _) => (
@@ -34,6 +42,10 @@ const { items } = Astro.props
 </div>
 
 <style>
+  .group-item {
+    --uno: 'w-max max-w-500 py-8 mx-auto';
+  }
+
   .icon {
     opacity: 0.5;
     line-height: 2.25rem;

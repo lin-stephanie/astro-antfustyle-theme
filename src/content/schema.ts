@@ -7,27 +7,29 @@ export const pageSchema = z.object({
     .describe(
       'Set the page title to format with `SITE.title` as `<pageTitle> - <siteTitle>` for title, meta tags, and for automatically generating OG images. If set to an empty string, displays only `<siteTitle>`.'
     ),
-  description: z.string().default(
-    `Set the page description for meta tags. If not defined or set to an empty string,
-      the 'SITE.description' will be used directly.`
-  ),
+  description: z
+    .string()
+    .optional()
+    .describe(
+      'Set the page description for meta tags. If not defined or set to an empty string, the `SITE.description` will be used directly.'
+    ),
   subtitle: z
     .string()
     .optional()
     .describe(
-      'Set the `subtitle` to display below the title if additional explanations are needed.'
+      'Set the subtitle to display below the title if additional explanations are needed.'
     ),
   bgType: z
     .enum(['plum', 'dot', 'rose', 'particle'])
+    .optional()
     .describe(
-      `Set the page background. If not defined or set to an empty string,
-        no background is added to the page.`
-    )
-    .optional(),
+      'Set the page background. If not defined or set to an empty string, no background is added to the page.'
+    ),
   ogImage: z
     .string()
     .regex(/^\/og-images\//, "ogImage must start with '/og-images/'.")
     .optional(),
+  toc: z.boolean().default(false),
 })
 
 export type PageSchema = z.infer<typeof pageSchema>
@@ -73,10 +75,7 @@ const projectSchema = z.object({
 const projectGroupsSchema = z.record(z.array(projectSchema))
 
 export const projectsSchema = z.object({
-  title: z.string(),
-  subtitle: z.string().optional(),
   projects: projectGroupsSchema,
-  toc: z.boolean().optional().default(true),
 })
 
 export type ProjectSchema = z.infer<typeof projectSchema>

@@ -1,24 +1,22 @@
 ---
-import type { CollectionEntry, DataCollectionKey } from 'astro:content'
-
 interface Props {
-  entry: CollectionEntry<DataCollectionKey>
+  title: string
+  subtitle?: string
 }
 
-const { entry } = Astro.props
-const { data } = entry
+const { title, subtitle } = Astro.props
 ---
 
 <header class="prose m-auto mb-8 text-center">
   <h1 class="slide-enter-50 mb-0">
-    {data.title}
+    {title}
   </h1>
 </header>
 <article class="max-w-300 mx-auto">
   {
-    data.subtitle && (
-      <p class="mt--6! mb-5 opacity-50 text-lg text-center italic">
-        {data.subtitle}
+    subtitle && (
+      <p class="mt--6! mb-8 opacity-50 text-md text-center italic">
+        {subtitle}
       </p>
     )
   }

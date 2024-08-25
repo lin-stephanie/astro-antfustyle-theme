@@ -1,0 +1,34 @@
+---
+import { getEntry } from 'astro:content'
+import Toc from '~/components/toc/Toc.astro'
+import Categorizer from '~/components/Categorizer.astro'
+import GroupItem from '~/components/GroupItem.astro'
+import { FEATURES } from '~/config'
+
+interface Props {
+  pageToc: boolean
+}
+
+const { pageToc } = Astro.props
+
+const { toc } = FEATURES
+const entry = await getEntry('projects', 'data')
+const { projects } = entry.data
+---
+
+{
+  Array.isArray(toc) && toc[0] && pageToc && (
+    <Toc
+      category={Object.keys(projects)}
+      style={toc[1].position === 'right' ? 'text-align:end' : ''}
+    />
+  )
+}
+{
+  Object.keys(projects).map((key, idx) => (
+    <div class="slide-enter" style={{ '--enter-stage': idx + 1 }}>
+      <Categorizer {idx} text={key} needId={true} wide={true} />
+      <GroupItem items={projects[key]} />
+    </div>
+  ))
+}

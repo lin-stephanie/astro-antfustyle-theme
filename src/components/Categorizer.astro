@@ -1,5 +1,6 @@
 ---
 import { slug } from '~/utils'
+import { LAYOUTS } from '~/config'
 
 interface Props {
   idx: number
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const { idx, text, needId = false, wide = false } = Astro.props
+const { groupItemCols } = LAYOUTS
 ---
 
 <div
@@ -32,12 +34,22 @@ const { idx, text, needId = false, wide = false } = Astro.props
       </span>
     ) : (
       <span
-        class="absolute left--4 top-0
-          op-35 dark:op-20
-          text-5em lt-lg:text-4.5em lt-sm:(text-3.2em top-3) text-stroke-1.5 text-stroke-hex-aaa font-bold color-transparent leading-1em"
+        class:list={[
+          'text',
+          {
+            'left--4': groupItemCols === 3,
+            'left-[14%] lt-lg:left--4': groupItemCols === 2,
+          },
+        ]}
       >
         {text}
       </span>
     )
   }
 </div>
+
+<style>
+  .text {
+    --uno: 'absolute top-0 op-35 dark:op-20 text-5em lt-lg:text-4.5em lt-sm:(text-3.2em top-3) text-stroke-1.5 text-stroke-hex-aaa font-bold color-transparent leading-1em';
+  }
+</style>

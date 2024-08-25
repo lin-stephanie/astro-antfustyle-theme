@@ -20,7 +20,7 @@ const socialIcons = SOCIALS.map((item) => item.icon)
 const projectIcons = extractIconsStartingWithI(projecstData.projects)
 
 export default defineConfig({
-  /* define utility classes and the resulting CSS */
+  // define utility classes and the resulting CSS
   rules: [
     [
       /^slide-enter-(\d+)$/,
@@ -38,7 +38,7 @@ export default defineConfig({
     ],
   ],
 
-  /* combine multiple rules */
+  // combine multiple rules
   shortcuts: [
     [
       'shadow-c',
@@ -46,7 +46,7 @@ export default defineConfig({
     ],
   ],
 
-  /* presets are partial configurations */
+  // presets are partial configurations
   presets: [
     presetUno(),
     presetAttributify({
@@ -70,9 +70,19 @@ export default defineConfig({
     }),
   ],
 
-  /* provides a unified interface to transform source code in order to support conventions */
+  // provides a unified interface to transform source code in order to support conventions
   transformers: [transformerDirectives(), transformerVariantGroup()],
 
-  /* work around the limitation of dynamically constructed utilities */
-  safelist: [...navIcons, ...socialIcons, ...projectIcons],
+  // work around the limitation of dynamically constructed utilities
+  // https://unocss.dev/guide/extracting#limitations
+  safelist: [
+    ...navIcons,
+    ...socialIcons,
+    ...projectIcons,
+    'grid-cols-2',
+    'grid-cols-3',
+    'left--4',
+    'left-[14%]',
+    'lt-lg:left--4',
+  ],
 })

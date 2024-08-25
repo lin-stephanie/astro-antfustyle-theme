@@ -248,6 +248,12 @@ export interface Layouts {
    * configuration is required before using this layout.
    */
   tabbedLayoutTabs: false | Tabs
+
+  /**
+   * Set the number of columns in the group view on the `/projects` page,
+   * used in `src/components/views/GroupItem.astro`.
+   */
+  groupItemCols: 2 | 3
 }
 
 /* FEATURES */
