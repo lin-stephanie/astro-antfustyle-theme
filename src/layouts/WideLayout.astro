@@ -11,14 +11,8 @@ const { title, subtitle } = Astro.props
   <h1 class="slide-enter-50 mb-0">
     {title}
   </h1>
+  {subtitle && <p class="mt--4! op-50 text-center italic">{subtitle}</p>}
 </header>
 <article class="max-w-300 mx-auto">
-  {
-    subtitle && (
-      <p class="mt--6! mb-8 opacity-50 text-md text-center italic">
-        {subtitle}
-      </p>
-    )
-  }
   <slot />
 </article>

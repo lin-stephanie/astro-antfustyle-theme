@@ -21,26 +21,29 @@ const currentPath = ensureTrailingSlash(Astro.url.pathname)
 const isActive = (href: string) => currentPath === ensureTrailingSlash(href)
 ---
 
+<nav id="nav-tabs" class="prose m-auto mb-8 animate-none!">
+  <div
+    u-flex="~ gap-3 lt-sm:(col wrap gap-1) "
+    class="mb-0 text-3xl select-none"
+  >
+    {
+      tabs.map((tab) => (
+        <Link
+          class:list={{
+            'link': true,
+            'tabs__a--active': isActive(tab.path),
+            'tabs__a--inactive': !isActive(tab.path),
+          }}
+          href={ensureTrailingSlash(tab.path)}
+        >
+          {tab.title}
+        </Link>
+      ))
+    }
+  </div>
+  {subtitle && <p class="mt-4! op-60 italic">{subtitle}</p>}
+</nav>
 <article class="prose slide-enter-content m-auto">
-  <nav id="nav-tabs" class="prose m-auto mb-8 select-none animate-none!">
-    <div u-flex="~ gap-3 lt-sm:(col wrap gap-1) " class="mb-0 text-3xl">
-      {
-        tabs.map((tab) => (
-          <Link
-            class:list={{
-              'link': true,
-              'tabs__a--active': isActive(tab.path),
-              'tabs__a--inactive': !isActive(tab.path),
-            }}
-            href={ensureTrailingSlash(tab.path)}
-          >
-            {tab.title}
-          </Link>
-        ))
-      }
-    </div>
-    {subtitle && <p class="opacity-60 mt-4! text-md italic">{subtitle}</p>}
-  </nav>
   <slot />
 </article>
 

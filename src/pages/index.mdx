@@ -1,0 +1,44 @@
+---
+title: Astro AntfuStyle Theme
+description: A customizable, feature-rich Astro theme for blog and portfolio
+ogImage: /og-images/og-image.png
+---
+
+import BaseLayout from '~/layouts/BaseLayout.astro'
+import StandardLayout from '~/layouts/StandardLayout.astro'
+
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+  <StandardLayout title={frontmatter.title}>
+      **Optimized Infrastructure**
+
+      - 100/100 Lighthouse Performance
+      - Zero UI Framework Integration
+      - SEO-Friendly & Sitemap
+      - Auto-Generated RSS Feed
+      - Customizable Background
+      - Automatic Copyright Update
+      - Ready-to-Use Astro Components
+
+      **Content Management**
+
+      - Type Safety
+      - Markdown & MDX Support
+      - Callouts
+      - Table of Contents
+      - Post Cover Images
+      - Code Syntax Highlighting & Annotations
+      - Dynamic OG Image Generation
+
+      **User Experience**
+
+      - Search
+      - Accessible
+      - View Transitions
+      - Responsive Design
+      - Light & Dark Mode
+      - Loading progress indicator
+      - Social Media Sharing
+      - Image Optimization & Zoom Preview
+
+  </StandardLayout>
+</BaseLayout>

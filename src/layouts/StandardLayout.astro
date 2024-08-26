@@ -1,61 +1,23 @@
 ---
-import { formatDate } from '~/utils'
-import type { CollectionEntry, ContentCollectionKey } from 'astro:content'
-
 interface Props {
-  post: CollectionEntry<ContentCollectionKey>
-  wrapperClass?: string
+  title: string
+  subtitle?: string
 }
 
-const { post, wrapperClass } = Astro.props
-const { data: frontmatter } = post
-const { remarkPluginFrontmatter } = await post.render()
-
-const created = frontmatter.created.toISOString()
-const lastModified =
-  frontmatter.lastModified && frontmatter.lastModified.toISOString()
-const minutesRead =
-  frontmatter.minutesRead || remarkPluginFrontmatter.minutesRead
+const { title, subtitle } = Astro.props
 ---
 
-<header class=`prose m-auto mb-8 ${wrapperClass}`>
+<header class="prose m-auto mb-8">
   <h1
     class="slide-enter-50 mb-0"
     data-pagefind-body
     data-pagefind-weight="10"
     data-pagefind-meta="title"
   >
-    {frontmatter.title}
+    {title}
   </h1>
-  {
-    frontmatter.subtitle && (
-      <p class="slide-enter mt--6! mb-8! opacity-50 italic">
-        {frontmatter.subtitle}
-      </p>
-    )
-  }
-  {
-    frontmatter.created && (
-      <p class="slide-enter-50 mt--6! opacity-50">
-        <time datetime={created}>{formatDate(created)}</time>
-        {minutesRead !== 0 && <span>· {minutesRead} min</span>}
-        {lastModified && (
-          <time datetime={lastModified}>
-            | Last updated: {formatDate(lastModified)}
-          </time>
-        )}
-      </p>
-    )
-  }
-  {
-    frontmatter.draft && (
-      <p class="slide-enter px-4 py-2 b-l-3 b-orange-4 bg-orange-4:10 text-orange-4">
-        This is a draft post that will not be published in production. Set the
-        post's <code>draft</code> field in frontmatter to <code>false</code> or
-        remove it to publish the post.
-      </p>
-    )
-  }
+  {subtitle && <p class="slide-enter mt--4! mb-8! italic">{subtitle}</p>}
+  <slot name="head" />
 </header>
 <article data-pagefind-body class="prose slide-enter-content m-auto">
   <slot />

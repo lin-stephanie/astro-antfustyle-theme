@@ -1,15 +1,14 @@
 import chalk from 'chalk'
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
-import type { SatoriOptions } from 'satori'
-
 import { basename, dirname, join } from 'node:path'
 import { readFileSync, existsSync, writeFileSync } from 'node:fs'
 import { mkdir } from 'node:fs/promises'
-
 import { getCurrentFormattedTime } from '../src/utils'
 import { ogImageMarkup } from './og-template/markup'
-import { PAGES, FEATURES } from '../src/config'
+import { FEATURES } from '../src/config'
+
+import type { SatoriOptions } from 'satori'
 import type { BgType } from '../src/types'
 
 const Inter = readFileSync('plugins/og-template/Inter-Regular-24pt.ttf')
@@ -100,7 +99,9 @@ function remarkGenerateOgImage() {
 
     // check if it has been generated
     const extname = file.extname
-    const nameWithoutExt = basename(filename, extname)
+    const dirpath = file.dirname
+    let nameWithoutExt = basename(filename, extname)
+    if (nameWithoutExt === 'index') nameWithoutExt = basename(dirpath)
     // 'public/og-images' is equivalent to './public/og-images' and relative to the cwd
     if (checkFileExistsInDir('public/og-images', `${nameWithoutExt}.png`))
       return
@@ -132,8 +133,8 @@ function remarkGenerateOgImage() {
     }
 
     // get bgType
-    const dirname = basename(file.dirname)
-    const bgType = PAGES[dirname].bgType ?? bgTypeConfig
+    const pageBgType = file.data.astro.frontmatter.bgType
+    const bgType = pageBgType ?? bgTypeConfig
 
     // generate og images
     await generateOgImage(

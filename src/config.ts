@@ -1,4 +1,4 @@
-import type { Site, Socials, Pages, Layouts, Features } from './types'
+import type { Site, Socials, Layouts, Features } from './types'
 
 export const SITE: Site = {
   website: 'http://example.com',
@@ -12,7 +12,7 @@ export const SITE: Site = {
       path: '/blog',
       prompt: 'Blog',
       text: 'Blog',
-      icon: 'i-ri-article-line',
+      icon: 'i-ri-file-text-line',
     },
     {
       type: 'rwd',
@@ -23,15 +23,9 @@ export const SITE: Site = {
     },
     {
       type: 'icon',
-      path: '/demos',
-      prompt: 'Demos',
-      icon: 'i-ri-screenshot-line',
-    },
-    {
-      type: 'icon',
-      path: '/chat',
-      prompt: 'Contact Me',
-      icon: 'i-ri-chat-1-line',
+      path: '/changelog',
+      prompt: 'Changelog',
+      icon: 'i-ri-file-list-2-line',
     },
   ],
 }
@@ -51,32 +45,8 @@ export const SOCIALS: Socials[] = [
   },
 ]
 
-export const PAGES: Pages = {
-  about: {
-    title: '',
-    description: 'About',
-    // bgType: 'plum',
-  },
-  blog: {
-    title: 'Blog',
-    description: 'Blog',
-    // bgType: 'rose',
-  },
-  projects: {
-    title: 'Projects',
-    description: 'Projects',
-    // bgType: 'dot',
-  },
-  404: {
-    title: '',
-    description: 'Not Found',
-    // bgType: 'particle',
-  },
-}
-
 export const LAYOUTS: Layouts = {
   tabbedLayoutTabs: [
-    { title: 'Guides', path: '/blog' },
     { title: 'Changelog', path: '/changelog' },
     { title: 'AstroBlog', path: '/feeds' },
     { title: 'AstroStreams', path: '/streams' },

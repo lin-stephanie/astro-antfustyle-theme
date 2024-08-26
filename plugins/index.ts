@@ -50,9 +50,10 @@ export const rehypePlugins: RehypePlugins = [
     {
       behavior: 'append',
       properties: {
-        class: 'header-anchor',
-        ariaHidden: 'true',
-        tabIndex: 0,
+        'class': 'header-anchor',
+        'ariaHidden': 'true',
+        'tabIndex': 0,
+        'data-pagefind-ignore': true,
       },
       content: {
         type: 'text',

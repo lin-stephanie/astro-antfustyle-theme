@@ -1,7 +1,7 @@
 ---
 import { getCollection, getEntry } from 'astro:content'
 import Categorizer from '~/components/Categorizer.astro'
-import ContentItem from '~/components/ListItem.astro'
+import ListItem from '~/components/ListItem.astro'
 import { isSameYear, getYear } from '~/utils'
 
 import type {
@@ -85,7 +85,7 @@ if (collectionType === 'streams') {
               ) && (
                 <Categorizer {idx} text={getYear(data.created).toString()} />
               )}
-              <ContentItem
+              <ListItem
                 {idx}
                 {collectionType}
                 redirect={data.redirect}
@@ -133,7 +133,7 @@ if (collectionType === 'streams') {
                   text={getYear(item.data.pubdate as Date).toString()}
                 />
               )}
-              <ContentItem
+              <ListItem
                 {idx}
                 {collectionType}
                 redirect={item.data.link as string}
@@ -160,7 +160,7 @@ if (collectionType === 'streams') {
               {!isSameYear(item.date, sortedStreamItems[idx - 1]?.date) && (
                 <Categorizer {idx} text={getYear(item.date).toString()} />
               )}
-              <ContentItem
+              <ListItem
                 {idx}
                 {collectionType}
                 redirect={item.link}

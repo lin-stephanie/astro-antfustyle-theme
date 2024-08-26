@@ -1,11 +1,10 @@
 ---
 import { getCollection } from 'astro:content'
-
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
 import Toc from '~/components/toc/Toc.astro'
 import ShareLink from '~/components/widgets/ShareLink.astro'
-
+import { formatDate } from '~/utils'
 import { FEATURES } from '~/config'
 
 export async function getStaticPaths() {
@@ -21,9 +20,14 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props
 const { data: frontmatter } = post
-const { Content, headings } = await post.render()
-
+const { Content, headings, remarkPluginFrontmatter } = await post.render()
 const { share, toc } = FEATURES
+
+const created = frontmatter.created.toISOString()
+const lastModified =
+  frontmatter.lastModified && frontmatter.lastModified.toISOString()
+const minutesRead =
+  frontmatter.minutesRead || remarkPluginFrontmatter.minutesRead
 ---
 
 <BaseLayout
@@ -32,7 +36,31 @@ const { share, toc } = FEATURES
   ogImage={frontmatter.ogImage}
 >
   {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
-  <StandardLayout {post}>
+  <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
+    <Fragment slot="head">
+      {
+        frontmatter.created && (
+          <p class="slide-enter-50 mt--6! opacity-50">
+            <time datetime={created}>{formatDate(created)}</time>
+            {minutesRead !== 0 && <span>· {minutesRead} min</span>}
+            {lastModified && (
+              <time datetime={lastModified}>
+                | Last updated: {formatDate(lastModified)}
+              </time>
+            )}
+          </p>
+        )
+      }
+      {
+        frontmatter.draft && (
+          <p class="slide-enter px-4 py-2 b-l-3 b-orange-4 bg-orange-4:10 text-orange-4">
+            This is a draft post that will not be published in production. Set
+            the post's <code>draft</code> field in frontmatter to{' '}
+            <code>false</code> or remove it to publish the post.
+          </p>
+        )
+      }
+    </Fragment>
     <Content />
   </StandardLayout>
   {

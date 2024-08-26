@@ -190,38 +190,6 @@ export interface Socials {
   rwd?: boolean
 }
 
-/* PAGES */
-export type BgType = 'plum' | 'dot' | 'rose' | 'particle'
-
-interface PageMetadata {
-  /**
-   * Set the page title to format with {@link Site.title} as `<pageTitle> - <siteTitle>`
-   * for title and meta tags.
-   *
-   * @description
-   * If set to an empty string, displays only `<name>`.
-   */
-  title: string
-
-  /**
-   * Set the page description for meta tags.
-   *
-   * @description
-   * If not defined or set to an empty string, the {@link Site.description} will be used directly.
-   */
-  description?: string
-
-  /**
-   * Set the page background.
-   *
-   * @description
-   * If not defined or set to an empty string, no background is added to the page.
-   */
-  bgType?: BgType
-}
-
-export type Pages = Record<string, PageMetadata>
-
 /* LAYLOUT */
 interface Tab {
   /**
@@ -257,6 +225,7 @@ export interface Layouts {
 }
 
 /* FEATURES */
+export type BgType = 'plum' | 'dot' | 'rose' | 'particle'
 type Mentioned = `@${string}` | ''
 type FeatureConfig<T> = false | [boolean, T]
 

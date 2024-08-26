@@ -1,15 +1,13 @@
 ---
-title: Blog
-description: Blog
-subtitle: How to use the Astro AntfuStyle theme
+title: '404'
+description: Page Not Found
 ---
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
-import List from '~/components/List.astro'
 
 <BaseLayout title={frontmatter.title} description={frontmatter.description}>
-  <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
-    <List collectionType="blog" />
+  <StandardLayout title={frontmatter.title}>
+    <p data-pagefind-ignore>Nice to meet you tho!</p>
   </StandardLayout>
 </BaseLayout>
