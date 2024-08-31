@@ -41,7 +41,7 @@ export const postSchema = z
     subtitle: z.string().default(''),
     description: z.string().default(''),
     created: z.coerce.date(),
-    lastModified: z.coerce.date().optional(),
+    lastModified: z.union([z.coerce.date(), z.literal('')]).optional(),
     minutesRead: z.number().optional(),
     radio: z.boolean().default(false),
     video: z.boolean().default(false),

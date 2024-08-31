@@ -1,4 +1,5 @@
 {
+  "editor.tabCompletion": "on",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[astro]": {

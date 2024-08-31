@@ -1,0 +1,26 @@
+{
+  "Add frontmatter to a post": {
+    "scope": "markdown,mdx",
+    "prefix": "frontmatter",
+    "body": [
+      "---",
+      "title: ${TM_FILENAME_BASE/([^-]+)(-|$)/${1:/capitalize}${2:+ }/g}",
+      "subtitle: ${1:If not needed, leave the field as an empty string or delete it}",
+      "description: ${2:If not needed, leave the field as an empty string or delete it}",
+      "created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+      "lastModified: ${3:If not needed, leave the field as an empty string or delete it}",
+      "minutesRead: ${4:To auto-generate reading time, delete the field; to hide it on the page, enter 0}",
+      "radio: ${5|false,true|}",
+      "video: ${6|false,true|}",
+      "platform: ${7:If not needed, leave the field as an empty string or delete it}",
+      "toc: ${8|true,false|}",
+      "share: ${9|true,false|}",
+      "ogImage: ${10:To auto-generate OG image, delete the field; to use an existing one, write a path starting with '/og-images/'}",
+      "redirect: ${11:If not needed, delete the field; otherwise, provide a valid URL}",
+      "draft: ${12|false,true|}",
+      "---",
+      "$0",
+    ],
+    "description": "Add the frontmatter block for a new Markdown/MDX post",
+  },
+}
