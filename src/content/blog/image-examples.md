@@ -31,11 +31,11 @@ share: true
 
 ## `image-figure` Directive
 
-:::image-figure[The Iron Triangle of Velocity-Scope-Quality]{style="text-align:center"}
+:::image-figure[The *Iron* Triangle of _Velocity-Scope-Quality_]{style="text-align:center"}
 ![Velocity-Scope-Quality](../../assets/mental-health-oss/oss-mental-iron-triangle.svg)(width:500)
 :::
 
-:::image-figure[The Iron Triangle of Velocity-Scope-Quality]{style="text-align:center; color:pink"}
+:::image-figure[The Iron [Triangle](https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio) of Velocity-Scope-Quality]{style="text-align:center; color:red"}
 ![Velocity-Scope-Quality](../../assets/mental-health-oss/oss-mental-iron-triangle.svg)
 :::
 
@@ -47,7 +47,8 @@ share: true
 ![Velocity-Scope-Quality](../../assets/mental-health-oss/oss-mental-iron-triangle.svg)
 :::
 
-:::image-figure[We temporarily close this due to the lack of enough information. Please provide a minimal reproduction to reopen the issue. Thanks.]
+:::image-figure[We temporarily close **this due to** the lack of enough ~~information~~. Please provide a minimal reproduction to reopen the issue. Thanks. ]
+
 ![](../../assets/why-reproductions-are-required/issue-close-without-repro-light.png)(class:img-light no-zoom)
 
 ![](../../assets/why-reproductions-are-required/issue-close-without-repro-dark.png)(class:img-dark)
@@ -92,5 +93,3 @@ share: true
 :::image-div{style="border:1px solid #333"}
 ![](../../assets/why-reproductions-are-required/issue-close-without-repro-light.png)
 :::
-
-<!-- Can't handle the case where lable contains md syntax for now -->

@@ -5,9 +5,9 @@
 /// <reference types="mdast-util-directive" />
 
 import { visit } from 'unist-util-visit'
-import type { Root, Paragraph } from 'mdast'
+import type { Root, Paragraph, PhrasingContent } from 'mdast'
 
-const validTagsForImg = new Set<string>([
+const VALID_TAGS_FOR_IMG = new Set<string>([
   'div',
   'span',
   'section',
@@ -37,42 +37,39 @@ function remarkImageContainer() {
         const attributes = node.attributes || {}
         const children = node.children
 
-        // add <figure>
+        // add figure node
         data.hName = 'figure'
 
-        // handle figcaption text & add figcaption node
-        let figcaptionText: string
+        // handle figcaption text
+        // priority: content inside [] of `:::image-figure[]{}`、`![]()`
+        let content: PhrasingContent[]
         if (
           children[0].type === 'paragraph' &&
           children[0].data?.directiveLabel &&
           children[0].children[0].type === 'text'
         ) {
-          figcaptionText = children[0].children[0].value
+          content = children[0].children
           children.shift()
         } else if (
           children[0].type === 'paragraph' &&
           children[0].children[0].type === 'image' &&
           children[0].children[0].alt
         ) {
-          figcaptionText = children[0].children[0].alt
+          content = [{ type: 'text', value: children[0].children[0].alt }]
         } else {
           throw new Error(
             'No figcaption text found for image-figure directive.'
           )
         }
 
+        // add figcaption node
         const figcaptionNode: Paragraph = {
           type: 'paragraph',
           data: {
             hName: 'figcaption',
             hProperties: attributes,
           },
-          children: [
-            {
-              type: 'text',
-              value: figcaptionText,
-            },
-          ],
+          children: content,
         }
 
         children.push(figcaptionNode)
@@ -93,7 +90,7 @@ function remarkImageContainer() {
         /* image-* */
         const regex = /^image-(.*)/
         const match = node.name.match(regex)
-        if (match && validTagsForImg.has(match[1])) {
+        if (match && VALID_TAGS_FOR_IMG.has(match[1])) {
           const data = node.data || (node.data = {})
           const attributes = node.attributes || {}
 
