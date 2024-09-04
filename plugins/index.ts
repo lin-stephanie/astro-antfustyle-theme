@@ -1,5 +1,6 @@
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import remarkDirective from 'remark-directive'
+import remarkDirectiveSugar from './remark-directive-sugar'
 import remarkImageContainer from './remark-image-container'
 import remarkImgattr from 'remark-imgattr'
 import remarkReadingTime from './remark-reading-time'
@@ -15,6 +16,7 @@ import type { RemarkPlugins, RehypePlugins } from 'astro'
 export const remarkPlugins: RemarkPlugins = [
   // https://github.com/remarkjs/remark-directive
   remarkDirective,
+  remarkDirectiveSugar,
   remarkImageContainer,
   // https://github.com/OliverSpeir/remark-imgattr
   remarkImgattr,

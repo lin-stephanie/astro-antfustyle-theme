@@ -6,6 +6,7 @@
 
 import { visit } from 'unist-util-visit'
 import type { Root, Paragraph, PhrasingContent } from 'mdast'
+import type { MarkdownVFile } from '@astrojs/markdown-remark'
 
 const VALID_TAGS_FOR_IMG = new Set<string>([
   'div',
@@ -23,11 +24,9 @@ const VALID_TAGS_FOR_IMG = new Set<string>([
 
 /**
  * Used to convert `:::image-*` into container elements for images.
- *
- * @param Root tree - Tree.
  */
 function remarkImageContainer() {
-  return (tree: Root) => {
+  return (tree: Root, file: MarkdownVFile) => {
     visit(tree, (node) => {
       if (node.type !== 'containerDirective') return
 
@@ -57,8 +56,9 @@ function remarkImageContainer() {
         ) {
           content = [{ type: 'text', value: children[0].children[0].alt }]
         } else {
-          throw new Error(
-            'No figcaption text found for image-figure directive.'
+          file.fail(
+            'The figcaption text is missing in the `image-figure` directive. Specify it in the `[]` of `:::image-figure[]{}` or `![]()`.',
+            node
           )
         }
 
@@ -78,7 +78,10 @@ function remarkImageContainer() {
         node.name === 'image-a'
       ) {
         if (!node.attributes || !node.attributes.href)
-          throw new Error('No external links provided.')
+          file.fail(
+            'Unexpectedly missing `href` in the `image-a` directive.',
+            node
+          )
 
         const data = node.data || (node.data = {})
         const attributes = node.attributes || {}
@@ -99,8 +102,9 @@ function remarkImageContainer() {
 
           // node.children.splice(0, 1, node.children[0].children[0])
         } else {
-          throw new Error(
-            'The `image-*` directive failed to match a valid tag.'
+          file.fail(
+            'The `image-*` directive failed to match a valid tag.',
+            node
           )
         }
       }

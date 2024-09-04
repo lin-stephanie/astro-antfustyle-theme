@@ -400,3 +400,28 @@ html:not(.dark) .img-dark {
 .medium-zoom-image--opened {
   z-index: 400;
 }
+
+/* Vedio */
+.prose .video {
+  z-index: 150;
+  position: relative;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  aspect-ratio: 16 / 9;
+}
+
+.prose .video iframe {
+  width: 100%;
+  border-radius: 0.5rem;
+  aspect-ratio: 16 / 9;
+}
+
+@media (min-width: 1024px) {
+  .prose .video {
+    margin: 5rem 0;
+  }
+
+  .prose .video iframe {
+    transform: scaleX(1.2) scaleY(1.2);
+  }
+}

@@ -12,7 +12,7 @@ minutesRead: 25
 >
 > Made with <Slidev class="inline"/> [**Slidev**](https://github.com/slidevjs/slidev) - presentation slides for developers.
 
-<YouTubeEmbed id="W6hhU-Ws2Rg" />
+::video{youtubeId=W6hhU-Ws2Rg}
 
 ## Transcript
 
