@@ -66,6 +66,7 @@ export default defineConfig({
       fonts: {
         sans: 'Inter:400,600,800',
         mono: 'DM Mono:400,600',
+        condensed: 'Roboto Condensed',
       },
     }),
   ],
@@ -79,10 +80,17 @@ export default defineConfig({
     ...navIcons,
     ...socialIcons,
     ...projectIcons,
+
+    /* GroupItem.astro */
     'grid-cols-2',
     'grid-cols-3',
+
+    /* Categorizer.astro */
     'left--4',
     'left-[14%]',
     'lt-lg:left--4',
+
+    /* remark-directive-sugar.ts */
+    'i-carbon-logo-github',
   ],
 })

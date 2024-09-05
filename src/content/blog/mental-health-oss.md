@@ -96,9 +96,9 @@ So, to say, I usually pick <b important-text-hex-80BEDF>Quality</b> and <b impor
 
 ### Scope
 
-I was _"accidentally"_ able to keep that momentum and velocity for quite a long time. I started getting into Open Source with {i18n Ally} and {VueUse}, and since then, I joined Vue and Vite teams. **Within 2021 alone**, I came up with {Slidev} <span op75 text-sm>(April 2021)</span>, {UnoCSS} <span op75 text-sm>(October 2021)</span> and {Vitest} <span op75 text-sm>(December 2021)</span> -- Everything went almost too smoothly that I barely realized the capacity of having larger scope will have a certain limit. I continued doing so with the "velocity" _ignorantly_ since then. I am super lucky to meet the amazing teams and community, and get help from them:
+I was _"accidentally"_ able to keep that momentum and velocity for quite a long time. I started getting into Open Source with :link[i18n Ally]{#lokalise/i18n-ally} and :link[VueUse]{#vueuse/vueuse}, and since then, I joined Vue and Vite teams. **Within 2021 alone**, I came up with {Slidev} <span op75 text-sm>(April 2021)</span>, {UnoCSS} <span op75 text-sm>(October 2021)</span> and {Vitest} <span op75 text-sm>(December 2021)</span> -- Everything went almost too smoothly that I barely realized the capacity of having larger scope will have a certain limit. I continued doing so with the "velocity" _ignorantly_ since then. I am super lucky to meet the amazing teams and community, and get help from them:
 
-- The awesome & super supportive {Nuxt} team {@Atinux} {@danielroe} {@pi0}
+- The awesome & super supportive {Nuxt} team :link[ATINUX]{#@Atinux} :link[DANIELROE]{#@danielroe} :link[PI0]{#@pi0}
 - {@sheremet-va} {@AriPerkkio} and [the Vitest team](https://github.com/vitest-dev/vitest/graphs/contributors) for taking care of {Vitest}
 - {@chu121su12} {@zyyv} and [the UnoCSS team](https://github.com/unocss/unocss/graphs/contributors) for polishing {UnoCSS} a lot
 - {@okxiaoliang4} {@wheatjs} {@Alfred-Skyblue} {@Tahul} and [the VueUse team](https://vueuse.org/) for {VueUse}

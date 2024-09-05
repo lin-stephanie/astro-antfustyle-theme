@@ -77,7 +77,9 @@ ESLint is essential to my workflow to ensure the code quality. If ESLint is alre
 
 I spent some time configuring my ESLint and made it a config preset:
 
-<GitHubLink repo="antfu/eslint-config" name="@antfu/eslint-config" />
+<!-- <GitHubLink repo="antfu/eslint-config" name="@antfu/eslint-config" /> -->
+
+:link[@antfu/eslint-config]{#antfu/eslint-config style=github-link}
 
 It turns out, the setup configuration can also be very minimal:
 

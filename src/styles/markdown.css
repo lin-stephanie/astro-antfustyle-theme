@@ -280,43 +280,6 @@ h6:focus .header-anchor {
   white-space: break-spaces;
 } */
 
-/* Markdown Magic Link */
-.markdown-magic-link {
-  display: inline-flex;
-  align-items: center;
-  background: #8882;
-  transform: translateY(3px);
-  line-height: 100%;
-  color: var(--fg-light) !important;
-  --uno: 'gap-1 transition rounded px1.5 py1 important-border-0 font-condensed';
-}
-
-.markdown-magic-link:hover {
-  background: #8883;
-  color: var(--fg) !important;
-}
-
-.markdown-magic-link-image {
-  display: inline-block;
-  height: 1.1em;
-  width: 1.1em;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 2px;
-}
-
-.markdown-magic-link.markdown-magic-link-github-at {
-  transform: translateY(6px);
-  --uno: 'pl-0 py-0 pr2 text-sm gap-1.2 rounded-full';
-}
-
-.markdown-magic-link.markdown-magic-link-github-at .markdown-magic-link-image {
-  height: 1.6em;
-  width: 1.6em;
-  border-radius: 50%;
-}
-
 /* Rehype Callouts */
 .callout {
   padding-left: 16px;
@@ -401,7 +364,7 @@ html:not(.dark) .img-dark {
   z-index: 400;
 }
 
-/* Vedio */
+/* ::vedio */
 .prose .video {
   z-index: 150;
   position: relative;
@@ -424,4 +387,60 @@ html:not(.dark) .img-dark {
   .prose .video iframe {
     transform: scaleX(1.2) scaleY(1.2);
   }
+}
+
+/* :link */
+.magic-button {
+  display: inline-flex;
+  gap: 0.25rem;
+  align-items: center;
+  padding: 0.25rem 0.375rem;
+  border-radius: 0.25rem;
+  border-width: 0px !important;
+
+  --uno: 'font-condensed';
+  color: var(--fg-light) !important;
+  line-height: 100%;
+
+  background: #8882;
+  transform: translateY(3px);
+}
+
+.magic-button:hover {
+  background: #8883;
+  color: var(--fg) !important;
+}
+
+.magic-button-image {
+  display: inline-block;
+  height: 1.1em;
+  width: 1.1em;
+  border-radius: 2px;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.magic-button.magic-button-rounded {
+  gap: 0.3rem;
+  padding: 0 0.5rem 0 0;
+  border-radius: 9999px;
+
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+
+  transform: translateY(6px);
+}
+
+.magic-button.magic-button-rounded .magic-button-image {
+  height: 1.6em;
+  width: 1.6em;
+  border-radius: 50%;
+}
+
+.magic-github-link {
+  margin-left: 0.25rem;
+  --uno: 'font-mono';
+  opacity: 0.7;
 }
