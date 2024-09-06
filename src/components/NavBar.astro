@@ -10,11 +10,10 @@ import { ensureTrailingSlash } from '~/utils'
 ---
 
 <header class="z-40">
-  <LogoButton />
   <ToTopButton />
-  <nav class="nav">
-    <div class="spacer"></div>
-    <div class="right print:op-0">
+  <LogoButton />
+  <nav class="nav flex items-center justify-end w-full p-8 lt-md:px-6">
+    <div class="right grid grid-auto-flow-col gap-[1.2rem] print:op-0">
       {
         SITE.navBar.map((item) => (
           <Link
@@ -58,28 +57,6 @@ import { ensureTrailingSlash } from '~/utils'
 </header>
 
 <style>
-  .nav {
-    display: grid;
-    grid-template-columns: auto max-content;
-
-    width: 100%;
-    padding: 2rem;
-  }
-
-  .nav > * {
-    margin: auto;
-  }
-
-  .nav .right {
-    display: grid;
-    gap: 1.2rem;
-    grid-auto-flow: column;
-  }
-
-  .nav .right > * {
-    margin: auto;
-  }
-
   .link {
     transition: opacity 0.2s ease;
   }
