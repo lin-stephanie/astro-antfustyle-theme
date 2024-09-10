@@ -6,6 +6,7 @@
   <div u-i-ri-sun-line u-dark:i-ri-moon-line></div>
 </button>
 
+<!-- initialize as inline scripts for faster response, avoiding FOUC  -->
 <script is:inline data-astro-rerun>
   function initTheme() {
     let theme
@@ -19,9 +20,20 @@
       }
       window.localStorage.setItem('theme', theme)
     }
-    theme === 'light'
-      ? document.documentElement.classList.remove('dark')
-      : document.documentElement.classList.add('dark')
+
+    const toggleThemeButton = document.getElementById('theme-switch')
+
+    if (theme === 'light') {
+      document.documentElement.classList.remove('dark')
+      toggleThemeButton.setAttribute('aria-label', 'light')
+    } else {
+      document.documentElement.classList.add('dark')
+      toggleThemeButton.setAttribute('aria-label', 'dark')
+    }
+
+    const colorThemeMetaTag = document.querySelector("meta[name='theme-color']")
+    const bgColor = getComputedStyle(document.body).getPropertyValue('--c-bg')
+    colorThemeMetaTag?.setAttribute('content', bgColor)
   }
 
   initTheme()
@@ -29,13 +41,34 @@
 
 <script>
   document.addEventListener('astro:page-load', () => {
+    let isDark: boolean
+
+    const saveTheme = () => {
+      window.localStorage.setItem('theme', isDark ? 'dark' : 'light')
+    }
+
+    const updateAriaLabel = (buttonElement: HTMLElement) => {
+      buttonElement.setAttribute('aria-label', isDark ? 'dark' : 'light')
+    }
+
+    const setColorTheme = () => {
+      const colorThemeMetaTag = document.querySelector(
+        "meta[name='theme-color']"
+      )
+      const bgColor = getComputedStyle(document.body).getPropertyValue('--c-bg')
+      colorThemeMetaTag?.setAttribute('content', bgColor)
+    }
+
+    /* user toggle button */
     const handleToggle = (event: MouseEvent) => {
-      let isDark: boolean
+      const currentTarget = event.currentTarget
 
       const toggle = () => {
         document.documentElement.classList.toggle('dark')
         isDark = document.documentElement.classList.contains('dark')
-        window.localStorage.setItem('theme', isDark ? 'dark' : 'light')
+        updateAriaLabel(currentTarget as HTMLElement)
+        saveTheme()
+        setColorTheme()
       }
 
       const isAppearanceTransition =
@@ -81,5 +114,15 @@
 
     const toggleThemeButton = document.getElementById('theme-switch')
     toggleThemeButton?.addEventListener('click', (event) => handleToggle(event))
+
+    /* listening system changes */
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', ({ matches }) => {
+        isDark = matches
+        document.documentElement.classList.toggle('dark', isDark)
+        saveTheme()
+        if (toggleThemeButton) updateAriaLabel(toggleThemeButton)
+      })
   })
 </script>
