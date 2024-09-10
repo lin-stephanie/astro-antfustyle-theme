@@ -39,7 +39,7 @@ const ogImageURL = new URL(
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="generator" content={Astro.generator} />
 
-<!-- Primary Meta Tags -->
+<!-- Primary Metadata -->
 <title>{pageTitle}</title>
 <meta name="title" content={pageTitle} />
 <meta name="description" content={pageDescription} />
@@ -49,9 +49,13 @@ const ogImageURL = new URL(
 <link rel="canonical" href={canonicalURL} />
 
 <!-- Icon -->
+<link rel="icon" sizes="any" href="/favicon.ico" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<!-- <meta name="msapplication-TileColor" content="#ffffff" /> -->
+
+<!-- Color -->
+<meta name="theme-color" content="" />
+<meta name="color-scheme" content="light dark" />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
@@ -66,6 +70,9 @@ const ogImageURL = new URL(
 <meta property="twitter:title" content={pageTitle} />
 <meta property="twitter:description" content={pageDescription} />
 <meta property="twitter:image" content={ogImageURL} />
+
+<!-- Manifest -->
+<link rel="manifest" href="/manifest.webmanifest" />
 
 <!-- Font preloads -->
 
