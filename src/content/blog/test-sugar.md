@@ -1,6 +1,6 @@
 ---
 title: Test Sugar
-created: 2024-09-03
+pubDate: 2024-09-03
 minutesRead: 0
 radio: false
 video: false

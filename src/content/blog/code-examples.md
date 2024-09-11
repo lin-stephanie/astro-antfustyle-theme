@@ -1,6 +1,6 @@
 ---
 title: Code Examples
-created: 2024-07-25
+pubDate: 2024-07-25
 toc: false
 share: true
 ---

@@ -136,6 +136,30 @@ export interface Site {
   author: string
 
   /**
+   * Set the primary language of the document content, found in `src/layouts/BaseLayout.astro`.
+   *
+   * @description
+   * It must be a single 'language tag' in the format defined in
+   * {@link https://datatracker.ietf.org/doc/html/rfc5646#appendix-A RFC 5646: Tags for Identifying Languages (also known as BCP 47)}.
+   *
+   */
+  lang: string
+
+  /**
+   * Set the page content's language and region for better content display on social platforms,
+   * found in `src/components/Head.astro`.
+   *
+   * @description
+   * It must be in 'language_TERRITORY' format, which you can find in
+   * {@link https://www.unicode.org/cldr/charts/44/supplemental/language_territory_information.html Language-Territory Information}.
+   *
+   * @example
+   * 'zh_CN'
+   * 'fr_FR'
+   */
+  ogLocale: string
+
+  /**
    * Set the website navigation bar, found in `src/components/NavBar.astro`.
    *
    * @description
@@ -160,7 +184,7 @@ export interface Socials {
    * You can use template literals to reference other configuration items.
    *
    * @example
-   * `${SITE.author}'s Github`
+   * `Follow ${SITE.author} on Twitter`
    */
   title: string
 

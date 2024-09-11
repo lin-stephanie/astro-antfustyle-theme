@@ -1,7 +1,7 @@
 ---
 title: Destructuring... with object or array?
 description: Prefer object destructure or array? Can we support both?
-created: 2020-10-21T16:00:00.000Z
+pubDate: 2020-10-21T16:00:00.000Z
 minutesRead: 8
 ---
 
@@ -32,7 +32,7 @@ The benefits of array destructuring is quite straightforward - you get the freed
 
 ## Destructuring Objects
 
-Instead of returning the getter and setter in React's `useState`, in Vue 3, a `ref` is created combining the getter and setter inside the single object. Naming is simpler and destructuring is no longer needed.
+Instead of returning the getter and setter in React's `useState`, in Vue 3, a `ref` is pubDate combining the getter and setter inside the single object. Naming is simpler and destructuring is no longer needed.
 
 ```ts
 // React

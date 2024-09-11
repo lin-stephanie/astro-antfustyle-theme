@@ -23,9 +23,9 @@ const { data: frontmatter } = post
 const { Content, headings, remarkPluginFrontmatter } = await post.render()
 const { share, toc } = FEATURES
 
-const created = frontmatter.created.toISOString()
-const lastModified =
-  frontmatter.lastModified && frontmatter.lastModified.toISOString()
+const pubDate = frontmatter.pubDate.toISOString()
+const lastModDate =
+  frontmatter.lastModDate && frontmatter.lastModDate.toISOString()
 const minutesRead =
   frontmatter.minutesRead || remarkPluginFrontmatter.minutesRead
 ---
@@ -34,18 +34,20 @@ const minutesRead =
   title={frontmatter.title}
   description={frontmatter.description}
   ogImage={frontmatter.ogImage}
+  {pubDate}
+  {lastModDate}
 >
   {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
   <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
     <Fragment slot="head">
       {
-        frontmatter.created && (
+        frontmatter.pubDate && (
           <p class="slide-enter-50 mt--6! opacity-50">
-            <time datetime={created}>{formatDate(created)}</time>
+            <time datetime={pubDate}>{formatDate(pubDate)}</time>
             {minutesRead !== 0 && <span>· {minutesRead} min</span>}
-            {lastModified && (
-              <time datetime={lastModified}>
-                | Last updated: {formatDate(lastModified)}
+            {lastModDate && (
+              <time datetime={lastModDate}>
+                | Last updated: {formatDate(lastModDate)}
               </time>
             )}
           </p>

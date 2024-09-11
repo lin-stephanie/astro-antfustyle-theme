@@ -1,7 +1,7 @@
 ---
 title: Development Experience with Nuxt
 description: Development Experience with Nuxt - Vue Amsterdam 2023
-created: 2023-02-09
+pubDate: 2023-02-09
 video: true
 minutesRead: 25
 ---

@@ -2,7 +2,7 @@
 title: Why I don't use Prettier
 description: The reason why I don't use Prettier in my projects.
 minutesRead: 12
-created: 2022-10-01T00:00:00Z
+pubDate: 2022-10-01T00:00:00Z
 ---
 
 I have started writing this post multiple times but never ended up posting it. I wasn't able to figure out a proper way to express my position about Prettier. But this time, I think I should try harder to explain that for future reference.

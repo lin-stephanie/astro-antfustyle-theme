@@ -5,17 +5,16 @@ import { checkFileExistsInDir } from '../../plugins/remark-generate-og-image'
 import { SITE } from '~/config'
 
 interface Props {
-  title: string
+  title?: string
   description?: string
   ogImage?: string
+  pubDate?: string
+  lastModDate?: string
 }
 
-const { title, description, ogImage } = Astro.props
+const { title, description, ogImage, pubDate, lastModDate } = Astro.props
 
-const titleSeparator = '-'
-const pageTitle = title
-  ? `${title} ${titleSeparator} ${SITE.title}`
-  : SITE.title
+const pageTitle = title ? `${title} - ${SITE.title}` : SITE.title
 
 const pageDescription = description || SITE.description
 
@@ -27,10 +26,40 @@ const generatedOgImage = checkFileExistsInDir(
 )
   ? `/og-images/${basename(Astro.url.pathname)}.png`
   : undefined
+
 const ogImageURL = new URL(
   (ogImage ?? generatedOgImage) || '/og-images/og-image.png',
   Astro.url
 ).href
+
+// https://jsonld.com/blog-post/
+const blogPostingData = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  'headline': pageTitle,
+  'image': ogImageURL,
+  'url': canonicalURL,
+  'datePublished': pubDate,
+  ...(lastModDate && { dateModified: lastModDate }),
+  ...(description && { description: description }),
+  'author': {
+    '@type': 'Person',
+    'name': SITE.author,
+    'url': SITE.website,
+  },
+}
+
+// https://jsonld.com/web-page/
+const webPageData = {
+  '@context': 'https://schema.org',
+  '@type': 'webPage',
+  'name': `${title || SITE.title}`,
+  ...(description && { description: description }),
+  'publisher': {
+    '@type': 'ProfilePage',
+    'name': `${SITE.author}'s Personal Website`,
+  },
+}
 ---
 
 <!-- Global Metadata -->
@@ -45,6 +74,35 @@ const ogImageURL = new URL(
 <meta name="description" content={pageDescription} />
 <meta name="author" content={SITE.author} />
 
+<!-- Color -->
+<meta name="theme-color" content="" />
+<meta name="color-scheme" content="light dark" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={pubDate ? 'article' : 'website'} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={pageDescription} />
+<meta property="og:image" content={ogImageURL} />
+<meta property="og:site_name" content={SITE.title} />
+<meta property="og:locale" content={SITE.ogLocale} />
+{
+  pubDate && (
+    <>
+      <meta property="article:author" content={SITE.author} />
+      <meta property="article:published_time" content={pubDate} />
+      <meta property="article:modified_time" content={lastModDate} />
+    </>
+  )
+}
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={pageTitle} />
+<meta property="twitter:description" content={pageDescription} />
+<meta property="twitter:image" content={ogImageURL} />
+
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 
@@ -53,27 +111,24 @@ const ogImageURL = new URL(
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-<!-- Color -->
-<meta name="theme-color" content="" />
-<meta name="color-scheme" content="light dark" />
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={pageTitle} />
-<meta property="og:description" content={pageDescription} />
-<meta property="og:image" content={ogImageURL} />
-
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={pageTitle} />
-<meta property="twitter:description" content={pageDescription} />
-<meta property="twitter:image" content={ogImageURL} />
-
 <!-- Manifest -->
 <link rel="manifest" href="/manifest.webmanifest" />
 
-<!-- Font preloads -->
+<!-- Google JSON-LD Structured Data -->
+{
+  pubDate ? (
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(blogPostingData)}
+    />
+  ) : (
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(webPageData)}
+    />
+  )
+}
 
 <ViewTransitions />

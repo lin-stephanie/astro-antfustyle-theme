@@ -32,7 +32,7 @@ if (collectionType === 'blog') {
   })
 
   sortedPostItems = postItems.sort(
-    (a, b) => b.data.created.valueOf() - a.data.created.valueOf()
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   )
 }
 
@@ -80,10 +80,10 @@ if (collectionType === 'streams') {
           return (
             <>
               {!isSameYear(
-                data.created,
-                sortedPostItems[idx - 1]?.data.created
+                data.pubDate,
+                sortedPostItems[idx - 1]?.data.pubDate
               ) && (
-                <Categorizer {idx} text={getYear(data.created).toString()} />
+                <Categorizer {idx} text={getYear(data.pubDate).toString()} />
               )}
               <ListItem
                 {idx}
@@ -93,7 +93,7 @@ if (collectionType === 'streams') {
                 title={data.title}
                 video={data.video}
                 radio={data.radio}
-                date={data.created}
+                date={data.pubDate}
                 {minutesRead}
                 platform={data.platform}
               />

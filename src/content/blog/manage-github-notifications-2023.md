@@ -1,7 +1,7 @@
 ---
 title: How I Manage GitHub Notifications
 description: Manage GitHub Notifications - GitHub Maintainer Summit 2023
-created: 2023-05-17
+pubDate: 2023-05-17
 video: true
 minutesRead: 20
 ---

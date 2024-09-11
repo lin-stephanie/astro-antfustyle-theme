@@ -35,7 +35,7 @@ export function getSortedItems(items: CollectionEntry<EntryKey>[]) {
   const publishedItems = getPublishedItems(items)
 
   return publishedItems.sort(
-    (a, b) => b.data.created.valueOf() - a.data.created.valueOf()
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   )
 }
 
@@ -43,7 +43,7 @@ export function groupItemsByYear(items: CollectionEntry<EntryKey>[]) {
   const sortedItems = getSortedItems(items)
 
   return sortedItems.reduce((acc: Acc, item) => {
-    const year = item.data.created.getFullYear().toString()
+    const year = item.data.pubDate.getFullYear().toString()
     acc[year] ? acc[year].push(item) : (acc[year] = [item])
     return acc
   }, {})

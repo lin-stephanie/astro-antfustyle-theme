@@ -6,6 +6,8 @@ export const SITE: Site = {
   description:
     'A customizable, feature-rich Astro theme for blog and portfolio',
   author: 'Stephanie Lin',
+  lang: 'en',
+  ogLocale: 'en_US',
   navBar: [
     {
       type: 'rwd',
