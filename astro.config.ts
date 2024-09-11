@@ -1,7 +1,9 @@
 import { defineConfig } from 'astro/config'
-import mdx from '@astrojs/mdx'
+import sitemap from '@astrojs/sitemap'
+import robotsTxt from 'astro-robots-txt'
 import unocss from 'unocss/astro'
 import astroExpressiveCode from 'astro-expressive-code'
+import mdx from '@astrojs/mdx'
 
 import { remarkPlugins, rehypePlugins } from './plugins'
 import { SITE } from './src/config'
@@ -10,6 +12,8 @@ import { SITE } from './src/config'
 export default defineConfig({
   site: SITE.website,
   integrations: [
+    sitemap(),
+    robotsTxt(),
     unocss({
       // https://unocss.dev/integrations/astro#style-reset
       injectReset: true,
