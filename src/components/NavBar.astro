@@ -46,12 +46,11 @@ import { ensureTrailingSlash } from '~/utils'
           )
         })
       }
-      <!-- <a href="/feed.xml" target="_blank" title="RSS" class="lt-md:hidden">
-        <div i-la-rss-square style="font-size:1.25rem; margin: 0 -0.125rem;">
-        </div>
-      </a> -->
       <SearchSwitch />
       <ThemeSwitch />
+      <Link title="RSS" href="/rss.xml" external={true} class="lt-md:hidden">
+        <div class="i-ri-rss-line"></div>
+      </Link>
     </div>
   </nav>
 </header>
