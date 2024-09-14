@@ -70,9 +70,7 @@ function remarkGenerateOgImage() {
   const ogImage = FEATURES.ogImage
   if (!(Array.isArray(ogImage) && ogImage[0])) return
 
-  const sourceConfig = ogImage[1].authorOrBrand
-  const titleConfig = ogImage[1].fallbackTitle
-  const bgTypeConfig = ogImage[1].fallbackBgType
+  const { authorOrBrand, fallbackTitle, fallbackBgType } = ogImage[1]
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
@@ -80,9 +78,9 @@ function remarkGenerateOgImage() {
     // regenerate fallback
     if (!checkFileExistsInDir('public/og-images', 'og-image.png')) {
       await generateOgImage(
-        sourceConfig,
-        titleConfig,
-        bgTypeConfig,
+        authorOrBrand,
+        fallbackTitle,
+        fallbackBgType,
         'public/og-images/og-image.png'
       )
     }
@@ -96,6 +94,11 @@ function remarkGenerateOgImage() {
     const draft = file.data.astro.frontmatter.draft
     const redirect = file.data.astro.frontmatter.redirect
     if (draft || redirect) return
+
+    // check if it need to be skipped
+    const title = file.data.astro.frontmatter.title
+    if (!title || !title.trim().length) return
+    if (file.data.astro.frontmatter.ogImage === false) return
 
     // check if it has been generated
     const extname = file.extname
@@ -116,29 +119,18 @@ function remarkGenerateOgImage() {
       !checkFileExistsInDir('public/og-images', basename(ogImage))
     ) {
       console.warn(
-        `${chalk.black(getCurrentFormattedTime())} ${chalk.yellow(`[WARN] The '${ogImage}' specified in '${filename}' was not found. No new og image will be generated for '${filename}'. Please verify.`)}\n  ${chalk.bold('Hint:')} See ${chalk.cyan.underline('https://docs.astro.build/en/getting-started/')} for more information on og image.`
+        `${chalk.black(getCurrentFormattedTime())} ${chalk.yellow(`[WARN] The '${ogImage}' specified in '${file.path}' was not found.`)}\n  ${chalk.bold('Hint:')} See ${chalk.cyan.underline('https://docs.astro.build/en/getting-started/')} for more information on og image.`
       )
-      /* console.warn(
-        `\x1b[90m${getCurrentFormattedTime()}\x1b[0m \x1b[33m[WARN] The image specified by the 'ogImage' field in '${filename}' was not found in the 'public/og-image' directory. No new og image will be generated for '${filename}'. Please verify.\x1b[0m`
-      ) */
       return
-    }
-
-    // get title
-    const title = file.data.astro.frontmatter.title
-    if (!title.trim().length) {
-      console.warn(
-        `${chalk.black(getCurrentFormattedTime())} ${chalk.yellow(`[WARN] The 'title' field in the '${filename}' frontmatter is an empty string.`)}`
-      )
     }
 
     // get bgType
     const pageBgType = file.data.astro.frontmatter.bgType
-    const bgType = pageBgType ?? bgTypeConfig
+    const bgType = pageBgType ?? fallbackBgType
 
     // generate og images
     await generateOgImage(
-      sourceConfig,
+      authorOrBrand,
       title.trim(),
       bgType,
       `public/og-images/${nameWithoutExt}.png`

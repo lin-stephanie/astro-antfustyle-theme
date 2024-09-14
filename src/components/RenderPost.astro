@@ -1,0 +1,16 @@
+---
+import { getEntry } from 'astro:content'
+import type { ContentCollectionKey, ValidContentEntrySlug } from 'astro:content'
+
+interface Props {
+  collectionType: ContentCollectionKey
+  slug: ValidContentEntrySlug<ContentCollectionKey>
+}
+
+const { collectionType, slug } = Astro.props
+
+const post = await getEntry(collectionType, slug)
+const { Content } = await post.render()
+---
+
+<Content />

@@ -4,8 +4,9 @@ import { z } from 'astro:content'
 export const pageSchema = z.object({
   title: z
     .string()
+    .optional()
     .describe(
-      'Set the page title to format with `SITE.title` as `<pageTitle> - <siteTitle>` for title, meta tags, and for automatically generating OG images. If set to an empty string, displays only `<siteTitle>`.'
+      'Set the page title, formatted with `SITE.title` as <pageTitle> - <siteTitle> for metadata and automatic OG image generation. If undefined or empty, only <siteTitle> is displayed, and OG image generation is skipped.'
     ),
   description: z
     .string()
@@ -26,8 +27,12 @@ export const pageSchema = z.object({
       'Set the page background. If not defined or set to an empty string, no background is added to the page.'
     ),
   ogImage: z
-    .string()
-    .regex(/^\/og-images\//, "ogImage must start with '/og-images/'.")
+    .union([
+      z.literal(false),
+      z
+        .string()
+        .regex(/^\/og-images\//, "ogImage must start with '/og-images/'."),
+    ])
     .optional(),
   toc: z.boolean().default(false),
 })
@@ -49,8 +54,12 @@ export const postSchema = z
     toc: z.boolean().default(true),
     share: z.boolean().default(true),
     ogImage: z
-      .string()
-      .regex(/^\/og-images\//, "ogImage must start with '/og-images/'.")
+      .union([
+        z.literal(false),
+        z
+          .string()
+          .regex(/^\/og-images\//, "ogImage must start with '/og-images/'."),
+      ])
       .optional(),
     redirect: z.string().url('Invalid url.').optional(),
     draft: z.boolean().default(false),
