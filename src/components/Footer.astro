@@ -1,17 +1,22 @@
 ---
+import Link from './base/Link.astro'
+import { SITE } from '~/config'
 
+const currentYear = new Date().getFullYear()
+
+const content = `© ${currentYear} ${SITE.author} | Powered by`
 ---
 
 <footer class="prose slide-enter flex mt-10 mb-6 m-auto animate-delay-1200!">
   <span class="op-50 text-sm">
-    © 2024 Stephanie Lin | Astro AntfuStyle under
-    <a
-      target="_blank"
-      href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
-      style="color:inherit"
+    {content}
+    <Link
+      href="https://github.com/lin-stephanie/astro-antfustyle-theme"
+      title="AntfuStyle on GitHub"
+      external={true}
     >
-      CC BY-NC-SA 4.0
-    </a>
+      Astro AntfuStyle Theme
+    </Link>
   </span>
   <div class="flex-auto"></div>
 </footer>
