@@ -2,7 +2,11 @@
 
 ---
 
-<button id="theme-switch" class="op-60 hover:op-100" title="Toggle Light/Dark">
+<button
+  id="theme-switch"
+  class="op-60 hover:op-100"
+  title="Toggles light & dark"
+>
   <div u-i-ri-sun-line u-dark:i-ri-moon-line></div>
 </button>
 
@@ -22,13 +26,16 @@
     }
 
     const toggleThemeButton = document.getElementById('theme-switch')
+    toggleThemeButton.setAttribute('role', 'switch')
 
     if (theme === 'light') {
       document.documentElement.classList.remove('dark')
       toggleThemeButton.setAttribute('aria-label', 'light')
+      toggleThemeButton.setAttribute('aria-checked', 'false')
     } else {
       document.documentElement.classList.add('dark')
       toggleThemeButton.setAttribute('aria-label', 'dark')
+      toggleThemeButton.setAttribute('aria-checked', 'true')
     }
 
     const colorThemeMetaTag = document.querySelector("meta[name='theme-color']")
@@ -47,8 +54,9 @@
       window.localStorage.setItem('theme', isDark ? 'dark' : 'light')
     }
 
-    const updateAriaLabel = (buttonElement: HTMLElement) => {
+    const updateAria = (buttonElement: HTMLElement) => {
       buttonElement.setAttribute('aria-label', isDark ? 'dark' : 'light')
+      buttonElement.setAttribute('aria-checked', isDark ? 'true' : 'false')
     }
 
     const setColorTheme = () => {
@@ -66,7 +74,7 @@
       const toggle = () => {
         document.documentElement.classList.toggle('dark')
         isDark = document.documentElement.classList.contains('dark')
-        updateAriaLabel(currentTarget as HTMLElement)
+        updateAria(currentTarget as HTMLElement)
         saveTheme()
         setColorTheme()
       }
@@ -122,7 +130,7 @@
         isDark = matches
         document.documentElement.classList.toggle('dark', isDark)
         saveTheme()
-        if (toggleThemeButton) updateAriaLabel(toggleThemeButton)
+        if (toggleThemeButton) updateAria(toggleThemeButton)
       })
   })
 </script>

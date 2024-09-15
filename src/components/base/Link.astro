@@ -9,9 +9,19 @@ interface Props extends HTMLAttributes<'a'> {
 }
 
 const { href, title, external = false, ...rest } = Astro.props
+
+const newTitle = external && title ? `${title} (external link)` : title
 ---
 
-<a {href} {title} target={external ? '_blank' : '_self'} {...rest}><slot /></a>
+<a
+  {href}
+  title={newTitle}
+  aria-label={newTitle}
+  target={external ? '_blank' : '_self'}
+  {...rest}
+>
+  <slot /></a
+>
 
 <style>
   a {

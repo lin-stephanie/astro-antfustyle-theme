@@ -1,8 +1,11 @@
 ---
 import Link from '~/components/base/Link.astro'
+import { SITE } from '~/config'
+
+const title = `${SITE.author} @ ${new URL(SITE.website).hostname}`
 ---
 
-<Link href="/" class="link">
+<Link href="/" {title} class="link" aria-current="page">
   <div class="logo-container">
     <!-- ICON SVG -->
     <!-- <svg
@@ -10,6 +13,7 @@ import Link from '~/components/base/Link.astro'
       viewBox="0 0 32 32"
       width="2em"
       height="2em"
+      aria-hidden="true"
     >
       <path
         fill="url(#vscodeIconsFileTypeLightAstro0)"
@@ -44,6 +48,7 @@ import Link from '~/components/base/Link.astro'
       height="32.732"
       viewBox="0 0 107.548 32.732"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
     >
       <g
         id="svgGroup"

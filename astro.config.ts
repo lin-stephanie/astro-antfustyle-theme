@@ -28,13 +28,21 @@ export default defineConfig({
   },
   vite: {
     base: '/',
-    plugins: [
-      // ... other Vite plugins
-    ],
-    // ... other Vite options
+    build: {
+      chunkSizeWarningLimit: 1500,
+      rollupOptions: {
+        output: {
+          assetFileNames: 'assets/[name].[hash][extname]',
+          /* manualChunks: (id) => {
+            if (id.includes('node_modules')) return 'vendor'
+          }, */
+        },
+      },
+    },
   },
   experimental: {
     contentLayer: true,
     contentIntellisense: true,
+    directRenderScript: true,
   },
 })

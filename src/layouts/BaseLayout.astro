@@ -14,12 +14,14 @@ import Footer from '~/components/Footer.astro'
 import Background from '~/components/Background.astro'
 
 import { SITE } from '~/config'
+import type { BgType } from '~/types'
+import Link from '~/components/base/Link.astro'
 
 interface Props {
   title?: string
   description?: string
   ogImage?: string
-  bgType?: string
+  bgType?: BgType
   pubDate?: string
   lastModDate?: string
 }
@@ -36,8 +38,13 @@ const { title, description, ogImage, bgType, pubDate, lastModDate } =
 
   <body class="relative font-sans text-gray-700 dark:text-gray-200">
     {bgType && <Background type={bgType} />}
+    <Link
+      class="sr-only focus:(not-sr-only fixed start-1 top-1.5 op-20)"
+      href="#main"
+      >Skip to content
+    </Link>
     <NavBar />
-    <main class="px-7 py-10">
+    <main id="main" class="px-7 py-10">
       <slot />
       {
         Astro.url.pathname !== '/' && (
