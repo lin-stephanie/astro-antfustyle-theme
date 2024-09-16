@@ -36,7 +36,10 @@ const { title, description, ogImage, bgType, pubDate, lastModDate } =
     <Head {title} {description} {ogImage} {pubDate} {lastModDate} />
   </head>
 
-  <body class="relative font-sans text-gray-700 dark:text-gray-200">
+  <body
+    class="relative flex flex-col min-h-screen
+      font-sans text-gray-700 dark:text-gray-200"
+  >
     {bgType && <Background type={bgType} />}
     <Link
       class="sr-only focus:(not-sr-only fixed start-1 top-1.5 op-20)"
@@ -48,15 +51,15 @@ const { title, description, ogImage, bgType, pubDate, lastModDate } =
       <slot />
       {
         Astro.url.pathname !== '/' && (
-          <div class="prose slide-enter m-auto mt-8 mb-8 animate-delay-1000! print:hidden">
+          <div class="prose slide-enter animate-delay-1000! m-auto mt-8 print:hidden">
             <slot name="share" />
             <br />
             <BackLink />
           </div>
         )
       }
-      <Footer />
     </main>
+    <Footer />
     <script>
       /* nprogress */
       import nprogress from 'nprogress'

@@ -7,16 +7,18 @@ const currentYear = new Date().getFullYear()
 const content = `© ${currentYear} ${SITE.author} | Powered by`
 ---
 
-<footer class="prose slide-enter flex mt-10 mb-6 m-auto animate-delay-1200!">
-  <span class="op-50 text-sm">
-    {content}
-    <Link
-      href="https://github.com/lin-stephanie/astro-antfustyle-theme"
-      title="AntfuStyle on GitHub"
-      external={true}
-    >
-      Astro AntfuStyle Theme
-    </Link>
-  </span>
-  <div class="flex-auto"></div>
+<footer class="slide-enter animate-delay-1600! px-7 mt-auto mb-10">
+  <div class="prose mx-auto op-50">
+    <div text-sm>
+      {content}
+      <Link
+        href="https://github.com/lin-stephanie/astro-antfustyle-theme"
+        title="AntfuStyle on GitHub"
+        external={true}
+        class="op-100! color-[--fg]!"
+      >
+        Astro AntfuStyle Theme
+      </Link>
+    </div>
+  </div>
 </footer>
