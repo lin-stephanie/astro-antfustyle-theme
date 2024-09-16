@@ -67,10 +67,12 @@ export const FEATURES: Features = {
     {
       twitter: [true, '@ste7lin'],
       mastodon: [true, '@ste7lin@fairy.id'],
-      telegram: false,
-      whatsapp: false,
       facebook: false,
       pinterest: false,
+      reddit: false,
+      telegram: false,
+      whatsapp: false,
+      email: false,
     },
   ],
   toc: [

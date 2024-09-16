@@ -11,10 +11,12 @@ const postUrl = Astro.url
 
 const twitter = 'https://twitter.com/intent/tweet?text='
 const elk = 'https://elk.zone/intent/post?text='
-const telegram = 'https://t.me/share/url?url='
-const whatsapp = 'https://wa.me/?text='
 const facebook = 'https://www.facebook.com/sharer.php?u='
 const pinterest = 'https://pinterest.com/pin/create/button/?url='
+const reddit = 'https://www.reddit.com/submit?url='
+const telegram = 'https://t.me/share/url?url='
+const whatsapp = 'https://wa.me/?text='
+const email = 'mailto:?subject=See%20this%20post&body='
 
 const twitterUrl =
   config.twitter &&
@@ -22,39 +24,57 @@ const twitterUrl =
 const elkUrl =
   config.mastodon &&
   `${elk}${encodeURIComponent(`Reading ${config.mastodon[1] && `${config.mastodon[1]}'s`} ${postUrl}\n\nI think...`)}`
-const telegramUrl = config.telegram && `${telegram}${postUrl}`
-const whatsappUrl = config.whatsapp && `${whatsapp}${postUrl}`
 const facebookUrl = config.facebook && `${facebook}${postUrl}`
 const pinterestUrl = config.pinterest && `${pinterest}${postUrl}`
+const redditUrl = config.reddit && `${reddit}${postUrl}`
+const telegramUrl = config.telegram && `${telegram}${postUrl}`
+const whatsappUrl = config.whatsapp && `${whatsapp}${postUrl}`
+const emailUrl = config.email && `${email}${postUrl}`
 
 const links = [
-  { url: twitterUrl, label: 'twitter' },
-  { url: elkUrl, label: 'mastodon' },
-  { url: telegramUrl, label: 'telegram' },
-  { url: whatsappUrl, label: 'whatsapp' },
-  { url: facebookUrl, label: 'facebook' },
-  { url: pinterestUrl, label: 'pinterest' },
+  { url: twitterUrl, label: 'twitter', title: 'Tweet this post' },
+  { url: elkUrl, label: 'mastodon', title: 'Share this post on Mastodon' },
+  { url: facebookUrl, label: 'facebook', title: 'Share this post on Facebook' },
+  {
+    url: pinterestUrl,
+    label: 'pinterest',
+    title: 'Share this post on Pinterest',
+  },
+  { url: redditUrl, label: 'reddit', title: 'Share this post on Reddit' },
+  {
+    url: telegramUrl,
+    label: 'telegram',
+    title: 'Share this post via Telegram',
+  },
+  {
+    url: whatsappUrl,
+    label: 'whatsapp',
+    title: 'Share this post via WhatsApp',
+  },
+  { url: emailUrl, label: 'email', title: 'Share this post via email' },
 ]
+
+// prevent the error "Type 'string | false' is not assignable to type 'string'"
 const filteredLinks = links.filter(
-  (link): link is { url: string; label: string } => typeof link.url === 'string'
+  (link): link is { url: string; label: string; title: string } =>
+    typeof link.url === 'string'
 )
 ---
 
-<span class="op-50 font-mono">&gt; </span>
+<span class="font-mono op-50">&gt; </span>
 <span class="op-50">share on</span>
 {
   filteredLinks.map((link, index) => (
     <>
-      <Link class="link" href={link.url} external={true}>
+      <Link
+        class="op-50! hover:op-75! op-transition"
+        href={link.url}
+        title={link.title}
+        external={true}
+      >
         {link.label}
       </Link>
       {index < filteredLinks.length - 1 && <span class="op-25">/</span>}
     </>
   ))
 }
-
-<style>
-  .link {
-    --uno: 'op-50';
-  }
-</style>

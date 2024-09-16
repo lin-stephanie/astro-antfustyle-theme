@@ -279,14 +279,24 @@ export interface ShareConfig {
   mastodon: FeatureConfig<Mentioned>
 
   /**
-   * Set whether to include Telegram for sharing.
-   */
-  telegram: boolean
-
-  /**
    * Set whether to include Facebook for sharing.
    */
   facebook: boolean
+
+  /**
+   * Set whether to include Pinterest for sharing.
+   */
+  pinterest: boolean
+
+  /**
+   * Set whether to include Reddit for sharing.
+   */
+  reddit: boolean
+
+  /**
+   * Set whether to include Telegram for sharing.
+   */
+  telegram: boolean
 
   /**
    * Set whether to include WhatsApp for sharing.
@@ -294,9 +304,9 @@ export interface ShareConfig {
   whatsapp: boolean
 
   /**
-   * Set whether to include Pinterest for sharing.
+   * Set whether to include Email for sharing.
    */
-  pinterest: boolean
+  email: boolean
 }
 
 interface TocConfig {
