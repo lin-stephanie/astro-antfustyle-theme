@@ -24,7 +24,7 @@ const { groupItemCols } = LAYOUTS
   {
     items.map((item, _) => (
       <Link
-        class="link relative flex items-center"
+        class="link relative flex items-center op-transition"
         href={item.link}
         title={item.name}
         external={true}
@@ -48,9 +48,10 @@ const { groupItemCols } = LAYOUTS
 
   .icon {
     opacity: 0.5;
+    filter: saturate(0);
+
     line-height: 2.25rem;
     font-size: 1.875rem;
-    filter: saturate(0);
   }
 
   /* .link:hover .icon {
@@ -62,9 +63,9 @@ const { groupItemCols } = LAYOUTS
     max-width: 100%;
     padding: 0.5rem 0.875rem 0.875rem;
     border-radius: 6px;
+
     background: transparent;
     font-size: 1.1rem;
-    transition: opacity 0.2s ease;
   }
 
   .link:hover {

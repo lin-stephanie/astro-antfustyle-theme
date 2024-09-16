@@ -37,9 +37,9 @@ const {
   }}
 >
   <Link
-    class="link"
     href={redirect ?? `/${collectionType}/${postSlug}/`}
     external={redirect ? true : false}
+    class="block border-b-none! mb-6 mt-2 op-transition!"
   >
     <li
       u-flex="~ items-center gap-2 lt-md:(col items-start)"
@@ -92,10 +92,3 @@ const {
     </li>
   </Link>
 </div>
-
-<style>
-  .link {
-    --uno: 'block border-b-none! mb-6 mt-2 font-normal';
-    transition: opacity 0.2s ease;
-  }
-</style>

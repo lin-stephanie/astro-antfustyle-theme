@@ -17,9 +17,9 @@ import { ensureTrailingSlash } from '~/utils'
       {
         SITE.navBar.map((item) => (
           <Link
-            class="link"
             href={ensureTrailingSlash(item.path)}
             title={item.prompt}
+            class="op-transition"
           >
             {item.type === 'rwd' && (
               <>
@@ -36,10 +36,10 @@ import { ensureTrailingSlash } from '~/utils'
         SOCIALS.map((item) => {
           return (
             <Link
-              title={item.title}
               href={item.href}
+              title={item.title}
               external={true}
-              class={item.rwd ? 'lt-md:hidden' : ''}
+              class={`${item.rwd ? 'lt-md:hidden' : ''} op-transition`}
             >
               <div class={`${item.icon}`} />
             </Link>
@@ -54,9 +54,3 @@ import { ensureTrailingSlash } from '~/utils'
     </div>
   </nav>
 </header>
-
-<style>
-  .link {
-    transition: opacity 0.2s ease;
-  }
-</style>

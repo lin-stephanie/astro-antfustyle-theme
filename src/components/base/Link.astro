@@ -16,8 +16,8 @@ const newTitle = external && title ? `${title} (external link)` : title
 <a
   {href}
   title={newTitle}
-  aria-label={newTitle}
   target={external ? '_blank' : '_self'}
+  aria-label={newTitle}
   {...rest}
 >
   <slot /></a

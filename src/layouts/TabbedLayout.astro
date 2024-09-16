@@ -31,6 +31,7 @@ const isActive = (href: string) => currentPath === ensureTrailingSlash(href)
         <Link
           class:list={{
             'link': true,
+            'op-transition!': true,
             'tabs__a--active': isActive(tab.path),
             'tabs__a--inactive': !isActive(tab.path),
           }}
@@ -41,7 +42,7 @@ const isActive = (href: string) => currentPath === ensureTrailingSlash(href)
       ))
     }
   </div>
-  {subtitle && <p class="mt-4! op-60 italic">{subtitle}</p>}
+  {subtitle && <p class="mt-4! op-50 italic">{subtitle}</p>}
 </nav>
 <article class="prose slide-enter-content m-auto">
   <slot />

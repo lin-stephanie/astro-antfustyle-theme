@@ -16,7 +16,11 @@ const { title, subtitle } = Astro.props
   >
     {title}
   </h1>
-  {subtitle && <p class="slide-enter mt--4! mb-8! italic">{subtitle}</p>}
+  {
+    subtitle && (
+      <p class="animate-none mt--4! mb-8! op-50! italic">{subtitle}</p>
+    )
+  }
   <slot name="head" />
 </header>
 <article data-pagefind-body class="prose slide-enter-content m-auto">

@@ -4,7 +4,7 @@ import { getUrl } from '~/utils'
 
 <button
   id="search-switch"
-  class="op-60 hover:op-100"
+  class="op-60 hover:op-100 op-transition"
   title="Search"
   aria-label="Search"
 >
@@ -14,7 +14,7 @@ import { getUrl } from '~/utils'
 <div
   transition:persist
   id="search-panel"
-  class="float-panel-closed
+  class="float-panel-closed op-transition
     z-200 fixed top-20 right-8
     grid grid-rows-[auto_1fr]
     w-30rem max-h-80vh p-2 rounded-lg lt-md:(w-90% left-5% right-5%)

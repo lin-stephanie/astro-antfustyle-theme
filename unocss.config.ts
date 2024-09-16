@@ -38,8 +38,9 @@ export default defineConfig({
     ],
   ],
 
-  // combine multiple rules
+  // combine multiple rules as utility classes
   shortcuts: [
+    ['op-transition', 'transition-opacity duration-300 ease-in-out'],
     [
       'shadow-c',
       'shadow-[0_0_20px_rgba(0,0,0,0.2)] dark:shadow-[0_0_30px_rgba(255,255,255,0.2)]',
