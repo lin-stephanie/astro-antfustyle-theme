@@ -67,7 +67,7 @@ if (collectionType === 'streams') {
 
 {
   collectionType === 'blog' && (
-    <ul>
+    <ul aria-label="Post list">
       {sortedPostItems.length === 0 ? (
         <div class="py-2 op-50">nothing here yet</div>
       ) : (
@@ -107,7 +107,7 @@ if (collectionType === 'streams') {
 
 {
   collectionType === 'feeds' && (
-    <ul>
+    <ul aria-label="Feed list">
       {sortedFeedItems.length === 0 ? (
         <div class="py-2 op-50">nothing here yet</div>
       ) : (
@@ -150,7 +150,7 @@ if (collectionType === 'streams') {
 
 {
   collectionType === 'streams' && (
-    <ul>
+    <ul aria-label="Stream list">
       {sortedStreamItems.length === 0 ? (
         <div class="py-2 op-50">nothing here yet</div>
       ) : (

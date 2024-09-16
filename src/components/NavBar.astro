@@ -12,7 +12,10 @@ import { ensureTrailingSlash } from '~/utils'
 <header class="z-40">
   <ToTopButton />
   <LogoButton />
-  <nav class="nav flex items-center justify-end w-full p-8 lt-md:px-6">
+  <nav
+    class="nav flex items-center justify-end w-full p-8 lt-md:px-6"
+    aria-label="Main menu"
+  >
     <div class="right grid grid-auto-flow-col gap-[1.2rem] print:op-0">
       {
         SITE.navBar.map((item) => (
@@ -20,6 +23,11 @@ import { ensureTrailingSlash } from '~/utils'
             href={ensureTrailingSlash(item.path)}
             title={item.prompt}
             class="op-transition"
+            aria-current={
+              Astro.url.pathname === ensureTrailingSlash(item.path)
+                ? 'page'
+                : false
+            }
           >
             {item.type === 'rwd' && (
               <>

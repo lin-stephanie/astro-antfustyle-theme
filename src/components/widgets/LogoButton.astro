@@ -5,7 +5,12 @@ import { SITE } from '~/config'
 const title = `${SITE.author} @ ${new URL(SITE.website).hostname}`
 ---
 
-<Link href="/" {title} class="link op-transition">
+<Link
+  href="/"
+  {title}
+  class="link op-transition"
+  aria-current={Astro.url.pathname === '/' ? 'page' : false}
+>
   <div class="logo-container">
     <!-- ICON SVG -->
     <!-- <svg
