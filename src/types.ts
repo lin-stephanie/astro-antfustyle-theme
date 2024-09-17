@@ -1,17 +1,3 @@
-/* MISC */
-export type Fn = () => void
-
-export type Range = [number, number]
-
-export interface Particle {
-  x: number
-  y: number
-  velocity: {
-    x: number
-    y: number
-  }
-}
-
 /* SITE */
 type Url = `http://${string}` | `https://${string}`
 type Icon = `i-${string}-${string}` | `i-${string}:${string}`

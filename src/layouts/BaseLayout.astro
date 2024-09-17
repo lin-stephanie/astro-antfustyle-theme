@@ -40,11 +40,11 @@ const { title, description, ogImage, bgType, pubDate, lastModDate } =
     class="relative flex flex-col min-h-screen
       font-sans text-gray-700 dark:text-gray-200"
   >
-    {bgType && <Background type={bgType} />}
     <Link
-      class="sr-only focus:(not-sr-only fixed start-1 top-1.5 op-20)"
       href="#main"
-      >Skip to content
+      class="sr-only focus:(not-sr-only fixed start-1 top-1.5 op-20)"
+    >
+      Skip to content
     </Link>
     <NavBar />
     <main id="main" class="px-7 py-10">
@@ -60,6 +60,7 @@ const { title, description, ogImage, bgType, pubDate, lastModDate } =
       }
     </main>
     <Footer />
+    {bgType && <Background type={bgType} />}
     <script>
       /* nprogress */
       import nprogress from 'nprogress'

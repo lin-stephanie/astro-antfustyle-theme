@@ -1,126 +1,145 @@
 ---
-
+// inspired by: https://github.com/JulianLaval/canvas-particle-network
 ---
 
-<div
-  id="particle"
-  class="z--1 fixed top-0 bottom-0 left-0 right-0
-    pointer-events-none
-    print:hidden dark:invert"
+<bg-particle
+  class="z--1 fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden dark:invert"
 >
-</div>
+</bg-particle>
+
+<script
+  is:inline
+  defer
+  src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.min.js"></script>
 
 <script>
-  import p5 from 'p5'
-  import type { Particle } from '~/types'
+  import type { default as P5Instance } from 'p5'
 
-  let p5Instance: p5 | null = null
+  interface Particle {
+    x: number
+    y: number
+    velocity: {
+      x: number
+      y: number
+    }
+  }
 
-  document.addEventListener('astro:page-load', () => {
-    // after switching pages, stop the animation loop.
-    if (p5Instance) {
-      p5Instance.remove()
-      p5Instance = null
+  class BgParticleElement extends HTMLElement {
+    p5Instance: P5Instance | null
+
+    constructor() {
+      super()
+      this.p5Instance = null
     }
 
-    const div = document.getElementById('particle')
-    if (!div) return
+    connectedCallback() {
+      const sketch = (p: P5Instance) => {
+        const BACKGROUND = '#fff'
+        const COLOR = '#88888825'
+        const VELOCITY = 0.8
+        const DENSITY = 6000
+        const DISTANCE = 120
+        const INTERACTIVE = false
 
-    const sketch = (p: p5) => {
-      const BACKGROUND = '#fff'
-      const COLOR = '#88888825'
-      const VELOCITY = 0.8
-      const DENSITY = 6000
-      const DISTANCE = 120
-      const INTERACTIVE = false
+        const width = window.innerWidth
+        const height = window.innerHeight
+        const particles: Particle[] = []
 
-      const width = window.innerWidth
-      const height = window.innerHeight
-      const particles: Particle[] = []
-
-      function createParticle() {
-        const x = p.random(width)
-        const y = p.random(height)
-        const velocity = {
-          x: (p.random() - 0.5) * VELOCITY,
-          y: (p.random() - 0.5) * VELOCITY,
-        }
-
-        return { x, y, velocity }
-      }
-
-      function drawParticle(particle: Particle) {
-        p.noStroke()
-        p.fill(COLOR)
-        p.circle(particle.x, particle.y, 3)
-      }
-
-      function updateParticle(particle: Particle) {
-        // change dir if outside map
-        if (particle.x > width + 20 || particle.x < -20) {
-          particle.velocity.x = -particle.velocity.x
-        }
-        if (particle.y > height + 20 || particle.y < -20) {
-          particle.velocity.y = -particle.velocity.y
-        }
-
-        particle.x += particle.velocity.x
-        particle.y += particle.velocity.y
-      }
-
-      p.setup = () => {
-        p.createCanvas(width, height)
-        p.background(BACKGROUND)
-
-        // initialize particles
-        const particleCount = (width * height) / DENSITY
-        for (let i = 0; i < particleCount; i++) {
-          particles.push(createParticle())
-        }
-
-        if (INTERACTIVE) {
-          let mouseParticle = createParticle()
-          mouseParticle.velocity = { x: 0, y: 0 }
-          particles.push(mouseParticle)
-
-          p.mouseMoved = function () {
-            mouseParticle.x = p.mouseX
-            mouseParticle.y = p.mouseY
+        function createParticle() {
+          const x = p.random(width)
+          const y = p.random(height)
+          const velocity = {
+            x: (p.random() - 0.5) * VELOCITY,
+            y: (p.random() - 0.5) * VELOCITY,
           }
 
-          p.mouseReleased = function () {
-            mouseParticle.velocity = p.createVector(
-              (p.random() - 0.5) * 2,
-              (p.random() - 0.5) * 2
-            )
-            mouseParticle = createParticle()
-            mouseParticle.velocity = p.createVector(0, 0)
+          return { x, y, velocity }
+        }
+
+        function drawParticle(particle: Particle) {
+          p.noStroke()
+          p.fill(COLOR)
+          p.circle(particle.x, particle.y, 3)
+        }
+
+        function updateParticle(particle: Particle) {
+          // change dir if outside map
+          if (particle.x > width + 20 || particle.x < -20) {
+            particle.velocity.x = -particle.velocity.x
+          }
+          if (particle.y > height + 20 || particle.y < -20) {
+            particle.velocity.y = -particle.velocity.y
+          }
+
+          particle.x += particle.velocity.x
+          particle.y += particle.velocity.y
+        }
+
+        p.setup = () => {
+          p.createCanvas(width, height)
+          p.background(BACKGROUND)
+
+          // initialize particles
+          const particleCount = (width * height) / DENSITY
+          for (let i = 0; i < particleCount; i++) {
+            particles.push(createParticle())
+          }
+
+          if (INTERACTIVE) {
+            let mouseParticle = createParticle()
+            mouseParticle.velocity = { x: 0, y: 0 }
             particles.push(mouseParticle)
+
+            p.mouseMoved = function () {
+              mouseParticle.x = p.mouseX
+              mouseParticle.y = p.mouseY
+            }
+
+            p.mouseReleased = function () {
+              mouseParticle.velocity = p.createVector(
+                (p.random() - 0.5) * 2,
+                (p.random() - 0.5) * 2
+              )
+              mouseParticle = createParticle()
+              mouseParticle.velocity = p.createVector(0, 0)
+              particles.push(mouseParticle)
+            }
           }
+        }
+
+        p.draw = () => {
+          p.background(BACKGROUND)
+
+          // update and draw particles
+          particles.forEach((particle) => {
+            updateParticle(particle)
+            drawParticle(particle)
+
+            // draw connections
+            particles.forEach((other) => {
+              const d = p.dist(particle.x, particle.y, other.x, other.y)
+              if (d < DISTANCE) {
+                p.stroke(COLOR)
+                p.strokeWeight(0.5)
+                p.line(particle.x, particle.y, other.x, other.y)
+              }
+            })
+          })
         }
       }
 
-      p.draw = () => {
-        p.background(BACKGROUND)
-
-        // update and draw particles
-        particles.forEach((particle) => {
-          updateParticle(particle)
-          drawParticle(particle)
-
-          // draw connections
-          particles.forEach((other) => {
-            const d = p.dist(particle.x, particle.y, other.x, other.y)
-            if (d < DISTANCE) {
-              p.stroke(COLOR)
-              p.strokeWeight(0.5)
-              p.line(particle.x, particle.y, other.x, other.y)
-            }
-          })
-        })
-      }
+      // @ts-expect-error (for Cannot find name 'p5'.ts(2304))
+      this.p5Instance = new p5(sketch, this)
     }
 
-    p5Instance = new p5(sketch, div)
-  })
+    // after switching pages, stop the animation loop
+    disconnectedCallback() {
+      if (this.p5Instance) {
+        this.p5Instance.remove()
+        this.p5Instance = null
+      }
+    }
+  }
+
+  customElements.define('bg-particle', BgParticleElement)
 </script>

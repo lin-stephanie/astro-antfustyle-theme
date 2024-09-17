@@ -37,22 +37,21 @@ const {
   }}
 >
   <Link
+    class="block border-b-none! mb-6 mt-2 op-transition!"
     href={redirect ?? `/${collectionType}/${postSlug}/`}
     external={redirect ? true : false}
-    class="block border-b-none! mb-6 mt-2 op-transition!"
   >
     <li
       u-flex="~ items-center gap-2 lt-md:(col items-start)"
       class="no-underline"
     >
-      <div u-flex="~ gap-2" class="text-lg leading-1.2em">
+      <div class="flex gap-2 text-lg leading-1.2em">
         <span class="align-middle">{title}</span>
         {
           redirect && (
             <span
               u-i-carbon-arrow-up-right
-              u-flex="none"
-              class="ml--1.5 op-50 align-middle text-xs"
+              class="flex-none ml--1.5 op-50 align-middle text-xs"
               title="External link"
             />
           )
@@ -63,8 +62,7 @@ const {
           video && (
             <span
               u-i-ri-film-line
-              u-flex="none"
-              class="op-50 align-middle"
+              class="flex-none op-50 align-middle"
               title="Provided in video"
             />
           )
@@ -73,8 +71,7 @@ const {
           radio && (
             <span
               u-i-ri-radio-line
-              u-flex="none"
-              class="op-50 align-middle"
+              class="flex-none op-50 align-middle"
               title="Provided in radio"
             />
           )

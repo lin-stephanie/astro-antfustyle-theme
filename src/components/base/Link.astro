@@ -8,12 +8,13 @@ interface Props extends HTMLAttributes<'a'> {
   children: HTMLElement | HTMLElement[] | string
 }
 
-const { href, title, external = false, ...rest } = Astro.props
+const { href, title, external = false, class: className, ...rest } = Astro.props
 
 const newTitle = external && title ? `${title} (external link)` : title
 ---
 
 <a
+  class={className}
   {href}
   title={newTitle}
   target={external ? '_blank' : '_self'}

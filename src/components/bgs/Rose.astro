@@ -1,8 +1,8 @@
 ---
 const roses = [
-  { id: 1, petals: 28, scale: 0.01, rotation: 80 },
+  { id: 1, petals: 28, scale: 0.008, rotation: 80 },
   { id: 2, petals: 26, scale: 0.005, rotation: 80 },
-  { id: 3, petals: 30, scale: 0.02, rotation: 80 },
+  { id: 3, petals: 30, scale: 0.01, rotation: 80 },
 ]
 ---
 
@@ -26,11 +26,11 @@ const roses = [
           <div
             class="petal absolute left-50%
               h-full w-full
-              transition-(transform duration-40000) origin-bottom-center
+              transition-(transform duration-100000 ease-out) origin-bottom-center
               before:(content-empty
-                absolute w-full h-full border-(solid 0.8 #88888860)
+                absolute w-full h-full border-(solid 0.6 #22222260) dark:border-(solid 0.8 #88888860)
                 rounded-(tl-[50%_35%] br-[35%_50%] tr-[45%] bl-[10%])
-                bg-radial-gradient-95 dark:bg-radial-gradient-85
+                bg-radial-gradient-98 dark:bg-radial-gradient-85
                 transform-rotate-[-45deg])"
             style={{
               'z-index': rose.petals - i,
@@ -44,8 +44,15 @@ const roses = [
 </div>
 
 <script>
-  import { getRandom, getRandomPercentage } from '~/utils'
-  import type { Range } from '~/types'
+  type Range = [number, number]
+
+  function getRandom(min: number, max: number) {
+    return Math.random() * (max - min) + min
+  }
+
+  function getRandomPercentage(min: number, max: number) {
+    return (Math.random() * (max - min) + min).toFixed(2) + '%'
+  }
 
   document.addEventListener('astro:page-load', () => {
     const div = document.getElementById('rose')

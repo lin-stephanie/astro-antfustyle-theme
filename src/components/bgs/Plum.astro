@@ -1,137 +1,169 @@
 ---
-
+// inspired by: https://github.com/antfu/antfu.me/blob/main/src/components/ArtPlum.vue
 ---
 
-<div
-  id="plum"
-  class="z--1 fixed top-0 bottom-0 left-0 right-0
-    pointer-events-none
-    print:hidden"
-  style="mask-image: radial-gradient(circle, transparent, black);
-    --webkit-mask-image: radial-gradient(circle, transparent, black)"
+<bg-plum
+  class="z--1 fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden"
+  style="mask-image: radial-gradient(circle, transparent, black); --webkit-mask-image: radial-gradient(circle, transparent, black)"
 >
-  <canvas id="plum-canvas" width="400" height="400"></canvas>
-</div>
+  <canvas></canvas>
+</bg-plum>
 
 <script>
-  import { initCanvas, polar2cart } from '~/utils'
-  import type { Fn } from '~/types'
+  type Fn = () => void
 
-  let rafId: number | null = null
+  function initCanvas(
+    canvas: HTMLCanvasElement,
+    width = 400,
+    height = 400,
+    _dpi?: number
+  ) {
+    const ctx = canvas.getContext('2d')!
+    const dpr = window.devicePixelRatio || 1
 
-  document.addEventListener('astro:page-load', () => {
-    /* Canvas drawing logic (recursively draw each branch) */
-    function step(
-      x: number,
-      y: number,
-      rad: number,
-      counter: { value: number } = { value: 0 }
-    ) {
-      // drawing a branch
-      const length = random() * LEN
-      const [nx, ny] = polar2cart(x, y, length, rad)
-      ctx.beginPath()
-      ctx.moveTo(x, y)
-      ctx.lineTo(nx, ny)
-      ctx.stroke()
-      counter.value += 1
+    // prettier-ignore
+    // @ts-expect-error (vendor)
+    const bsr = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1
+    const dpi = _dpi || dpr / bsr
 
-      // out of bounds then return
-      if (nx < -100 || nx > width + 100 || ny < -100 || ny > height + 100)
-        return
+    canvas.style.width = `${width}px`
+    canvas.style.height = `${height}px`
+    canvas.width = dpi * width
+    canvas.height = dpi * height
+    ctx.scale(dpi, dpi)
 
-      // otherwise continue drawring
-      const rad1 = rad + random() * R15
-      const rad2 = rad - random() * R15
-      const rate = counter.value <= THRESHOLD ? 0.8 : 0.5
-      // left branch
-      if (random() < rate) pendingSteps.push(() => step(nx, ny, rad1, counter))
-      // right branch
-      if (random() < rate) pendingSteps.push(() => step(nx, ny, rad2, counter))
+    return { ctx, dpi }
+  }
+
+  function polar2cart(x = 0, y = 0, r = 0, theta = 0) {
+    const dx = r * Math.cos(theta)
+    const dy = r * Math.sin(theta)
+
+    return [x + dx, y + dy]
+  }
+
+  class BgPlumElement extends HTMLElement {
+    rafId: number | null
+
+    constructor() {
+      super()
+      this.rafId = null
     }
 
-    /* RAF callback functions */
-    function frame() {
-      const now = performance.now()
-      if (now - lastTime < INTERVAL) return
-      lastTime = now
+    connectedCallback() {
+      /* Canvas drawing logic (recursively draw each branch) */
+      const step = (
+        x: number,
+        y: number,
+        rad: number,
+        counter: { value: number } = { value: 0 }
+      ) => {
+        // drawing a branch
+        const length = random() * LEN
+        const [nx, ny] = polar2cart(x, y, length, rad)
+        ctx.beginPath()
+        ctx.moveTo(x, y)
+        ctx.lineTo(nx, ny)
+        ctx.stroke()
+        counter.value += 1
 
-      const steps: Fn[] = []
-      // 50% chance to keep the step for the next frame, to create a more organic look
-      pendingSteps = pendingSteps.filter((i) => {
-        if (Math.random() > 0.5) {
-          steps.push(i)
-          return false
-        }
-        return true
-      })
-      steps.forEach((fn) => fn())
-    }
+        // out of bounds then return
+        if (nx < -100 || nx > width + 100 || ny < -100 || ny > height + 100)
+          return
 
-    /* Start animation loop */
-    function startFrame() {
-      rafId = requestAnimationFrame(() => {
-        // if the condition is satisfied then continue, otherwise cancel the animation loop
-        if (pendingSteps.length) {
-          frame()
-          startFrame()
-        } else {
-          if (rafId) {
-            cancelAnimationFrame(rafId)
-            rafId = null
+        // otherwise continue drawring
+        const rad1 = rad + random() * R15
+        const rad2 = rad - random() * R15
+        const rate = counter.value <= THRESHOLD ? 0.8 : 0.5
+        // left branch
+        if (random() < rate)
+          pendingSteps.push(() => step(nx, ny, rad1, counter))
+        // right branch
+        if (random() < rate)
+          pendingSteps.push(() => step(nx, ny, rad2, counter))
+      }
+
+      /* RAF callback functions */
+      const frame = () => {
+        const now = performance.now()
+        if (now - lastTime < INTERVAL) return
+        lastTime = now
+
+        const steps: Fn[] = []
+        // 50% chance to keep the step for the next frame, to create a more organic look
+        pendingSteps = pendingSteps.filter((i) => {
+          if (Math.random() > 0.5) {
+            steps.push(i)
+            return false
           }
-        }
-      })
+          return true
+        })
+        steps.forEach((fn) => fn())
+      }
+
+      /* Start animation loop */
+      const startFrame = () => {
+        this.rafId = requestAnimationFrame(() => {
+          // if the condition is satisfied then continue, otherwise cancel the animation loop
+          if (pendingSteps.length) {
+            frame()
+            startFrame()
+          } else {
+            if (this.rafId) {
+              cancelAnimationFrame(this.rafId)
+              this.rafId = null
+            }
+          }
+        })
+      }
+
+      /* Start drawing */
+      const start = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+        pendingSteps = [
+          () => step(randomMiddle() * width, -5, R90),
+          () => step(randomMiddle() * width, height + 5, -R90),
+          () => step(-5, randomMiddle() * height, 0),
+          () => step(width + 5, randomMiddle() * height, R180),
+        ]
+        if (width < 640) pendingSteps = pendingSteps.slice(0, 2)
+
+        startFrame()
+      }
+
+      const R180 = Math.PI
+      const R90 = Math.PI / 2
+      const R15 = Math.PI / 12
+      const COLOR = '#88888825'
+      const THRESHOLD = 30
+      const LEN = 6
+      const INTERVAL = 1000 / 40
+
+      const { random } = Math
+      const randomMiddle = () => random() * 0.6 + 0.2
+
+      let pendingSteps: Fn[]
+      let lastTime = performance.now()
+
+      const width = window.innerWidth
+      const height = window.innerHeight
+      const canvas = this.querySelector('canvas') as HTMLCanvasElement
+      const { ctx } = initCanvas(canvas, width, height)
+      ctx.lineWidth = 1
+      ctx.strokeStyle = COLOR
+
+      start()
     }
 
-    /* Start drawing */
-    function start() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      pendingSteps = [
-        () => step(randomMiddle() * width, -5, R90),
-        () => step(randomMiddle() * width, height + 5, -R90),
-        () => step(-5, randomMiddle() * height, 0),
-        () => step(width + 5, randomMiddle() * height, R180),
-      ]
-      if (width < 640) pendingSteps = pendingSteps.slice(0, 2)
-
-      startFrame()
-    }
-
-    /* Prepare to create dynamic plum on canvas */
     // after switching pages, stop the last drawing that was started but has not yet finished.
-    if (rafId) {
-      cancelAnimationFrame(rafId)
-      rafId = null
+    disconnectedCallback() {
+      if (this.rafId) {
+        cancelAnimationFrame(this.rafId)
+        this.rafId = null
+      }
     }
+  }
 
-    // this callback is re-executed each time you navigate,
-    // it needs to be returned early in a page that does not have the component
-    const div = document.getElementById('plum')
-    if (!div) return
-
-    const R180 = Math.PI
-    const R90 = Math.PI / 2
-    const R15 = Math.PI / 12
-    const COLOR = '#88888825'
-    const THRESHOLD = 30
-    const LEN = 6
-    const INTERVAL = 1000 / 40
-
-    const { random } = Math
-    const randomMiddle = () => random() * 0.6 + 0.2
-
-    let pendingSteps: Fn[]
-    let lastTime = performance.now()
-
-    const width = window.innerWidth
-    const height = window.innerHeight
-    const canvas = document.getElementById('plum-canvas') as HTMLCanvasElement
-    const { ctx } = initCanvas(canvas, width, height)
-    ctx.lineWidth = 1
-    ctx.strokeStyle = COLOR
-
-    start()
-  })
+  customElements.define('bg-plum', BgPlumElement)
 </script>

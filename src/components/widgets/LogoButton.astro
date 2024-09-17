@@ -6,9 +6,9 @@ const title = `${SITE.author} @ ${new URL(SITE.website).hostname}`
 ---
 
 <Link
+  class="link op-transition"
   href="/"
   {title}
-  class="link op-transition"
   aria-current={Astro.url.pathname === '/' ? 'page' : false}
 >
   <div class="logo-container">
