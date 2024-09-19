@@ -1,8 +1,9 @@
 ---
 import { getCollection, getEntry } from 'astro:content'
-import Categorizer from '~/components/Categorizer.astro'
-import ListItem from '~/components/ListItem.astro'
-import { isSameYear, getYear } from '~/utils'
+import Categorizer from '~/components/base/Categorizer.astro'
+import ListItem from '~/components/views/ListItem.astro'
+import { isSameYear, getYear } from '~/utils/datetime-utils'
+import { getFilteredPosts, getSortedPosts } from '~/utils/post-utils'
 
 import type {
   CollectionEntry,
@@ -23,17 +24,12 @@ if (!['blog', 'feeds', 'streams'].includes(collectionType))
   )
 
 /* Posts */
-let postItems: CollectionEntry<ContentCollectionKey>[]
-let sortedPostItems: CollectionEntry<ContentCollectionKey>[] = []
+let blogItems: CollectionEntry<ContentCollectionKey>[]
+let sortedBlogItems: CollectionEntry<ContentCollectionKey>[] = []
 
 if (collectionType === 'blog') {
-  postItems = await getCollection(collectionType, ({ data }) => {
-    return import.meta.env.PROD ? data.draft !== true : true
-  })
-
-  sortedPostItems = postItems.sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-  )
+  blogItems = await getFilteredPosts('blog')
+  sortedBlogItems = getSortedPosts(blogItems)
 }
 
 /* Feeds */
@@ -68,10 +64,10 @@ if (collectionType === 'streams') {
 {
   collectionType === 'blog' && (
     <ul aria-label="Post list">
-      {sortedPostItems.length === 0 ? (
+      {sortedBlogItems.length === 0 ? (
         <div class="py-2 op-50">nothing here yet</div>
       ) : (
-        sortedPostItems.map(async (item, idx) => {
+        sortedBlogItems.map(async (item, idx) => {
           const { data, slug } = item
           const { remarkPluginFrontmatter } = await item.render()
           const minutesRead =
@@ -81,7 +77,7 @@ if (collectionType === 'streams') {
             <>
               {!isSameYear(
                 data.pubDate,
-                sortedPostItems[idx - 1]?.data.pubDate
+                sortedBlogItems[idx - 1]?.data.pubDate
               ) && (
                 <Categorizer {idx} text={getYear(data.pubDate).toString()} />
               )}

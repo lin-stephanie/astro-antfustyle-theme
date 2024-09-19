@@ -1,7 +1,9 @@
 ---
 import TocItem from './TocItem.astro'
-import { generateToc, slug } from '~/utils'
+import { slug } from '~/utils/common-utils'
+import { generateToc } from '~/utils/toc-utils'
 import { FEATURES } from '~/config'
+
 import type { MarkdownHeading } from 'astro'
 
 interface Props {

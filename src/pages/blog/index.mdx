@@ -1,15 +1,15 @@
 ---
 title: Blog
-description: Blog
-subtitle: How to use the Astro AntfuStyle theme
+description: How to use the Astro AntfuStyle Theme
+subtitle: How to use the Astro AntfuStyle Theme
 ---
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
-import List from '~/components/List.astro'
+import ListView from '~/components/views/ListView.astro'
 
 <BaseLayout title={frontmatter.title} description={frontmatter.description}>
   <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
-    <List collectionType="blog" />
+    <ListView collectionType="blog" />
   </StandardLayout>
 </BaseLayout>

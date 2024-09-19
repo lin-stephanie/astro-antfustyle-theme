@@ -1,16 +1,15 @@
 import chalk from 'chalk'
 import satori from 'satori'
 import sharp from 'sharp'
-import { decode } from 'html-entities'
-import { basename, dirname, join } from 'node:path'
-import { readFileSync, existsSync, writeFileSync } from 'node:fs'
+import { basename, dirname } from 'node:path'
+import { readFileSync, writeFileSync } from 'node:fs'
 import { mkdir } from 'node:fs/promises'
-import { getCurrentFormattedTime } from '../src/utils'
+import { unescapeHTML, checkFileExistsInDir } from '../src/utils/common-utils'
+import { getCurrentFormattedTime } from '../src/utils/datetime-utils'
 import { ogImageMarkup } from './og-template/markup'
 import { FEATURES } from '../src/config'
 
 import type { SatoriOptions } from 'satori'
-import type { html } from 'satori-html'
 import type { BgType } from '../src/types'
 
 const Inter = readFileSync('plugins/og-template/Inter-Regular-24pt.ttf')
@@ -27,27 +26,6 @@ const satoriOptions: SatoriOptions = {
       data: Inter,
     },
   ],
-}
-
-function unescapeHTML(node: ReturnType<typeof html>) {
-  const children = node?.props?.children
-  if (!children) {
-    return
-  } else if (Array.isArray(children)) {
-    for (const n of children) {
-      unescapeHTML(n)
-    }
-  } else if (typeof children === 'object') {
-    unescapeHTML(children)
-  } else if (typeof children === 'string') {
-    node.props.children = decode(children)
-  }
-}
-
-export function checkFileExistsInDir(path: string, filename: string) {
-  const fullPath = join(process.cwd(), path, filename)
-
-  return existsSync(fullPath)
 }
 
 async function generateOgImage(

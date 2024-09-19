@@ -1,16 +1,14 @@
 ---
-import { getCollection } from 'astro:content'
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
 import Toc from '~/components/toc/Toc.astro'
 import ShareLink from '~/components/widgets/ShareLink.astro'
-import { formatDate } from '~/utils'
+import { formatDate } from '~/utils/datetime-utils'
+import { getFilteredPosts } from '~/utils/post-utils'
 import { FEATURES } from '~/config'
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => {
-    return import.meta.env.PROD ? data.draft !== true : true
-  })
+  const posts = await getFilteredPosts('blog')
 
   return posts.map((post) => ({
     params: { slug: post.slug },
@@ -47,7 +45,7 @@ const minutesRead =
             {minutesRead !== 0 && <span>· {minutesRead} min</span>}
             {lastModDate && (
               <time datetime={lastModDate}>
-                | Last updated: {formatDate(lastModDate)}
+                | Updated: {formatDate(lastModDate)}
               </time>
             )}
           </p>

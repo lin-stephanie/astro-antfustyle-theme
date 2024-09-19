@@ -6,10 +6,10 @@ subtitle: 'Example: fetching Astro Blog using @ascorbic/feed-loader'
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import TabbedLayout from '~/layouts/TabbedLayout.astro'
-import List from '~/components/List.astro'
+import ListView from '~/components/views/ListView.astro'
 
 <BaseLayout title={frontmatter.title} description={frontmatter.description}>
   <TabbedLayout subtitle={frontmatter.subtitle}>
-    <List collectionType="feeds" />
+    <ListView collectionType="feeds" />
   </TabbedLayout>
 </BaseLayout>

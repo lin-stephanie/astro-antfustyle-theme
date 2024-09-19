@@ -9,7 +9,7 @@ import {
 } from 'unocss'
 
 import projecstData from './src/content/projects/data.json'
-import { extractIconsStartingWithI } from './src/utils'
+import { extractIconsStartingWithI } from './src/utils/common-utils'
 import { SITE, SOCIALS } from './src/config'
 import type { IconNavItem, ResponsiveNavItem } from './src/types'
 

@@ -6,11 +6,10 @@ import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
 import SearchSwitch from '~/components/widgets/SearchSwitch.astro'
 
 import { SITE, SOCIALS } from '~/config'
-import { ensureTrailingSlash } from '~/utils'
+import { ensureTrailingSlash } from '~/utils/common-utils'
 ---
 
-<header class="z-40">
-  <ToTopButton />
+<header>
   <LogoButton />
   <nav
     class="nav flex items-center justify-end w-full p-8 lt-md:px-6"
@@ -56,9 +55,15 @@ import { ensureTrailingSlash } from '~/utils'
       }
       <SearchSwitch />
       <ThemeSwitch />
-      <Link title="RSS" href="/rss.xml" external={true} class="lt-md:hidden">
-        <div class="i-ri-rss-line"></div>
+      <Link
+        title="RSS Feed"
+        href="/rss.xml"
+        external={true}
+        class="lt-md:hidden op-transition"
+      >
+        <div class="i-lucide-rss"></div>
       </Link>
     </div>
   </nav>
+  <ToTopButton />
 </header>

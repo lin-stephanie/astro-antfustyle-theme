@@ -29,13 +29,9 @@ export default defineConfig({
   vite: {
     base: '/',
     build: {
-      chunkSizeWarningLimit: 1500,
       rollupOptions: {
         output: {
           assetFileNames: 'assets/[name].[hash][extname]',
-          /* manualChunks: (id) => {
-            if (id.includes('node_modules')) return 'vendor'
-          }, */
         },
       },
     },
