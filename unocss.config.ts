@@ -82,16 +82,23 @@ export default defineConfig({
     ...socialIcons,
     ...projectIcons,
 
-    /* GroupItem.astro */
+    /* GroupItem */
     'grid-cols-2',
     'grid-cols-3',
 
-    /* Categorizer.astro */
+    /* Categorizer */
     'left--4',
     'left-[14%]',
     'lt-lg:left--4',
 
-    /* remark-directive-sugar.ts */
+    /* remark-directive-sugar */
     'i-carbon-logo-github',
+
+    /* BaseLayout */
+    'focus:not-sr-only',
+    'focus:fixed',
+    'focus:start-1',
+    'focus:top-1.5',
+    'focus:op-20',
   ],
 })

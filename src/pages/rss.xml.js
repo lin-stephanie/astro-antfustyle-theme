@@ -1,5 +1,6 @@
 import rss from '@astrojs/rss'
 import { SITE } from '~/config'
+import { getUrl } from '~/utils/common-utils'
 
 export async function GET() {
   const blogItems = Object.values(
@@ -34,7 +35,7 @@ export async function GET() {
 
       return {
         title: `${item.frontmatter.title}`,
-        link: `/blog/${slug}`,
+        link: getUrl(`/blog/${slug}`),
         pubDate: item.frontmatter.pubDate,
         description: item.frontmatter.description,
         author: SITE.author,
@@ -42,6 +43,6 @@ export async function GET() {
       }
     }),
 
-    stylesheet: '/rss-styles.xsl',
+    stylesheet: getUrl('/rss-styles.xsl'),
   })
 }

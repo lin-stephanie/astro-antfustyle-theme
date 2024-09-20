@@ -9,13 +9,15 @@ import '~/styles/markdown.css'
 
 import Head from '~/components/base/Head.astro'
 import NavBar from '~/components/base/NavBar.astro'
+import Link from '~/components/base/Link.astro'
 import BackLink from '~/components/widgets/BackLink.astro'
 import Footer from '~/components/base/Footer.astro'
 import Background from '~/components/backgrounds/Background.astro'
 
 import { SITE } from '~/config'
+import { getUrl } from '~/utils/common-utils'
+
 import type { BgType } from '~/types'
-import Link from '~/components/base/Link.astro'
 
 interface Props {
   title?: string
@@ -50,7 +52,7 @@ const { title, description, ogImage, bgType, pubDate, lastModDate } =
     <main id="main" class="px-7 py-10">
       <slot />
       {
-        Astro.url.pathname !== '/' && (
+        Astro.url.pathname !== getUrl('/') && (
           <div class="prose slide-enter animate-delay-1000! m-auto mt-8 print:hidden">
             <slot name="share" />
             <br />

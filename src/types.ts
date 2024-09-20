@@ -20,7 +20,7 @@ interface BaseNavItem {
 
 interface TextNavItem extends BaseNavItem {
   /**
-   * Specifies the navigation item where type is 'text'.
+   * Specify the navigation item where type is 'text'.
    *
    * @description
    * Only text is shown regardless of the viewport size.
@@ -38,7 +38,7 @@ interface TextNavItem extends BaseNavItem {
 
 export interface IconNavItem extends BaseNavItem {
   /**
-   * Specifies the navigation item of type is 'icon'.
+   * Specify the navigation item of type is 'icon'.
    *
    * @description
    * Only an icon is shown regardless of the viewport size.
@@ -65,7 +65,7 @@ export interface IconNavItem extends BaseNavItem {
 
 export interface ResponsiveNavItem extends BaseNavItem {
   /**
-   * Specifies the navigation item of type is 'rwd' (responsive).
+   * Specify the navigation item of type is 'rwd' (responsive).
    *
    * @description
    * Displays text when viewport width is over 768px and icons otherwise.
@@ -99,11 +99,21 @@ type NavItem = TextNavItem | IconNavItem | ResponsiveNavItem
 
 export interface Site {
   /**
-   * Set your final deployed URL, which will be passed to the
-   * {@link https://docs.astro.build/en/reference/configuration-reference/#site site config} in Astro,
-   * used for generating canonical URLs and more, found in `astro.config.ts`.
+   * Set your final deployed URL, passed to the
+   * {@link https://docs.astro.build/en/reference/configuration-reference/#site `site`} config in Astro,
+   * Used for generating canonical URLs and other features, and applied in `astro.config.ts`.
    */
   website: Url
+
+  /**
+   * Set the base path for your site, which must start with `/`. It wiil be passed to the
+   * {@link https://docs.astro.build/en/reference/configuration-reference/#base `base`} config in Astro,
+   * Used when deploying to a subdirectory and applied in `astro.config.ts`.
+   *
+   * @example
+   * `/my-site/` (for a site deployed to `https://example.com/my-site/`)
+   */
+  base: Path
 
   /**
    * Set the site name to format with {@link PageMetadata.title} as `<pageTitle> - <siteTitle>`

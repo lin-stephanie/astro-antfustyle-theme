@@ -1,5 +1,6 @@
 ---
 import Link from '~/components/base/Link.astro'
+import { getUrl } from '~/utils/common-utils'
 import { formatDate } from '~/utils/datetime-utils'
 
 interface Props {
@@ -38,7 +39,7 @@ const {
 >
   <Link
     class="block border-b-none! mb-6 mt-2 op-transition!"
-    href={redirect ?? `/${collectionType}/${postSlug}/`}
+    href={redirect ?? getUrl(`/${collectionType}/${postSlug}/`)}
     external={redirect ? true : false}
   >
     <li

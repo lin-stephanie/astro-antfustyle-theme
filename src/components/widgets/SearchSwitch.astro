@@ -37,7 +37,7 @@ import { getUrl } from '~/utils/common-utils'
       autocomplete="off"
     />
   </div>
-  <div id="search-results" class="overflow-y-auto"></div>
+  <div id="search-results" class="overflow-y-auto" data-base={getUrl('/')}></div>
 </div>
 
 <style is:global>
@@ -140,14 +140,12 @@ import { getUrl } from '~/utils/common-utils'
 <script>
   const fakeResults = [
     {
-      url: '/',
       meta: {
         title: 'Simulated Search Result in Dev Env',
       },
       excerpt: 'Mock data is used to simulate pagefind search <mark>in development</mark>, where files required for indexing exist only in memory.',
     },
     {
-      url: '/',
       meta: {
         title: 'Testing Search Functionality in Prod Env',
       },
@@ -173,8 +171,9 @@ import { getUrl } from '~/utils/common-utils'
       }
     } else {
       for (const data of fakeResults) {
-        document.getElementById('search-results')!.innerHTML += `
-          <a href="${data.url}" class="search-results__a">
+        const searchResults = document.getElementById('search-results')!
+        searchResults.innerHTML += `
+          <a href=${searchResults.dataset.base} class="search-results__a">
             <div class="search-results__title">${data.meta.title}</div>
             <div class="search-results__excerpt">${data.excerpt}</div>
           </a>`

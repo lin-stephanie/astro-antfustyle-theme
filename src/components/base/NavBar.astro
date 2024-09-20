@@ -6,7 +6,7 @@ import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
 import SearchSwitch from '~/components/widgets/SearchSwitch.astro'
 
 import { SITE, SOCIALS } from '~/config'
-import { ensureTrailingSlash } from '~/utils/common-utils'
+import { ensureTrailingSlash, getUrl } from '~/utils/common-utils'
 ---
 
 <header>
@@ -19,11 +19,11 @@ import { ensureTrailingSlash } from '~/utils/common-utils'
       {
         SITE.navBar.map((item) => (
           <Link
-            href={ensureTrailingSlash(item.path)}
-            title={item.prompt}
             class="op-transition"
+            href={getUrl(ensureTrailingSlash(item.path))}
+            title={item.prompt}
             aria-current={
-              Astro.url.pathname === ensureTrailingSlash(item.path)
+              Astro.url.pathname === getUrl(ensureTrailingSlash(item.path))
                 ? 'page'
                 : false
             }
@@ -43,10 +43,10 @@ import { ensureTrailingSlash } from '~/utils/common-utils'
         SOCIALS.map((item) => {
           return (
             <Link
+              class={`${item.rwd ? 'lt-md:hidden' : ''} op-transition`}
               href={item.href}
               title={item.title}
               external={true}
-              class={`${item.rwd ? 'lt-md:hidden' : ''} op-transition`}
             >
               <div class={`${item.icon}`} />
             </Link>
@@ -56,10 +56,10 @@ import { ensureTrailingSlash } from '~/utils/common-utils'
       <SearchSwitch />
       <ThemeSwitch />
       <Link
-        title="RSS Feed"
-        href="/rss.xml"
-        external={true}
         class="lt-md:hidden op-transition"
+        href={getUrl('/rss.xml')}
+        title="RSS Feed"
+        external={true}
       >
         <div class="i-lucide-rss"></div>
       </Link>

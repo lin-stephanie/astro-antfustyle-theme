@@ -1,7 +1,7 @@
 ---
 import { ViewTransitions } from 'astro:transitions'
 import { basename } from 'node:path'
-import { checkFileExistsInDir } from '~/utils/common-utils'
+import { checkFileExistsInDir, getUrl } from '~/utils/common-utils'
 import { SITE } from '~/config'
 
 interface Props {
@@ -24,11 +24,16 @@ const generatedOgImage = checkFileExistsInDir(
   'public/og-images',
   `${basename(Astro.url.pathname)}.png`
 )
-  ? `/og-images/${basename(Astro.url.pathname)}.png`
+  ? getUrl('og-images', `${basename(Astro.url.pathname)}.png`)
   : undefined
 
+const assignedOgImage =
+  ogImage && checkFileExistsInDir('public/og-images', ogImage)
+    ? getUrl('og-images', ogImage)
+    : undefined
+
 const ogImageURL = new URL(
-  (ogImage ?? generatedOgImage) || '/og-images/og-image.png',
+  assignedOgImage || generatedOgImage || getUrl('og-images', 'og-image.png'),
   Astro.url
 ).href
 
@@ -107,21 +112,21 @@ const webPageData = {
 <link rel="canonical" href={canonicalURL} />
 
 <!-- Icon -->
-<link rel="icon" sizes="any" href="/favicon.ico" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="icon" sizes="any" href={getUrl('/favicon.ico')} />
+<link rel="icon" type="image/svg+xml" href={getUrl('/favicon.svg')} />
+<link rel="apple-touch-icon" href={getUrl('/apple-touch-icon.png')} />
 
 <!-- Manifest -->
-<link rel="manifest" href="/manifest.webmanifest" />
+<link rel="manifest" href={getUrl('/manifest.webmanifest')} />
 
 <!-- Sitemap -->
-<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="sitemap" href={getUrl('/sitemap-index.xml')} />
 
 <!-- RSS -->
 <link
   rel="alternate"
   type="application/rss+xml"
-  title={SITE.title}
+  title={getUrl('/rss.xml')}
   href="/rss.xml"
 />
 

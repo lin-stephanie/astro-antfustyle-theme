@@ -1,10 +1,10 @@
 import type { Site, Socials, Layouts, Features } from './types'
 
 export const SITE: Site = {
-  website: 'http://example.com',
+  website: 'https://example.com',
+  base: '/',
   title: 'Astro AntfuStyle Theme',
-  description:
-    'A customizable, feature-rich Astro theme for blog and portfolio',
+  description: 'A customizable, feature-rich Astro theme for blog & portfolio',
   author: 'Stephanie Lin',
   lang: 'en',
   ogLocale: 'en_US',

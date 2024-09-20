@@ -1,7 +1,8 @@
 ---
 import Link from '~/components/base/Link.astro'
-import { ensureTrailingSlash } from '~/utils/common-utils'
+import { ensureTrailingSlash, getUrl } from '~/utils/common-utils'
 import { LAYOUTS } from '~/config'
+
 import type { Tabs } from '~/types'
 
 interface Props {
@@ -18,7 +19,8 @@ if (!LAYOUTS.tabbedLayoutTabs) {
 }
 
 const currentPath = ensureTrailingSlash(Astro.url.pathname)
-const isActive = (href: string) => currentPath === ensureTrailingSlash(href)
+const isActive = (href: string) =>
+  currentPath === getUrl(ensureTrailingSlash(href))
 ---
 
 <nav
@@ -34,16 +36,16 @@ const isActive = (href: string) => currentPath === ensureTrailingSlash(href)
     {
       tabs.map((tab) => (
         <Link
-          href={ensureTrailingSlash(tab.path)}
           class:list={{
             'link': true,
             'op-transition!': true,
             'tabs__a--active': isActive(tab.path),
             'tabs__a--inactive': !isActive(tab.path),
           }}
+          href={getUrl(ensureTrailingSlash(tab.path))}
           role="tab"
           aria-current={
-            Astro.url.pathname === ensureTrailingSlash(tab.path)
+            Astro.url.pathname === getUrl(ensureTrailingSlash(tab.path))
               ? 'page'
               : false
           }
