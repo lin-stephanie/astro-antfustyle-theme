@@ -6,35 +6,38 @@ export const pageSchema = z.object({
     .string()
     .optional()
     .describe(
-      'Set the page title, formatted with `SITE.title` as <pageTitle> - <siteTitle> for metadata and automatic OG image generation. If undefined or empty, only <siteTitle> is displayed, and OG image generation is skipped.'
-    ),
-  description: z
-    .string()
-    .optional()
-    .describe(
-      'Set the page description for meta tags. If not defined or set to an empty string, the `SITE.description` will be used directly.'
+      'Sets the page title, formatted with `SITE.title` as `<pageTitle> - <siteTitle>` for metadata and automatic OG image generation. If undefined or empty, only `<siteTitle>` is displayed, and OG image generation is skipped.'
     ),
   subtitle: z
     .string()
-    .optional()
+    .default('')
     .describe(
-      'Set the subtitle to display below the title if additional explanations are needed.'
+      'Provides a page subtitle. If provided, it will be displayed below the title. If not needed, leave the field as an empty string or delete it.'
+    ),
+  description: z
+    .string()
+    .default('')
+    .describe(
+      'Provides a brief description, used in meta tags for SEO and sharing purposes. If not needed, leave the field as an empty string or delete it, and the `SITE.description` will be used directly.'
     ),
   bgType: z
     .enum(['plum', 'dot', 'rose', 'particle'])
     .optional()
     .describe(
-      'Set the page background. If not defined or set to an empty string, no background is added to the page.'
+      'Specifies whether to apply a background on this page and select its type. If not needed, delete the field.'
+    ),
+  toc: z
+    .boolean()
+    .default(false)
+    .describe(
+      'Controls whether the table of contents (TOC) is generated for the page.'
     ),
   ogImage: z
-    .union([
-      z.literal(false),
-      z
-        .string()
-        .regex(/^\/og-images\//, "ogImage must start with '/og-images/'."),
-    ])
-    .optional(),
-  toc: z.boolean().default(false),
+    .union([z.string(), z.literal(false)])
+    .optional()
+    .describe(
+      'Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field, or set to `false` to disable. To use a custom image, provide the full filename from `/public/og-images/`.'
+    ),
 })
 
 export type PageSchema = z.infer<typeof pageSchema>
@@ -42,27 +45,88 @@ export type PageSchema = z.infer<typeof pageSchema>
 /* Posts */
 export const postSchema = z
   .object({
-    title: z.string().max(60).describe('Set the title of the blog post'),
-    subtitle: z.string().default(''),
-    description: z.string().default(''),
-    pubDate: z.coerce.date(),
-    lastModDate: z.union([z.coerce.date(), z.literal('')]).optional(),
-    minutesRead: z.number().optional(),
-    radio: z.boolean().default(false),
-    video: z.boolean().default(false),
-    platform: z.string().default(''),
-    toc: z.boolean().default(true),
-    share: z.boolean().default(true),
+    title: z
+      .string()
+      .max(60)
+      .describe(
+        "**Requirde**. Sets the post title, limited to **60 characters**. This follows Moz's recommendation, ensuring approximately 90% of titles display correctly in SERPs and preventing truncation on smaller screens or social platforms. [Learn more](https://moz.com/learn/seo/title-tag)."
+      ),
+    subtitle: z
+      .string()
+      .default('')
+      .describe(
+        'Provides a post subtitle. If provided, it will be displayed below the title. If not needed, leave the field as an empty string or delete it.'
+      ),
+    description: z
+      .string()
+      .default('')
+      .describe(
+        'Provides a brief description, used in meta tags for SEO and sharing purposes. If not needed, leave the field as an empty string or delete it, and the `SITE.description` will be used directly.'
+      ),
+    pubDate: z.coerce
+      .date()
+      .describe(
+        '**Requirde**. Specifies the publication date. See supported formats [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#examples).'
+      ),
+    lastModDate: z
+      .union([z.coerce.date(), z.literal('')])
+      .optional()
+      .describe(
+        'Tracks the last modified date. If not needed, leave the field as an empty string or delete it.'
+      ),
+    minutesRead: z
+      .number()
+      .optional()
+      .describe(
+        'Provides an estimated reading time in minutes. To auto-generate, delete the field; to hide it on the page, enter 0'
+      ),
+    radio: z
+      .boolean()
+      .default(false)
+      .describe(
+        'Indicates if the post includes audio content or links to an external audio source. If `true`, an icon will be added to the post item in the list.'
+      ),
+    video: z
+      .boolean()
+      .default(false)
+      .describe(
+        'Indicates if the post includes video content or links to an external video source. If `true`, an icon will be added to the post item in the list.'
+      ),
+    platform: z
+      .string()
+      .default('')
+      .describe(
+        'Specifies the platform where the audio or video content is published. If provided, the platform name will be displayed. If not needed, leave the field as an empty string or delete it.'
+      ),
+    toc: z
+      .boolean()
+      .default(true)
+      .describe(
+        'Controls whether the table of contents (TOC) is generated for the post.'
+      ),
+    share: z
+      .boolean()
+      .default(true)
+      .describe(
+        'Controls whether social sharing options are available for the post.'
+      ),
     ogImage: z
-      .union([
-        z.literal(false),
-        z
-          .string()
-          .regex(/^\/og-images\//, "ogImage must start with '/og-images/'."),
-      ])
-      .optional(),
-    redirect: z.string().url('Invalid url.').optional(),
-    draft: z.boolean().default(false),
+      .union([z.string(), z.literal(false)])
+      .optional()
+      .describe(
+        'Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field, or set to `false` to disable. To use a custom image, provide the full filename from `/public/og-images/`.'
+      ),
+    redirect: z
+      .string()
+      .url('Invalid url.')
+      .optional()
+      .describe('Defines a URL to redirect the post.'),
+    draft: z
+      .boolean()
+      .default(false)
+      .describe(
+        'Marks the post as a draft. If `true`, it is only visible in development and excluded from production builds.'
+      ),
   })
   .strict()
 
@@ -70,14 +134,24 @@ export type PostSchema = z.infer<typeof postSchema>
 
 /* Projects */
 const projectSchema = z.object({
-  name: z.string(),
-  desc: z.string(),
-  link: z.string().url('Invalid url.'),
+  name: z
+    .string()
+    .describe('**Requirde**. Name of the project to be displayed.'),
+  link: z
+    .string()
+    .url('Invalid url.')
+    .describe('**Requirde**. URL linking to the project page or repository.'),
+  desc: z
+    .string()
+    .describe('**Requirde**. A brief description summarizing the project.'),
   icon: z
     .string()
     .regex(
       /^i-[\w-]+(:[\w-]+)?$/,
-      "Icon must be in the format 'i-<collection>-<icon>' or 'i-<collection>:<icon>' as per Unocss specifications."
+      'Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [Unocss](https://unocss.dev/presets/icons) specs.'
+    )
+    .describe(
+      '**Requirde**. Icon representing the project. It must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [Unocss](https://unocss.dev/presets/icons) specs. [Check all available icons here](https://icones.js.org/).'
     ),
 })
 
@@ -93,12 +167,32 @@ export type ProjectsSchema = z.infer<typeof projectsSchema>
 
 /* Stremas */
 const streamSchema = z.object({
-  title: z.string(),
-  date: z.coerce.date(),
-  link: z.string().url('Invalid url.'),
-  radio: z.boolean().default(false),
-  video: z.boolean().default(false),
-  platform: z.string().default(''),
+  title: z.string().describe('**Requirde**. Sets the stream title.'),
+  pubDate: z.coerce
+    .date()
+    .describe(
+      '**Requirde**. Specifies the publication date. See supported formats [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#examples).'
+    ),
+  link: z
+    .string()
+    .url('Invalid url.')
+    .describe('**Requirde**. Specifies the URL link to the stream.'),
+  radio: z
+    .boolean()
+    .default(false)
+    .describe(
+      'Indicates whether the stream is a radio broadcast. If `true`, an icon will be added to the stream item in the list.'
+    ),
+  video: z
+    .boolean()
+    .default(false)
+    .describe(
+      'Indicates whether the stream is a video broadcast. If `true`, an icon will be added to the stream item in the list.'
+    ),
+  platform: z
+    .string()
+    .default('')
+    .describe('Specifies the platform where the stream is published.'),
 })
 
 const streamGroupsSchema = z.array(streamSchema)
