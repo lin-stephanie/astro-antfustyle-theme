@@ -5,6 +5,7 @@ import { generateToc } from '~/utils/toc-utils'
 import { FEATURES } from '~/config'
 
 import type { MarkdownHeading } from 'astro'
+import type { HeadingLevel } from '~/types'
 
 interface Props {
   headings?: MarkdownHeading[]
@@ -12,28 +13,43 @@ interface Props {
   style?: string
 }
 
-let position = 'left'
+const { headings = [], category = [], style } = Astro.props
+
+let minHeadingLevel: HeadingLevel = 2
+let maxHeadingLevel: HeadingLevel = 4
+let displayPosition = 'left'
+let displayMode = 'hover'
+
 if (Array.isArray(FEATURES.toc) && FEATURES.toc[0]) {
-  position = FEATURES.toc[1].position
+  ;({ minHeadingLevel, maxHeadingLevel, displayPosition, displayMode } =
+    FEATURES.toc[1])
 }
 
-const { headings = [], category = [], style } = Astro.props
-const toc = generateToc(headings)
+const toc = generateToc(headings, minHeadingLevel, maxHeadingLevel)
 ---
 
-<aside>
+<aside class={`${displayMode === 'always' ? 'toc-always-on' : ''}`}>
   <nav
-    class:list={[
-      'table-of-contents',
-      {
-        'table-of-contents-right': position === 'right',
-      },
-    ]}
+    class={`table-of-contents ${displayPosition === 'right' ? 'table-of-contents-right' : ''}`}
     {style}
   >
     <div class="table-of-contents-anchor">
-      {position === 'left' && <div u-i-ri-menu-2-fill />}
-      {position === 'right' && <div u-i-ri-menu-3-fill />}
+      {
+        displayPosition === 'left' && (
+          <div
+            u-i-ri-menu-2-fill
+            class={`${displayMode === 'always' ? 'op-60' : ''}`}
+          />
+        )
+      }
+      {
+        displayPosition === 'right' && (
+          <div
+            u-i-ri-menu-3-fill
+            class={`${displayMode === 'always' ? 'op-60' : ''}`}
+          />
+        )
+      }
     </div>
     <ul>
       {!!toc.length && toc.map((heading) => <TocItem {heading} />)}

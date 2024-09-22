@@ -56,7 +56,7 @@ if (collectionType === 'streams') {
   streamItems = streamData.data.streams
 
   sortedStreamItems = streamItems.sort(
-    (a, b) => b.date.valueOf() - a.date.valueOf()
+    (a, b) => b.pubDate.valueOf() - a.pubDate.valueOf()
   )
 }
 ---
@@ -153,8 +153,11 @@ if (collectionType === 'streams') {
         sortedStreamItems.map((item, idx) => {
           return (
             <>
-              {!isSameYear(item.date, sortedStreamItems[idx - 1]?.date) && (
-                <Categorizer {idx} text={getYear(item.date).toString()} />
+              {!isSameYear(
+                item.pubDate,
+                sortedStreamItems[idx - 1]?.pubDate
+              ) && (
+                <Categorizer {idx} text={getYear(item.pubDate).toString()} />
               )}
               <ListItem
                 {idx}
@@ -163,7 +166,7 @@ if (collectionType === 'streams') {
                 title={item.title}
                 video={item.video}
                 radio={item.radio}
-                date={item.date}
+                date={item.pubDate}
                 platform={item.platform}
               />
             </>

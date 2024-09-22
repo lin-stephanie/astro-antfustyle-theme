@@ -1,12 +1,8 @@
 import type { MarkdownHeading } from 'astro'
+import type { HeadingLevel } from '~/types'
 
 export interface TocHeading extends MarkdownHeading {
   children: TocHeading[]
-}
-
-interface TocOpts {
-  maxHeadingLevel?: number | undefined
-  minHeadingLevel?: number | undefined
 }
 
 /**
@@ -51,9 +47,15 @@ function injectChild(items: TocHeading[], item: TocHeading): void {
  */
 export function generateToc(
   headings: readonly MarkdownHeading[],
-  { maxHeadingLevel = 4, minHeadingLevel = 2 }: TocOpts = {}
+  minHeadingLevel: HeadingLevel,
+  maxHeadingLevel: HeadingLevel
 ) {
-  // by default this ignores/filters out h1 and h5 heading(s)
+  if (minHeadingLevel > maxHeadingLevel) {
+    throw new Error(
+      '`minHeadingLevel` must be less than or equal to `maxHeadingLevel`'
+    )
+  }
+
   const bodyHeadings = headings.filter(
     ({ depth }) => depth >= minHeadingLevel && depth <= maxHeadingLevel
   )

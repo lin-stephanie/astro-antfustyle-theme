@@ -4,6 +4,7 @@ import { existsSync } from 'node:fs'
 
 import type { html } from 'satori-html'
 import type { ProjectGroupsSchema } from '~/content/schema'
+import type { NavBarLayout } from '~/types'
 
 /**
  * Converts a given text into a URL-friendly slug.
@@ -80,5 +81,21 @@ export function unescapeHTML(node: ReturnType<typeof html>) {
     unescapeHTML(children)
   } else if (typeof children === 'string') {
     node.props.children = decode(children)
+  }
+}
+
+/**
+ * Validates the navigation bar layout to ensure no duplicates between `left` and `right`.
+ */
+export function validateNavBarLayout(layout: NavBarLayout) {
+  const leftSet = new Set(layout.left)
+  const rightSet = new Set(layout.right)
+
+  for (const item of leftSet) {
+    if (rightSet.has(item)) {
+      throw new Error(
+        `Duplicate '${item}' found in both 'UI.navBarLayout.left' and 'UI.navBarLayout.right'.`
+      )
+    }
   }
 }

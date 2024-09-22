@@ -1,4 +1,4 @@
-import type { Site, Socials, Layouts, Features } from './types'
+import type { Site, Ui, Features } from './types'
 
 export const SITE: Site = {
   website: 'https://example.com',
@@ -8,58 +8,68 @@ export const SITE: Site = {
   author: 'Stephanie Lin',
   lang: 'en',
   ogLocale: 'en_US',
-  navBar: [
+}
+
+export const UI: Ui = {
+  internalNavs: [
     {
-      type: 'rwd',
       path: '/blog',
-      prompt: 'Blog',
+      title: 'Blog',
+      displayMode: 'textToIconOnMobile',
       text: 'Blog',
-      icon: 'i-ri-file-text-line',
+      icon: 'i-ri-article-line',
     },
     {
-      type: 'rwd',
       path: '/projects',
-      prompt: 'Projects',
+      title: 'Projects',
+      displayMode: 'textToIconOnMobile',
       text: 'Projects',
       icon: 'i-ri-lightbulb-line',
     },
     {
-      type: 'icon',
       path: '/changelog',
-      prompt: 'Changelog',
-      icon: 'i-ri-file-list-2-line',
+      title: 'Changelog',
+      displayMode: 'iconHiddenOnMobile',
+      icon: 'i-ri-draft-line',
     },
   ],
-}
-
-export const SOCIALS: Socials[] = [
-  {
-    title: `${SITE.title}'s Github Repo`,
-    href: 'https://github.com/lin-stephanie/astro-antfustyle-theme',
-    icon: 'i-uil-github-alt',
-    rwd: false,
+  socialLinks: [
+    {
+      link: 'https://github.com/lin-stephanie/astro-antfustyle-theme',
+      title: 'AntfuStyle on Github',
+      displayMode: 'alwaysIcon',
+      icon: 'i-uil-github-alt',
+    },
+    {
+      link: 'https://x.com/ste7lin',
+      title: `${SITE.author} on Twitter`,
+      displayMode: 'iconHiddenOnMobile',
+      icon: 'i-ri-twitter-x-fill',
+    },
+  ],
+  navBarLayout: {
+    left: [],
+    right: [
+      'internalNavs',
+      'socialLinks',
+      'searchButton',
+      'themeButton',
+      'rssLink',
+    ],
   },
-  {
-    title: "Astro's Twitter",
-    href: 'https://twitter.com/ASTRO_org',
-    icon: 'i-ri-twitter-x-fill',
-    rwd: false,
-  },
-]
-
-export const LAYOUTS: Layouts = {
   tabbedLayoutTabs: [
     { title: 'Changelog', path: '/changelog' },
     { title: 'AstroBlog', path: '/feeds' },
     { title: 'AstroStreams', path: '/streams' },
   ],
   groupItemCols: 3,
+  showGroupItemColorOnHover: false,
 }
 
 /**
- * Configure whether to enable certain special features on the website, configuration method:
- *  - Set to `false` or `[false, {...}]` to disable this feature.
- *  - Set to `[true, {...}]` to enable and configure this feature.
+ * Configures whether to enable special features:
+ *  - Set to `false` or `[false, {...}]` to disable the feature.
+ *  - Set to `[true, {...}]` to enable and configure the feature.
  */
 export const FEATURES: Features = {
   share: [
@@ -78,7 +88,10 @@ export const FEATURES: Features = {
   toc: [
     true,
     {
-      position: 'left',
+      minHeadingLevel: 2,
+      maxHeadingLevel: 4,
+      displayPosition: 'left',
+      displayMode: 'hover',
     },
   ],
   ogImage: [

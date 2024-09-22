@@ -20,7 +20,7 @@ const { projects } = entry.data
   Array.isArray(toc) && toc[0] && pageToc && (
     <Toc
       category={Object.keys(projects)}
-      style={toc[1].position === 'right' ? 'text-align:end' : ''}
+      style={toc[1].displayPosition === 'right' ? 'text-align:end' : ''}
     />
   )
 }

@@ -1,6 +1,6 @@
 ---
 import Link from '~/components/base/Link.astro'
-import { LAYOUTS } from '~/config'
+import { UI } from '~/config'
 import type { ProjectSchema } from '~/content/schema'
 
 interface Props {
@@ -8,29 +8,28 @@ interface Props {
 }
 
 const { items } = Astro.props
-const { groupItemCols } = LAYOUTS
+const { groupItemCols, showGroupItemColorOnHover } = UI
 ---
 
 <div
   u-grid="~ lt-lg:cols-2 lt-sm:cols-1 gap-4"
-  class:list={[
-    'group-item',
-    {
-      'grid-cols-2': groupItemCols === 2,
-      'grid-cols-3': groupItemCols === 3,
-    },
-  ]}
+  class={`w-max py-8 mx-auto
+    ${groupItemCols === 2 ? 'grid-cols-2' : ''}
+    ${groupItemCols === 3 ? 'grid-cols-3' : ''}`}
 >
   {
     items.map((item, _) => (
       <Link
-        class="link relative flex items-center op-transition"
+        class={`link relative flex items-center
+          w-[350px] max-w-full px-3.5 pt-2 pb-3.5 rounded-md
+          bg-transparent hover:bg-[#88888811]
+          text-4.4 transition-all duration-300`}
         href={item.link}
         title={item.name}
         external={true}
       >
         <div class="pt-2 pr-5">
-          <div class={`icon ${item.icon}`} />
+          <div class={`icon op-50 saturate-0 leading-9 text-7.5 ${item.icon}`} />
         </div>
         <div class="flex-auto">
           <div>{item.name}</div>
@@ -41,34 +40,10 @@ const { groupItemCols } = LAYOUTS
   }
 </div>
 
-<style>
-  .group-item {
-    --uno: 'w-max py-8 mx-auto';
-  }
-
-  .icon {
-    opacity: 0.5;
-    filter: saturate(0);
-
-    line-height: 2.25rem;
-    font-size: 1.875rem;
-  }
-
-  /* .link:hover .icon {
-    filter: saturate(1);
-  } */
-
-  .link {
-    width: 350px;
-    max-width: 100%;
-    padding: 0.5rem 0.875rem 0.875rem;
-    border-radius: 6px;
-
-    background: transparent;
-    font-size: 1.1rem;
-  }
-
-  .link:hover {
-    background: #88888811;
-  }
-</style>
+{showGroupItemColorOnHover && (
+  <style>
+    .link:hover .icon {
+      filter: saturate(1);
+    }
+  </style>
+)}

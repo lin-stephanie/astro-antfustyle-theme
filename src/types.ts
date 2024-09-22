@@ -1,11 +1,72 @@
 /* SITE */
 type Url = `http://${string}` | `https://${string}`
-type Icon = `i-${string}-${string}` | `i-${string}:${string}`
 type Path = `/${string}`
+
+export interface Site {
+  /**
+   * Specifies the final deployed URL, passed to the
+   * {@link https://docs.astro.build/en/reference/configuration-reference/#site `site`} config in Astro.
+   * It is used for generating canonical URLs and other features, and applied in `astro.config.ts`.
+   */
+  website: Url
+
+  /**
+   * Specifies the base path for your site, which must start with `/`. It wiil be passed to the
+   * {@link https://docs.astro.build/en/reference/configuration-reference/#base `base`} config in Astro,
+   * used when deploying to a subdirectory and applied in `astro.config.ts`.
+   *
+   * @example
+   * `/my-site/` (for a site deployed to `https://example.com/my-site/`)
+   */
+  base: Path
+
+  /**
+   * Specifies the site name to format with {@link PageMetadata.title} as `<pageTitle> - <siteTitle>`
+   * for title and meta tags, found in `src/components/base/Head.astro`.
+   */
+  title: string
+
+  /**
+   * Specifies the default content for meta tags, found in `src/components/base/Head.astro`.
+   */
+  description: string
+
+  /**
+   * Specifies the author name for meta tags, found in `src/components/base/Head.astro`.
+   */
+  author: string
+
+  /**
+   * Specifies the primary language of the document content, found in `src/layouts/BaseLayout.astro`.
+   *
+   * @description
+   * It must be a single 'language tag' in the format defined in
+   * {@link https://datatracker.ietf.org/doc/html/rfc5646#appendix-A RFC 5646: Tags for Identifying Languages (also known as BCP 47)}.
+   *
+   */
+  lang: string
+
+  /**
+   * Specifies the page content's language and region for better content display on social platforms,
+   * found in `src/components/Head.astro`.
+   *
+   * @description
+   * It must be in `language_TERRITORY` format, which you can find in
+   * {@link https://www.unicode.org/cldr/charts/44/supplemental/language_territory_information.html Language-Territory Information}.
+   *
+   * @example
+   * 'zh_CN'
+   * 'fr_FR'
+   */
+  ogLocale: string
+}
+
+/* UI */
+type Icon = `i-${string}-${string}` | `i-${string}:${string}`
 
 interface BaseNavItem {
   /**
-   * Set the navigation path, which must start with `/`.
+   * Sets the navigation path, which must start with `/`.
    *
    * @example
    * '/blog'、'/blog/'
@@ -13,43 +74,51 @@ interface BaseNavItem {
   path: Path
 
   /**
-   * Set prompt content for mouse hover.
+   * Sets the content displayed on hover for accessibility.
    */
-  prompt?: string
+  title: string
 }
 
 interface TextNavItem extends BaseNavItem {
   /**
-   * Specify the navigation item where type is 'text'.
-   *
-   * @description
-   * Only text is shown regardless of the viewport size.
+   * Specifies how the item is displayed responsively. Allowed values:
+   *  - 'alwaysText': Always display text, regardless of screen size.
+   *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
+   *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
+   *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
+   *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
    *
    * @remark
-   * Requires `text` to be configured.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
    */
-  type: 'text'
+  displayMode: 'alwaysText' | 'textHiddenOnMobile'
 
   /**
-   * Set the text displayed for the navigation item.
+   * Sets the text displayed for the navigation item.
+   * Required if `displayMode` is 'alwaysText', 'textHiddenOnMobile', or 'textToIconOnMobile'.
    */
   text: string
 }
 
 export interface IconNavItem extends BaseNavItem {
   /**
-   * Specify the navigation item of type is 'icon'.
-   *
-   * @description
-   * Only an icon is shown regardless of the viewport size.
+   * Specifies how the item is displayed responsively. Allowed values:
+   *  - 'alwaysText': Always display text, regardless of screen size.
+   *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
+   *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
+   *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
+   *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
    *
    * @remark
-   * Requires `icon` to be configured.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
    */
-  type: 'icon'
+  displayMode: 'alwaysIcon' | 'iconHiddenOnMobile'
 
   /**
-   * Set the icon displayed for the navigation item. Required if `type` is 'icon' or 'rwd'.
+   * Sets the icon displayed for the navigation item.
+   * Required if `displayMode` is 'alwaysIcon', 'iconHiddenOnMobile', or 'textToIconOnMobile'.
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
@@ -65,23 +134,28 @@ export interface IconNavItem extends BaseNavItem {
 
 export interface ResponsiveNavItem extends BaseNavItem {
   /**
-   * Specify the navigation item of type is 'rwd' (responsive).
-   *
-   * @description
-   * Displays text when viewport width is over 768px and icons otherwise.
+   * Specifies how the item is displayed responsively. Allowed values:
+   *  - 'alwaysText': Always display text, regardless of screen size.
+   *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
+   *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
+   *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
+   *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
    *
    * @remark
-   * Requires both `text` and `icon` to be configured.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
    */
-  type: 'rwd'
+  displayMode: 'textToIconOnMobile'
 
   /**
-   * Set the text displayed for the navigation item. Required if `type` is 'text' or 'rwd'.
+   * Sets the text displayed for the navigation item.
+   * Required if `displayMode` is 'alwaysText', 'textHiddenOnMobile', or 'textToIconOnMobile'.
    */
   text: string
 
   /**
-   * Set the icon displayed for the navigation item. Required if `type` is 'icon' or 'rwd'.
+   * Sets the icon displayed for the navigation item.
+   * Required if `displayMode` is 'alwaysIcon', 'iconHiddenOnMobile', or 'textToIconOnMobile'.
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
@@ -95,86 +169,16 @@ export interface ResponsiveNavItem extends BaseNavItem {
   icon: Icon
 }
 
-type NavItem = TextNavItem | IconNavItem | ResponsiveNavItem
+type InternalNav = TextNavItem | IconNavItem | ResponsiveNavItem
 
-export interface Site {
+interface BaseSocialItem {
   /**
-   * Set your final deployed URL, passed to the
-   * {@link https://docs.astro.build/en/reference/configuration-reference/#site `site`} config in Astro,
-   * Used for generating canonical URLs and other features, and applied in `astro.config.ts`.
+   * Set the URL to the social platform.
    */
-  website: Url
+  link: Url
 
   /**
-   * Set the base path for your site, which must start with `/`. It wiil be passed to the
-   * {@link https://docs.astro.build/en/reference/configuration-reference/#base `base`} config in Astro,
-   * Used when deploying to a subdirectory and applied in `astro.config.ts`.
-   *
-   * @example
-   * `/my-site/` (for a site deployed to `https://example.com/my-site/`)
-   */
-  base: Path
-
-  /**
-   * Set the site name to format with {@link PageMetadata.title} as `<pageTitle> - <siteTitle>`
-   * for title and meta tags, found in `src/components/Head.astro`.
-   */
-  title: string
-
-  /**
-   * Set the default content for meta tags, found in `src/components/Head.astro`.
-   */
-  description: string
-
-  /**
-   * Set the author name for meta tags, found in `src/components/Head.astro`.
-   */
-  author: string
-
-  /**
-   * Set the primary language of the document content, found in `src/layouts/BaseLayout.astro`.
-   *
-   * @description
-   * It must be a single 'language tag' in the format defined in
-   * {@link https://datatracker.ietf.org/doc/html/rfc5646#appendix-A RFC 5646: Tags for Identifying Languages (also known as BCP 47)}.
-   *
-   */
-  lang: string
-
-  /**
-   * Set the page content's language and region for better content display on social platforms,
-   * found in `src/components/Head.astro`.
-   *
-   * @description
-   * It must be in 'language_TERRITORY' format, which you can find in
-   * {@link https://www.unicode.org/cldr/charts/44/supplemental/language_territory_information.html Language-Territory Information}.
-   *
-   * @example
-   * 'zh_CN'
-   * 'fr_FR'
-   */
-  ogLocale: string
-
-  /**
-   * Set the website navigation bar, found in `src/components/NavBar.astro`.
-   *
-   * @description
-   * The configuration order corresponds to the display order on the page.
-   *
-   * @property {string} `type` - Set the type of navigation item:
-   *  - 'text': Only text is shown regardless of the viewport size.
-   *  - 'icon': Only an icon is shown regardless of the viewport size.
-   *  - 'rwd': Responsive type, showing text when the viewport width exceeds 768px and icons otherwise.
-   * @property {string} `text` - Set the text displayed for the navigation item. Required if `type` is 'text' or 'rwd'.
-   * @property {string} `icon` - Set the icon displayed for the navigation item. Required if `type` is 'icon' or 'rwd'.
-   */
-  navBar: NavItem[]
-}
-
-/* SOCIALS */
-export interface Socials {
-  /**
-   * Set a brief description to show where the link leads, displayed when hovered over.
+   * Sets the content displayed on hover for accessibility.
    *
    * @description
    * You can use template literals to reference other configuration items.
@@ -183,198 +187,337 @@ export interface Socials {
    * `Follow ${SITE.author} on Twitter`
    */
   title: string
+}
 
+interface TextSocialItem extends BaseSocialItem {
   /**
-   * Set the URL to the social platform profile.
+   * Specifies how the item is displayed responsively. Allowed values:
+   *  - 'alwaysText': Always display text, regardless of screen size.
+   *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
+   *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
+   *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
+   *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
+   *
+   * @remark
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
    */
-  href: string
+  displayMode: 'alwaysText' | 'textHiddenOnMobile'
 
   /**
-   * Set the icon for the social platform.
+   * Sets the text displayed for the navigation item.
+   * Required if `displayMode` is 'alwaysText', 'textHiddenOnMobile', or 'textToIconOnMobile'.
+   */
+  text: string
+}
+
+export interface IconSocialItem extends BaseSocialItem {
+  /**
+   * Specifies how the item is displayed responsively. Allowed values:
+   *  - 'alwaysText': Always display text, regardless of screen size.
+   *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
+   *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
+   *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
+   *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
+   *
+   * @remark
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
+   */
+  displayMode: 'alwaysIcon' | 'iconHiddenOnMobile'
+
+  /**
+   * Sets the icon displayed the social platform.
+   * Required if `displayMode` is 'alwaysIcon', 'iconHiddenOnMobile', or 'textToIconOnMobile'.
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
    * as per {@link https://unocss.dev/presets/icons Unocss} specs.
    *
-   * @example "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
+   * @example
+   * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
    *
    * @see {@link  https://icones.js.org/ Check all available icons}
    */
   icon: Icon
-
-  /**
-   * Whether to hide the social icon when the viewport width less than 768px.
-   *
-   * @default false
-   */
-  rwd?: boolean
 }
 
-/* LAYLOUT */
-interface Tab {
+export interface ResponsiveSocialItem extends BaseSocialItem {
   /**
-   * Set the display title of the tab.
+   * Specifies how the item is displayed responsively. Allowed values:
+   *  - 'alwaysText': Always display text, regardless of screen size.
+   *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
+   *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
+   *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
+   *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
+   *
+   * @remark
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
    */
-  title: string
+  displayMode: 'textToIconOnMobile'
 
   /**
-   * Set the navigation path associated with the tab, which must start with `/`.
+   * Sets the text displayed for the navigation item.
+   * Required if `displayMode` is 'alwaysText', 'textHiddenOnMobile', or 'textToIconOnMobile'.
+   */
+  text: string
+
+  /**
+   * Sets the icon displayed the social platform.
+   * Required if `displayMode` is 'alwaysIcon', 'iconHiddenOnMobile', or 'textToIconOnMobile'.
+   *
+   * @description
+   * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
+   * as per {@link https://unocss.dev/presets/icons Unocss} specs.
+   *
+   * @example
+   * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
+   *
+   * @see {@link  https://icones.js.org/ Check all available icons}
+   */
+  icon: Icon
+}
+
+type SocialLink = TextSocialItem | IconSocialItem | ResponsiveSocialItem
+
+type NavBarComponentType =
+  | 'internalNavs'
+  | 'socialLinks'
+  | 'searchButton'
+  | 'themeButton'
+  | 'rssLink'
+
+export interface NavBarLayout {
+  /**
+   * Defines which components ('internalNavigation', 'socialLinks', 'searchButton',
+   * 'themeToggleButton', 'rssLink') are positioned on the left side of the navigation bar.
+   *
+   * @remark
+   * If you want all components to appear on the right side, leave this array empty.
+   * Components in `left` and `right` arrays must not contain duplicates.
+   */
+  left: NavBarComponentType[]
+
+  /**
+   * Defines which components ('internalNavigation', 'socialLinks', 'searchButton',
+   * 'themeToggleButton', 'rssLink') are positioned on the right side of the navigation bar.
+   *
+   * @remark
+   * If you want all components to appear on the left side, leave this array empty.
+   * Components in `left` and `right` arrays must not contain duplicates.
+   */
+  right: NavBarComponentType[]
+}
+
+interface Tab {
+  /**
+   * Sets the navigation path associated with the tab, which must start with `/`.
    *
    * @example
    * '/blog'、'/blog/'
    */
   path: Path
+
+  /**
+   * Sets the content displayed on hover for accessibility.
+   */
+  title: string
 }
+
 export type Tabs = [Tab, Tab, ...Tab[]]
 
-export interface Layouts {
+export interface Ui {
   /**
-   * Enable and configure for tabs within a tabbed layout, used in `src/layouts/TabbedLayout.astro`.
+   * Configures the website internal navigation,
+   * used in `src/components/base/NavBar.astro`.
+   *
+   * @remark
+   * The configuration order corresponds to the display order on the page.
+   */
+  internalNavs: InternalNav[]
+
+  /**
+   * Configures the external links to social platform,
+   * used in `src/components/base/NavBar.astro`.
+   *
+   * @remark
+   * The configuration order corresponds to the display order on the page.
+   */
+  socialLinks: SocialLink[]
+
+  /**
+   * Configures the layout of the navigation bar,
+   * used in `src/components/base/NavBar.astro`.
+   */
+  navBarLayout: NavBarLayout
+
+  /**
+   * Enables and configures for tabs within a tabbed layout,
+   * used in `src/layouts/TabbedLayout.astro`.
    *
    * @description
-   * If your website does not use the `TabbedLayout`, you can set it to `false`; however,
-   * configuration is required before using this layout.
+   * If your website does not use the `TabbedLayout`, you can set it to `false`.
+   * Otherwise, required before using this layout.
    */
   tabbedLayoutTabs: false | Tabs
 
   /**
-   * Set the number of columns in the group view on the `/projects` page,
+   * Sets the number of columns in the group view on the `/projects` page,
    * used in `src/components/views/GroupItem.astro`.
    */
   groupItemCols: 2 | 3
+
+  /**
+   * Controls whether to change the icon's hover effect from grayscale to full color.
+   * If `true`, the icon for the group item will display in its original colors on hover.
+   *
+   * @type {boolean}
+   */
+  showGroupItemColorOnHover: boolean
 }
 
 /* FEATURES */
 export type BgType = 'plum' | 'dot' | 'rose' | 'particle'
-type Mentioned = `@${string}` | ''
+type Mentioned = `@${string}` | `@${string}@${string}` | ''
 type FeatureConfig<T> = false | [boolean, T]
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6
 
 export interface ShareConfig {
   /**
-   * Set whether to include Twitter for sharing,
-   * If enabled, optionally configure a Twitter username to be mentioned:
-   *  - Set to `false` or `[false, '@userName']` to exclude.
-   *  - Set to `[true, '@userName']` to include.
+   * Twitter sharing configuration:
+   *  - Set to `false` or `[false, '@userName']` to disable.
+   *  - Set to `[true, '@userName']` to enable and mention you.
    *
    * @description
-   * The Twitter username must start with `@`.
-   * If set to an empty string, '@userName' will be excluded from the shared text.
+   * If an empty string is used, '@userName' will be excluded from the shared text.
    */
   twitter: FeatureConfig<Mentioned>
 
   /**
-   * Set whether to include Mastodon for sharing,
-   * If enabled, optionally configure a Mastodon username to be mentioned:
-   *  - Set to `false` or `[false, '@userName@serverName']` to exclude.
-   *  - Set to `[true, '@userName@serverName']` to include.
+   * Mastodon sharing configuration:
+   *  - Set to `false` or `[false, '@userName@serverName']` to disable.
+   *  - Set to `[true, '@userName@serverName']` to enable and mention you.
    *
    * @description
-   * The Mastodon username must start with `@`.
+   * If an empty string is used, the username will not be included in the shared text.
    * If set to an empty string, '@userName@serverName' will be excluded from the shared text.
    */
   mastodon: FeatureConfig<Mentioned>
 
   /**
-   * Set whether to include Facebook for sharing.
+   * Controls whether to include Facebook for sharing.
    */
   facebook: boolean
 
   /**
-   * Set whether to include Pinterest for sharing.
+   * Controls whether to include Pinterest for sharing.
    */
   pinterest: boolean
 
   /**
-   * Set whether to include Reddit for sharing.
+   * Controls whether to include Reddit for sharing.
    */
   reddit: boolean
 
   /**
-   * Set whether to include Telegram for sharing.
+   * Controls whether to include Telegram for sharing.
    */
   telegram: boolean
 
   /**
-   * Set whether to include WhatsApp for sharing.
+   * Controls whether to include WhatsApp for sharing.
    */
   whatsapp: boolean
 
   /**
-   * Set whether to include Email for sharing.
+   * Controls whether to include Email for sharing.
    */
   email: boolean
 }
 
 interface TocConfig {
   /**
-   * Set the display position of the table of contents.
+   * Sets the minimum heading level for TOC, constrained to a valid heading level (h1-h6).
+   * Must be less than or equal to {@link maxHeadingLevel}.
    */
-  position: 'left' | 'right'
+  minHeadingLevel: HeadingLevel
+
+  /**
+   * Sets the maximum heading level for TOC, constrained to a valid heading level (h1-h6).
+   * Must be greater than or equal to {@link minHeadingLevel}.
+   */
+  maxHeadingLevel: HeadingLevel
+
+  /**
+   * Sets the display position of the TOC.
+   */
+  displayPosition: 'left' | 'right'
+
+  /**
+   * Sets the TOC visibility behavior.
+   */
+  displayMode: 'always' | 'hover'
 }
 
 interface OgImageConfig {
   /**
-   * Set the name of the author or brand associated with the content.
+   * Sets the site name or brand for OG images.
    *
    * @description
-   * Used to display above the title to enhance recognition.
+   * Displayed above the title to enhance recognition.
    */
   authorOrBrand: string
 
   /**
-   * Set title for fallback OG image.
-   *
-   * @description
-   * A fallback OG image is the default image used when the specified or auto-generated OG image is missing,
-   * ensuring that any page shared on social platforms displays an image.
-   *
-   * @remarks
-   * The fallback OG image is stored at `/public/og-images/og-image.png`.
-   * Delete the existing file to regenerate.
+   * Sets the fallback title for OG images. Used when the `title` in the frontmatter is missing or invalid.
    */
   fallbackTitle: string
 
   /**
-   * Set the fallback background for automatically generated OG images.
+   * Sets the fallback background for OG images.
    *
    * @description
-   * The automatically generated OG images will default to the page's {@link PageMetadata.bgType} for
-   * the background. If not set, the background will use the type specified in this field.
+   * By default, the background used for auto-generated OG images is based on the `bgType` set in frontmatter.
+   * This value is only used for the fallback OG image (stored at `/public/og-images/og-image.png`)
+   * and as the background when `bgType` is not specified.
+   *
+   * @note
+   * A fallback OG image is the default image used when the specified or auto-generated OG image is missing.
+   * You can delete the existing file to regenerate a new one.
    */
   fallbackBgType: BgType
 }
 
 export interface Features {
   /**
-   * Enable and configure the sharing feature, which allows visitors to share content to social platforms.
+   * Enables and configures the sharing feature, which allows visitors to share content to social platforms.
    *
    * @description
-   * If enabled, share links appear at the bottom of all posts.
-   * Disable for a specific post by setting the `share` field in the frontmatter to `false`.
+   * When enabled, sharing links are displayed at the bottom of all posts.
+   * To disable for a specific post, set the `share` field in the frontmatter to `false`.
    */
   share: FeatureConfig<ShareConfig>
 
   /**
-   * Enable and configure the TOC feature.
+   * Enables and configures the TOC (Table of Contents) feature.
    *
    * @description
-   * If enabled, both the `/blog/[slug]` and `/projects` pages will automatically include a TOC.
-   * Disable for a specific post or the `/projects` page by setting the `toc` field in the frontmatter to `false`.
+   * When enabled, the `/blog/[slug]` and `/projects` pages will include a TOC automatically.
+   * To disable for a specific post or the `/projects` page, set the `toc` field in the frontmatter to `false`.
    *
    * @remarks
-   * The TOC automatically hides when the viewport width less than 1024px.
+   * The TOC is automatically hidden when the viewport width is less than 1024px.
    */
   toc: FeatureConfig<TocConfig>
 
   /**
-   * Enable and configure the automatic OG image generation feature.
+   * Enables and configures automatic OG image generation.
    *
    * @description
-   * If enabled, auto-generate OG images for Markdown/MDX files lacking ogImage
-   * in frontmatter and store in `/public/og-images`.
-   *
-   * @remarks
-   * Only available for pages generated from Markdown/MDX, as the process is implemented through remark plugin.
+   * Automatically generate OG images for Markdown/MDX files that lack an `ogImage` in their frontmatter.
+   * Generated images are stored in `/public/og-images`.
+   * To disable for a specific post, set the `ogImage` field in the frontmatter to `false`.
    */
   ogImage: FeatureConfig<OgImageConfig>
 }

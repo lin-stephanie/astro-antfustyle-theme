@@ -10,13 +10,33 @@ import {
 
 import projecstData from './src/content/projects/data.json'
 import { extractIconsStartingWithI } from './src/utils/common-utils'
-import { SITE, SOCIALS } from './src/config'
-import type { IconNavItem, ResponsiveNavItem } from './src/types'
+import { UI } from './src/config'
 
-const navIcons = SITE.navBar
-  .filter((item) => item.type !== 'text')
+import type {
+  IconNavItem,
+  ResponsiveNavItem,
+  IconSocialItem,
+  ResponsiveSocialItem,
+} from './src/types'
+
+const { internalNavs, socialLinks } = UI
+
+const navIcons = internalNavs
+  .filter(
+    (item) =>
+      item.displayMode !== 'alwaysText' &&
+      item.displayMode !== 'textHiddenOnMobile'
+  )
   .map((item) => (item as IconNavItem | ResponsiveNavItem).icon)
-const socialIcons = SOCIALS.map((item) => item.icon)
+
+const socialIcons = socialLinks
+  .filter(
+    (item) =>
+      item.displayMode !== 'alwaysText' &&
+      item.displayMode !== 'textHiddenOnMobile'
+  )
+  .map((item) => (item as IconSocialItem | ResponsiveSocialItem).icon)
+
 const projectIcons = extractIconsStartingWithI(projecstData.projects)
 
 export default defineConfig({

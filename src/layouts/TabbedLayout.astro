@@ -1,7 +1,7 @@
 ---
 import Link from '~/components/base/Link.astro'
 import { ensureTrailingSlash, getUrl } from '~/utils/common-utils'
-import { LAYOUTS } from '~/config'
+import { UI } from '~/config'
 
 import type { Tabs } from '~/types'
 
@@ -12,10 +12,13 @@ interface Props {
 const { subtitle } = Astro.props
 
 let tabs: Tabs
-if (!LAYOUTS.tabbedLayoutTabs) {
-  throw new Error('LAYOUTS.tabbedLayoutTabs is not configured.')
+if (
+  !UI.tabbedLayoutTabs ||
+  (Array.isArray(UI.tabbedLayoutTabs) && UI.tabbedLayoutTabs.length === 0)
+) {
+  throw new Error('`UI.tabbedLayoutTabs`` is not configured.')
 } else {
-  tabs = LAYOUTS.tabbedLayoutTabs
+  tabs = UI.tabbedLayoutTabs
 }
 
 const currentPath = ensureTrailingSlash(Astro.url.pathname)
@@ -39,8 +42,8 @@ const isActive = (href: string) =>
           class:list={{
             'link': true,
             'op-transition!': true,
-            'tabs__a--active': isActive(tab.path),
-            'tabs__a--inactive': !isActive(tab.path),
+            'active': isActive(tab.path),
+            'inactive': !isActive(tab.path),
           }}
           href={getUrl(ensureTrailingSlash(tab.path))}
           role="tab"
@@ -66,15 +69,15 @@ const isActive = (href: string) =>
     border-style: none !important;
   }
 
-  .tabs__a--active {
+  .active {
     opacity: 1;
   }
 
-  .tabs__a--inactive {
+  .inactive {
     opacity: 0.2;
   }
 
-  .tabs__a--inactive:hover {
+  .inactive:hover {
     opacity: 0.5;
   }
 </style>
