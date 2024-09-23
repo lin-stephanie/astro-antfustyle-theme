@@ -5,9 +5,11 @@
 /// <reference types="mdast-util-directive" />
 
 import { visit } from 'unist-util-visit'
+
 import type { Root, Paragraph, PhrasingContent } from 'mdast'
 import type { MarkdownVFile } from '@astrojs/markdown-remark'
 
+const IMAGE_DIR_REGEXP = /^image-(.*)/
 const VALID_TAGS_FOR_IMG = new Set<string>([
   'div',
   'span',
@@ -23,15 +25,15 @@ const VALID_TAGS_FOR_IMG = new Set<string>([
 ])
 
 /**
- * Used to convert `:::image-*` into container elements for images.
+ * Convert `:::image-*` into container elements for images.
  */
 function remarkImageContainer() {
   return (tree: Root, file: MarkdownVFile) => {
     visit(tree, (node) => {
       if (node.type !== 'containerDirective') return
 
-      /* image-figure */
       if (node.name === 'image-figure') {
+        /* image-figure */
         const data = node.data || (node.data = {})
         const attributes = node.attributes || {}
         const children = node.children
@@ -73,10 +75,8 @@ function remarkImageContainer() {
         }
 
         children.push(figcaptionNode)
-      } else if (
+      } else if (node.name === 'image-a') {
         /* image-a */
-        node.name === 'image-a'
-      ) {
         if (!node.attributes || !node.attributes.href)
           file.fail(
             'Unexpectedly missing `href` in the `image-a` directive.',
@@ -89,10 +89,9 @@ function remarkImageContainer() {
         data.hName = 'a'
         const defaultAttrs = { target: '_blank' }
         data.hProperties = { ...defaultAttrs, ...attributes }
-      } else {
+      } else if (node.name.match(IMAGE_DIR_REGEXP)) {
         /* image-* */
-        const regex = /^image-(.*)/
-        const match = node.name.match(regex)
+        const match = node.name.match(IMAGE_DIR_REGEXP)
         if (match && VALID_TAGS_FOR_IMG.has(match[1])) {
           const data = node.data || (node.data = {})
           const attributes = node.attributes || {}

@@ -45,6 +45,7 @@
     "eslint-plugin-astro": "^1.1.2",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "globals": "^15.1.0",
+    "hastscript": "^9.0.0",
     "html-entities": "^2.5.2",
     "lint-staged": "^15.2.2",
     "mdast-util-directive": "^3.0.0",

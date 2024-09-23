@@ -365,7 +365,7 @@ html:not(.dark) .img-dark {
 }
 
 /* ::vedio */
-.prose .video {
+.prose .sugar-video {
   z-index: 150;
   position: relative;
   margin: 1rem 0;
@@ -373,24 +373,24 @@ html:not(.dark) .img-dark {
   aspect-ratio: 16 / 9;
 }
 
-.prose .video iframe {
+.prose .sugar-video iframe {
   width: 100%;
   border-radius: 0.5rem;
   aspect-ratio: 16 / 9;
 }
 
 @media (min-width: 1024px) {
-  .prose .video {
+  .prose .sugar-video {
     margin: 5rem 0;
   }
 
-  .prose .video iframe {
+  .prose .sugar-video iframe {
     transform: scaleX(1.2) scaleY(1.2);
   }
 }
 
 /* :link */
-.magic-button {
+.sugar-link-square {
   display: inline-flex;
   gap: 0.25rem;
   align-items: center;
@@ -406,12 +406,30 @@ html:not(.dark) .img-dark {
   transform: translateY(3px);
 }
 
-.magic-button:hover {
+.sugar-link-rounded {
+  display: inline-flex;
+  gap: 0.3rem;
+  align-items: center;
+  padding: 0 0.5rem 0 0;
+  border-radius: 9999px;
+  border-width: 0px !important;
+
+  --uno: 'font-condensed';
+  color: var(--fg-light) !important;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+
+  background: #8882;
+  transform: translateY(6px);
+}
+
+.sugar-link-square:hover,
+.sugar-link-rounded:hover {
   background: #8883;
   color: var(--fg) !important;
 }
 
-.magic-button-image {
+.sugar-link-image {
   display: inline-block;
   height: 1.1em;
   width: 1.1em;
@@ -422,25 +440,30 @@ html:not(.dark) .img-dark {
   background-position: center;
 }
 
-.magic-button.magic-button-rounded {
-  gap: 0.3rem;
-  padding: 0 0.5rem 0 0;
-  border-radius: 9999px;
-
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-
-  transform: translateY(6px);
-}
-
-.magic-button.magic-button-rounded .magic-button-image {
+.sugar-link-rounded .sugar-link-image {
   height: 1.6em;
   width: 1.6em;
   border-radius: 50%;
 }
 
-.magic-github-link {
+.sugar-link-github {
   margin-left: 0.25rem;
   --uno: 'font-mono';
   opacity: 0.7;
+}
+
+/* :badge */
+.sugar-badge {
+  --uno: 'inline-block px-1.5 py-0.5 rounded mr-2 color-white dark:color-black text-xs uppercase';
+  background-color: var(--badge-color-light);
+}
+
+.dark .sugar-badge {
+  background-color: var(--badge-color-dark);
+}
+
+/* details */
+details summary {
+  padding-left: 1px;
+  cursor: pointer;
 }
