@@ -1,0 +1,36 @@
+name: Feature Request
+description: Propose a new feature to be added to Astro AntfuStyle Theme
+labels: ['enhancement']
+title: 'Feature: '
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for your interest in the project and taking the time to fill out this feature report!
+  - type: textarea
+    attributes:
+      label: Feature description
+      description: As a user of the Astro AntfuStyle Theme, I want [goal / wish] so that [benefit]. Please describe the desired feature in as much detail as you are able. If you intend to submit a PR for this issue, tell me in the description. Thanks!
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Suggested solution
+      description: How can I implement this feature? If there are any reference projects, please let me know. No problem if there's no solution for now.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Any other context about the feature request here. If it's a UI improvement, you can provide screenshots of the desired effect and possible links for reference.
+    validations:
+      required: false
+  - type: checkboxes
+    id: validations
+    attributes:
+      label: Validations
+      description: Before submitting the issue, please make sure you do the following
+      options:
+        - label: Check that there isn't [already an issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) that request the same feature to avoid creating a duplicate.
+          required: true
