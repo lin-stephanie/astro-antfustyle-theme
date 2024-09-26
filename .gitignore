@@ -26,5 +26,10 @@ pnpm-debug.log*
 # ESLint cache
 .eslintcache
 
+# ignore prettier
+pnpm-lock.yaml
+SearchSwitch.astro
+GroupItem.astro
+
 # Local
 .local
