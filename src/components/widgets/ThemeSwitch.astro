@@ -96,7 +96,8 @@
         Math.max(y, innerHeight - y)
       )
 
-      // @ts-expect-error (View Transitions API)
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore (View Transitions API)
       const transition = document.startViewTransition(() => toggle())
 
       transition.ready.then(() => {

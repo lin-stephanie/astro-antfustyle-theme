@@ -10,7 +10,7 @@ interface Props {
 }
 
 const { idx, text, needId = false, wide = false } = Astro.props
-const { groupItemCols } = UI
+const { maxGroupColumns } = UI
 ---
 
 <div
@@ -35,9 +35,9 @@ const { groupItemCols } = UI
     ) : (
       <span
         class={`absolute top-0 op-35 dark:op-20
-          text-5em lt-lg:text-4.5em lt-sm:(text-3.2em top-3) text-stroke-1.5 text-stroke-hex-aaa
+          text-5em lt-lg:text-4.5em lt-sm:(text-3.6em top-2) text-stroke-1.5 text-stroke-hex-aaa
           font-bold color-transparent leading-1em
-          ${groupItemCols === 3 ? 'left--4' : ''} ${groupItemCols === 2 ? 'left-[14%] lt-lg:left--4' : ''}`}
+          ${maxGroupColumns === 3 ? 'left--4' : ''} ${maxGroupColumns === 2 ? 'left-[14%] lt-lg:left--4' : ''}`}
       >
         {text}
       </span>

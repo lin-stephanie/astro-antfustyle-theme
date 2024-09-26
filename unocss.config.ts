@@ -102,10 +102,6 @@ export default defineConfig({
     ...socialIcons,
     ...projectIcons,
 
-    /* GroupItem */
-    'grid-cols-2',
-    'grid-cols-3',
-
     /* Categorizer */
     'left--4',
     'left-[14%]',

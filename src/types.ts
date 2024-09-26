@@ -363,16 +363,15 @@ export interface Ui {
   tabbedLayoutTabs: false | Tabs
 
   /**
-   * Sets the number of columns in the group view on the `/projects` page,
+   * Sets the maximum number of columns displayed in the group view on the `/projects` page,
    * used in `src/components/views/GroupItem.astro`.
    */
-  groupItemCols: 2 | 3
+  maxGroupColumns: 2 | 3
 
   /**
-   * Controls whether to change the icon's hover effect from grayscale to full color.
+   * Controls whether the icon's hover effect changes from grayscale to full color
+   * in the group view of the `/projects` page, used in `src/components/views/GroupItem.astro`.
    * If `true`, the icon for the group item will display in its original colors on hover.
-   *
-   * @type {boolean}
    */
   showGroupItemColorOnHover: boolean
 }
