@@ -53,8 +53,8 @@ export function ensureTrailingSlash(pathname: string): string {
  * Checks if a file exists in a specified directory.
  *
  * @param {string} path
- *  The relative directory path to check in.
  *  This path is relative to the current working directory.
+ *  ('public/og-images' is equivalent to './public/og-images' and relative to the cwd)
  * @param {string} filename
  *  The name of the file to check for.
  */

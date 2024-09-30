@@ -62,7 +62,7 @@ export const UI: Ui = {
     { title: 'AstroBlog', path: '/feeds' },
     { title: 'AstroStreams', path: '/streams' },
   ],
-  maxGroupColumns: 2,
+  maxGroupColumns: 3,
   showGroupItemColorOnHover: false,
 }
 

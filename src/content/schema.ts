@@ -4,7 +4,7 @@ import { z } from 'astro:content'
 export const pageSchema = z.object({
   title: z
     .string()
-    .optional()
+    .default('')
     .describe(
       'Sets the page title, formatted with `SITE.title` as `<pageTitle> - <siteTitle>` for metadata and automatic OG image generation. If undefined or empty, only `<siteTitle>` is displayed, and OG image generation is skipped.'
     ),
@@ -33,10 +33,10 @@ export const pageSchema = z.object({
       'Controls whether the table of contents (TOC) is generated for the page.'
     ),
   ogImage: z
-    .union([z.string(), z.literal(false)])
-    .optional()
+    .union([z.string(), z.boolean()])
+    .default(true)
     .describe(
-      'Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field, or set to `false` to disable. To use a custom image, provide the full filename from `/public/og-images/`.'
+      'Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field or set to `true`. To disable it, set the field to `false`. To use a custom image, provide the full filename from `/public/og-images/`.'
     ),
 })
 
@@ -111,10 +111,10 @@ export const postSchema = z
         'Controls whether social sharing options are available for the post.'
       ),
     ogImage: z
-      .union([z.string(), z.literal(false)])
-      .optional()
+      .union([z.string(), z.boolean()])
+      .default(true)
       .describe(
-        'Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field, or set to `false` to disable. To use a custom image, provide the full filename from `/public/og-images/`.'
+        'Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field or set to `true`. To disable it, set the field to `false`. To use a custom image, provide the full filename from `/public/og-images/`.'
       ),
     redirect: z
       .string()

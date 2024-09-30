@@ -3,7 +3,7 @@ import backgroundBase64 from './base64'
 import type { BgType } from '../../src/types'
 
 export const ogImageMarkup = (
-  source: string,
+  authorOrBrand: string,
   title: string,
   bgType: BgType
 ) => {
@@ -56,7 +56,7 @@ export const ogImageMarkup = (
       </div>
 
       <div tw="flex flex-col" style="gap: 10px">
-        <div tw="text-[#858585] text-2.1rem">${source}</div>
+        <div tw="text-[#858585] text-2.1rem">${authorOrBrand}</div>
         <div tw="text-white text-3.1rem leading-relaxed mr-18">${title}</div>
       </div>
     </div>

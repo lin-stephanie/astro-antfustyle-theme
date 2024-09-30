@@ -29,7 +29,7 @@ const satoriOptions: SatoriOptions = {
 }
 
 async function generateOgImage(
-  source: string,
+  authorOrBrand: string,
   title: string,
   bgType: BgType,
   output: string
@@ -41,7 +41,7 @@ async function generateOgImage(
   )
 
   try {
-    const node = ogImageMarkup(source, title, bgType)
+    const node = ogImageMarkup(authorOrBrand, title, bgType)
     unescapeHTML(node)
 
     const svg = await satori(node, satoriOptions)
@@ -100,24 +100,28 @@ function remarkGenerateOgImage() {
     // check if it need to be skipped
     const title = file.data.astro.frontmatter.title
     if (!title || !title.trim().length) return
-    if (file.data.astro.frontmatter.ogImage === false) return
+    const ogImage = file.data.astro.frontmatter.ogImage
+    if (ogImage === false) return
 
     // check if it has been generated
     const extname = file.extname
     const dirpath = file.dirname
     let nameWithoutExt = basename(filename, extname)
     if (nameWithoutExt === 'index') nameWithoutExt = basename(dirpath)
-    // 'public/og-images' is equivalent to './public/og-images' and relative to the cwd
     if (checkFileExistsInDir('public/og-images', `${nameWithoutExt}.png`))
       return
 
     // check if it has been assigned & actually exists
-    const ogImage = file.data.astro.frontmatter.ogImage
-    if (ogImage && checkFileExistsInDir('public/og-images', basename(ogImage)))
+    if (
+      ogImage &&
+      ogImage !== true &&
+      checkFileExistsInDir('public/og-images', basename(ogImage))
+    )
       return
 
     if (
       ogImage &&
+      ogImage !== true &&
       !checkFileExistsInDir('public/og-images', basename(ogImage))
     ) {
       console.warn(
