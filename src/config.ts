@@ -29,7 +29,7 @@ export const UI: Ui = {
     {
       path: '/changelog',
       title: 'Changelog',
-      displayMode: 'iconHiddenOnMobile',
+      displayMode: 'alwaysIcon',
       icon: 'i-ri-draft-line',
     },
   ],

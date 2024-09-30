@@ -32,4 +32,7 @@ export default defineConfig({
     contentIntellisense: true,
     directRenderScript: true,
   },
+  vite: {
+    build: { chunkSizeWarningLimit: 1200 },
+  },
 })

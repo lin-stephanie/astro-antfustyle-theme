@@ -7,12 +7,8 @@
 >
 </bg-dot>
 
-<script
-  is:inline
-  defer
-  src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.min.js"></script>
-
 <script>
+  import p5 from 'p5'
   import type { default as P5Instance } from 'p5'
 
   class BgDotElement extends HTMLElement {
@@ -82,7 +78,6 @@
         }
       }
 
-      // @ts-expect-error (for Cannot find name 'p5'.ts(2304))
       this.p5Instance = new p5(sketch, this)
     }
 

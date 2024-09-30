@@ -165,5 +165,7 @@
     }
   }
 
-  customElements.define('bg-plum', BgPlumElement)
+  if (!customElements.get('bg-plum')) {
+    customElements.define('bg-plum', BgPlumElement)
+  }
 </script>

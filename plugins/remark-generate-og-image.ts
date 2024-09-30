@@ -132,7 +132,7 @@ function remarkGenerateOgImage() {
 
     // get bgType
     const pageBgType = file.data.astro.frontmatter.bgType
-    const bgType = pageBgType ?? fallbackBgType
+    const bgType = pageBgType || fallbackBgType
 
     // generate og images
     await generateOgImage(

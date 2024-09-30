@@ -43,27 +43,22 @@ const roses = [
   }
 </div>
 
-<script>
-  type Range = [number, number]
-
-  function getRandom(min: number, max: number) {
+<script is:inline data-astro-rerun>
+  function getRandom(min, max) {
     return Math.random() * (max - min) + min
   }
 
-  function getRandomPercentage(min: number, max: number) {
+  function getRandomPercentage(min, max) {
     return (Math.random() * (max - min) + min).toFixed(2) + '%'
   }
 
-  document.addEventListener('astro:page-load', () => {
-    const div = document.getElementById('rose')
-    if (!div) return
-
+  if (document.getElementById('rose')) {
     const animateRose = (
-      roseId: string,
-      topRange: Range,
-      leftRange: Range,
-      scaleRange: Range,
-      rotationRange: Range
+      roseId,
+      topRange,
+      leftRange,
+      scaleRange,
+      rotationRange
     ) => {
       const rose = document.getElementById(roseId)
       if (!rose) return
@@ -89,5 +84,5 @@ const roses = [
     animateRose('rose-1', [-10, -5], [10, 20], [0.04, 0.06], [-3, 3])
     animateRose('rose-2', [80, 85], [-5, 5], [0.02, 0.04], [-3, 3])
     animateRose('rose-3', [45, 65], [85, 90], [0.05, 0.07], [-3, 3])
-  })
+  }
 </script>
