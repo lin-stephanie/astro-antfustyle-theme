@@ -40,6 +40,17 @@ const socialIcons = socialLinks
 const projectIcons = extractIconsStartingWithI(projecstData.projects)
 
 export default defineConfig({
+  // will be deep-merged to the default theme
+  extendTheme: (theme) => {
+    return {
+      ...theme,
+      breakpoints: {
+        ...theme.breakpoints,
+        lgp: '1128px',
+      },
+    }
+  },
+
   // define utility classes and the resulting CSS
   rules: [
     [

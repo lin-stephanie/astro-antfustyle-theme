@@ -27,15 +27,6 @@ export default defineConfig({
     remarkPlugins,
     rehypePlugins,
   },
-  vite: {
-    build: {
-      rollupOptions: {
-        output: {
-          assetFileNames: 'assets/[name].[hash][extname]',
-        },
-      },
-    },
-  },
   experimental: {
     contentLayer: true,
     contentIntellisense: true,

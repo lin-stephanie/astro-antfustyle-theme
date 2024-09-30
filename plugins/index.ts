@@ -34,7 +34,7 @@ export const rehypePlugins: RehypePlugins = [
   [
     rehypeCallouts,
     {
-      theme: 'obsidian',
+      theme: 'vitepress',
     },
   ],
 
