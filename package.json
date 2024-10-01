@@ -1,9 +1,9 @@
 {
-  "name": "astor-antfustyle-blog",
+  "name": "astor-antfustyle-theme",
   "version": "0.0.0",
-  "description": "A customizable, feature-rich Astro theme for blog & portfolio.",
   "type": "module",
-  "private": false,
+  "private": true,
+  "license": "MIT",
   "scripts": {
     "astro": "astro",
     "sync": "astro sync",
@@ -18,10 +18,10 @@
     "toolbar:on": "astro preferences enable devToolbar",
     "toolbar:off": "astro preferences disable devToolbar",
     "prepare": "simple-git-hooks",
-    "postbuild": "pagefind --site dist && rimraf dist/pagefind/*ui*"
+    "postbuild": "pagefind --site dist && del-cli \"dist/pagefind/*ui*\""
   },
   "dependencies": {
-    "astro": "^4.15.9",
+    "astro": "4.15.9",
     "nprogress": "^0.2.0"
   },
   "devDependencies": {
@@ -34,17 +34,18 @@
     "@eslint/js": "^9.11.1",
     "@expressive-code/plugin-collapsible-sections": "^0.37.0",
     "@expressive-code/plugin-line-numbers": "^0.37.0",
-    "@iconify/json": "^2.2.252",
+    "@iconify/json": "^2.2.255",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.7.0",
     "@types/nprogress": "^0.2.3",
     "@types/p5": "^1.7.6",
-    "@typescript-eslint/parser": "^8.7.0",
-    "@unocss/reset": "^0.62.4",
+    "@typescript-eslint/parser": "^8.8.0",
+    "@unocss/reset": "^0.63.1",
     "astro-expressive-code": "^0.37.0",
     "astro-robots-txt": "^1.0.0",
     "chalk": "^5.3.0",
     "dayjs": "^1.11.13",
+    "del-cli": "^5.1.0",
     "eslint": "^9.11.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-astro": "^1.2.4",
@@ -56,6 +57,7 @@
     "mdast-util-directive": "^3.0.0",
     "mdast-util-to-string": "^4.0.0",
     "medium-zoom": "^1.1.0",
+    "p5": "^1.11.0",
     "pagefind": "^1.1.1",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.14.0",
@@ -65,15 +67,14 @@
     "rehype-external-links": "^3.0.0",
     "remark-directive": "^3.0.0",
     "remark-imgattr": "^1.0.5",
-    "rimraf": "^6.0.1",
     "satori": "^0.11.1",
     "satori-html": "^0.3.2",
     "sharp": "^0.33.5",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "^5.6.0",
-    "typescript-eslint": "^8.7.0",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.8.0",
     "unist-util-visit": "^5.0.0",
-    "unocss": "^0.62.4"
+    "unocss": "^0.63.1"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
