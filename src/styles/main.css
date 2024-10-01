@@ -24,6 +24,7 @@ html {
   background: #8884;
 }
 
+/* NProgress */
 #nprogress {
   pointer-events: none;
 }
@@ -40,20 +41,6 @@ html {
   background: #888;
   opacity: 0.75;
 }
-
-/* .sponsorkit-avatar {
-  cursor: pointer;
-}
-.sponsorkit-tier-title {
-  font-weight: 600;
-  font-size: 20px;
-  fill: currentColor;
-}
-.sponsorkit-name {
-  font-weight: 300;
-  font-size: 15px;
-  transform: translateY(8px);
-} */
 
 /* Scrollbar */
 @supports (scrollbar-width: auto) {
@@ -102,22 +89,6 @@ html {
     height: 0;
   }
 }
-
-h2 + p > em:first-child {
-  display: block;
-  margin-top: -20px;
-  opacity: 0.5;
-  font-size: 0.9em;
-}
-
-/* why-reproductions-are-required */
-/* .dark [img-light] {
-  display: none;
-}
-
-html:not(.dark) [img-dark] {
-  display: none;
-} */
 
 /* Slide Enter */
 @keyframes slide-enter {
@@ -228,38 +199,4 @@ html:not(.dark) [img-dark] {
 
 .dark::view-transition-new(root) {
   z-index: 1;
-}
-
-/* Overrides Floating Vue */
-.v-popper--theme-dropdown .v-popper__inner,
-.v-popper--theme-tooltip .v-popper__inner {
-  --uno: 'bg-base color-base text-base rounded border border-base shadow';
-  box-shadow: 0 6px 30px #0000001a;
-}
-
-.v-popper--theme-tooltip .v-popper__arrow-inner,
-.v-popper--theme-dropdown .v-popper__arrow-inner {
-  visibility: visible;
-  --uno: 'border-white dark-border-black';
-}
-
-.v-popper--theme-tooltip .v-popper__arrow-outer,
-.v-popper--theme-dropdown .v-popper__arrow-outer {
-  --uno: 'border-base';
-}
-
-.v-popper--theme-tooltip.v-popper--shown,
-.v-popper--theme-tooltip.v-popper--shown * {
-  transition: none !important;
-}
-
-/* Transitions */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }

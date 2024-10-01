@@ -1,5 +1,4 @@
 .prose {
-  /* color: var(--fg); */
   max-width: 65ch;
   font-size: 1rem;
   line-height: 1.75;
@@ -105,7 +104,7 @@
 .prose h2 {
   color: var(--fg-deep);
   font-weight: 700;
-  font-size: 1.5em;
+  font-size: 1.6em;
   margin-top: 2em;
   margin-bottom: 1em;
   line-height: 1.3333333;
@@ -113,18 +112,34 @@
 .prose h3 {
   color: inherit;
   font-weight: 600;
-  font-size: 1.25em;
+  font-size: 1.4em;
   margin-top: 1.6em;
   margin-bottom: 0.6em;
   line-height: 1.6;
-  opacity: 0.7;
 }
 .prose h4 {
   color: inherit;
   font-weight: 600;
+  font-size: 1.2em;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
   line-height: 1.5;
+}
+.prose h5 {
+  color: inherit;
+  font-weight: 600;
+  font-size: 1.1em;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.4;
+}
+.prose h6 {
+  color: inherit;
+  font-weight: 600;
+  font-size: 1em;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
 }
 .prose figure figcaption {
   color: #6b7280;
@@ -280,13 +295,11 @@
 .prose h4 + * {
   margin-top: 0;
 }
-.prose h6 {
-  text-transform: uppercase;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  opacity: 0.5;
-  font-weight: 500;
-  letter-spacing: 2px;
+.prose h5 + * {
+  margin-top: 0;
+}
+.prose h6 + * {
+  margin-top: 0;
 }
 .prose thead th:first-child {
   padding-left: 0;
@@ -311,186 +324,4 @@
 }
 .prose em {
   color: inherit;
-}
-.prose-sm {
-  font-size: 0.875rem;
-  line-height: 1.7142857;
-}
-.prose-sm p {
-  margin-top: 1.1428571em;
-  margin-bottom: 1.1428571em;
-}
-.prose-sm [class~='lead'] {
-  font-size: 1.2857143em;
-  line-height: 1.5555556;
-  margin-top: 0.8888889em;
-  margin-bottom: 0.8888889em;
-}
-.prose-sm blockquote {
-  margin-top: 1.3333333em;
-  margin-bottom: 1.3333333em;
-  padding-left: 1.1111111em;
-}
-.prose-sm h1 {
-  font-size: 2.1428571em;
-  margin-top: 0;
-  margin-bottom: 0.8em;
-  line-height: 1.2;
-}
-.prose-sm h2 {
-  font-size: 1.4285714em;
-  margin-top: 1.6em;
-  margin-bottom: 0.8em;
-  line-height: 1.4;
-}
-.prose-sm h3 {
-  font-size: 1.2857143em;
-  margin-top: 1.5555556em;
-  margin-bottom: 0.4444444em;
-  line-height: 1.5555556;
-}
-.prose-sm h4 {
-  margin-top: 1.4285714em;
-  margin-bottom: 0.5714286em;
-  line-height: 1.4285714;
-}
-.prose-sm img {
-  margin-top: 1.7142857em;
-  margin-bottom: 1.7142857em;
-}
-.prose-sm video {
-  margin-top: 1.7142857em;
-  margin-bottom: 1.7142857em;
-}
-.prose-sm figure {
-  margin-top: 1.7142857em;
-  margin-bottom: 1.7142857em;
-}
-.prose-sm figure > * {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-.prose-sm figure figcaption {
-  font-size: 0.8571429em;
-  line-height: 1.3333333;
-  margin-top: 0.6666667em;
-}
-.prose-sm code {
-  font-size: 0.8571429em;
-}
-.prose-sm h2 code {
-  font-size: 0.9em;
-}
-.prose-sm h3 code {
-  font-size: 0.8888889em;
-}
-.prose-sm pre {
-  font-size: 0.8571429em;
-  line-height: 1.6666667;
-  margin-top: 1.6666667em;
-  margin-bottom: 1.6666667em;
-  border-radius: 0.25rem;
-  padding-top: 0.6666667em;
-  padding-right: 1em;
-  padding-bottom: 0.6666667em;
-  padding-left: 1em;
-}
-.prose-sm ol {
-  margin-top: 1.1428571em;
-  margin-bottom: 1.1428571em;
-}
-.prose-sm ul {
-  margin-top: 1.1428571em;
-  margin-bottom: 1.1428571em;
-}
-.prose-sm li {
-  margin-top: 0.2857143em;
-  margin-bottom: 0.2857143em;
-}
-.prose-sm ol > li {
-  padding-left: 1.5714286em;
-}
-.prose-sm ol > li::before {
-  left: 0;
-}
-.prose-sm ul > li {
-  padding-left: 1.5714286em;
-}
-.prose-sm ul > li::before {
-  height: 0.3571429em;
-  width: 0.3571429em;
-  top: calc(0.8571429em - 0.1785714em);
-  left: 0.2142857em;
-}
-.prose-sm > ul > li p {
-  margin-top: 0.5714286em;
-  margin-bottom: 0.5714286em;
-}
-.prose-sm > ul > li > *:first-child {
-  margin-top: 1.1428571em;
-}
-.prose-sm > ul > li > *:last-child {
-  margin-bottom: 1.1428571em;
-}
-.prose-sm > ol > li > *:first-child {
-  margin-top: 1.1428571em;
-}
-.prose-sm > ol > li > *:last-child {
-  margin-bottom: 1.1428571em;
-}
-.prose-sm ul ul,
-.prose-sm ul ol,
-.prose-sm ol ul,
-.prose-sm ol ol {
-  margin-top: 0.5714286em;
-  margin-bottom: 0.5714286em;
-}
-.prose-sm hr {
-  margin-top: 2.8571429em;
-  margin-bottom: 2.8571429em;
-}
-.prose-sm hr + * {
-  margin-top: 0;
-}
-.prose-sm h2 + * {
-  margin-top: 0;
-}
-.prose-sm h3 + * {
-  margin-top: 0;
-}
-.prose-sm h4 + * {
-  margin-top: 0;
-}
-.prose-sm table {
-  font-size: 0.8571429em;
-  line-height: 1.5;
-}
-.prose-sm thead th {
-  padding-right: 1em;
-  padding-bottom: 0.6666667em;
-  padding-left: 1em;
-}
-.prose-sm thead th:first-child {
-  padding-left: 0;
-}
-.prose-sm thead th:last-child {
-  padding-right: 0;
-}
-.prose-sm tbody td {
-  padding-top: 0.6666667em;
-  padding-right: 1em;
-  padding-bottom: 0.6666667em;
-  padding-left: 1em;
-}
-.prose-sm tbody td:first-child {
-  padding-left: 0;
-}
-.prose-sm tbody td:last-child {
-  padding-right: 0;
-}
-.prose-sm > :first-child {
-  margin-top: 0;
-}
-.prose-sm > :last-child {
-  margin-bottom: 0;
 }
