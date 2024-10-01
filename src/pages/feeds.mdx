@@ -1,15 +1,23 @@
 ---
 title: Astro Blog
-description: Astro Blog
+description: 'Example: fetching Astro Blog using @ascorbic/feed-loader'
 subtitle: 'Example: fetching Astro Blog using @ascorbic/feed-loader'
+bgType: false
+toc: true
+ogImage: true
 ---
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import TabbedLayout from '~/layouts/TabbedLayout.astro'
 import ListView from '~/components/views/ListView.astro'
 
-<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  bgType={frontmatter.bgType}
+  ogImage={frontmatter.ogImage}
+>
   <TabbedLayout subtitle={frontmatter.subtitle}>
-    <ListView collectionType="feeds" />
+    <ListView pageToc={frontmatter.toc} collectionType="feeds" />
   </TabbedLayout>
 </BaseLayout>

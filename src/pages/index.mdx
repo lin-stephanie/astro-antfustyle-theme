@@ -1,9 +1,23 @@
+---
+title: 'Astro AntfuStyle Theme'
+subtitle: ''
+description: ''
+# bgType: plum
+toc: false
+ogImage: false
+---
+
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
 import RenderPost from '~/components/views/RenderPost.astro'
 
-<BaseLayout>
-  <StandardLayout title="Astro AntfuStyle Theme">
-    <RenderPost collectionType="home" slug="index" />
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  bgType={frontmatter.bgType}
+  ogImage={frontmatter.ogImage}
+>
+  <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
+    <RenderPost pageToc={frontmatter.toc} collectionType="home" slug="index" />
   </StandardLayout>
 </BaseLayout>

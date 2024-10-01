@@ -1,5 +1,5 @@
 ---
-import TocItem from './TocItem.astro'
+import TocItem from '~/components/toc/TocItem.astro'
 import { slug } from '~/utils/common-utils'
 import { generateToc } from '~/utils/toc-utils'
 import { FEATURES } from '~/config'
@@ -10,10 +10,11 @@ import type { HeadingLevel } from '~/types'
 interface Props {
   headings?: MarkdownHeading[]
   category?: string[]
+  years?: string[]
   style?: string
 }
 
-const { headings = [], category = [], style } = Astro.props
+const { headings = [], category = [], years = [], style } = Astro.props
 
 let minHeadingLevel: HeadingLevel = 2
 let maxHeadingLevel: HeadingLevel = 4
@@ -25,7 +26,7 @@ if (Array.isArray(FEATURES.toc) && FEATURES.toc[0]) {
     FEATURES.toc[1])
 }
 
-const toc = generateToc(headings, minHeadingLevel, maxHeadingLevel)
+const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
 ---
 
 <aside class={`${displayMode === 'always' ? 'toc-always-on' : ''}`}>
@@ -52,12 +53,27 @@ const toc = generateToc(headings, minHeadingLevel, maxHeadingLevel)
       }
     </div>
     <ul>
-      {!!toc.length && toc.map((heading) => <TocItem {heading} />)}
+      {
+        !!specHeadings.length &&
+          specHeadings.map((heading) => <TocItem {heading} />)
+      }
       {
         !!category.length &&
-          category.map((heading) => (
+          category.map((item) => (
             <li>
-              <a href={`#${slug(heading)}`}>{heading}</a>
+              <a href={`#${slug(item)}`} aria-label={item}>
+                {item}
+              </a>
+            </li>
+          ))
+      }
+      {
+        !!years.length &&
+          years.map((item) => (
+            <li>
+              <a href={`#${slug(item)}`} aria-label={item}>
+                {item}
+              </a>
             </li>
           ))
       }

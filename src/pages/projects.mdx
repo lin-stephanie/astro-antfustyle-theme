@@ -1,15 +1,22 @@
 ---
 title: Projects
-description: Projects
-subtitle: Credits & Tech Stack for the Astro AntfuStyle Theme
+subtitle: Tech Stack for the Astro AntfuStyle Theme & Credits
+description: Tech Stack for the Astro AntfuStyle Theme & Credits
+# bgType: dot
 toc: true
+ogImage: true
 ---
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import WideLayout from '~/layouts/WideLayout.astro'
 import GroupView from '~/components/views/GroupView.astro'
 
-<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  bgType={frontmatter.bgType}
+  ogImage={frontmatter.ogImage}
+>
   <WideLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
     <GroupView pageToc={frontmatter.toc} />
   </WideLayout>

@@ -14,7 +14,8 @@ interface Props {
 
 const { title, description, ogImage, pubDate, lastModDate } = Astro.props
 
-const pageTitle = title ? `${title} - ${SITE.title}` : SITE.title
+const pageTitle =
+  title && title !== SITE.title ? `${title} - ${SITE.title}` : SITE.title
 
 const pageDescription = description || SITE.description
 

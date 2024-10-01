@@ -1,14 +1,22 @@
 ---
 title: '404'
-description: Page Not Found
+subtitle: ''
+description: Page not found
+bgType: false
+toc: false
 ogImage: false
 ---
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
 
-<BaseLayout title={frontmatter.title} description={frontmatter.description}>
-  <StandardLayout title={frontmatter.title}>
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  bgType={frontmatter.bgType}
+  ogImage={frontmatter.ogImage}
+>
+  <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
     <p data-pagefind-ignore>Nice to meet you tho!</p>
   </StandardLayout>
 </BaseLayout>

@@ -2,14 +2,22 @@
 title: Blog
 description: How to use the Astro AntfuStyle Theme
 subtitle: How to use the Astro AntfuStyle Theme
+# bgType: rose
+toc: false
+ogImage: true
 ---
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
 import ListView from '~/components/views/ListView.astro'
 
-<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  bgType={frontmatter.bgType}
+  ogImage={frontmatter.ogImage}
+>
   <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
-    <ListView collectionType="blog" />
+    <ListView pageToc={frontmatter.toc} collectionType="blog" />
   </StandardLayout>
 </BaseLayout>

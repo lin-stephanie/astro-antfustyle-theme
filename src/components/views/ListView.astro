@@ -2,8 +2,11 @@
 import { getCollection, getEntry } from 'astro:content'
 import Categorizer from '~/components/base/Categorizer.astro'
 import ListItem from '~/components/views/ListItem.astro'
+import Toc from '~/components/toc/Toc.astro'
+import Warning from '~/components/base/Warning.astro'
 import { isSameYear, getYear } from '~/utils/datetime-utils'
 import { getFilteredPosts, getSortedPosts } from '~/utils/post-utils'
+import { FEATURES } from '~/config'
 
 import type {
   CollectionEntry,
@@ -14,22 +17,60 @@ import type { StreamGroupsSchema } from '~/content/schema'
 
 interface Props {
   collectionType: ContentCollectionKey | DataCollectionKey
+  pageToc: boolean
 }
 
-const { collectionType } = Astro.props
+const { collectionType, pageToc } = Astro.props
 
-if (!['blog', 'feeds', 'streams'].includes(collectionType))
-  throw new Error(
-    `The '${collectionType}' collection type does not belong to 'blog', 'feeds', or 'streams'.`
-  )
+/* Toc */
+const { toc } = FEATURES
+const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
+let years: string[] = []
 
 /* Posts */
 let blogItems: CollectionEntry<ContentCollectionKey>[]
 let sortedBlogItems: CollectionEntry<ContentCollectionKey>[] = []
 
 if (collectionType === 'blog') {
-  blogItems = await getFilteredPosts('blog')
+  blogItems = await getFilteredPosts(collectionType)
   sortedBlogItems = getSortedPosts(blogItems)
+
+  if (tocEnabled) {
+    const yearsSet = new Set<number>()
+    sortedBlogItems.forEach((item) => {
+      const year = getYear(item.data.pubDate)
+      yearsSet.add(year)
+    })
+
+    years = Array.from(yearsSet)
+      .sort((a, b) => b - a)
+      .map((year) => year.toString())
+  }
+}
+
+/* Streams */
+let streamItems: StreamGroupsSchema
+let sortedStreamItems: StreamGroupsSchema = []
+
+if (collectionType === 'streams') {
+  const streamData = await getEntry(collectionType, 'data')
+  streamItems = streamData.data.streams
+
+  sortedStreamItems = streamItems.sort(
+    (a, b) => b.pubDate.valueOf() - a.pubDate.valueOf()
+  )
+
+  if (tocEnabled) {
+    const yearsSet = new Set<number>()
+    sortedStreamItems.forEach((item) => {
+      const year = getYear(item.pubDate)
+      yearsSet.add(year)
+    })
+
+    years = Array.from(yearsSet)
+      .sort((a, b) => b - a)
+      .map((year) => year.toString())
+  }
 }
 
 /* Feeds */
@@ -45,21 +86,28 @@ if (collectionType === 'feeds') {
 
     return b.data.pubdate.valueOf() - a.data.pubdate.valueOf()
   })
+
+  if (tocEnabled) {
+    const yearsSet = new Set<number>()
+    sortedFeedItems.forEach((item) => {
+      const year = getYear(item.data.pubdate as Date)
+      yearsSet.add(year)
+    })
+
+    years = Array.from(yearsSet)
+      .sort((a, b) => b - a)
+      .map((year) => year.toString())
+  }
 }
 
-/* Streams */
-let streamItems: StreamGroupsSchema
-let sortedStreamItems: StreamGroupsSchema = []
-
-if (collectionType === 'streams') {
-  const streamData = await getEntry(collectionType, 'data')
-  streamItems = streamData.data.streams
-
-  sortedStreamItems = streamItems.sort(
-    (a, b) => b.pubDate.valueOf() - a.pubDate.valueOf()
-  )
-}
+/* Exception */
+const warningHTML = `The '${collectionType}' collection type does not
+  belong to the built-in types 'blog', 'feeds', or 'streams'. You may
+  need to modify the <code>ListView.astro</code> logic for your defined
+  collection types to render the list.`
 ---
+
+{tocEnabled && <Toc {years} />}
 
 {
   collectionType === 'blog' && (
@@ -79,7 +127,11 @@ if (collectionType === 'streams') {
                 data.pubDate,
                 sortedBlogItems[idx - 1]?.data.pubDate
               ) && (
-                <Categorizer {idx} text={getYear(data.pubDate).toString()} />
+                <Categorizer
+                  {idx}
+                  needId={tocEnabled}
+                  text={getYear(data.pubDate).toString()}
+                />
               )}
               <ListItem
                 {idx}
@@ -92,6 +144,43 @@ if (collectionType === 'streams') {
                 date={data.pubDate}
                 {minutesRead}
                 platform={data.platform}
+              />
+            </>
+          )
+        })
+      )}
+    </ul>
+  )
+}
+
+{
+  collectionType === 'streams' && (
+    <ul aria-label="Stream list">
+      {sortedStreamItems.length === 0 ? (
+        <div class="py-2 op-50">nothing here yet</div>
+      ) : (
+        sortedStreamItems.map((item, idx) => {
+          return (
+            <>
+              {!isSameYear(
+                item.pubDate,
+                sortedStreamItems[idx - 1]?.pubDate
+              ) && (
+                <Categorizer
+                  {idx}
+                  needId={tocEnabled}
+                  text={getYear(item.pubDate).toString()}
+                />
+              )}
+              <ListItem
+                {idx}
+                {collectionType}
+                redirect={item.link}
+                title={item.title}
+                video={item.video}
+                radio={item.radio}
+                date={item.pubDate}
+                platform={item.platform}
               />
             </>
           )
@@ -126,6 +215,7 @@ if (collectionType === 'streams') {
               ) && (
                 <Categorizer
                   {idx}
+                  needId={tocEnabled}
                   text={getYear(item.data.pubdate as Date).toString()}
                 />
               )}
@@ -145,34 +235,7 @@ if (collectionType === 'streams') {
 }
 
 {
-  collectionType === 'streams' && (
-    <ul aria-label="Stream list">
-      {sortedStreamItems.length === 0 ? (
-        <div class="py-2 op-50">nothing here yet</div>
-      ) : (
-        sortedStreamItems.map((item, idx) => {
-          return (
-            <>
-              {!isSameYear(
-                item.pubDate,
-                sortedStreamItems[idx - 1]?.pubDate
-              ) && (
-                <Categorizer {idx} text={getYear(item.pubDate).toString()} />
-              )}
-              <ListItem
-                {idx}
-                {collectionType}
-                redirect={item.link}
-                title={item.title}
-                video={item.video}
-                radio={item.radio}
-                date={item.pubDate}
-                platform={item.platform}
-              />
-            </>
-          )
-        })
-      )}
-    </ul>
-  )
+  collectionType !== 'blog' &&
+    collectionType !== 'feeds' &&
+    collectionType !== 'streams' && <Warning rawHTMLString={warningHTML} />
 }

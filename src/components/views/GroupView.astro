@@ -11,13 +11,15 @@ interface Props {
 
 const { pageToc } = Astro.props
 
-const { toc } = FEATURES
 const entry = await getEntry('projects', 'data')
 const { projects } = entry.data
+
+const { toc } = FEATURES
+const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
 ---
 
 {
-  Array.isArray(toc) && toc[0] && pageToc && (
+  tocEnabled && (
     <Toc
       category={Object.keys(projects)}
       style={toc[1].displayPosition === 'right' ? 'text-align:end' : ''}
@@ -27,7 +29,7 @@ const { projects } = entry.data
 {
   Object.keys(projects).map((key, idx) => (
     <div class="slide-enter" style={{ '--enter-stage': idx + 1 }}>
-      <Categorizer {idx} text={key} needId={true} wide={true} />
+      <Categorizer {idx} text={key} needId={tocEnabled} wide={true} />
       <GroupItem items={projects[key]} />
     </div>
   ))

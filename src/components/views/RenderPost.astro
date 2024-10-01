@@ -1,16 +1,24 @@
 ---
 import { getEntry } from 'astro:content'
+import Toc from '~/components/toc/Toc.astro'
+import { FEATURES } from '~/config'
+
 import type { ContentCollectionKey, ValidContentEntrySlug } from 'astro:content'
 
 interface Props {
   collectionType: ContentCollectionKey
   slug: ValidContentEntrySlug<ContentCollectionKey>
+  pageToc: boolean
 }
 
-const { collectionType, slug } = Astro.props
+const { collectionType, slug, pageToc } = Astro.props
 
 const post = await getEntry(collectionType, slug)
-const { Content } = await post.render()
+const { Content, headings } = await post.render()
+
+const { toc } = FEATURES
+const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
 ---
 
+{tocEnabled && <Toc {headings} />}
 <Content />
