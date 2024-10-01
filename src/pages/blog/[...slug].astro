@@ -3,6 +3,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
 import Toc from '~/components/toc/Toc.astro'
 import ShareLink from '~/components/widgets/ShareLink.astro'
+import Warning from '~/components/base/Warning.astro'
 import { formatDate } from '~/utils/datetime-utils'
 import { getFilteredPosts } from '~/utils/post-utils'
 import { FEATURES } from '~/config'
@@ -26,6 +27,11 @@ const lastModDate =
   frontmatter.lastModDate && frontmatter.lastModDate.toISOString()
 const minutesRead =
   frontmatter.minutesRead || remarkPluginFrontmatter.minutesRead
+
+/* Exception */
+const warningHTML = `This is a draft post that will not be published
+in production. Set the post's <code>draft</code> property in
+frontmatter to <code>false</code> or remove it to publish the post.`
 ---
 
 <BaseLayout
@@ -51,15 +57,7 @@ const minutesRead =
           </p>
         )
       }
-      {
-        frontmatter.draft && (
-          <p class="slide-enter px-4 py-2 b-l-3 b-orange-4 bg-orange-4:10 text-orange-4">
-            This is a draft post that will not be published in production. Set
-            the post's <code>draft</code> property in frontmatter to
-            <code>false</code> or remove it to publish the post.
-          </p>
-        )
-      }
+      {frontmatter.draft && <Warning rawHTMLString={warningHTML} />}
     </Fragment>
     <Content />
   </StandardLayout>
