@@ -1,30 +1,64 @@
+Glad you made it here! This is a customizable, feature-rich :link[Astro]{id=withastro/astro} theme for blogs and portfolios, inspired by the minimalist style of :link[antfu.me]{link=https://antfu.me/ imageUrl=https://antfu.me/favicon.svg}.
+
+This live demo will guide you through setup and customization, while offering helpful insights along the way. Enjoy exploring all the features this theme offers! ✨
+
 **Optimized Infrastructure**
 
-- 100/100 Lighthouse Performance
-- Zero UI Framework Integration
-- SEO-Friendly & Sitemap
-- Auto-Generated RSS Feed
-- Customizable Background
-- Automatic Copyright Update
-- Ready-to-Use Astro Components
+- Zero UI Framework
+- SEO-friendly
+- Auto-generated RSS Feed
+- Support for Subpath Deployment
+- Optimized Local Image Handling
+- VS Code Snippets for Quick Coding
+- Well-organized Project Structure
 
 **Content Management**
 
 - Type Safety
 - Markdown & MDX Support
-- Callouts
-- Table of Contents
-- Post Cover Images
-- Code Syntax Highlighting & Annotations
+- Table of Contents Generation
 - Dynamic OG Image Generation
+- Callouts (Alerts/Admonitions)
+- Directive Sugar for Both Markdown/MDX
+- Code Syntax Highlighting & Annotations
+- Customizable Page Background
 
 **User Experience**
 
-- Search
-- Accessible
-- View Transitions
-- Responsive Design
-- Light & Dark Mode
-- Loading progress indicator
-- Social Media Sharing
-- Image Optimization & Zoom Preview
+- Search Functionality
+- Accessibility Enhancements
+- Smooth View Transitions
+- Responsive Layout
+- Light & Dark Modes Toggle
+- Loading Progress Indicator
+- Social Media Sharing Features
+- Image Zoom Preview
+
+> More features are continuously being added!
+
+---
+
+If you find this theme helpful, consider supporting the project maintainer or the style designer. Your support means more than you know. Thank you! ❤️
+
+<div class="flex gap-4">
+  <a
+    class="btn-rose inline-block"
+    href="https://github.com/sponsors/lin-stephanie"
+    target="_blank"
+    aria-label="Support Stephanie Lin"
+  >
+    <div class="i-ph-heart-duotone transition-all ease-out duration-200"> </div>
+    Support Stephanie Lin (Maintainer)
+  </a>
+  <a
+    class="btn-yellow inline-block"
+    href="https://github.com/sponsors/antfu"
+    target="_blank"
+    aria-label="Support Anthony Fu"
+  >
+    <div
+      class="i-ph-lightning-duotone transition-all ease-out duration-200"
+    ></div>
+    Support Anthony Fu (Designer)
+  </a>
+</div>

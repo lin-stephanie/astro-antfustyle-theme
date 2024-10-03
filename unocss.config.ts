@@ -76,6 +76,11 @@ export default defineConfig({
       'shadow-c',
       'shadow-[0_0_20px_rgba(0,0,0,0.2)] dark:shadow-[0_0_30px_rgba(255,255,255,0.2)]',
     ],
+    [
+      /^btn-(\w+)$/,
+      ([_, color]) =>
+        `px-2.5 py-1 border border-[#8884]! rounded op-50 transition-all duration-200 ease-out no-underline! hover:(op-100 text-${color} bg-${color}/10)`,
+    ],
   ],
 
   // presets are partial configurations

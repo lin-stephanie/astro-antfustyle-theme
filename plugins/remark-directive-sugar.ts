@@ -26,6 +26,7 @@ const VIDEO_PLATFORMS: Record<string, (id: string) => string> = {
 }
 
 /* link */
+const FAVICON_BASE_URL = 'https://favicon.yandex.net/favicon/'
 const GITHUB_USERNAME_REGEXP =
   /^@[a-zA-Z0-9](?!.*--)[a-zA-Z0-9-_]{0,37}[a-zA-Z0-9]$/
 const GITHUB_REPO_REGEXP =
@@ -219,8 +220,7 @@ function remarkDirectiveSugar() {
             // non github scope
             resolvedLink = link
             resolvedImageUrl =
-              imageUrl ||
-              `https://favicon.yandex.net/favicon/${new URL(resolvedLink).hostname}`
+              imageUrl || `${FAVICON_BASE_URL}${new URL(resolvedLink).hostname}`
             resolvedStyle = resolvedStyle || 'button-sq'
           } else if (id) {
             // github scope

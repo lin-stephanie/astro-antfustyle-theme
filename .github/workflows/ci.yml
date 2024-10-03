@@ -67,6 +67,7 @@ jobs:
         run: pnpm build
 
       - name: ✅ Verify build output
+        shell: bash
         run: |
           if [ ! -d "./dist" ]; then
             echo "Build failed: dist directory not found."
