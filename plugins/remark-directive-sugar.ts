@@ -30,7 +30,7 @@ const FAVICON_BASE_URL = 'https://favicon.yandex.net/favicon/'
 const GITHUB_USERNAME_REGEXP =
   /^@[a-zA-Z0-9](?!.*--)[a-zA-Z0-9-_]{0,37}[a-zA-Z0-9]$/
 const GITHUB_REPO_REGEXP =
-  /^([a-zA-Z0-9](?!.*--)[a-zA-Z0-9-_]{0,37}[a-zA-Z0-9])\/.*$/
+  /^(?:@)?([a-zA-Z0-9](?!.*--)[a-zA-Z0-9-_]{0,37}[a-zA-Z0-9])\/.*$/
 const LINK_STYLE = ['button-sq', 'button-rd', 'gh-link'] as const
 const TAB_ORG_REGEXP = /^org-(\w+)$/
 const GITHUB_TAB = [
