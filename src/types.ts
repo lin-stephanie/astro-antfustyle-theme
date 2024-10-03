@@ -4,16 +4,16 @@ type Path = `/${string}`
 
 export interface Site {
   /**
-   * Specifies the final deployed URL, passed to the
-   * {@link https://docs.astro.build/en/reference/configuration-reference/#site `site`} config in Astro.
-   * It is used for generating canonical URLs and other features, and applied in `astro.config.ts`.
+   * Specifies the final deployed URL, which must start with `http://` or `https://`. It will be passed to the
+   * {@link https://docs.astro.build/en/reference/configuration-reference/#site `site`} config in Astro,
+   * used for generating canonical URLs, `rss.xml` and other features.
    */
   website: Url
 
   /**
    * Specifies the base path for your site, which must start with `/`. It wiil be passed to the
    * {@link https://docs.astro.build/en/reference/configuration-reference/#base `base`} config in Astro,
-   * used when deploying to a subdirectory and applied in `astro.config.ts`.
+   * used when deploying to a subdirectory.
    *
    * @example
    * `/my-site/` (for a site deployed to `https://example.com/my-site/`)
@@ -21,8 +21,8 @@ export interface Site {
   base: Path
 
   /**
-   * Specifies the site name to format with {@link PageMetadata.title} as `<pageTitle> - <siteTitle>`
-   * for title and meta tags, found in `src/components/base/Head.astro`.
+   * Specifies the site name for formatting the `title` in the frontmatter as `<pageTitle> - <siteTitle>`.
+   * It is used for the title and meta tags, found in `src/components/base/Head.astro`.
    */
   title: string
 
@@ -32,7 +32,7 @@ export interface Site {
   description: string
 
   /**
-   * Specifies the author name for meta tags, found in `src/components/base/Head.astro`.
+   * Specifies your name for meta tags, found in `src/components/base/Head.astro`.
    */
   author: string
 
@@ -41,14 +41,17 @@ export interface Site {
    *
    * @description
    * It must be a single 'language tag' in the format defined in
-   * {@link https://datatracker.ietf.org/doc/html/rfc5646#appendix-A RFC 5646: Tags for Identifying Languages (also known as BCP 47)}.
+   * {@link https://datatracker.ietf.org/doc/html/rfc5646#appendix-A RFC 5646: Tags for Identifying Languages} (also known as BCP 47).
    *
+   * @example
+   * 'zh-Hant' (Chinese written using the Traditional Chinese script)
+   * 'fr' (French)
    */
   lang: string
 
   /**
    * Specifies the page content's language and region for better content display on social platforms,
-   * found in `src/components/Head.astro`.
+   * found in `src/components/base/Head.astro`.
    *
    * @description
    * It must be in `language_TERRITORY` format, which you can find in
@@ -491,6 +494,7 @@ interface OgImageConfig {
 export interface Features {
   /**
    * Enables and configures the sharing feature, which allows visitors to share content to social platforms.
+   * 全局控制是否显示分享链接
    *
    * @description
    * When enabled, sharing links are displayed at the bottom of all posts.
@@ -500,10 +504,10 @@ export interface Features {
 
   /**
    * Enables and configures the TOC (Table of Contents) feature.
+   * 全局控制是否显示 toc
    *
    * @description
-   * When enabled, the `/blog/[slug]` and `/projects` pages will include a TOC automatically.
-   * To disable for a specific post or the `/projects` page, set the `toc` field in the frontmatter to `false`.
+   * To disable for a specific post or page, set the `toc` field in the frontmatter to `false`.
    *
    * @remarks
    * The TOC is automatically hidden when the viewport width is less than 1024px.
@@ -512,6 +516,7 @@ export interface Features {
 
   /**
    * Enables and configures automatic OG image generation.
+   * 全局控制是否启用 OG 图片自动生成，注意如果关闭，删除备用 `/public/og-images/og-image.png` 也不会再重新生成了
    *
    * @description
    * Automatically generate OG images for Markdown/MDX files that lack an `ogImage` in their frontmatter.
