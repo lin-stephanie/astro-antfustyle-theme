@@ -87,6 +87,22 @@ html.dark .prose {
   cursor: pointer;
 }
 
+.prose details {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.prose tbody td:first-child {
+  white-space: nowrap;
+}
+
+.prose p code,
+.prose table code {
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  --uno: 'bg-[#88888815] dark:bg-[#88888830]';
+}
+
 /* Toc */
 .table-of-contents {
   z-index: 100;
