@@ -303,7 +303,6 @@
         "icon": "i-icon-park-delete"
       }
     ],
-
     "Remark Utilities": [
       {
         "name": "unist-util-visit",
@@ -334,6 +333,32 @@
         "link": "https://github.com/syntax-tree/hastscript",
         "desc": "Hyperscript for HAST, creating HAST nodes",
         "icon": "i-vscode-icons-file-type-light-rehype"
+      }
+    ],
+    "Credits": [
+      {
+        "name": "antfu/antfu.me",
+        "link": "https://github.com/antfu/antfu.me",
+        "desc": "Anthony Fu's personal website",
+        "icon": "i-mynaui-letter-a-waves"
+      },
+      {
+        "name": "satnaing/astro-paper",
+        "link": "https://github.com/satnaing/astro-paper",
+        "desc": "A minimal, accessible and SEO-friendly Astro blog theme",
+        "icon": "i-quill-paper"
+      },
+      {
+        "name": "chrismwilliams/astro-theme-cactus",
+        "link": "https://github.com/chrismwilliams/astro-theme-cactus",
+        "desc": "A simple Astro theme. Use it to create your blog or website",
+        "icon": "i-noto-v1-cactus"
+      },
+      {
+        "name": "saicaca/fuwari",
+        "link": "https://github.com/saicaca/fuwari",
+        "desc": "A static blog template built with Astro",
+        "icon": "i-gridicons-themes"
       }
     ]
   }

@@ -1,0 +1,69 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro'
+import StandardLayout from '~/layouts/StandardLayout.astro'
+import Toc from '~/components/toc/Toc.astro'
+import ShareLink from '~/components/widgets/ShareLink.astro'
+import Warning from '~/components/base/Warning.astro'
+import { formatDate } from '~/utils/datetime-utils'
+import { getFilteredPosts } from '~/utils/post-utils'
+import { FEATURES } from '~/config'
+
+export async function getStaticPaths() {
+  const posts = await getFilteredPosts('changelog')
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }))
+}
+
+const { post } = Astro.props
+const { data: frontmatter } = post
+const { Content, headings, remarkPluginFrontmatter } = await post.render()
+const { share, toc } = FEATURES
+
+const pubDate = frontmatter.pubDate.toISOString()
+const lastModDate =
+  frontmatter.lastModDate && frontmatter.lastModDate.toISOString()
+const minutesRead =
+  frontmatter.minutesRead || remarkPluginFrontmatter.minutesRead
+
+/* Exception */
+const warningHTML = `This is a draft post that will not be published
+in production. Set the post's <code>draft</code> property in
+frontmatter to <code>false</code> or remove it to publish the post.`
+---
+
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  ogImage={frontmatter.ogImage}
+  {pubDate}
+  {lastModDate}
+>
+  {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
+  <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
+    <Fragment slot="head">
+      {
+        frontmatter.pubDate && (
+          <p class="slide-enter-50 mt--6! opacity-50">
+            <time datetime={pubDate}>{formatDate(pubDate)}</time>
+            {minutesRead !== 0 && <span>· {minutesRead} min</span>}
+            {lastModDate && (
+              <time datetime={lastModDate}>
+                | Updated: {formatDate(lastModDate)}
+              </time>
+            )}
+          </p>
+        )
+      }
+      {frontmatter.draft && <Warning rawHTMLString={warningHTML} />}
+    </Fragment>
+    <Content />
+  </StandardLayout>
+  {
+    Array.isArray(share) && share[0] && frontmatter.share && (
+      <ShareLink slot="share" config={share[1]} />
+    )
+  }
+</BaseLayout>

@@ -1,6 +1,6 @@
 ---
 title: Changelog
-subtitle: 【WIP】
+subtitle: ''
 description: The changelog of the Astro AntfuStyle Theme project
 bgType: particle
 toc: false
@@ -18,6 +18,6 @@ import ListView from '~/components/views/ListView.astro'
   ogImage={frontmatter.ogImage}
 >
   <TabbedLayout subtitle={frontmatter.subtitle}>
-    {/* <ListView pageToc={frontmatter.toc} collectionType="changelog" /> */}
+    <ListView pageToc={frontmatter.toc} collectionType="changelog" />
   </TabbedLayout>
 </BaseLayout>

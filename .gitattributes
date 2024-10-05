@@ -1,2 +1,3 @@
 * text=auto eol=lf
 plugins/**/* linguist-detectable=false
+public/rss-styles.xsl linguist-detectable=false

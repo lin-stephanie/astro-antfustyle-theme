@@ -73,7 +73,7 @@ You may need to adjust the SVG element's `width`, `height`, and `viewBox` attrib
 
 ## Replacing the Website Icon
 
-Once you've ==customized the logo== and have the SVG file, it's time to generate the necessary icons to replace the website's favicon. You'll need to generate the following [Ultimate Favicon Setup](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs#the-ultimate-favicon-setup):
+Once you've [customized the logo](#customizing-logo) and have the SVG file, it's time to generate the necessary icons to replace the website's favicon. You'll need to generate the following [Ultimate Favicon Setup](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs#the-ultimate-favicon-setup):
 
 - **`favicon.ico`**: For legacy browsers.
 - **`favicon.svg`**: A single SVG icon with light/dark modes for modern browsers.
@@ -148,7 +148,7 @@ If you don't need PWA support, you can delete `manifest.webmanifest.js`, `icon-1
 
 ## Customizing Website Styles
 
-While the theme offers some quick ==UI configuration options== in the `src/config.ts`, these are limited. If you're familiar with CSS, you can fully customize the website styles, but it's recommended to follow the methods outlined below.
+While the theme offers some quick [UI configuration options](https://astro-antfustyle-theme.vercel.app/blog/basic-configuration/#configuring-ui) in the `src/config.ts`, these are limited. If you're familiar with CSS, you can fully customize the website styles, but it's recommended to follow the methods outlined below.
 
 **Styling approaches**
 

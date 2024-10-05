@@ -44,7 +44,6 @@ astro-antfustyle-theme
 |-pnpm-lock.yaml                            // Lock file ensuring consistent installation of dependencies.
 |-public                                    // Publicly accessible static assets.
 | |-apple-touch-icon.png                    // Apple touch icon for iOS devices.
-| |-docs                                    // Documentation-related assets.
 | |-favicon.ico                             // Favicon for browsers.
 | |-favicon.svg                             // SVG version of the favicon.
 | |-icon-192.png                            // 192x192px icon for web apps.
@@ -84,7 +83,9 @@ astro-antfustyle-theme
 | | |-blog                                  // Blog post pages.
 | | | |-[...slug].astro                     // Dynamic routing for individual blog posts.
 | | | |-index.mdx                           // Blog index page.
-| | |-changelog.mdx                         // Changelog page.
+| | |-changelog                             // Changlog post pages.
+| | | |-[slug].astro                     // Dynamic routing for individual changlog posts.
+| | | |-index.mdx                           // Changlog index page.
 | | |-feeds.mdx                             // Feeds page.
 | | |-index.mdx                             // Homepage in Markdown.
 | | |-manifest.webmanifest.js               // Web app manifest file for mobile and PWA support.
@@ -121,15 +122,16 @@ Here’s how the theme’s pages correlate to collections and utilize zod schema
 
 <div class='overflow-x-auto'>
 
-| Page Path                                              | Collection Location for Content Display | Collection Location for Content Display                                                                            | Zod Schema（found in `src/content/schema.ts`） |
-| ------------------------------------------------------ | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------- |
-| `/`                                                    | `src/pages/index.mdx`                   | `src/content/home/`                                                                                                | -                                            |
-| `/blog`                                                | `src/pages/blog/index.mdx`              | `src/content/blog/`                                                                                                | `postSchema`                                 |
-| `/blog/post-name` <br> `/blog/sequences/one/two/three` | `src/pages/blog/[...slug].astro`        | `src/content/blog/`                                                                                                | `postSchema`                                 |
-| `/projects`                                            | `src/pages/projects.mdx`                | `src/content/projects/`                                                                                            | `projectsSchema`                             |
-| `/changelog`                                           | `src/pages/changelog.mdx`               | `src/content/changelog/`                                                                                           | `postSchema`                                 |
-| `/feeds`                                               | `src/pages/feeds.mdx`                   | [Data fetched externally](https://astro-antfustyle-theme.vercel.app/blog/recreate-current-pages/#about-feeds-page) | -                                            |
-| `/streams`                                             | `src/pages/streams.mdx`                 | `src/content/streams/`                                                                                             | `streamsSchema`                              |
+| URL Path                                              | Page File Location                 | Content/Data Collection Path                                                                                       | Zod Schema for Collection |
+| ----------------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------- |
+| `/`                                                   | `src/pages/index.mdx`              | `src/content/home/`                                                                                                | -                         |
+| `/blog`                                               | `src/pages/blog/index.mdx`         | `src/content/blog/`                                                                                                | `postSchema`              |
+| `/blog/post-name` <br>`/blog/sequences/one/two/three` | `src/pages/blog/[...slug].astro`   | `src/content/blog/`                                                                                                | `postSchema`              |
+| `/projects`                                           | `src/pages/projects.mdx`           | `src/content/projects/`                                                                                            | `projectsSchema`          |
+| `/changelog`                                          | `src/pages/changelog/index.mdx`    | `src/content/changelog/`                                                                                           | `postSchema`              |
+| `/changelog/xxx`                                      | `src/pages/changelog/[slug].astro` | `src/content/changelog/`                                                                                           | `postSchema`              |
+| `/feeds`                                              | `src/pages/feeds.mdx`              | [Data fetched externally](https://astro-antfustyle-theme.vercel.app/blog/recreate-current-pages/#about-feeds-page) | -                         |
+| `/streams`                                            | `src/pages/streams.mdx`            | `src/content/streams/`                                                                                             | `streamsSchema`           |                      |
 
 </div>
 

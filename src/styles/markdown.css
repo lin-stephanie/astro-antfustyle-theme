@@ -92,6 +92,11 @@ html.dark .prose {
   margin-bottom: 1.25em;
 }
 
+.prose li details {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
 .prose thead th,
 .prose tbody td:first-child {
   white-space: nowrap;
