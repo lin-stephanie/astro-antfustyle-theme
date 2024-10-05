@@ -31,7 +31,7 @@ const GITHUB_USERNAME_REGEXP =
   /^@[a-zA-Z0-9](?!.*--)[a-zA-Z0-9-_]{0,37}[a-zA-Z0-9]$/
 const GITHUB_REPO_REGEXP =
   /^(?:@)?([a-zA-Z0-9](?!.*--)[a-zA-Z0-9-_]{0,37}[a-zA-Z0-9])\/.*$/
-const LINK_STYLE = ['button-sq', 'button-rd', 'gh-link'] as const
+const LINK_STYLE = ['square', 'rounded', 'github'] as const
 const TAB_ORG_REGEXP = /^org-(\w+)$/
 const GITHUB_TAB = [
   'repositories',
@@ -52,13 +52,13 @@ const CONFIG: Config = {
   badge: {
     defaultColor: '#bebfc5',
     preset: {
-      a: { text: 'ARTICLE', color: '#eee12f|#fbf8cc' },
-      v: { text: 'VIDEO', color: '#da58c2|#f1c0e8' },
+      a: { text: 'ARTICLE', color: '#E9D66B|#fbf8cc' },
+      v: { text: 'VIDEO', color: '#D473D4|#f1c0e8' },
       o: { text: 'OFFICIAL', color: '#4a8ce8|#a3c4f3' },
       f: { text: 'FEED', color: '#9568de|#cfbaf0' },
-      t: { text: 'TOOL', color: '#f6903c|#ffcfd2' },
-      w: { text: 'WEBSITE', color: '#45C3ED|#90dbf4' },
-      g: { text: 'GITHUB', color: '#65f673|#b9fbc0' },
+      t: { text: 'TOOL', color: '#FF9966|#ffcfd2' },
+      w: { text: 'WEBSITE', color: '#8AB9F1|#90dbf4' },
+      g: { text: 'GITHUB', color: '#74C365|#b9fbc0' },
     },
   },
 }
@@ -72,7 +72,7 @@ const VALID_BADGES = new Set(Object.keys(CONFIG.badge.preset))
  *
  *  - `::video`: enable consistent video embedding.
  *  - `:link`: link to GitHub users/repositories or other external URLs in Markdown/MDX. (Inspired by: https://github.com/antfu/markdown-it-magic-link)
- *  - `:badge`/`:badge-*`: customizable badge-like representations.
+ *  - `:badge`/`:badge-*`: customizable badge-like markers.
  */
 function remarkDirectiveSugar() {
   /**
@@ -112,7 +112,7 @@ function remarkDirectiveSugar() {
 
           if (!youtubeId && !bilibiliId && !vimeoId && !iframeSrc) {
             file.fail(
-              'Unexpectedly missing one of the following in the `video` directive: `youtubeId`, `bilibiliId`, `iframeSrc`.',
+              'Invalid `video` directive. Unexpectedly missing one of the following: `youtubeId`, `bilibiliId`, `iframeSrc`.',
               node
             )
           } else {
@@ -181,7 +181,7 @@ function remarkDirectiveSugar() {
             resolvedText = children[0].value
           } else if (!id) {
             file.fail(
-              'Invalid directive. The text in the `[]` of `:link[]{}` is required if `id` attribute is not specified.',
+              'Invalid `link` directive. The text in the `[]` of `:link[]{}` is required if `id` attribute is not specified.',
               node
             )
           }
@@ -194,7 +194,7 @@ function remarkDirectiveSugar() {
             !(LINK_STYLE as readonly string[]).includes(style)
           ) {
             file.fail(
-              'Invalid directive. The `style` must be one of "button-sq", "button-rd", or "gh-link".',
+              'Invalid `link` directive. The `style` must be one of "square", "rounded", or "github".',
               node
             )
           }
@@ -202,7 +202,7 @@ function remarkDirectiveSugar() {
           // check tab
           if (tab && !GITHUB_TAB.includes(tab)) {
             file.fail(
-              'Invalid directive. The `tab` must be one of the following: "repositories", "projects", "packages", "stars", "sponsoring", "sponsors", "org-repositories", "org-projects", "org-packages", "org-sponsoring", or "org-people".',
+              'Invalid `link` directive. The `tab` must be one of the following: "repositories", "projects", "packages", "stars", "sponsoring", "sponsors", "org-repositories", "org-projects", "org-packages", "org-sponsoring", or "org-people".',
               node
             )
           } else if (tab) {
@@ -221,7 +221,7 @@ function remarkDirectiveSugar() {
             resolvedLink = link
             resolvedImageUrl =
               imageUrl || `${FAVICON_BASE_URL}${new URL(resolvedLink).hostname}`
-            resolvedStyle = resolvedStyle || 'button-sq'
+            resolvedStyle = resolvedStyle || 'square'
           } else if (id) {
             // github scope
             if (id.match(GITHUB_USERNAME_REGEXP)) {
@@ -234,7 +234,7 @@ function remarkDirectiveSugar() {
               resolvedImageUrl =
                 imageUrl || `https://github.com/${id.substring(1)}.png`
 
-              resolvedStyle = resolvedStyle || 'button-rd'
+              resolvedStyle = resolvedStyle || 'rounded'
               resolvedText = resolvedText || id.substring(1)
             } else if (id.match(GITHUB_REPO_REGEXP)) {
               const match = id.match(GITHUB_REPO_REGEXP)
@@ -243,26 +243,26 @@ function remarkDirectiveSugar() {
               resolvedImageUrl =
                 imageUrl || `https://github.com/${match && match[1]}.png`
 
-              resolvedStyle = resolvedStyle || 'button-sq'
+              resolvedStyle = resolvedStyle || 'square'
               resolvedText = resolvedText || id
             } else {
               file.fail(
-                'Invalid directive. The `id` attribute must be provided in the format `@username` or `username/reponame`.',
+                'Invalid `link` directive. The `id` attribute must be provided in the format `@username` or `username/reponame`.',
                 node
               )
             }
           } else {
             file.fail(
-              'Invalid directive. The `link` attribute is required if `id` attribute is not specified.',
+              'Invalid `link` directive. The `link` attribute is required if `id` attribute is not specified.',
               node
             )
           }
 
-          if (resolvedStyle === 'button-sq' || resolvedStyle === 'button-rd') {
+          if (resolvedStyle === 'square' || resolvedStyle === 'rounded') {
             data.hName = 'a'
             data.hProperties = {
               class: `${
-                resolvedStyle === 'button-sq'
+                resolvedStyle === 'square'
                   ? 'sugar-link-square'
                   : 'sugar-link-rounded'
               }`,
@@ -283,7 +283,7 @@ function remarkDirectiveSugar() {
                 value: resolvedText,
               },
             ]
-          } else if (resolvedStyle === 'gh-link') {
+          } else if (resolvedStyle === 'github') {
             data.hName = 'span'
             data.hProperties = {
               style: 'white-space: nowrap',
@@ -333,7 +333,7 @@ function remarkDirectiveSugar() {
             resolvedText = children[0].value
           } else {
             file.fail(
-              'Invalid directive. The text in the `[]` of `:badge[]{}` is required.',
+              'Invalid `badge` directive. The text in the `[]` of `:badge[]{}` is required.',
               node
             )
           }
@@ -348,7 +348,7 @@ function remarkDirectiveSugar() {
               ;[resolvedColorLight, resolvedColorDark] = colors
             } else {
               file.fail(
-                "Invalid directive. The `color` expected one or two color values split by '|'.",
+                "Invalid `badge` directive. The `color` expected one or two color values split by '|'.",
                 node
               )
             }
@@ -359,7 +359,6 @@ function remarkDirectiveSugar() {
           data.hName = 'span'
           data.hProperties = {
             class: 'sugar-badge',
-            // style: `background: ${resolvedColor}`,
             style: `--badge-color-light:${resolvedColorLight}; --badge-color-dark:${resolvedColorDark}`,
           }
           data.hChildren = [
@@ -394,7 +393,7 @@ function remarkDirectiveSugar() {
                 ;[resolvedColorLight, resolvedColorDark] = colors
               } else {
                 file.fail(
-                  "Invalid directive. The `color` expected one or two color values split by '|'.",
+                  "Invalid `badge` directive. The `color` expected one or two color values split by '|'.",
                   node
                 )
               }
@@ -416,7 +415,7 @@ function remarkDirectiveSugar() {
             ]
           } else {
             file.fail(
-              'The `badge-*` directive failed to match a valid badge name.',
+              'The `badge` directive failed to match a valid badge name.',
               node
             )
           }

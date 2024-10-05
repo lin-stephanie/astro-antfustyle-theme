@@ -4,21 +4,25 @@ import { SITE } from '~/config'
 
 const currentYear = new Date().getFullYear()
 
-const content = `© ${currentYear} ${SITE.author} | Powered by`
+const copyrightText = `© ${currentYear} ${SITE.author}`
 ---
 
-<footer class="slide-enter animate-delay-1600! px-7 mt-auto mb-10">
+<footer class="slide-enter animate-delay-1600! px-7 mt-auto mb-8">
   <div class="prose mx-auto op-50">
-    <div class="text-sm">
-      {content}
-      <Link
-        class="op-100! color-[--fg]!"
-        href="https://github.com/lin-stephanie/astro-antfustyle-theme"
-        title="AntfuStyle on GitHub"
-        external={true}
-      >
-        Astro AntfuStyle Theme
-      </Link>
+    <div class="flex lt-sm:flex-col items-center text-sm whitespace-nowrap">
+      <span>{copyrightText}</span>
+      <span class="lt-sm:hidden">&nbsp;|&nbsp;</span>
+      <span>
+        Powered by
+        <Link
+          class="op-100! color-[--fg]!"
+          href="https://github.com/lin-stephanie/astro-antfustyle-theme"
+          title="AntfuStyle on GitHub"
+          external={true}
+        >
+          Astro AntfuStyle Theme
+        </Link>
+      </span>
     </div>
   </div>
 </footer>
