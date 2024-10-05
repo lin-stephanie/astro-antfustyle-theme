@@ -21,36 +21,36 @@
     "postbuild": "pagefind --site dist && del-cli \"dist/pagefind/*ui*\""
   },
   "dependencies": {
-    "astro": "4.15.9",
+    "astro": "4.15.11",
     "nprogress": "^0.2.0"
   },
   "devDependencies": {
     "@ascorbic/feed-loader": "^1.0.1",
-    "@astrojs/check": "^0.9.3",
+    "@astrojs/check": "^0.9.4",
     "@astrojs/markdown-remark": "^5.2.0",
     "@astrojs/mdx": "^3.1.7",
     "@astrojs/rss": "^4.0.7",
-    "@astrojs/sitemap": "^3.1.6",
-    "@eslint/js": "^9.11.1",
+    "@astrojs/sitemap": "^3.2.0",
+    "@eslint/js": "^9.12.0",
     "@expressive-code/plugin-collapsible-sections": "^0.37.0",
     "@expressive-code/plugin-line-numbers": "^0.37.0",
-    "@iconify/json": "^2.2.255",
+    "@iconify/json": "^2.2.256",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.7.0",
     "@types/nprogress": "^0.2.3",
     "@types/p5": "^1.7.6",
     "@typescript-eslint/parser": "^8.8.0",
-    "@unocss/reset": "^0.63.1",
+    "@unocss/reset": "^0.63.3",
     "astro-expressive-code": "^0.37.0",
     "astro-robots-txt": "^1.0.0",
     "chalk": "^5.3.0",
     "dayjs": "^1.11.13",
     "del-cli": "^5.1.0",
-    "eslint": "^9.11.1",
+    "eslint": "^9.12.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-astro": "^1.2.4",
     "eslint-plugin-jsx-a11y": "^6.10.0",
-    "globals": "^15.1.0",
+    "globals": "^15.10.0",
     "hastscript": "^9.0.0",
     "html-entities": "^2.5.2",
     "lint-staged": "^15.2.10",
@@ -76,7 +76,7 @@
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.8.0",
     "unist-util-visit": "^5.0.0",
-    "unocss": "^0.63.1"
+    "unocss": "^0.63.3"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
