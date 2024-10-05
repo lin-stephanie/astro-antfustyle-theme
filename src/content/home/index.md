@@ -5,34 +5,35 @@ This live demo will guide you through setup and customization, while offering he
 **Optimized Infrastructure**
 
 - Zero UI Framework
-- SEO-friendly
+- [SEO-friendly](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#about-seo-and-accessibility)
 - Auto-generated RSS Feed
-- Support for Subpath Deployment
+- Support for [Subpath Deployment](https://astro-antfustyle-theme.vercel.app/blog/basic-configuration/#configuring-site)
 - Optimized Local Image Handling
 - VS Code Snippets for Quick Coding
-- Well-organized Project Structure
+- Well-organized [Project Structure](https://astro-antfustyle-theme.vercel.app/blog/project-structure/)
 
 **Content Management**
 
 - Type Safety
 - Markdown & MDX Support
 - Table of Contents Generation
-- Dynamic OG Image Generation
-- Callouts (Alerts/Admonitions)
-- Directive Sugar for Both Markdown/MDX
-- Code Syntax Highlighting & Annotations
-- Customizable Page Background
+- [Dynamic OG Image Generation](https://astro-antfustyle-theme.vercel.app/blog/about-open-graph-images/)
+- KaTeX Math Integration
+- [Callouts (Alerts/Admonitions)](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#callouts-alerts--admonitions)
+- [Directive Sugar](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#image-caption--link) for Both Markdown/MDX
+- [Code Syntax Highlighting & Annotations](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#fully-featured-code-blocks)
+- Customizable Animated Backgrounds (Take a look around!)
 
 **User Experience**
 
-- Search Functionality
-- Accessibility Enhancements
+- [Search Functionality](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#search-functionality)
+- [Accessibility Enhancements](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#about-seo-and-accessibility)
 - Smooth View Transitions
 - Responsive Layout
 - Light & Dark Modes Toggle
 - Loading Progress Indicator
 - Social Media Sharing Features
-- Image Zoom Preview
+- [Image Zoom](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#image-zoom) Preview
 
 > More features are continuously being added!
 
@@ -40,7 +41,7 @@ This live demo will guide you through setup and customization, while offering he
 
 If you find this theme helpful, consider supporting the project maintainer or the style designer. Your support means more than you know. Thank you! ❤️
 
-<div class="flex gap-4">
+<div class="flex flex-wrap gap-4">
   <a
     class="btn-rose inline-block"
     href="https://github.com/sponsors/lin-stephanie"

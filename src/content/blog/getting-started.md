@@ -10,9 +10,9 @@ ogImage: true
 
 This post outlines the essential steps to quickly set up your personal website using the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme). Each step may involve more detailed content, requiring you to consult other posts for further information.
 
-## Preparation (Skip If You're a Developer)
+## Preparation
 
-To build your website with this theme, it's recommended to:
+(_Skip if you’re a developer_) To build your website with this theme, it's recommended to:
 
 - [Install Node.js](https://nodejs.org/en/download/package-manager) for running and developing the project locally.
 - [Install pnpm](https://pnpm.io/installation) for managing dependencies.
@@ -25,7 +25,7 @@ These are ideal conditions, but feel free to substitute with tools you're comfor
 
 ## Create Your Project
 
-Create your project from the latest theme version in two ways:
+Start with the latest theme version using one of two methods:
 
 **Use GitHub**
 
@@ -57,7 +57,8 @@ yarn create astro --template lin-stephanie/astro-antfustyle-theme
 pnpm dlx create-astro --template lin-stephanie/astro-antfustyle-theme
 ```
 
-> [!tip] If you prefer not to use Git, you can [download the ZIP file](https://github.com/lin-stephanie/astro-antfustyle-theme/archive/refs/heads/main.zip), extract it, and work directly in your local directory.
+> [!tip] 
+> If you prefer not to use Git, you can [download the ZIP file](https://github.com/lin-stephanie/astro-antfustyle-theme/archive/refs/heads/main.zip), extract it, and work directly in your local directory.
 
 ## Launch the Project
 
@@ -88,67 +89,63 @@ You can explore the current theme freely. Additionally, the following commands a
 | `pnpm astro --help`                         | Get help using the [Astro CLI](https://docs.astro.build/en/reference/cli-reference/)                                        |
 | `pnpm toolbar:on`<br>`pnpm toolbar:off`<br> | Enable or disable the [Astro Dev Toolbar](https://docs.astro.build/en/guides/dev-toolbar/)                                  |
 
-Here's the translated document based on your requirements and guidelines:
 
-==【加链接】==
-
-> [!note]- This project uses `pnpm` as the package manager, so you’ll need to install it if you haven’t yet.
+> [!warning]- Handling Package Management Alternatives
+> 
+> This project uses `pnpm` as the package manager, so you’ll need to install it if you haven’t yet.
 >
 > You can execute `npm install -g pnpm` to [install `pnpm`](https://pnpm.io/installation) globally. Alternatively, you can [enable `corepack`](https://github.com/nodejs/corepack) (allows you to manage package manager versions directly via Node.js) or [install the `ni` tool](https://github.com/antfu-collective/ni) (simplifies running commands across different package managers).
 >
-> If you want to use a different package manager, make sure to ==convert the project to your chosen package manager== before running its commands.
+> If you want to use a different package manager, make sure to [convert the project to your chosen package manager](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#revert-from-pnpm-to-npm-or-yarn) before running its commands.
 
 ## Configure the Project
 
-> [!important]- Before configuring, it is advisable to review =="Project Structure"== for an overview of the project and how it’s organized.
+> [!important]
+> Before configuring, it is advisable to review [**Project Structure**](https://astro-antfustyle-theme.vercel.app/blog/project-structure/) for an overview of the project and how it’s organized.
 
 Configuration can be done in two steps:
 
-==【加链接】==
-
-- **"Basic Configuration"**: Customize the `src/config.ts` file.
-- **"Advanced Configuration"**: Customize the LOGOs, site icons, styles, fonts and footer.
+- [**Basic Configuration**](https://astro-antfustyle-theme.vercel.app/blog/basic-configuration/): Customize the `src/config.ts` file.
+- [**Advanced Configuration**](https://astro-antfustyle-theme.vercel.app/blog/advanced-configuration/): Customize the LOGOs, site icons, styles, fonts and footer.
 
 ## Authoring Content
 
 Once configured, ensure the project is running correctly in your browser, then start creating or migrating your content. Jump to the section you're interested in:
 
-==【加链接】==
-
-- **"Add New Posts"**: For creating posts, writing tips, and guidelines.
-- **"Recreate Current Pages"**: For recreating content for the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, and `404` pages, as well as creating / deleting pages.
-- **"Markdown Syntax Guide"**: Showcase the rendering of Markdown syntax in this theme.
-- **"Markdown & MDX Extended Features"**: Extended syntax supported by the theme, including callouts (admonitions/alerts), fully-featured code blocks, image captions and links, video embeddings, styled GitHub links, and more.
+- [**Add New Posts**](https://astro-antfustyle-theme.vercel.app/blog/add-new-posts/): For creating posts, writing tips, and guidelines.
+- [**Recreate Current Pages**](https://astro-antfustyle-theme.vercel.app/blog/recreate-current-pages/): For recreating content for the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, and `404` pages, as well as creating / deleting pages.
+- [**Markdown Syntax Guide**](https://astro-antfustyle-theme.vercel.app/blog/markdown-syntax-guide/): Showcase the rendering of Markdown syntax in this theme.
+- [**Markdown/MDX Extended Features**](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/): Extended syntax supported by the theme, including callouts (admonitions/alerts), fully-featured code blocks, image captions and links, video embeddings, styled GitHub links, and more.
 
 ## Deploy Your Project
 
 Refer to [Astro’s Deployment Guide](https://docs.astro.build/en/guides/deploy/) to choose your preferred platform and follow its guide. Ensure the `SITE.website` option in the `src/config.ts` is correctly set before deploying!
 
-> [!note]- If you aren’t using GitHub and any other Git provider for deployment, follow the [CLI Deployment Guide](https://docs.astro.build/en/guides/deploy/#cli-deployment) to deploy without a Git repository, such as using [Vercel CLI](https://vercel.com/docs/deployments/deploy-with-vercel-cli#deploying-to-vercel-with-vercel-cli) or [Netlify CLI](https://docs.netlify.com/functions/deploy/#manual-deploys-with-cli).
+> [!tip]- Deploying Without a Git Repository Using CLI Tools
+> If you aren’t using GitHub and any other Git provider for deployment, follow the [CLI Deployment Guide](https://docs.astro.build/en/guides/deploy/#cli-deployment) to deploy without a Git repository, such as using [Vercel CLI](https://vercel.com/docs/deployments/deploy-with-vercel-cli#deploying-to-vercel-with-vercel-cli) or [Netlify CLI](https://docs.netlify.com/functions/deploy/#manual-deploys-with-cli).
 
 ## Sync Updates
 
-Like other open-source projects, this theme evolves with bug fixes and feature updates. It's crucial to sync these updates with your own customized project. Consult ==**"Sync Update"**== for more details.
+Just like other open-source projects, this theme gets regular bug fixes and feature updates. To keep your customized project up to date, be sure to sync the latest changes. For more details, check out the [sync updates guide](https://astro-antfustyle-theme.vercel.app/blog/sync-updates/).
 
-Check the ==Changelog== or [Releases](https://github.com/lin-stephanie/astro-antfustyle-theme/releases) to stay informed about theme updates, or consider subscribing to the theme's ==RSS== feed.
+To stay informed about the latest changes, visit the [changelog](https://astro-antfustyle-theme.vercel.app/changelog/) or [releases](https://github.com/lin-stephanie/astro-antfustyle-theme/releases) pages. You can also [subscribe to the theme's RSS feed](https://astro-antfustyle-theme.vercel.app/rss.xml) for updates.
 
 ## Next Steps
 
 You can dive deeper into the theme through the following sections:
 
-==【加链接】==
+- [**Managing Image Assets**](https://astro-antfustyle-theme.vercel.app/blog/managing-image-assets/): Best practices for using images in Markdown/MDX.
+- [**About Open Graph Images**](https://astro-antfustyle-theme.vercel.app/blog/about-open-graph-images/): How to customize or auto-generate Open Graph images.
+- [**FAQs and Known Issues**](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/): Get more insights into the theme's details.
 
-- **"Managing Image Assets"**: Best practices for using images in Markdown/MDX.
-- **"About Open Graph Images"**: How to customize or auto-generate Open Graph images.
-- **"FAQs and Known Issues"**: Get more insights into the theme's details.
-- **"Explore Resources and Tools"**: A collection of external resources and helpful tools.
-
-Additionally, feel free to explore the theme's ==tech stack==. For parts not mentioned or clarified in the guide, you might find answers in the [Astro Docs](https://docs.astro.build/en/getting-started/). You can also follow the [Astro Blog](https://astro.build/blog/) or join the [Astro Lounge](https://discord.com/invite/grF4GTXXYm) community.
+Additionally, feel free to explore the theme's [tech stack](https://astro-antfustyle-theme.vercel.app/projects/). For parts not mentioned or clarified in the guide, you might find answers in the [Astro Docs](https://docs.astro.build/en/getting-started/). You can also follow the [Astro Blog](https://astro.build/blog/) or join the [Astro Lounge](https://discord.com/invite/grF4GTXXYm) community.
 
 ## Wrapping Up
 
-Congratulations on completing the setup! Hopefully, this theme meets your blogging or portfolio needs.
+Congratulations on completing the setup! 🎉 Hopefully, this theme meets your blogging or portfolio needs.
 
-If you encounter any issues, find errors, or see opportunities for improvement, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme) or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls). Your feedback is invaluable to making this theme even better!
+If you encounter any issues, find errors, or see opportunities for improvement, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions) or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls). Your feedback is invaluable to making this theme even better!
 
-Thank you for taking the time to read this guide. ❤️
+Thank you for taking the time to read this guide. ❤️ 
+
+Happy coding and enjoy building with the Astro AntfuStyle Theme! 🌟

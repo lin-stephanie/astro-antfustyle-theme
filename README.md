@@ -3,46 +3,47 @@
 [![ci][ci-badge]][ci-link]
 [![version][version-badge]][version-link]
 [![live demo][demo-badge]][demo-link]
-[![playground][stackblitz-badge]][stackblitz-link]
+[![playground][playground-badge]][playground-link]
 [![chat][chat-badge]][chat-link]
 
-【Cover Image】
+![cover image](https://raw.githubusercontent.com/lin-stephanie/my-assets/refs/heads/main/astro-antfustyle-theme/cover_2x.png)
 
-AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme for blogs and portfolios, inspired by the minimalist style of [antfu.me](https://antfu.me/). I admire this design and have rebuilt and expanded its functionality.
+AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme for blog and portfolio creation, inspired by the minimalist style of [antfu.me](https://antfu.me/). I admire this design and have rebuilt and expanded its functionality.
 
 ## Features
 
 **Optimized Infrastructure**
 
 - Zero UI Framework
+- [SEO-friendly](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#about-seo-and-accessibility)
 - Auto-generated RSS Feed
-- SEO-friendly with `sitemap.xml` and `robots.txt`
-- Support for Subpath Deployment
+- Support for [Subpath Deployment](https://astro-antfustyle-theme.vercel.app/blog/basic-configuration/#configuring-site)
 - Optimized Local Image Handling
 - VS Code Snippets for Quick Coding
-- Well-organized Project Structure
+- Well-organized [Project Structure](https://astro-antfustyle-theme.vercel.app/blog/project-structure/)
 
 **Content Management**
 
 - Type Safety
 - Markdown & MDX Support
 - Table of Contents Generation
-- Dynamic OG Image Generation
-- Callouts (Alerts / Admonitions)
-- Directive Sugar for Both Markdown/MDX
-- Code Syntax Highlighting & Annotations
-- Customizable Page Background ([See Screenshots](#preview))
+- [Dynamic OG Image Generation](https://astro-antfustyle-theme.vercel.app/blog/about-open-graph-images/)
+- KaTeX Math Integration
+- [Callouts (Alerts/Admonitions)](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#callouts-alerts--admonitions)
+- [Directive Sugar](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#image-caption--link) for Both Markdown/MDX
+- [Code Syntax Highlighting & Annotations](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#fully-featured-code-blocks)
+- Customizable Animated Backgrounds (Take a look around!)
 
 **User Experience**
 
-- Search Functionality
-- Accessibility Enhancements
+- [Search Functionality](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#search-functionality)
+- [Accessibility Enhancements](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#about-seo-and-accessibility)
 - Smooth View Transitions
 - Responsive Layout
 - Light & Dark Modes Toggle
 - Loading Progress Indicator
 - Social Media Sharing Features
-- Image Zoom Preview
+- [Image Zoom](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#image-zoom) Preview
 
 > More features are continuously being added!
 
@@ -59,11 +60,17 @@ The [live demo][demo-link] serves as self-documentation, detailing how to config
 
 If you're eager to deploy your own version right away:
 
-[![Deploy with Netlify](./public/docs/deploy_netlify.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/lin-stephanie/astro-antfustyle-theme) [![Deploy with Vercel](./public/docs/deploy_vercel.svg)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flin-stephanie%2Fastro-antfustyle-theme&project-name=astro-antfustyle-theme)
+[![Deploy with Netlify](https://raw.githubusercontent.com/lin-stephanie/my-assets/refs/heads/main/astro-antfustyle-theme/deploy_netlify.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/lin-stephanie/astro-antfustyle-theme) [![Deploy with Vercel](https://raw.githubusercontent.com/lin-stephanie/my-assets/refs/heads/main/astro-antfustyle-theme/deploy_vercel.svg)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flin-stephanie%2Fastro-antfustyle-theme&project-name=astro-antfustyle-theme)
 
 ## Preview
 
-【WIP】
+![plum](https://raw.githubusercontent.com/lin-stephanie/my-assets/refs/heads/main/astro-antfustyle-theme/blog_2x.png)
+
+![rose](https://raw.githubusercontent.com/lin-stephanie/my-assets/refs/heads/main/astro-antfustyle-theme/post_2x.png)
+
+![dot](https://raw.githubusercontent.com/lin-stephanie/my-assets/refs/heads/main/astro-antfustyle-theme/projects_2x.png)
+
+![particle](https://raw.githubusercontent.com/lin-stephanie/my-assets/refs/heads/main/astro-antfustyle-theme/streams_2x.png)
 
 ## Credits
 
@@ -90,11 +97,11 @@ If you see any errors or room for improvement, feel free to open an [issue](http
 [version-badge]: https://img.shields.io/github/v/release/lin-stephanie/astro-antfustyle-theme?label=Release&style=flat&colorA=080f12&colorB=ef7575
 [version-link]: https://github.com/lin-stephanie/astro-antfustyle-theme/releases
 
-[demo-badge]: https://img.shields.io/badge/Live%20Demo-080f12?&style=flat&colorA=080f12&colorB=ef7575&logo=vercel&logoSize=10
+[demo-badge]: https://img.shields.io/badge/Live%20Demo-080f12?label=Vercel&style=flat&colorA=080f12&colorB=ef7575&logo=vercel&logoSize=10
 [demo-link]:https://astro-antfustyle-theme.vercel.app/
 
-[stackblitz-badge]: https://img.shields.io/badge/Playground-080f12?style=flat&colorA=080f12&colorB=ef7575&logo=stackblitz&logoSize=10
-[stackblitz-link]: https://stackblitz.com/github/lin-stephanie/astro-antfustyle-theme?file=src/content/home/index.md
+[playground-badge]: https://img.shields.io/badge/Playground-080f12?style=flat&colorA=080f12&colorB=ef7575&logo=codesandbox&logoSize=10
+[playground-link]: https://codesandbox.io/s/github/lin-stephanie/astro-antfustyle-theme
 
 [chat-badge]: https://img.shields.io/badge/Discussions-080f12?style=flat&colorA=080f12&colorB=ef7575&logo=github
 [chat-link]: https://github.com/lin-stephanie/astro-antfustyle-theme/discussions

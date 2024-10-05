@@ -1,2 +1,2 @@
 * text=auto eol=lf
-plugins/* linguist-vendored
+plugins/**/* linguist-detectable=false

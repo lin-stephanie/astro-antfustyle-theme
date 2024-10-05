@@ -1,10 +1,11 @@
 import type { Site, Ui, Features } from './types'
 
 export const SITE: Site = {
-  website: 'https://example.com',
+  website: 'https://astro-antfustyle-theme.vercel.app/',
   base: '/',
   title: 'Astro AntfuStyle Theme',
-  description: 'A customizable, feature-rich Astro theme for blog & portfolio',
+  description:
+    'A customizable, feature-rich Astro theme for blog and portfolio creation',
   author: 'Stephanie Lin',
   lang: 'en',
   ogLocale: 'en_US',
@@ -63,7 +64,7 @@ export const UI: Ui = {
     { title: 'AstroStreams', path: '/streams' },
   ],
   maxGroupColumns: 3,
-  showGroupItemColorOnHover: false,
+  showGroupItemColorOnHover: true,
 }
 
 /**

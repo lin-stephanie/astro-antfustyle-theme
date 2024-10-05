@@ -1,115 +1,339 @@
 {
+  "$schema": "../../../.astro/collections/projects.schema.json",
   "projects": {
-    "Classification One": [
+    "Astro Ecosystem": [
       {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      },
-      {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      },
-      {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      }
-    ],
-    "Classification Two": [
-      {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      },
-      {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      },
-      {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      },
-      {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      },
-      {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      },
-      {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      }
-    ],
-    "Classification Three": [
-      {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      },
-      {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      },
-      {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      },
-      {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      },
-      {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      },
-      {
-        "name": "WIP",
-        "link": "https://github.com/lin-stephanie/astro-antfustyle-theme",
-        "desc": "This is a Description",
-        "icon": "i-svg-spinners-3-dots-fade"
-      }
-    ],
-    "CSS": [
-      {
-        "name": "UnoCSS",
-        "link": "https://github.com/unocss/unocss",
-        "desc": "The instant on-demand atomic CSS engine",
-        "icon": "i-vscode-icons:file-type-unocss"
-      }
-    ],
-    "Test": [
-      {
-        "name": "Astro",
+        "name": "astro",
         "link": "https://github.com/withastro/astro",
         "desc": "The web framework for content-driven websites",
-        "icon": "i-simple-icons:astro"
+        "icon": "i-devicon-astro"
+      },
+      {
+        "name": "@astrojs/check",
+        "link": "https://github.com/withastro/astro",
+        "desc": "Astro's official check tool",
+        "icon": "i-carbon-settings-check"
+      },
+      {
+        "name": "@astrojs/markdown-remark",
+        "link": "https://github.com/withastro/markdown-remark",
+        "desc": "Astro's integration with markdown using Remark",
+        "icon": "i-la-markdown"
+      },
+      {
+        "name": "@astrojs/mdx",
+        "link": "https://github.com/withastro/mdx",
+        "desc": "Astro's MDX support",
+        "icon": "i-logos-mdx"
+      },
+      {
+        "name": "@astrojs/rss",
+        "link": "https://github.com/withastro/rss",
+        "desc": "Astro RSS feed generation support",
+        "icon": "i-cil-rss"
+      },
+      {
+        "name": "@astrojs/sitemap",
+        "link": "https://github.com/withastro/sitemap",
+        "desc": "Astro Sitemap generation",
+        "icon": "i-uil-sitemap"
+      },
+      {
+        "name": "astro-robots-txt",
+        "link": "https://github.com/withastro/astro-robots-txt",
+        "desc": "Robots.txt generator for Astro",
+        "icon": "i-catppuccin-robots"
+      },
+      {
+        "name": "@ascorbic/feed-loader",
+        "link": "https://github.com/ascorbic/feed-loader",
+        "desc": "Load feeds into your Astro project",
+        "icon": "i-flat-color-icons-feed-in"
+      },
+      {
+        "name": "prettier-plugin-astro",
+        "link": "https://github.com/withastro/prettier-plugin-astro",
+        "desc": "Prettier plugin for Astro files",
+        "icon": "i-logos-prettier"
+      }
+    ],
+    "Markdown Handling": [
+      {
+        "name": "remark-directive",
+        "link": "https://github.com/remarkjs/remark-directive",
+        "desc": "Remark plugin for custom Markdown directives",
+        "icon": "i-mdi-magic"
+      },
+      {
+        "name": "remark-imgattr",
+        "link": "https://github.com/remarkjs/remark-imgattr",
+        "desc": "Remark plugin for adding attributes to images",
+        "icon": "i-bi-images"
+      },
+      {
+        "name": "rehype-math",
+        "link": "https://github.com/remarkjs/remark-math/tree/main/packages/remark-math",
+        "desc": "Remark plugin to support math (`$C_L$`)",
+        "icon": "i-mynaui-math-square"
+      },
+      {
+        "name": "rehype-autolink-headings",
+        "link": "https://github.com/rehypejs/rehype-autolink-headings",
+        "desc": "Rehype plugin for automatically linking headings",
+        "icon": "i-lucide-lab-heading-square"
+      },
+      {
+        "name": "rehype-callouts",
+        "link": "https://github.com/rehypejs/rehype-callouts",
+        "desc": "Rehype plugin for callouts",
+        "icon": "i-fluent-mdl2-text-callout"
+      },
+      {
+        "name": "rehype-external-links",
+        "link": "https://github.com/rehypejs/rehype-external-links",
+        "desc": "Rehype plugin for handling external links",
+        "icon": "i-line-md-external-link"
+      },
+      {
+        "name": "rehype-katex",
+        "link": "https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex",
+        "desc": "Rehype plugin to render elements with a `language-math` class with KaTeX",
+        "icon": "i-tabler-math"
+      }
+    ],
+    "Image Handling": [
+      {
+        "name": "sharp",
+        "link": "https://github.com/lovell/sharp",
+        "desc": "High performance Node.js image processing",
+        "icon": "i-icon-park-performance"
+      },
+      {
+        "name": "satori-html",
+        "link": "https://github.com/vercel/satori-html",
+        "desc": "HTML rendering engine built for Satori",
+        "icon": "i-ic-twotone-imagesearch-roller"
+      },
+      {
+        "name": "satori",
+        "link": "https://github.com/vercel/satori",
+        "desc": "Satori is a library for rendering HTML to SVG",
+        "icon": "i-catppuccin-svg"
+      },
+      {
+        "name": "medium-zoom",
+        "link": "https://github.com/francoischalifour/medium-zoom",
+        "desc": "Medium-inspired zoom for images",
+        "icon": "i-icon-park-zoom-in"
+      }
+    ],
+    "CSS & Icons": [
+      {
+        "name": "unocss",
+        "link": "https://github.com/unocss/unocss",
+        "desc": "The instant on-demand atomic CSS engine",
+        "icon": "i-logos-unocss"
+      },
+      {
+        "name": "@unocss/reset",
+        "link": "https://github.com/unocss/unocss",
+        "desc": "UnoCSS reset styles",
+        "icon": "i-ri-reset-right-fill"
+      },
+      {
+        "name": "@iconify/json",
+        "link": "https://github.com/iconify/iconify",
+        "desc": "Iconify JSON icon data",
+        "icon": "i-simple-icons-iconify"
+      }
+    ],
+    "Background Animation Design": [
+      {
+        "name": "p5",
+        "link": "https://github.com/processing/p5.js",
+        "desc": "p5.js is a library for creative coding",
+        "icon": "i-devicon-p5js"
+      },
+      {
+        "name": "@types/p5",
+        "link": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+        "desc": "TypeScript definitions for p5.js",
+        "icon": "i-devicon-p5js"
+      }
+    ],
+    "Code Block Handling": [
+      {
+        "name": "astro-expressive-code",
+        "link": "https://github.com/withastro/expressive-code",
+        "desc": "Code highlighting plugin for Astro",
+        "icon": "i-line-md-document-code"
+      },
+      {
+        "name": "@expressive-code/plugin-collapsible-sections",
+        "link": "https://github.com/expressive-code/plugin-collapsible-sections",
+        "desc": "Plugin for collapsible sections in code blocks",
+        "icon": "i-line-md-document-code"
+      },
+      {
+        "name": "@expressive-code/plugin-line-numbers",
+        "link": "https://github.com/expressive-code/plugin-line-numbers",
+        "desc": "Plugin for line numbers in code blocks",
+        "icon": "i-line-md-document-code"
+      }
+    ],
+    "Utilities": [
+      {
+        "name": "pagefind",
+        "link": "https://github.com/CloudCannon/pagefind",
+        "desc": "A static search tool",
+        "icon": "i-icon-park-search"
+      },
+      {
+        "name": "nprogress",
+        "link": "https://github.com/rstacruz/nprogress",
+        "desc": "Slim progress bars for Ajax applications",
+        "icon": "i-svg-spinners-3-dots-fade"
+      },
+      {
+        "name": "dayjs",
+        "link": "https://github.com/iamkun/dayjs",
+        "desc": "A fast 2kB alternative to Moment.js",
+        "icon": "i-fluent-mdl2-date-time"
+      },
+      {
+        "name": "reading-time",
+        "link": "https://github.com/ngryman/reading-time",
+        "desc": "Estimate reading time for text",
+        "icon": "i-ep-reading"
+      },
+      {
+        "name": "html-entities",
+        "link": "https://github.com/mdevils/html-entities",
+        "desc": "Encode/decode HTML entities",
+        "icon": "i-icon-park-transform"
+      }
+    ],
+    "TypeScript": [
+      {
+        "name": "typescript",
+        "link": "https://github.com/microsoft/TypeScript",
+        "desc": "TypeScript is a superset of JavaScript",
+        "icon": "i-vscode-icons-file-type-typescript-official"
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "link": "https://github.com/typescript-eslint/typescript-eslint",
+        "desc": "TypeScript ESLint parser",
+        "icon": "i-vscode-icons-file-type-typescript-official"
+      },
+      {
+        "name": "typescript-eslint",
+        "link": "https://github.com/typescript-eslint/typescript-eslint",
+        "desc": "TypeScript plugin for ESLint",
+        "icon": "i-vscode-icons-file-type-typescript-official"
+      }
+    ],
+    "Linting & Formatting": [
+      {
+        "name": "eslint",
+        "link": "https://github.com/eslint/eslint",
+        "desc": "The pluggable linting utility for JavaScript",
+        "icon": "i-logos-eslint"
+      },
+      {
+        "name": "@eslint/js",
+        "link": "https://github.com/eslint/eslint",
+        "desc": "ESLint core JS rules",
+        "icon": "i-logos-eslint"
+      },
+      {
+        "name": "eslint-plugin-astro",
+        "link": "https://github.com/withastro/eslint-plugin-astro",
+        "desc": "ESLint plugin for Astro",
+        "icon": "i-logos-eslint"
+      },
+      {
+        "name": "eslint-plugin-jsx-a11y",
+        "link": "https://github.com/jsx-eslint/eslint-plugin-jsx-a11y",
+        "desc": "Static AST checker for accessibility rules",
+        "icon": "i-logos-eslint"
+      },
+      {
+        "name": "eslint-config-prettier",
+        "link": "https://github.com/prettier/eslint-config-prettier",
+        "desc": "Disables ESLint rules that conflict with Prettier",
+        "icon": "i-logos-eslint"
+      },
+      {
+        "name": "globals",
+        "link": "https://github.com/sindresorhus/globals",
+        "desc": "Global variables for various environments",
+        "icon": "i-solar-global-broken"
+      },
+      {
+        "name": "prettier",
+        "link": "https://github.com/prettier/prettier",
+        "desc": "An opinionated code formatter",
+        "icon": "i-logos-prettier"
+      },
+      {
+        "name": "simple-git-hooks",
+        "link": "https://github.com/toplenboren/simple-git-hooks",
+        "desc": "Easily manage Git hooks",
+        "icon": "i-devicon-git"
+      },
+      {
+        "name": "lint-staged",
+        "link": "https://github.com/okonet/lint-staged",
+        "desc": "Run linters on staged git files",
+        "icon": "i-devicon-git"
+      }
+    ],
+    "CLI & Terminal": [
+      {
+        "name": "chalk",
+        "link": "https://github.com/chalk/chalk",
+        "desc": "Terminal string styling done right",
+        "icon": "i-logos-chalk"
+      },
+      {
+        "name": "del-cli",
+        "link": "https://github.com/sindresorhus/del-cli",
+        "desc": "Delete files/folders using globs",
+        "icon": "i-icon-park-delete"
+      }
+    ],
+
+    "Remark Utilities": [
+      {
+        "name": "unist-util-visit",
+        "link": "https://github.com/syntax-tree/unist-util-visit",
+        "desc": "Utility to recursively walk through unist nodes",
+        "icon": "i-gravity-ui-nodes-down"
+      },
+      {
+        "name": "@types/mdast",
+        "link": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+        "desc": "TypeScript definitions for the MDAST abstract syntax tree",
+        "icon": "i-vscode-icons-file-type-light-remark"
+      },
+      {
+        "name": "mdast-util-directive",
+        "link": "https://github.com/syntax-tree/mdast-util-directive",
+        "desc": "Utility for handling directives in MDAST",
+        "icon": "i-vscode-icons-file-type-light-remark"
+      },
+      {
+        "name": "mdast-util-to-string",
+        "link": "https://github.com/syntax-tree/mdast-util-to-string",
+        "desc": "Utility to get the text content of an MDAST node",
+        "icon": "i-vscode-icons-file-type-light-remark"
+      },
+      {
+        "name": "hastscript",
+        "link": "https://github.com/syntax-tree/hastscript",
+        "desc": "Hyperscript for HAST, creating HAST nodes",
+        "icon": "i-vscode-icons-file-type-light-rehype"
       }
     ]
   }

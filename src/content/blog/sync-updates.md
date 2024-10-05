@@ -8,7 +8,9 @@ share: true
 ogImage: true
 ---
 
-Opening this post suggests that you may already be using the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) --- thank you for choosing it! This guide provides instructions on how to stay up-to-date with the latest theme versions and manage your project dependencies effectively. Let's dive into the steps!
+Opening this post suggests that you may already be using the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) --- thank you for choosing it! 
+
+This guide provides instructions on how to stay up-to-date with the latest theme versions and manage your project dependencies effectively. Let's dive into the steps!
 
 ## Updating to the Latest Theme Version
 
@@ -102,7 +104,7 @@ git push origin main
 
 This pushes updates to your remote repository. Your project is now synced with the latest theme version. 🎉
 
-In addition to syncing updates via Git, it's also recommended to use :link{id=AndreasAugustin/actions-template-sync}. This tool automates keeping your project up-to-date with the theme's latest version by sending pull requests when changes are available.
+In addition to syncing updates via Git, it's also recommended to use :link[actions-template-sync]{id=AndreasAugustin/actions-template-sync style=github}. This tool automates keeping your project up-to-date with the theme's latest version by sending pull requests when changes are available.
 
 > [!warning]- Backup Before Syncing
 >
@@ -135,13 +137,13 @@ Repeat the above commands to check for minor updates. Although minor updates usu
 
 Finally, if major updates are available, carefully review the release notes to avoid any breaking changes before proceeding with the update.
 
-In addition to using `pnpm`, consider :link[Taze]{id=antfu-collective/taze} (for monorepos) or :link[npm-check-updates]{id=raineorshine/npm-check-updates}
+In addition to using `pnpm`, consider :link[Taze]{id=antfu-collective/taze style=github} (for monorepos) or :link[npm-check-updates]{id=raineorshine/npm-check-updates style=github}
 
 ## Wrapping Up
 
 That's it! Keeping your project updated may seem like work initially, but it becomes easier over time. Plus, it's worth it to enjoy the new features and improvements with each update.
 
-If you run into any issues or have questions along the way, don't hesitate to jump into the [discussions](https://github.com/lin-stephanie/astro-antfustyle-theme) or open an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues). We're all learning and improving together! 🌟 
+If you encounter any issues, find errors, or see opportunities for improvement as you explore the theme, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions), or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls). Your feedback is highly appreciated! 
 
 Happy coding, and may your projects continue to thrive! 🚀
 

@@ -1,6 +1,6 @@
 ---
 title: Markdown Syntax Guide
-description: Presentation of Basic Markdown Syntax in Astro AntfuStyle Theme
+description: Presentation of basic Markdown syntax in Astro AntfuStyle Theme
 pubDate: 2023-10-02
 lastModDate: ''
 toc: true
@@ -8,9 +8,7 @@ share: true
 ogImage: true
 ---
 
-
-该 post 展示了 Markdown 基础语法在 Astro AntfuStyle Theme 下的呈现效果
-（文本是在 ==:link[rt2zz/markdown-sample.md]{link=https://gist.github.com/rt2zz/e0a1d6ab2682d2c47746950b84c0b6ee style=gh-link}== 基础上进行了调整），你可以对照着 ==Markdwon 原生代码文件【帮我修改下使其表述更准确】==进行查看。
+The post shows how basic Markdown syntax is displayed in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) (modified from :link[rt2zz/markdown-sample.md]{link=https://gist.github.com/rt2zz/e0a1d6ab2682d2c47746950b84c0b6ee style=github}). You can refer to the [original Markdown file](https://github.com/lin-stephanie/astro-antfustyle-theme/blob/main/src/content/blog/markdown-syntax-guide.md) for comparison. If you want to learn MDX, visit the [MDX Docs](https://mdxjs.com/docs/).
 
 
 ## An h1 header
@@ -35,7 +33,7 @@ Use 2 dashes for ranges (ex., "it's all in chapters 12--14").
 
 Three dots … will be converted to an ellipsis.
 
-Unicode is supported. ☺
+Unicode is supported. 😊
 
 ### An h2 header
 
@@ -45,14 +43,14 @@ Here's a numbered list:
 2. second item
 3. third item
 
-Note again how the actual text starts at 4 columns in (4 characters
-from the left side). Here's a code sample:
+Note again how the actual text starts at 4 columns in (4 characters from the left side). 
+
+Here's a code sample:
 
     # Let me re-iterate ...
     for i in 1 .. 10 { do-something(i) }
 
-As you probably guessed, indented 4 spaces. By the way, instead of
-indenting the block, you can use delimited blocks, if you like:
+As you probably guessed, indented 4 spaces. By the way, instead of indenting the block, you can use delimited blocks, if you like:
 
 ```
 define foobar() {
@@ -60,17 +58,7 @@ define foobar() {
 }
 ```
 
-(which makes copying & pasting easier). You can optionally mark the
-delimited block for Pandoc to syntax highlight it:
-
-```python
-import time
-# Quick, count to ten!
-for i in range(10):
-    # (but not *too* quick)
-    time.sleep(0.5)
-    print i
-```
+(which makes copying & pasting easier). 
 
 #### An h3 header
 
@@ -96,78 +84,36 @@ Now a nested list:
 
     Do not bump wooden spoon or it will fall.
 
-Notice again how text always lines up on 4-space indents (including
-that last line which continues item 3 above).
+Notice again how text always lines up on 4-space indents (including that last line which continues item 3 above).
 
-Here's a link to [a website](http://foo.bar), to a [local
-doc](local-doc.html), and to a [section heading in the current
-doc](#an-h2-header). Here's a footnote [^1].
+Here's a link to [google](https://www.google.com/) and to a [section heading in the current doc](#an-h2-header).
+
+Here's a footnote [^1].
+
+[^1]: Footnote text goes here.
 
 Tables can look like this:
 
-size material color
-
----
-
-9 leather brown
-10 hemp canvas natural
-11 glass transparent
-
-Table: Shoes, their sizes, and what they're made of
-
-(The above is the caption for the table.) Pandoc also supports
-multi-line tables:
-
----
-
-keyword text
-
----
-
-red Sunsets, apples, and
-other red or reddish
-things.
-
-green Leaves, grass, frogs
-and other things it's
-not easy being.
-
----
+| size | material    | color       |
+| ---- | ----------- | ----------- |
+| 9    | leather     | brown       |
+| 10   | hemp canvas | natural     |
+| 11   | glass       | transparent |
 
 A horizontal rule follows.
 
----
+***
 
-Here's a definition list:
+Here's a image can be specified like so:
 
-apples
-: Good for making applesauce.
-oranges
-: Citrus!
-tomatoes
-: There's no "e" in tomato.
+![example image](/og-images/og-image.png "An exemplary image")
 
-Again, text is indented 4 spaces. (Put a blank line between each
-term/definition pair to spread things out more.)
+Inline math equations go in like so: $\omega = d\phi / dt$. 
 
-Here's a "line block":
+Display math should get its own line and be put in in double-dollarsigns:
 
-| Line one
-| Line too
-| Line tree
+$$I = \int \rho R^{2} dV$$
 
-and images can be specified like so:
+And note that you can backslash-escape any punctuation characters which you wish to be displayed literally, ex.: \`foo\`, \*bar\*, etc.
 
-[//]: # (![example image]&#40;./demo-banner.png "An exemplary image"&#41;)
-
-Inline math equations go in like so: $\omega = d\phi / dt$. Display
-math should get its own line and be put in in double-dollarsigns:
-
-$$
-I = \int \rho R^{2} dV
-$$
-
-And note that you can backslash-escape any punctuation characters
-which you wish to be displayed literally, ex.: \`foo\`, \*bar\*, etc.
-
-如果你想要探索如何使用 MDX ，你可以查看 [MDX Docs](https://mdxjs.com/docs/) 
+Here’s a final look at how the inline code appears: `console.log("hello world!")`. 👋

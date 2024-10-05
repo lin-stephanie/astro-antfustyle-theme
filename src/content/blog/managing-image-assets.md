@@ -13,7 +13,7 @@ This post provides a brief guide on how to organize and use images in the [Astro
 
 ## Supported Cases for Image Processing
 
-Astro supports processing images during the build phase via the [Image Service API](https://docs.astro.build/en/reference/image-service-reference/) ([Sharp is the default service](https://docs.astro.build/en/guides/images/#default-image-service)), allowing actions like converting to webp, compressing, adding attributes, inferring dimensions to prevent CLS, lazy loading, and async decoding. However, this only applies in the following cases:
+Astro supports processing images during the build phase via the [Image Service API](https://docs.astro.build/en/reference/image-service-reference/) ([:link[Sharp]{id=lovell/sharp style=github} is the default service](https://docs.astro.build/en/guides/images/#default-image-service)), allowing actions like converting to webp, compressing, adding attributes, inferring dimensions to prevent CLS, lazy loading, and async decoding. However, this only applies in the following cases:
 
 - [Images stored in `src/`](https://docs.astro.build/en/guides/images/#where-to-store-images) (Images in the `public/` folder won’t be processed)
 - [Authorized remote images](https://docs.astro.build/en/guides/images/#authorizing-remote-images) (Note: external images referenced in Markdown using `![]()` will not be processed)
@@ -58,6 +58,13 @@ It is recommended to store the local images used in the post under the `src/asse
 
 ```
 
+> [!tip]- Adjusting Image Attributes in Markdown/MDX
+>
+> To modify attributes of an `img` element (like size) in Markdown/MDX, use the :link[remark-imgattr]{id=OliverSpeir/remark-imgattr style=github} syntax.
+> 
+> **Note**: Styles must be written directly in the `style` attribute or by applying a `class`. UnoCSS utility classes won't apply.
+
+
 ## Images in MDX Files
 
 In addition to supporting the standard Markdown `![alt](src)` syntax as demonstrated above, you can also use Astro’s `<Image />` component and JSX `<img />` tags in your `.mdx` files by importing both the component and your image.
@@ -97,6 +104,4 @@ As mentioned, Astro can compress images from the `src/` folder. However, for ima
 
 ## Wrapping Up
 
-I hope this post helps clarify image usage in Markdown/MDX within this theme. For anything not covered here, check out the [Astro Images Docs](https://docs.astro.build/en/guides/images/) .
-
-If you encounter issues, find errors, or see opportunities for improvement, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme) or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls). Your feedback is highly appreciated!
+I hope this post helps clarify image usage in Markdown/MDX within this theme. For anything not covered here, check out the [Astro Images Docs](https://docs.astro.build/en/guides/images/) . 📖

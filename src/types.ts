@@ -69,7 +69,7 @@ type Icon = `i-${string}-${string}` | `i-${string}:${string}`
 
 interface BaseNavItem {
   /**
-   * Sets the navigation path, which must start with `/`.
+   * Specifies the navigation path. It must start with `/`.
    *
    * @example
    * '/blog'、'/blog/'
@@ -84,7 +84,7 @@ interface BaseNavItem {
 
 interface TextNavItem extends BaseNavItem {
   /**
-   * Specifies how the item is displayed responsively. Allowed values:
+   * Defines how the navigation item is displayed responsively. Allowed values:
    *  - 'alwaysText': Always display text, regardless of screen size.
    *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
    *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
@@ -99,14 +99,14 @@ interface TextNavItem extends BaseNavItem {
 
   /**
    * Sets the text displayed for the navigation item.
-   * Required if `displayMode` is 'alwaysText', 'textHiddenOnMobile', or 'textToIconOnMobile'.
+   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
    */
   text: string
 }
 
 export interface IconNavItem extends BaseNavItem {
   /**
-   * Specifies how the item is displayed responsively. Allowed values:
+   * Defines how the navigation item is displayed responsively. Allowed values:
    *  - 'alwaysText': Always display text, regardless of screen size.
    *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
    *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
@@ -121,7 +121,7 @@ export interface IconNavItem extends BaseNavItem {
 
   /**
    * Sets the icon displayed for the navigation item.
-   * Required if `displayMode` is 'alwaysIcon', 'iconHiddenOnMobile', or 'textToIconOnMobile'.
+   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
@@ -130,14 +130,14 @@ export interface IconNavItem extends BaseNavItem {
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
    *
-   * @see {@link  https://icones.js.org/ Check all available icons}
+   * @see {@link https://icon-sets.iconify.design/ Check all available icons}
    */
   icon: Icon
 }
 
 export interface ResponsiveNavItem extends BaseNavItem {
   /**
-   * Specifies how the item is displayed responsively. Allowed values:
+   * Defines how the navigation item is displayed responsively. Allowed values:
    *  - 'alwaysText': Always display text, regardless of screen size.
    *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
    *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
@@ -152,13 +152,13 @@ export interface ResponsiveNavItem extends BaseNavItem {
 
   /**
    * Sets the text displayed for the navigation item.
-   * Required if `displayMode` is 'alwaysText', 'textHiddenOnMobile', or 'textToIconOnMobile'.
+   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
    */
   text: string
 
   /**
    * Sets the icon displayed for the navigation item.
-   * Required if `displayMode` is 'alwaysIcon', 'iconHiddenOnMobile', or 'textToIconOnMobile'.
+   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
@@ -167,7 +167,7 @@ export interface ResponsiveNavItem extends BaseNavItem {
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
    *
-   * @see {@link  https://icones.js.org/ Check all available icons}
+   * @see {@link https://icon-sets.iconify.design/ Check all available icons}
    */
   icon: Icon
 }
@@ -194,7 +194,7 @@ interface BaseSocialItem {
 
 interface TextSocialItem extends BaseSocialItem {
   /**
-   * Specifies how the item is displayed responsively. Allowed values:
+   * Defines how the social item is displayed responsively. Allowed values:
    *  - 'alwaysText': Always display text, regardless of screen size.
    *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
    *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
@@ -209,14 +209,14 @@ interface TextSocialItem extends BaseSocialItem {
 
   /**
    * Sets the text displayed for the navigation item.
-   * Required if `displayMode` is 'alwaysText', 'textHiddenOnMobile', or 'textToIconOnMobile'.
+   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
    */
   text: string
 }
 
 export interface IconSocialItem extends BaseSocialItem {
   /**
-   * Specifies how the item is displayed responsively. Allowed values:
+   * Defines how the social item is displayed responsively. Allowed values:
    *  - 'alwaysText': Always display text, regardless of screen size.
    *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
    *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
@@ -231,7 +231,7 @@ export interface IconSocialItem extends BaseSocialItem {
 
   /**
    * Sets the icon displayed the social platform.
-   * Required if `displayMode` is 'alwaysIcon', 'iconHiddenOnMobile', or 'textToIconOnMobile'.
+   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
@@ -240,14 +240,14 @@ export interface IconSocialItem extends BaseSocialItem {
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
    *
-   * @see {@link  https://icones.js.org/ Check all available icons}
+   * @see {@link https://icon-sets.iconify.design/ Check all available icons}
    */
   icon: Icon
 }
 
 export interface ResponsiveSocialItem extends BaseSocialItem {
   /**
-   * Specifies how the item is displayed responsively. Allowed values:
+   * Defines how the social item is displayed responsively. Allowed values:
    *  - 'alwaysText': Always display text, regardless of screen size.
    *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
    *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
@@ -262,13 +262,13 @@ export interface ResponsiveSocialItem extends BaseSocialItem {
 
   /**
    * Sets the text displayed for the navigation item.
-   * Required if `displayMode` is 'alwaysText', 'textHiddenOnMobile', or 'textToIconOnMobile'.
+   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
    */
   text: string
 
   /**
    * Sets the icon displayed the social platform.
-   * Required if `displayMode` is 'alwaysIcon', 'iconHiddenOnMobile', or 'textToIconOnMobile'.
+   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', or 'textToIconOnMobile'.
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
@@ -277,7 +277,7 @@ export interface ResponsiveSocialItem extends BaseSocialItem {
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
    *
-   * @see {@link  https://icones.js.org/ Check all available icons}
+   * @see {@link https://icon-sets.iconify.design/ Check all available icons}
    */
   icon: Icon
 }
@@ -332,32 +332,28 @@ export type Tabs = [Tab, Tab, ...Tab[]]
 
 export interface Ui {
   /**
-   * Configures the website internal navigation,
-   * used in `src/components/base/NavBar.astro`.
+   * Configures internal navigation links, used in `src/components/base/NavBar.astro`.
    *
    * @remark
-   * The configuration order corresponds to the display order on the page.
+   * The configuration order matches the display order.
    */
   internalNavs: InternalNav[]
 
   /**
-   * Configures the external links to social platform,
-   * used in `src/components/base/NavBar.astro`.
+   * Specifies external social links, used in `src/components/base/NavBar.astro`.
    *
    * @remark
-   * The configuration order corresponds to the display order on the page.
+   * The configuration order matches the display order.
    */
   socialLinks: SocialLink[]
 
   /**
-   * Configures the layout of the navigation bar,
-   * used in `src/components/base/NavBar.astro`.
+   * Controls the layout of the navigation bar,  used in `src/components/base/NavBar.astro`.
    */
   navBarLayout: NavBarLayout
 
   /**
-   * Enables and configures for tabs within a tabbed layout,
-   * used in `src/layouts/TabbedLayout.astro`.
+   * Enables and configures for tabs within a tabbed layout, used in `src/layouts/TabbedLayout.astro`.
    *
    * @description
    * If your website does not use the `TabbedLayout`, you can set it to `false`.
@@ -366,14 +362,16 @@ export interface Ui {
   tabbedLayoutTabs: false | Tabs
 
   /**
-   * Sets the maximum number of columns displayed in the group view on the `/projects` page,
-   * used in `src/components/views/GroupItem.astro`.
+   * Sets the maximum number of columns displayed in the group view.
+   * It is used in `src/components/views/GroupItem.astro` for `/projects` page.
    */
   maxGroupColumns: 2 | 3
 
   /**
-   * Controls whether the icon's hover effect changes from grayscale to full color
-   * in the group view of the `/projects` page, used in `src/components/views/GroupItem.astro`.
+   * Determines whether group item icons display in color when hovered over.
+   * It is used in `src/components/views/GroupItem.astro` for `/projects` page.
+   *
+   * @description
    * If `true`, the icon for the group item will display in its original colors on hover.
    */
   showGroupItemColorOnHover: boolean
@@ -452,27 +450,26 @@ interface TocConfig {
   maxHeadingLevel: HeadingLevel
 
   /**
-   * Sets the display position of the TOC.
+   * Sets the position of TOC on the page (either on the left or right).
    */
   displayPosition: 'left' | 'right'
 
   /**
-   * Sets the TOC visibility behavior.
+   * Controls whether the TOC is always visible or only appears when hovering.
    */
   displayMode: 'always' | 'hover'
 }
 
 interface OgImageConfig {
   /**
-   * Sets the site name or brand for OG images.
-   *
-   * @description
+   * Defines your name or brand name that will be displayed on the OG image.
    * Displayed above the title to enhance recognition.
    */
   authorOrBrand: string
 
   /**
-   * Sets the fallback title for OG images. Used when the `title` in the frontmatter is missing or invalid.
+   * Sets the fallback title for OG images.
+   * Used when the `title` in the frontmatter is missing or invalid.
    */
   fallbackTitle: string
 
@@ -493,8 +490,7 @@ interface OgImageConfig {
 
 export interface Features {
   /**
-   * Enables and configures the sharing feature, which allows visitors to share content to social platforms.
-   * 全局控制是否显示分享链接
+   * Globally controls the sharing feature, which allows visitors to share content to social platforms.
    *
    * @description
    * When enabled, sharing links are displayed at the bottom of all posts.
@@ -503,25 +499,23 @@ export interface Features {
   share: FeatureConfig<ShareConfig>
 
   /**
-   * Enables and configures the TOC (Table of Contents) feature.
-   * 全局控制是否显示 toc
+   * Globally controls the TOC feature and related options.
    *
    * @description
    * To disable for a specific post or page, set the `toc` field in the frontmatter to `false`.
-   *
-   * @remarks
    * The TOC is automatically hidden when the viewport width is less than 1024px.
    */
   toc: FeatureConfig<TocConfig>
 
   /**
-   * Enables and configures automatic OG image generation.
-   * 全局控制是否启用 OG 图片自动生成，注意如果关闭，删除备用 `/public/og-images/og-image.png` 也不会再重新生成了
+   * Globally controls OG image auto-generation and related options.
+   * If disabled, deleting the fallback /public/og-images/og-image.png won’t regenerate it.
    *
    * @description
-   * Automatically generate OG images for Markdown/MDX files that lack an `ogImage` in their frontmatter.
-   * Generated images are stored in `/public/og-images`.
+   * Automatically generate OG images for Markdown/MDX files when the `ogImage` field
+   * is not present in the frontmatter or is set to `true`.
    * To disable for a specific post, set the `ogImage` field in the frontmatter to `false`.
+   * Generated images are stored in `/public/og-images`.
    */
   ogImage: FeatureConfig<OgImageConfig>
 }
