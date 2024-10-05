@@ -92,15 +92,15 @@ html.dark .prose {
   margin-bottom: 1.25em;
 }
 
+.prose thead th,
 .prose tbody td:first-child {
   white-space: nowrap;
 }
 
-.prose p code,
-.prose table code {
+.prose code:not(.expressive-code code) {
   border-radius: 0.25rem;
-  padding: 0.25rem;
-  --uno: 'bg-[#88888815] dark:bg-[#88888830]';
+  padding: 0.15rem 0.3rem;
+  --uno: 'bg-[#88888820] dark:bg-[#88888830]';
 }
 
 /* Toc */
@@ -278,10 +278,16 @@ h6:focus .header-anchor {
 /* rehype-callouts */
 .callout {
   padding-left: 16px;
+  font-size: 15px;
 }
 
 .callout .callout-icon {
   padding-right: 2px;
+}
+
+.callout p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* :::iamge-* */

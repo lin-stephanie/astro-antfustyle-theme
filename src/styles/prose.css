@@ -149,15 +149,8 @@
 }
 .prose code {
   color: var(--fg-deep);
-  font-weight: 600;
   font-size: 0.875em;
 }
-/* .prose code::before {
-  content: '`';
-}
-.prose code::after {
-  content: '`';
-} */
 .prose a code {
   color: #111827;
 }
@@ -195,8 +188,6 @@
   width: 100%;
   table-layout: auto;
   text-align: left;
-  margin-top: 2em;
-  margin-bottom: 2em;
   font-size: 0.875em;
   line-height: 1.7142857;
 }
