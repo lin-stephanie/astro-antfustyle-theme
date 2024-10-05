@@ -96,7 +96,7 @@ export const FEATURES: Features = {
     },
   ],
   ogImage: [
-    false,
+    true,
     {
       authorOrBrand: `${SITE.title}`,
       fallbackTitle: `${SITE.description}`,

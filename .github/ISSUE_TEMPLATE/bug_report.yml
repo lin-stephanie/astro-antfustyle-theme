@@ -48,5 +48,5 @@ body:
       options:
         - label: Check that there isn't [already an issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) that reports the same bug to avoid creating a duplicate.
           required: true
-        - label: Check that this is a concrete bug. For Q&A open a [GitHub Discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions) or refer to the [posts on the demo site](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions).
+        - label: Check that this is a concrete bug. For Q&A open a [GitHub Discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions) or refer to the [posts on the live demo](https://astro-antfustyle-theme.vercel.app/blog/).
           required: true

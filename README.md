@@ -32,7 +32,7 @@ AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme f
 - [Callouts (Alerts/Admonitions)](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#callouts-alerts--admonitions)
 - [Directive Sugar](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#image-caption--link) for Both Markdown/MDX
 - [Code Syntax Highlighting & Annotations](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#fully-featured-code-blocks)
-- Customizable Animated Backgrounds (Preview[#preview])
+- Customizable Animated Backgrounds ([Preview](#preview))
 
 **User Experience**
 
