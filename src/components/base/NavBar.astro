@@ -18,16 +18,16 @@ const { left, right } = navBarLayout
 validateNavBarLayout(navBarLayout)
 ---
 
-<header class="flex items-center gap-[1.2rem] p-8 lt-md:(px-6 gap-none)">
+<header class="flex items-center gap-4.8 p-8 lt-md:(px-6 gap-3)">
   <LogoButton />
   <nav
-    class={`flex items-center gap-[1.2rem] w-full lt-md:justify-end
+    class={`flex items-center gap-4.8 w-full lt-md:justify-end
       ${left.length !== 0 && right.length !== 0 ? 'justify-between' : 'justify-end'}`}
     aria-label="Main menu"
   >
     {
       left.length !== 0 && (
-        <div class="grid grid-auto-flow-col gap-[1.2rem] print:op-0">
+        <div class="grid grid-flow-col gap-4.8 lt-md:(gap-3) print:op-0 ">
           {UI.navBarLayout.left.map((key) =>
             key === 'searchButton' ? (
               <SearchSwitch />
@@ -112,7 +112,7 @@ validateNavBarLayout(navBarLayout)
     }
     {
       right.length !== 0 && (
-        <div class="grid grid-auto-flow-col gap-[1.2rem] print:op-0">
+        <div class="grid grid-flow-col gap-4.8 lt-md:(gap-3) print:op-0">
           {UI.navBarLayout.right.map((key) =>
             key === 'searchButton' ? (
               <SearchSwitch />
@@ -196,5 +196,5 @@ validateNavBarLayout(navBarLayout)
       )
     }
   </nav>
-  <ToTopButton />
 </header>
+<ToTopButton />
