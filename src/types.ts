@@ -125,7 +125,7 @@ export interface IconNavItem extends BaseNavItem {
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
-   * as per {@link https://unocss.dev/presets/icons Unocss} specs.
+   * as per {@link https://unocss.dev/presets/icons UnoCSS} specs.
    *
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
@@ -162,7 +162,7 @@ export interface ResponsiveNavItem extends BaseNavItem {
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
-   * as per {@link https://unocss.dev/presets/icons Unocss} specs.
+   * as per {@link https://unocss.dev/presets/icons UnoCSS} specs.
    *
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
@@ -235,7 +235,7 @@ export interface IconSocialItem extends BaseSocialItem {
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
-   * as per {@link https://unocss.dev/presets/icons Unocss} specs.
+   * as per {@link https://unocss.dev/presets/icons UnoCSS} specs.
    *
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
@@ -272,7 +272,7 @@ export interface ResponsiveSocialItem extends BaseSocialItem {
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
-   * as per {@link https://unocss.dev/presets/icons Unocss} specs.
+   * as per {@link https://unocss.dev/presets/icons UnoCSS} specs.
    *
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"

@@ -84,7 +84,7 @@ astro-antfustyle-theme
 | | | |-[...slug].astro                     // Dynamic routing for individual blog posts.
 | | | |-index.mdx                           // Blog index page.
 | | |-changelog                             // Changlog post pages.
-| | | |-[slug].astro                     // Dynamic routing for individual changlog posts.
+| | | |-[slug].astro                        // Dynamic routing for individual changlog posts.
 | | | |-index.mdx                           // Changlog index page.
 | | |-feeds.mdx                             // Feeds page.
 | | |-index.mdx                             // Homepage in Markdown.

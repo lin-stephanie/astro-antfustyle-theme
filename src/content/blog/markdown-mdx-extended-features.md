@@ -428,7 +428,7 @@ The custom `::video` directive allows for consistent video embedding across diff
 ::video{bilibiliId=BV1MC4y1c7Kv}
 
 <!-- Setting `noScale=true` disables video scaling -->
-::video{vimeoId=912831806 noScale=true}
+::video{youtubeId=gxBkghlglTg noScale=true}
 
 <!-- You can directly provide the iframe URL for embedding a video via `iframeSrc` -->
 ::video{iframeSrc='https://www.youtube-nocookie.com/embed/gxBkghlglTg'}

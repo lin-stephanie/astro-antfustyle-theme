@@ -57,7 +57,7 @@ export const rehypePlugins: RehypePlugins = [
           content += textNode.value
         })
         return {
-          ariaLabel: `Link to: ${content} (external link)`,
+          ariaLabel: `${content && `Link to: ${content} `}(external link)`,
         }
       },
     },

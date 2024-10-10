@@ -146,10 +146,10 @@ const projectSchema = z.object({
     .string()
     .regex(
       /^i-[\w-]+(:[\w-]+)?$/,
-      'Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [Unocss](https://unocss.dev/presets/icons) specs.'
+      'Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [UnoCSS](https://unocss.dev/presets/icons) specs.'
     )
     .describe(
-      '**Requirde**. Icon representing the project. It must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [Unocss](https://unocss.dev/presets/icons) specs. [Check all available icons here](https://icones.js.org/).'
+      '**Requirde**. Icon representing the project. It must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [UnoCSS](https://unocss.dev/presets/icons) specs. [Check all available icons here](https://icones.js.org/).'
     ),
 })
 

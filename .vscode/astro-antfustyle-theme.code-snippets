@@ -49,7 +49,7 @@
       "  \"name\": \"${1:Name of the project to be displayed}\",",
       "  \"link\": \"${2:URL linking to the project page or repository}\",",
       "  \"desc\": \"${3:A brief description summarizing the project}\",",
-      "  \"icon\": \"${4:Icon representing the project. It must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [Unocss](https://unocss.dev/presets/icons) specs. [Check all available icons here](https://icones.js.org/)}\"",
+      "  \"icon\": \"${4:Icon representing the project. It must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [UnoCSS](https://unocss.dev/presets/icons) specs. [Check all available icons here](https://icones.js.org/)}\"",
       "}",
     ],
     "description": "Insert a project entry for projects data",

@@ -1,6 +1,6 @@
-Glad you made it here! This is a customizable, feature-rich :link[Astro]{id=withastro/astro} theme for blogs and portfolios, inspired by the minimalist style of :link[antfu.me]{link=https://antfu.me/ imageUrl=https://antfu.me/favicon.svg}.
+Glad you made it here! This is a customizable, feature-rich :link[Astro]{id=withastro/astro} theme for blog and portfolio creation, inspired by the minimalist style of :link[antfu.me]{link=https://antfu.me/ imageUrl=https://antfu.me/favicon.svg}. The design has been refined and its functionality expanded for greater flexibility.
 
-This live demo will guide you through setup and customization, while offering helpful insights along the way. Enjoy exploring all the features this theme offers! ✨
+This live demo will guide you through setup and customization, offering helpful insights along the way. Enjoy exploring all the features this theme provides! ✨
 
 **Optimized Infrastructure**
 
@@ -39,6 +39,25 @@ This live demo will guide you through setup and customization, while offering he
 
 ---
 
+<p>
+  Visit the theme's
+  <a ml-1.5 inline-block op-75 hover:op-100 href="https://github.com/lin-stephanie/astro-antfustyle-theme" target="_blank" aria-label="AntfuStyle on GitHub (external link)">
+    <span i-simple-icons-github></span>
+    GitHub repo
+  </a>
+</p>
+
+<p>
+  Find me on
+  <a ml-1.5 inline-block op-75 hover:op-100 href="https://github.com/lin-stephanie/" target="_blank"    aria-label="Find me on GitHub (external link)"><span i-simple-icons-github></span> GitHub</a>
+  <a ml-1.5 inline-block op-75 hover:op-100 href="https://www.twitter.com/ste7lin" target="_blank" aria-label="Find me on Twitter (external link)"><span i-ri-twitter-x-fill></span> Twitter</a>
+  <a ml-1.5 inline-block op-75 hover:op-100 href="https://www.instagram.com/ste7lin" target="_blank" aria-label="Find me on Instagram (external link)"><span i-simple-icons-instagram></span> Instagram</a>
+  <a ml-1.5 inline-block op-75 hover:op-100 href="https://elk.zone/fairy.id/@ste7lin" target="_blank" aria-label="Find me on Mastodon (external link)"><span i-simple-icons-mastodon></span> Mastodon</a>
+  <a ml-1.5 inline-block op-75 hover:op-100 target="_blank" aria-label="Find me on YouTube (external link)"><span i-simple-icons-youtube></span> YouTube</a>
+</p>
+
+---
+
 If you find this theme helpful, consider supporting the project maintainer or the style designer. Your support means more than you know. Thank you! ❤️
 
 <div class="flex flex-wrap gap-4">
@@ -46,7 +65,7 @@ If you find this theme helpful, consider supporting the project maintainer or th
     class="btn-rose inline-block"
     href="https://github.com/sponsors/lin-stephanie"
     target="_blank"
-    aria-label="Support Stephanie Lin"
+    aria-label="Support Stephanie Lin (external link)"
   >
     <div class="i-ph-heart-duotone transition-all ease-out duration-200"> </div>
     Support Stephanie Lin (Maintainer)
@@ -55,7 +74,7 @@ If you find this theme helpful, consider supporting the project maintainer or th
     class="btn-yellow inline-block"
     href="https://github.com/sponsors/antfu"
     target="_blank"
-    aria-label="Support Anthony Fu"
+    aria-label="Support Anthony Fu (external link)"
   >
     <div
       class="i-ph-lightning-duotone transition-all ease-out duration-200"

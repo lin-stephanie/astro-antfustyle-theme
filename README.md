@@ -6,9 +6,9 @@
 [![playground][playground-badge]][playground-link]
 [![chat][chat-badge]][chat-link]
 
-![cover image](https://raw.githubusercontent.com/lin-stephanie/my-assets/refs/heads/main/astro-antfustyle-theme/cover_2x.png)
+![cover image](https://raw.githubusercontent.com/lin-stephanie/assets/refs/heads/main/astro-antfustyle-theme/cover_2x.png)
 
-AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme for blog and portfolio creation, inspired by the minimalist style of [antfu.me](https://antfu.me/). I admire this design and have rebuilt and expanded its functionality.
+AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme for blog and portfolio creation, inspired by the minimalist style of [antfu.me](https://antfu.me/). I like this design and have recreated and expanded its functionality.
 
 ## Features
 
@@ -49,28 +49,28 @@ AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme f
 
 ## Docs
 
-The [live demo][demo-link] serves as self-documentation, detailing how to configure and use the theme, along with other relevant knowledge expansion. Explore posts on the demo site or view Markdown files in the repository. Quick Navigation:
+The [live demo][demo-link] serves as self-documentation, detailing how to configure and use the theme, along with other relevant knowledge expansion. Explore posts on the demo site or [view Markdown files](https://github.com/lin-stephanie/astro-antfustyle-theme/tree/main/src/content/blog) in the repository. Quick Navigation:
 
-- Getting Started - [post](https://astro-antfustyle-theme.vercel.app/blog/getting-started/) | [markdown](https://github.com/lin-stephanie/astro-antfustyle-theme/blob/main/src/content/blog/getting-started.md)
-- Project Structure - [post](https://astro-antfustyle-theme.vercel.app/blog/project-structure/) | [markdown](https://github.com/lin-stephanie/astro-antfustyle-theme/blob/main/src/content/blog/project-structure.md)
-- Configuration - [post](https://astro-antfustyle-theme.vercel.app/blog/basic-configuration/) | [markdown](https://github.com/lin-stephanie/astro-antfustyle-theme/blob/main/src/content/blog/basic-configuration.md)
-- Authoring Content - [post](https://astro-antfustyle-theme.vercel.app/blog/getting-started/#authoring-content) | [markdown](https://github.com/lin-stephanie/astro-antfustyle-theme/blob/main/src/content/blog/getting-started.md#authoring-content) 
-- Sync Updates - [post](https://astro-antfustyle-theme.vercel.app/blog/sync-updates/) | [markdown](https://github.com/lin-stephanie/astro-antfustyle-theme/blob/main/src/content/blog/sync-updates.md)
-- Explore More - [post](https://github.com/lin-stephanie/astro-antfustyle-theme/blob/main/src/content/blog/getting-started.md#next-steps) | [markdown](https://astro-antfustyle-theme.vercel.app/blog/getting-started/#next-steps)
+- [Getting Started](https://astro-antfustyle-theme.vercel.app/blog/getting-started/)
+- [Project Structure](https://astro-antfustyle-theme.vercel.app/blog/project-structure/)
+- [Configuration](https://astro-antfustyle-theme.vercel.app/blog/basic-configuration/)
+- [Authoring Content](https://astro-antfustyle-theme.vercel.app/blog/getting-started/#authoring-content)
+- [Sync Updates](https://astro-antfustyle-theme.vercel.app/blog/sync-updates/)
+- [Explore More](https://astro-antfustyle-theme.vercel.app/blog/getting-started/#next-steps)
 
 If you're eager to deploy your own version right away:
 
-[![Deploy with Netlify](https://raw.githubusercontent.com/lin-stephanie/my-assets/refs/heads/main/astro-antfustyle-theme/deploy_netlify.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/lin-stephanie/astro-antfustyle-theme) [![Deploy with Vercel](https://raw.githubusercontent.com/lin-stephanie/my-assets/refs/heads/main/astro-antfustyle-theme/deploy_vercel.svg)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flin-stephanie%2Fastro-antfustyle-theme&project-name=astro-antfustyle-theme)
+[![Deploy with Netlify](https://raw.githubusercontent.com/lin-stephanie/assets/refs/heads/main/astro-antfustyle-theme/deploy_netlify.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/lin-stephanie/astro-antfustyle-theme) [![Deploy with Vercel](https://raw.githubusercontent.com/lin-stephanie/assets/refs/heads/main/astro-antfustyle-theme/deploy_vercel.svg)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flin-stephanie%2Fastro-antfustyle-theme&project-name=astro-antfustyle-theme)
 
 ## Preview
 
-![plum](https://raw.githubusercontent.com/lin-stephanie/my-assets/refs/heads/main/astro-antfustyle-theme/blog_2x.png)
+![plum](https://raw.githubusercontent.com/lin-stephanie/assets/refs/heads/main/astro-antfustyle-theme/blog_2x.png)
 
-![rose](https://raw.githubusercontent.com/lin-stephanie/my-assets/refs/heads/main/astro-antfustyle-theme/post_2x.png)
+![rose](https://raw.githubusercontent.com/lin-stephanie/assets/refs/heads/main/astro-antfustyle-theme/post_2x.png)
 
-![dot](https://raw.githubusercontent.com/lin-stephanie/my-assets/refs/heads/main/astro-antfustyle-theme/projects_2x.png)
+![dot](https://raw.githubusercontent.com/lin-stephanie/assets/refs/heads/main/astro-antfustyle-theme/projects_2x.png)
 
-![particle](https://raw.githubusercontent.com/lin-stephanie/my-assets/refs/heads/main/astro-antfustyle-theme/streams_2x.png)
+![particle](https://raw.githubusercontent.com/lin-stephanie/assets/refs/heads/main/astro-antfustyle-theme/streams_2x.png)
 
 ## Credits
 
