@@ -100,13 +100,18 @@ Currently, backgrounds are not supported for pages at the `/blog/[slug]` path. I
 </BaseLayout>
 ```
 
-Additionally, you can directly modify the constants in each background component (/src/components/backgrounds/) to customize the animation effects.
+Additionally, you can directly modify the constants in each background component (`/src/components/backgrounds/`) to customize the animation effects.
 
 ### Search Functionality
 
-The theme uses :link[Pagefind]{id=CloudCannon/pagefind} to support search functionality. By default, only blog posts are included in search results. If you want to learn how to configure what content can be indexed, check out [Configuring what content is indexed](https://pagefind.app/docs/indexing/). You can also search for `data-pagefind-` in the editor to see the current configuration.
+The theme utilizes :link[Pagefind]{id=CloudCannon/pagefind} to enable search functionality.
 
-Additionally, Pagefind only works after the site has been fully built. You can test it by running `pnpm build && pnpm preview` after building the Astro site.
+You can control the search index dynamically in `src/layouts/StandardLayout.astro`. By default, only blog posts are searchable (set in `src/pages/blog/[...slug].astro` with `isSearchable={true}`). You can adjust this by passing the `isSearchable` prop to the StandardLayout component, or for more custom search options, check out [Configuring what content is indexed](https://pagefind.app/docs/indexing/). 
+
+Search for `data-pagefind-` in the editor to see the current setup.
+
+> [!warning]
+> Pagefind works only after the site is fully built. Test it by running `pnpm build && pnpm preview` after building the Astro site.
 
 ### Image Zoom
 

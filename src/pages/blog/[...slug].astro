@@ -42,7 +42,11 @@ frontmatter to <code>false</code> or remove it to publish the post.`
   {lastModDate}
 >
   {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
-  <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
+  <StandardLayout
+    title={frontmatter.title}
+    subtitle={frontmatter.subtitle}
+    isSearchable={true}
+  >
     <Fragment slot="head">
       {
         frontmatter.pubDate && (

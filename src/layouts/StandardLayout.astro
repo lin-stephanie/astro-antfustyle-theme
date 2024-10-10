@@ -2,17 +2,18 @@
 interface Props {
   title: string
   subtitle?: string
+  isSearchable?: boolean
 }
 
-const { title, subtitle } = Astro.props
+const { title, subtitle, isSearchable = false } = Astro.props
 ---
 
 <header class="prose m-auto mb-8">
   <h1
     class="slide-enter-50 mb-0"
-    data-pagefind-body
-    data-pagefind-weight="10"
-    data-pagefind-meta="title"
+    data-pagefind-body={isSearchable ? true : undefined}
+    data-pagefind-weight={isSearchable ? '10' : undefined}
+    data-pagefind-meta={isSearchable ? 'title' : undefined}
   >
     {title}
   </h1>
@@ -23,6 +24,9 @@ const { title, subtitle } = Astro.props
   }
   <slot name="head" />
 </header>
-<article data-pagefind-body class="prose slide-enter-content m-auto">
+<article
+  data-pagefind-body={isSearchable ? true : undefined}
+  class="prose slide-enter-content m-auto"
+>
   <slot />
 </article>
