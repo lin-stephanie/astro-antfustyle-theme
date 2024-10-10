@@ -113,12 +113,13 @@ import { getUrl } from '~/utils/common-utils'
   })
 
   const handleClose = (event: MouseEvent) => {
-    const panels = [{id: 'search-panel', ignores: ['search-panel','search-bar', 'search-results', 'search-switch']}]
+    const panels = [{id: 'search-panel', ignores: ['search-switch']}]
 
     panels.forEach(panel => {
       const panelEl = document.getElementById(panel.id)
       if (!panelEl || panelEl.classList.contains('float-panel-closed')) return
 
+      // check if the click event occurred outside the search panel in a non-ignored area
       const target = event.target
       const isClickedOutside =
         target instanceof Node &&
@@ -128,7 +129,13 @@ import { getUrl } from '~/utils/common-utils'
           return ignoreEl?.contains(target)
         })
 
-      if (isClickedOutside) {
+      // check if a link within 'search-results' was clicked
+      const isClickedOnLinkInSearchResults =
+        target instanceof HTMLElement &&
+        target.closest('#search-results') &&
+        target.closest('a');
+
+      if (isClickedOutside || isClickedOnLinkInSearchResults) {
         panelEl.classList.add('float-panel-closed')
       }
     })
