@@ -24,6 +24,7 @@ jobs:
         node: [lts/*]
       fail-fast: false
 
+    if: github.repository == 'lin-stephanie/astro-antfustyle-theme'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
 

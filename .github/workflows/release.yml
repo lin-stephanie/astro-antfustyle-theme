@@ -12,7 +12,9 @@ permissions:
 
 jobs:
   release:
+    if: github.repository == 'lin-stephanie/astro-antfustyle-theme'
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
         with:

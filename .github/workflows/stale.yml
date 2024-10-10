@@ -4,12 +4,13 @@ on:
   schedule:
     - cron: '59 23 * * 0'
 
+permissions:
+  issues: write
+  pull-requests: write
+
 jobs:
   stale:
-    permissions:
-      issues: write
-      pull-requests: write
-
+    if: github.repository == 'lin-stephanie/astro-antfustyle-theme'
     runs-on: ubuntu-latest
 
     steps:
