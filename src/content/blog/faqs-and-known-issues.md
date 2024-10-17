@@ -84,9 +84,9 @@ The default date format is `MMM D, YYYY`, handled by `formatDate` in `src/utils/
 
 Backgrounds, except `Rose.astro`, use custom elements with animations that stop to prevent memory leaks. There’s no performance issue, but [report](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) any if you encounter any performance problems.
 
-Currently, backgrounds are not supported for pages at the `/blog/[slug]` path. If you wish to add one, you can modify the `src/pages/blog/[slug].astro` file like this:
+Currently, backgrounds are not supported for pages at the `/blog/[...slug]` path. If you wish to add one, you can modify the `src/pages/blog/[...slug].astro` file like this:
 
-```astro title='src/pages/blog/[slug].astro' ins={8}
+```astro title='src/pages/blog/[...slug].astro' ins={8}
 ...
 <BaseLayout
   title={frontmatter.title}

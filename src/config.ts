@@ -42,7 +42,7 @@ export const UI: Ui = {
       icon: 'i-uil-github-alt',
     },
     {
-      link: 'https://x.com/ste7lin',
+      link: 'https://github.com/lin-stephanie/astro-antfustyle-theme',
       title: `${SITE.author} on Twitter`,
       displayMode: 'iconHiddenOnMobile',
       icon: 'i-ri-twitter-x-fill',

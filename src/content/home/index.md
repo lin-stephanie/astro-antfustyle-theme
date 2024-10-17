@@ -49,11 +49,11 @@ This live demo will guide you through setup and customization, offering helpful 
 
 <p>
   Find me on
-  <a ml-1.5 inline-block op-75 hover:op-100 href="https://github.com/lin-stephanie/" target="_blank"    aria-label="Find me on GitHub (external link)"><span i-simple-icons-github></span> GitHub</a>
-  <a ml-1.5 inline-block op-75 hover:op-100 href="https://www.twitter.com/ste7lin" target="_blank" aria-label="Find me on Twitter (external link)"><span i-ri-twitter-x-fill></span> Twitter</a>
-  <a ml-1.5 inline-block op-75 hover:op-100 href="https://www.instagram.com/ste7lin" target="_blank" aria-label="Find me on Instagram (external link)"><span i-simple-icons-instagram></span> Instagram</a>
-  <a ml-1.5 inline-block op-75 hover:op-100 href="https://elk.zone/fairy.id/@ste7lin" target="_blank" aria-label="Find me on Mastodon (external link)"><span i-simple-icons-mastodon></span> Mastodon</a>
-  <a ml-1.5 inline-block op-75 hover:op-100 target="_blank" aria-label="Find me on YouTube (external link)"><span i-simple-icons-youtube></span> YouTube</a>
+  <a ml-1.5 inline-block op-75 hover:op-100 href="https://github.com/lin-stephanie/astro-antfustyle-theme" target="_blank"    aria-label="Find me on GitHub (external link)"><span i-simple-icons-github></span> GitHub</a>
+  <a ml-1.5 inline-block op-75 hover:op-100 href="https://github.com/lin-stephanie/astro-antfustyle-theme" target="_blank" aria-label="Find me on Twitter (external link)"><span i-ri-twitter-x-fill></span> Twitter</a>
+  <a ml-1.5 inline-block op-75 hover:op-100 href="https://github.com/lin-stephanie/astro-antfustyle-theme" target="_blank" aria-label="Find me on Instagram (external link)"><span i-simple-icons-instagram></span> Instagram</a>
+  <a ml-1.5 inline-block op-75 hover:op-100 href="https://github.com/lin-stephanie/astro-antfustyle-theme" target="_blank" aria-label="Find me on Mastodon (external link)"><span i-simple-icons-mastodon></span> Mastodon</a>
+  <a ml-1.5 inline-block op-75 hover:op-100 href="https://github.com/lin-stephanie/astro-antfustyle-theme" target="_blank" aria-label="Find me on YouTube (external link)"><span i-simple-icons-youtube></span> YouTube</a>
 </p>
 
 ---

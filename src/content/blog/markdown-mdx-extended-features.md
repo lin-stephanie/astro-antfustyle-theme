@@ -28,15 +28,14 @@ If you change the `theme` configuration (default: `'vitepress'`), you will also 
 > [!TIP] You can customize the `title`！ 
 > Optional information to help a user be more successful.
 
-> [!Important] This is a **non-collapsible** callout
-> This is the content!
+> [!Important]- This is a **collapsible** callout, **initially close**.
+> Crucial information necessary for users to succeed.
 
-> [!Warning]- This is a _collapsible and nested_ callout
+> [!Warning]+ This is a _collapsible and nested_ callout, _initially open_.
 >
 > Critical content demanding immediate user attention due to potential risks.
 > 
-> > [!caution]
-> > 
+> > [!caution]- This is a **collapsible** callout, too
 > > Negative potential consequences of an action.
 ```
 
@@ -46,19 +45,19 @@ If you change the `theme` configuration (default: `'vitepress'`), you will also 
 > [!TIP] You can customize the `title`！
 > Optional information to help a user be more successful.
 
-> [!Important] This is a **non-collapsible** callout
+> [!Important]- This is a **collapsible** callout, **initially close**.
 > Crucial information necessary for users to succeed.
 
-> [!Warning]- This is a _collapsible and nested_ callout
+> [!Warning]+ This is a _collapsible and nested_ callout, _initially open_.
 >
 > Critical content demanding immediate user attention due to potential risks.
->
-> > [!caution]
+> 
+> > [!caution]- This is also a **collapsible** callout.
 > > Negative potential consequences of an action.
 
 ## Fully-featured Code Blocks
 
-Supported by :link[astro-expressive-code]{link=https://github.com/expressive-code/expressive-code/tree/main/packages/astro-expressive-code imageUrl='https://avatars.githubusercontent.com/u/124694388'} with :link[plugin-collapsible-sections]{id=@expressive-code/plugin-collapsible-sections style=github} and :link[plugin-line-numbers]{id=@expressive-code/plugin-line-numbers style=github} plugins to add styling and extra functionality for code blocks. 
+Supported by :link[astro-expressive-code]{link=https://github.com/expressive-code/expressive-code/tree/main/packages/astro-expressive-code imageUrl='https://avatars.githubusercontent.com/u/124694388'} with [@expressive-code/plugin-collapsible-sections](https://expressive-code.com/plugins/collapsible-sections/) and [@expressive-code/plugin-line-numbers](https://expressive-code.com/plugins/line-numbers/) plugins to add styling and extra functionality for code blocks. 
 
 To customize code block themes or functionality, modify the `ec.config.mjs` file at the project root after reviewing the [Configuring Expressive Code](https://expressive-code.com/reference/configuration/), such as [change themes](https://expressive-code.com/guides/themes/#using-bundled-themes), [enable word wrap](https://expressive-code.com/key-features/word-wrap/#wrap), or [toggle line numbers](https://expressive-code.com/plugins/line-numbers/#showlinenumbers).
 
@@ -301,7 +300,7 @@ Build on :link[remark-directive]{id=remark/remark-directive style='github'} with
 
 The custom directive creates a block with an image, figcaption, and optional styling, much like a figure in academic papers.
 
-`:::image-figure[caption]{<figure> attrs}`: The square brackets hold the figcaption (if not set, the alt text from `![]()` will be used as the default), and curly braces are for inline styles or supported attributes.
+`:::image-figure[caption]{<figcaption> attrs}`: The square brackets hold the figcaption (if not set, the alt text from `![]()` will be used as the default), and curly braces are for inline styles or supported attributes.
 
 `![alt](image path)(<img> attrs)`: Standard Markdown image syntax with optional attributes inside parentheses (powered by :link[remark-imgattr]{#OliverSpeir/remark-imgattr style=github}, allowing you to adjust the size of individual images).
 
