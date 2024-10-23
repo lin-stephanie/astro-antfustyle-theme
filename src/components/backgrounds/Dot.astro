@@ -54,6 +54,7 @@
         p.setup = () => {
           p.createCanvas(width, height)
           p.background(BACKGROUND)
+          p.frameRate(30)
           addPoints()
         }
 
@@ -73,7 +74,8 @@
               200,
               (Math.abs(p.cos(rad)) * 0.8 + 0.2) * point.opacity * 255
             )
-            p.circle(nx, ny, 1)
+            p.strokeWeight(2)
+            p.point(nx, ny)
           }
         }
       }
