@@ -321,7 +321,7 @@ Of course, it would greatly appreciated if you could also keep the `Powered by A
 Finally, you may want to:
 
 - Delete the `.github` directory (for repo workflows and templates).
-- Clean up `src/content/` and `src/assets/` directories。
+- Clean up `public/og-images/`, `src/content/` and `src/assets/` directories。
 - Check `.vscode/settings.json` for adjustments.  
 - Rewrite `README.md`.
 

@@ -113,7 +113,7 @@ Configuration can be done in two steps:
 Once configured, ensure the project is running correctly in your browser, then start creating or migrating your content. Jump to the section you're interested in:
 
 - [**Add New Posts**](https://astro-antfustyle-theme.vercel.app/blog/add-new-posts/): For creating posts, writing tips, and guidelines.
-- [**Recreate Current Pages**](https://astro-antfustyle-theme.vercel.app/blog/recreate-current-pages/): For recreating content for the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, and `404` pages, as well as creating / deleting pages.
+- [**Recreate Current Pages**](https://astro-antfustyle-theme.vercel.app/blog/recreate-current-pages/): For recreating content for the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, and `404` pages, as well as deleting pages.
 - [**Markdown Syntax Guide**](https://astro-antfustyle-theme.vercel.app/blog/markdown-syntax-guide/): Showcase the rendering of Markdown syntax in this theme.
 - [**Markdown/MDX Extended Features**](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/): Extended syntax supported by the theme, including callouts (admonitions/alerts), fully-featured code blocks, image captions and links, video embeddings, styled GitHub links, and more.
 

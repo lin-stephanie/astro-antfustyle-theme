@@ -82,7 +82,7 @@ The default date format is `MMM D, YYYY`, handled by `formatDate` in `src/utils/
 
 ### Page Backgrounds
 
-Backgrounds, except `Rose.astro`, use custom elements with animations that stop to prevent memory leaks. There’s no performance issue, but [report](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) any if you encounter any performance problems.
+Backgrounds, except for 'rose', use custom elements with animations that stop to prevent memory leaks. No major performance issues have been reported, but please [report any problems](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) if you encounter theme.
 
 Currently, backgrounds are not supported for pages at the `/blog/[...slug]` path. If you wish to add one, you can modify the `src/pages/blog/[...slug].astro` file like this:
 
@@ -102,6 +102,9 @@ Currently, backgrounds are not supported for pages at the `/blog/[...slug]` path
 
 Additionally, you can directly modify the constants in each background component (`/src/components/backgrounds/`) to customize the animation effects.
 
+> [!warning]- CPU Usage Warning for 'dot' Background
+> The 'Dot' background animation can be CPU-intensive, potentially causing slowdowns or noisy fans on less powerful devices ([#1](https://github.com/lin-stephanie/astro-antfustyle-theme/issues/1), [antfu/antfu.me#86](https://github.com/antfu/antfu.me/issues/86)). Despite adjustments to reduce the load ([8fb85e1](https://github.com/lin-stephanie/astro-antfustyle-theme/commit/8fb85e1)), the effect may still be noticeable. If this is an issue, consider using a different background.
+
 ### Search Functionality
 
 The theme utilizes :link[Pagefind]{id=CloudCannon/pagefind} to enable search functionality.
@@ -110,7 +113,7 @@ You can control the search index dynamically in `src/layouts/StandardLayout.astr
 
 Search for `data-pagefind-` in the editor to see the current setup.
 
-> [!warning]
+> [!warning]- Pagefind Works after Build
 > Pagefind works only after the site is fully built. Test it by running `pnpm build && pnpm preview` after building the Astro site.
 
 ### Image Zoom

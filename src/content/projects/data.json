@@ -10,43 +10,43 @@
       },
       {
         "name": "@astrojs/check",
-        "link": "https://github.com/withastro/astro",
+        "link": "https://www.npmjs.com/package/@astrojs/check",
         "desc": "Astro's official check tool",
         "icon": "i-carbon-settings-check"
       },
       {
         "name": "@astrojs/markdown-remark",
-        "link": "https://github.com/withastro/markdown-remark",
+        "link": "https://www.npmjs.com/package/@astrojs/markdown-remark",
         "desc": "Astro's integration with markdown using Remark",
         "icon": "i-la-markdown"
       },
       {
         "name": "@astrojs/mdx",
-        "link": "https://github.com/withastro/mdx",
+        "link": "https://www.npmjs.com/package/@astrojs/mdx",
         "desc": "Astro's MDX support",
         "icon": "i-logos-mdx"
       },
       {
         "name": "@astrojs/rss",
-        "link": "https://github.com/withastro/rss",
+        "link": "https://www.npmjs.com/package/@astrojs/rss",
         "desc": "Astro RSS feed generation support",
         "icon": "i-cil-rss"
       },
       {
         "name": "@astrojs/sitemap",
-        "link": "https://github.com/withastro/sitemap",
+        "link": "https://www.npmjs.com/package/@astrojs/sitemap",
         "desc": "Astro Sitemap generation",
         "icon": "i-uil-sitemap"
       },
       {
         "name": "astro-robots-txt",
-        "link": "https://github.com/withastro/astro-robots-txt",
+        "link": "https://www.npmjs.com/package/astro-robots-txt",
         "desc": "Robots.txt generator for Astro",
         "icon": "i-catppuccin-robots"
       },
       {
         "name": "@ascorbic/feed-loader",
-        "link": "https://github.com/ascorbic/feed-loader",
+        "link": "https://www.npmjs.com/package/@ascorbic/feed-loader",
         "desc": "Load feeds into your Astro project",
         "icon": "i-flat-color-icons-feed-in"
       },
@@ -66,7 +66,7 @@
       },
       {
         "name": "remark-imgattr",
-        "link": "https://github.com/remarkjs/remark-imgattr",
+        "link": "https://github.com/OliverSpeir/remark-imgattr",
         "desc": "Remark plugin for adding attributes to images",
         "icon": "i-bi-images"
       },
@@ -84,7 +84,7 @@
       },
       {
         "name": "rehype-callouts",
-        "link": "https://github.com/rehypejs/rehype-callouts",
+        "link": "https://github.com/lin-stephanie/rehype-callouts",
         "desc": "Rehype plugin for callouts",
         "icon": "i-fluent-mdl2-text-callout"
       },
@@ -110,7 +110,7 @@
       },
       {
         "name": "satori-html",
-        "link": "https://github.com/vercel/satori-html",
+        "link": "https://github.com/natemoo-re/satori-html",
         "desc": "HTML rendering engine built for Satori",
         "icon": "i-ic-twotone-imagesearch-roller"
       },
@@ -136,7 +136,7 @@
       },
       {
         "name": "@unocss/reset",
-        "link": "https://github.com/unocss/unocss",
+        "link": "https://www.npmjs.com/package/@unocss/reset",
         "desc": "UnoCSS reset styles",
         "icon": "i-ri-reset-right-fill"
       },
@@ -156,7 +156,7 @@
       },
       {
         "name": "@types/p5",
-        "link": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+        "link": "https://www.npmjs.com/package/@types/p5",
         "desc": "TypeScript definitions for p5.js",
         "icon": "i-devicon-p5js"
       }
@@ -164,19 +164,19 @@
     "Code Block Handling": [
       {
         "name": "astro-expressive-code",
-        "link": "https://github.com/withastro/expressive-code",
+        "link": "https://www.npmjs.com/package/astro-expressive-code",
         "desc": "Code highlighting plugin for Astro",
         "icon": "i-line-md-document-code"
       },
       {
         "name": "@expressive-code/plugin-collapsible-sections",
-        "link": "https://github.com/expressive-code/plugin-collapsible-sections",
+        "link": "https://www.npmjs.com/package/@expressive-code/plugin-collapsible-sections",
         "desc": "Plugin for collapsible sections in code blocks",
         "icon": "i-line-md-document-code"
       },
       {
         "name": "@expressive-code/plugin-line-numbers",
-        "link": "https://github.com/expressive-code/plugin-line-numbers",
+        "link": "https://www.npmjs.com/package/@expressive-code/plugin-line-numbers",
         "desc": "Plugin for line numbers in code blocks",
         "icon": "i-line-md-document-code"
       }
@@ -221,15 +221,15 @@
         "icon": "i-vscode-icons-file-type-typescript-official"
       },
       {
-        "name": "@typescript-eslint/parser",
-        "link": "https://github.com/typescript-eslint/typescript-eslint",
-        "desc": "TypeScript ESLint parser",
-        "icon": "i-vscode-icons-file-type-typescript-official"
-      },
-      {
         "name": "typescript-eslint",
         "link": "https://github.com/typescript-eslint/typescript-eslint",
         "desc": "TypeScript plugin for ESLint",
+        "icon": "i-vscode-icons-file-type-typescript-official"
+      },
+      {
+        "name": "@typescript-eslint/parser",
+        "link": "https://www.npmjs.com/package/@typescript-eslint/parser",
+        "desc": "TypeScript ESLint parser",
         "icon": "i-vscode-icons-file-type-typescript-official"
       }
     ],
@@ -242,7 +242,7 @@
       },
       {
         "name": "@eslint/js",
-        "link": "https://github.com/eslint/eslint",
+        "link": "https://www.npmjs.com/package/@eslint/js",
         "desc": "ESLint core JS rules",
         "icon": "i-logos-eslint"
       },
@@ -312,7 +312,7 @@
       },
       {
         "name": "@types/mdast",
-        "link": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+        "link": "https://www.npmjs.com/package/@types/mdast",
         "desc": "TypeScript definitions for the MDAST abstract syntax tree",
         "icon": "i-vscode-icons-file-type-light-remark"
       },
