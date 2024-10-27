@@ -1,18 +1,15 @@
 import rss from '@astrojs/rss'
+import { getCollection } from 'astro:content'
 import { SITE } from '~/config'
 import { getUrl } from '~/utils/common-utils'
 
 export async function GET() {
-  const blogItems = Object.values(
-    import.meta.glob('../content/blog/**/*.{md,mdx}', {
-      eager: true,
-    })
-  )
+  const blog = await getCollection('blog')
 
-  const filteredBlogitems = blogItems.filter((item) => !item.frontmatter.draft)
+  const filteredBlogitems = blog.filter((item) => !item.data.draft)
 
   const sortedBlogItems = filteredBlogitems.sort(
-    (a, b) => new Date(b.frontmatter.pubDate) - new Date(a.frontmatter.pubDate)
+    (a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate)
   )
 
   return rss({
@@ -27,21 +24,13 @@ export async function GET() {
         <link>${SITE.website}</link>
       </image>`,
 
-    items: sortedBlogItems.map((item) => {
-      const slug = item.file
-        .split('/')
-        .pop()
-        .replace(/\.mdx?$/, '')
-
-      return {
-        title: `${item.frontmatter.title}`,
-        link: getUrl(`/blog/${slug}`),
-        pubDate: item.frontmatter.pubDate,
-        description: item.frontmatter.description,
-        author: SITE.author,
-        content: item.compiledContent(),
-      }
-    }),
+    items: sortedBlogItems.map((item) => ({
+      title: `${item.data.title}`,
+      link: getUrl(`/blog/${item.slug}`),
+      pubDate: item.data.pubDate,
+      description: item.data.description,
+      author: SITE.author,
+    })),
 
     stylesheet: getUrl('/rss-styles.xsl'),
   })

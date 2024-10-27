@@ -43,12 +43,6 @@ Use MDX if:
 - The content requires conditional rendering or dynamic data.
 - You need interactive code examples or other highly interactive content.
 
-> [!warning]- MDX Support Limitations in RSS Generation
-> 
-> The theme automatically generates `rss.xml` via `src/pages/rss.xml.js`. When [processing full post content](https://docs.astro.build/en/guides/rss/#including-full-post-content), it uses the `compiledContent()` helper to retrieve and sanitize the rendered HTML. 
-> 
-> However, this feature does not support MDX files, which may result in the `items.content` value not being generated as expected for posts written in `.mdx` files.
-
 ## Editing Frontmatter
 
 All `.md` and `.mdx` files in the `src/content/blog/` belong to the `blog` content collection.
