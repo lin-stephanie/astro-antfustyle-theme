@@ -1,0 +1,43 @@
+---
+export function dispatchToggleBackgrop(visible: boolean) {
+  document.dispatchEvent(
+    new CustomEvent('toggle-backgrop', {
+      detail: { visible },
+    })
+  )
+}
+---
+
+<div
+  id="backdrop"
+  class="hidden z-75 fixed inset-0
+    backdrop-blur-[2px] bg-[#000000cc]"
+  aria-hidden="true"
+>
+</div>
+
+<script>
+  document.addEventListener('toggle-backgrop', ((
+    event: CustomEvent<{ visible: boolean }>
+  ) => {
+    const backdrop = document.getElementById('backdrop')
+    const visible = event.detail.visible
+
+    if (backdrop) {
+      if (visible) {
+        backdrop.classList.remove('hidden')
+        backdrop.classList.add('fade-in')
+      } else {
+        backdrop.classList.add('fade-out')
+        backdrop.addEventListener(
+          'animationend',
+          () => {
+            backdrop.classList.remove('fade-in', 'fade-out')
+            backdrop.classList.add('hidden')
+          },
+          { once: true }
+        )
+      }
+    }
+  }) as EventListener)
+</script>

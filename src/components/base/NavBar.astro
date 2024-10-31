@@ -1,200 +1,168 @@
 ---
-import Link from '~/components/base/Link.astro'
 import LogoButton from '~/components/widgets/LogoButton.astro'
-import ToTopButton from '~/components/widgets/ToTopButton.astro'
-import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
 import SearchSwitch from '~/components/widgets/SearchSwitch.astro'
+import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
+import RssLink from '~/components/widgets/RssLink.astro'
+import NavItem from '~/components/base/NavItem.astro'
+import NavSwitch from '~/components/widgets/NavSwitch.astro'
 
 import { UI } from '~/config'
-import {
-  ensureTrailingSlash,
-  getUrl,
-  validateNavBarLayout,
-} from '~/utils/common-utils'
+import { validateNavBarLayout } from '~/utils/common-utils'
 
-const { navBarLayout } = UI
-const { left, right } = navBarLayout
+const { navBarLayout, internalNavs, socialLinks } = UI
+const { left, right, mergeOnMobile } = navBarLayout
 
 validateNavBarLayout(navBarLayout)
 ---
 
-<header class="flex items-center gap-4.8 p-8 lt-md:(px-6 gap-3)">
+<header
+  class={`flex items-center gap-6 p-8 ${mergeOnMobile ? 'lt-md:px-7' : 'lt-md:(px-6 gap-3)'}`}
+>
   <LogoButton />
   <nav
     class={`flex items-center gap-4.8 w-full lt-md:justify-end
-      ${left.length !== 0 && right.length !== 0 ? 'justify-between' : 'justify-end'}`}
+    ${left.length !== 0 ? (right.length !== 0 ? 'justify-between' : '') : 'justify-end'}`}
     aria-label="Main menu"
   >
     {
-      left.length !== 0 && (
-        <div class="grid grid-flow-col gap-4.8 lt-md:(gap-3) print:op-0 ">
-          {UI.navBarLayout.left.map((key) =>
-            key === 'searchButton' ? (
-              <SearchSwitch />
-            ) : key === 'themeButton' ? (
-              <ThemeSwitch />
-            ) : key === 'rssLink' ? (
-              <Link
-                class="lt-md:hidden op-transition"
-                href={getUrl('/rss.xml')}
-                title="RSS Feed"
-                external={true}
-              >
-                <div class="i-lucide-rss" />
-              </Link>
-            ) : key === 'internalNavs' ? (
-              UI[key].map((item) => (
-                <Link
-                  class={`${
-                    item.displayMode === 'iconHiddenOnMobile' ||
-                    item.displayMode === 'textHiddenOnMobile'
-                      ? 'lt-md:hidden'
-                      : ''
-                  } op-transition`}
-                  href={getUrl(ensureTrailingSlash(item.path))}
-                  title={item.title}
-                  aria-current={
-                    Astro.url.pathname ===
-                    getUrl(ensureTrailingSlash(item.path))
-                      ? 'page'
-                      : false
-                  }
-                >
-                  {item.displayMode === 'textToIconOnMobile' && (
-                    <>
-                      <span class="lt-md:hidden">{item.text}</span>
-                      <div class={`md:hidden ${item.icon}`} />
-                    </>
-                  )}
-                  {(item.displayMode === 'alwaysIcon' ||
-                    item.displayMode === 'iconHiddenOnMobile') && (
-                    <div class={item.icon} />
-                  )}
-                  {(item.displayMode === 'alwaysText' ||
-                    item.displayMode === 'textHiddenOnMobile') && (
-                    <span>{item.text}</span>
-                  )}
-                </Link>
-              ))
-            ) : (
-              UI[key].map((item) => (
-                <Link
-                  class={`${
-                    item.displayMode === 'iconHiddenOnMobile' ||
-                    item.displayMode === 'textHiddenOnMobile'
-                      ? 'lt-md:hidden'
-                      : ''
-                  } op-transition`}
-                  href={item.link}
-                  title={item.title}
-                  external={true}
-                >
-                  {item.displayMode === 'textToIconOnMobile' && (
-                    <>
-                      <span class="lt-md:hidden">{item.text}</span>
-                      <div class={`md:hidden ${item.icon}`} />
-                    </>
-                  )}
-                  {(item.displayMode === 'alwaysIcon' ||
-                    item.displayMode === 'iconHiddenOnMobile') && (
-                    <div class={item.icon} />
-                  )}
-                  {(item.displayMode === 'alwaysText' ||
-                    item.displayMode === 'textHiddenOnMobile') && (
-                    <span>{item.text}</span>
-                  )}
-                </Link>
-              ))
-            )
+      mergeOnMobile ? (
+        <>
+          {left.length !== 0 && (
+            <div class="grid grid-flow-col gap-4.8 print:op-0">
+              {left.map((key) =>
+                key === 'searchButton' ? (
+                  <SearchSwitch />
+                ) : key === 'themeButton' ? (
+                  <ThemeSwitch />
+                ) : key === 'rssLink' ? (
+                  <RssLink class="lt-md:hidden" />
+                ) : key === 'internalNavs' ? (
+                  internalNavs.map((item) => (
+                    <NavItem type="internal" {item} {mergeOnMobile} />
+                  ))
+                ) : (
+                  socialLinks.map((item) => (
+                    <NavItem type="social" {item} {mergeOnMobile} />
+                  ))
+                )
+              )}
+            </div>
           )}
-        </div>
-      )
-    }
-    {
-      right.length !== 0 && (
-        <div class="grid grid-flow-col gap-4.8 lt-md:(gap-3) print:op-0">
-          {UI.navBarLayout.right.map((key) =>
-            key === 'searchButton' ? (
-              <SearchSwitch />
-            ) : key === 'themeButton' ? (
-              <ThemeSwitch />
-            ) : key === 'rssLink' ? (
-              <Link
-                class="op-transition"
-                href={getUrl('/rss.xml')}
-                title="RSS Feed"
-                external={true}
-              >
-                <div class="i-lucide-rss" />
-              </Link>
-            ) : key === 'internalNavs' ? (
-              UI[key].map((item) => (
-                <Link
-                  class={`${
-                    item.displayMode === 'iconHiddenOnMobile' ||
-                    item.displayMode === 'textHiddenOnMobile'
-                      ? 'lt-md:hidden'
-                      : ''
-                  } op-transition`}
-                  href={getUrl(ensureTrailingSlash(item.path))}
-                  title={item.title}
-                  aria-current={
-                    Astro.url.pathname ===
-                    getUrl(ensureTrailingSlash(item.path))
-                      ? 'page'
-                      : false
-                  }
-                >
-                  {item.displayMode === 'textToIconOnMobile' && (
-                    <>
-                      <span class="lt-md:hidden">{item.text}</span>
-                      <div class={`${item.icon} md:hidden`} />
-                    </>
-                  )}
-                  {(item.displayMode === 'alwaysIcon' ||
-                    item.displayMode === 'iconHiddenOnMobile') && (
-                    <div class={item.icon} />
-                  )}
-                  {(item.displayMode === 'alwaysText' ||
-                    item.displayMode === 'textHiddenOnMobile') && (
-                    <span>{item.text}</span>
-                  )}
-                </Link>
-              ))
-            ) : (
-              UI[key].map((item) => (
-                <Link
-                  class={`${
-                    item.displayMode === 'iconHiddenOnMobile' ||
-                    item.displayMode === 'textHiddenOnMobile'
-                      ? 'lt-md:hidden'
-                      : ''
-                  } op-transition`}
-                  href={item.link}
-                  title={item.title}
-                  external={true}
-                >
-                  {item.displayMode === 'textToIconOnMobile' && (
-                    <>
-                      <span class="lt-md:hidden">{item.text}</span>
-                      <div class={`${item.icon} md:hidden`} />
-                    </>
-                  )}
-                  {(item.displayMode === 'alwaysIcon' ||
-                    item.displayMode === 'iconHiddenOnMobile') && (
-                    <div class={item.icon} />
-                  )}
-                  {(item.displayMode === 'alwaysText' ||
-                    item.displayMode === 'textHiddenOnMobile') && (
-                    <span>{item.text}</span>
-                  )}
-                </Link>
-              ))
-            )
+          {right.length !== 0 && (
+            <div
+              id="test"
+              class={`grid grid-flow-col gap-4.8 print:op-0
+              ${!right.includes('themeButton') && !right.includes('searchButton') && 'lt-md:hidden'}`}
+            >
+              {right.map((key) =>
+                key === 'searchButton' ? (
+                  <SearchSwitch />
+                ) : key === 'themeButton' ? (
+                  <ThemeSwitch />
+                ) : key === 'rssLink' ? (
+                  <RssLink class="lt-md:hidden" />
+                ) : key === 'internalNavs' ? (
+                  internalNavs.map((item) => (
+                    <NavItem type="internal" {item} {mergeOnMobile} />
+                  ))
+                ) : (
+                  socialLinks.map((item) => (
+                    <NavItem type="social" {item} {mergeOnMobile} />
+                  ))
+                )
+              )}
+            </div>
           )}
-        </div>
+          <NavSwitch>
+            <Fragment slot="text">
+              {internalNavs.length !== 0 &&
+                internalNavs.map((item) => (
+                  <NavItem
+                    type="internal"
+                    {item}
+                    {mergeOnMobile}
+                    mobileItemType="text"
+                  />
+                ))}
+              {socialLinks.length !== 0 &&
+                socialLinks.map((item) => (
+                  <NavItem
+                    type="social"
+                    {item}
+                    {mergeOnMobile}
+                    mobileItemType="text"
+                  />
+                ))}
+            </Fragment>
+            <Fragment slot="icon">
+              {internalNavs.length !== 0 &&
+                internalNavs.map((item) => (
+                  <NavItem
+                    type="internal"
+                    {item}
+                    {mergeOnMobile}
+                    mobileItemType="icon"
+                  />
+                ))}
+              {socialLinks.length !== 0 &&
+                socialLinks.map((item) => (
+                  <NavItem
+                    type="social"
+                    {item}
+                    {mergeOnMobile}
+                    mobileItemType="icon"
+                  />
+                ))}
+              <RssLink />
+            </Fragment>
+          </NavSwitch>
+        </>
+      ) : (
+        <>
+          {left.length !== 0 && (
+            <div class="grid grid-flow-col gap-4.8 lt-md:(gap-3) print:op-0 ">
+              {navBarLayout.left.map((key) =>
+                key === 'searchButton' ? (
+                  <SearchSwitch />
+                ) : key === 'themeButton' ? (
+                  <ThemeSwitch />
+                ) : key === 'rssLink' ? (
+                  <RssLink />
+                ) : key === 'internalNavs' ? (
+                  internalNavs.map((item) => (
+                    <NavItem type="internal" {item} {mergeOnMobile} />
+                  ))
+                ) : (
+                  socialLinks.map((item) => (
+                    <NavItem type="social" {item} {mergeOnMobile} />
+                  ))
+                )
+              )}
+            </div>
+          )}
+          {right.length !== 0 && (
+            <div class="grid grid-flow-col gap-4.8 lt-md:(gap-3) print:op-0">
+              {navBarLayout.right.map((key) =>
+                key === 'searchButton' ? (
+                  <SearchSwitch />
+                ) : key === 'themeButton' ? (
+                  <ThemeSwitch />
+                ) : key === 'rssLink' ? (
+                  <RssLink />
+                ) : key === 'internalNavs' ? (
+                  internalNavs.map((item) => (
+                    <NavItem type="internal" {item} {mergeOnMobile} />
+                  ))
+                ) : (
+                  socialLinks.map((item) => (
+                    <NavItem type="social" {item} {mergeOnMobile} />
+                  ))
+                )
+              )}
+            </div>
+          )}
+        </>
       )
     }
   </nav>
 </header>
-<ToTopButton />

@@ -1,0 +1,15 @@
+---
+import Link from '~/components/base/Link.astro'
+import { getUrl } from '~/utils/common-utils'
+
+const { class: className } = Astro.props
+---
+
+<Link
+  class=`op-transition ${className}`
+  href={getUrl('/rss.xml')}
+  title="RSS Feed"
+  external={true}
+>
+  <div class="i-lucide-rss"></div>
+</Link>

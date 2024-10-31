@@ -5,11 +5,13 @@ import '~/styles/prose.css'
 import '~/styles/markdown.css'
 
 import Head from '~/components/base/Head.astro'
-import NavBar from '~/components/base/NavBar.astro'
+import Background from '~/components/backgrounds/Background.astro'
 import Link from '~/components/base/Link.astro'
+import NavBar from '~/components/base/NavBar.astro'
 import BackLink from '~/components/widgets/BackLink.astro'
 import Footer from '~/components/base/Footer.astro'
-import Background from '~/components/backgrounds/Background.astro'
+import ToTopButton from '~/components/widgets/ToTopButton.astro'
+import Backdrop from '~/components/base/Backdrop.astro'
 
 import { SITE } from '~/config'
 import { getUrl } from '~/utils/common-utils'
@@ -39,6 +41,10 @@ const { title, description, ogImage, bgType, pubDate, lastModDate } =
     class="relative flex flex-col min-h-screen
       font-sans text-gray-700 dark:text-gray-200"
   >
+    <!-- Background -->
+    {bgType && <Background type={bgType} />}
+
+    <!-- Main -->
     <Link
       href="#main"
       class="sr-only focus:(not-sr-only fixed start-1 top-1.5 op-20)"
@@ -59,9 +65,13 @@ const { title, description, ogImage, bgType, pubDate, lastModDate } =
       }
     </main>
     <Footer />
-    {bgType && <Background type={bgType} />}
+    <ToTopButton />
+
+    <!-- Panel Backdrop (on mobile) -->
+    <Backdrop />
+
+    <!-- Progress Bar -->
     <script>
-      /* nprogress */
       import nprogress from 'nprogress'
 
       document.addEventListener('astro:before-preparation', () => {

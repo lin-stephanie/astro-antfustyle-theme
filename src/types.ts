@@ -90,16 +90,17 @@ interface TextNavItem extends BaseNavItem {
    *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
    *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
    *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
+   *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
    *
    * @remark
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    */
   displayMode: 'alwaysText' | 'textHiddenOnMobile'
 
   /**
    * Sets the text displayed for the navigation item.
-   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
+   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    */
   text: string
 }
@@ -112,16 +113,17 @@ export interface IconNavItem extends BaseNavItem {
    *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
    *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
    *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
+   *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
    *
    * @remark
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    */
   displayMode: 'alwaysIcon' | 'iconHiddenOnMobile'
 
   /**
    * Sets the icon displayed for the navigation item.
-   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
+   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
@@ -143,22 +145,23 @@ export interface ResponsiveNavItem extends BaseNavItem {
    *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
    *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
    *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
+   *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
    *
    * @remark
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    */
-  displayMode: 'textToIconOnMobile'
+  displayMode: 'textToIconOnMobile' | 'iconToTextOnMobile'
 
   /**
    * Sets the text displayed for the navigation item.
-   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
+   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    */
   text: string
 
   /**
    * Sets the icon displayed for the navigation item.
-   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
+   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
@@ -172,7 +175,7 @@ export interface ResponsiveNavItem extends BaseNavItem {
   icon: Icon
 }
 
-type InternalNav = TextNavItem | IconNavItem | ResponsiveNavItem
+export type InternalNav = TextNavItem | IconNavItem | ResponsiveNavItem
 
 interface BaseSocialItem {
   /**
@@ -200,16 +203,17 @@ interface TextSocialItem extends BaseSocialItem {
    *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
    *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
    *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
+   *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
    *
    * @remark
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    */
   displayMode: 'alwaysText' | 'textHiddenOnMobile'
 
   /**
-   * Sets the text displayed for the navigation item.
-   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
+   * Sets the text displayed for the social item.
+   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    */
   text: string
 }
@@ -222,16 +226,17 @@ export interface IconSocialItem extends BaseSocialItem {
    *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
    *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
    *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
+   *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
    *
    * @remark
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    */
   displayMode: 'alwaysIcon' | 'iconHiddenOnMobile'
 
   /**
    * Sets the icon displayed the social platform.
-   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
+   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
@@ -253,22 +258,23 @@ export interface ResponsiveSocialItem extends BaseSocialItem {
    *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
    *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
    *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
+   *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
    *
    * @remark
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', and 'textToIconOnMobile'.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    */
-  displayMode: 'textToIconOnMobile'
+  displayMode: 'textToIconOnMobile' | 'iconToTextOnMobile'
 
   /**
-   * Sets the text displayed for the navigation item.
-   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', and 'textToIconOnMobile'.
+   * Sets the text displayed for the social item.
+   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    */
   text: string
 
   /**
    * Sets the icon displayed the social platform.
-   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', or 'textToIconOnMobile'.
+   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    *
    * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
@@ -282,7 +288,7 @@ export interface ResponsiveSocialItem extends BaseSocialItem {
   icon: Icon
 }
 
-type SocialLink = TextSocialItem | IconSocialItem | ResponsiveSocialItem
+export type SocialLink = TextSocialItem | IconSocialItem | ResponsiveSocialItem
 
 type NavBarComponentType =
   | 'internalNavs'
@@ -311,6 +317,11 @@ export interface NavBarLayout {
    * Components in `left` and `right` arrays must not contain duplicates.
    */
   right: NavBarComponentType[]
+
+  /**
+   * Controls whether the navigation bar merges into a hamburger icon on mobile devices.
+   */
+  mergeOnMobile: boolean
 }
 
 interface Tab {
