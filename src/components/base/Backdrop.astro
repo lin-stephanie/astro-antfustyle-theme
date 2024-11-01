@@ -1,7 +1,7 @@
 ---
-export function dispatchToggleBackgrop(visible: boolean) {
+export function dispatchToggleBackdrop(visible: boolean) {
   document.dispatchEvent(
-    new CustomEvent('toggle-backgrop', {
+    new CustomEvent('toggle-backdrop', {
       detail: { visible },
     })
   )
@@ -17,14 +17,17 @@ export function dispatchToggleBackgrop(visible: boolean) {
 </div>
 
 <script>
-  document.addEventListener('toggle-backgrop', ((
+  import { dispatchToggleBackdrop } from './Backdrop.astro'
+
+  /* Control Backdrop Fading */
+  document.addEventListener('toggle-backdrop', ((
     event: CustomEvent<{ visible: boolean }>
   ) => {
     const backdrop = document.getElementById('backdrop')
-    const visible = event.detail.visible
+    const isVisible = event.detail.visible
 
     if (backdrop) {
-      if (visible) {
+      if (isVisible) {
         backdrop.classList.remove('hidden')
         backdrop.classList.add('fade-in')
       } else {
@@ -40,4 +43,90 @@ export function dispatchToggleBackgrop(visible: boolean) {
       }
     }
   }) as EventListener)
+
+  /* Handle user click on backdrop to close panel */
+  document.addEventListener('astro:page-load', () => {
+    const handleClick = () => {
+      const navPanel = document.getElementById('nav-panel')
+      const searchPanel = document.getElementById('search-panel')
+
+      if (navPanel && !navPanel.classList.contains('hidden!')) {
+        navPanel.classList.add('fade-out')
+        dispatchToggleBackdrop(false)
+        navPanel.addEventListener(
+          'animationend',
+          () => {
+            navPanel.classList.remove('fade-in', 'fade-out')
+            navPanel.classList.add('hidden!')
+          },
+          { once: true }
+        )
+      }
+
+      if (searchPanel && !searchPanel.classList.contains('hidden')) {
+        searchPanel.classList.add('fade-out')
+        dispatchToggleBackdrop(false)
+        searchPanel.addEventListener(
+          'animationend',
+          () => {
+            searchPanel.classList.remove('fade-in', 'fade-out')
+            searchPanel.classList.add('hidden')
+          },
+          { once: true }
+        )
+      }
+    }
+
+    const backdrop = document.getElementById('backdrop')
+    backdrop?.addEventListener('click', handleClick)
+  })
+
+  /* Close panel when 'Tab' shifts focus outside the panel, if backdrop is present */
+  document.addEventListener('keyup', (event) => {
+    const backdrop = document.getElementById('backdrop')
+    if (!backdrop) return
+
+    const key = event.key === 'Tab'
+    if (!key) return
+
+    const focusEl = document.activeElement
+    const navPanel = document.getElementById('nav-panel')
+    const searchPanel = document.getElementById('search-panel')
+
+    if (
+      navPanel &&
+      !navPanel.classList.contains('hidden!') &&
+      !navPanel.contains(focusEl) &&
+      focusEl?.id !== 'nav-open-button'
+    ) {
+      navPanel.classList.add('fade-out')
+      dispatchToggleBackdrop(false)
+      navPanel.addEventListener(
+        'animationend',
+        () => {
+          navPanel.classList.remove('fade-in', 'fade-out')
+          navPanel.classList.add('hidden!')
+        },
+        { once: true }
+      )
+    }
+
+    if (
+      searchPanel &&
+      !searchPanel.classList.contains('hidden') &&
+      !searchPanel.contains(focusEl) &&
+      focusEl?.id !== 'search-switch'
+    ) {
+      searchPanel.classList.add('fade-out')
+      dispatchToggleBackdrop(false)
+      searchPanel.addEventListener(
+        'animationend',
+        () => {
+          searchPanel.classList.remove('fade-in', 'fade-out')
+          searchPanel.classList.add('hidden')
+        },
+        { once: true }
+      )
+    }
+  })
 </script>

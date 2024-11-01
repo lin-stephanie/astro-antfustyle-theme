@@ -14,18 +14,16 @@ import { getUrl } from '~/utils/common-utils'
 <div
   transition:persist
   id="search-panel"
-  class="float-panel-closed op-transition
-    z-200 fixed top-20 right-8
+  class="hidden z-200 fixed top-20 right-8
     grid grid-rows-[auto_1fr]
-    w-30rem max-h-80vh p-2 rounded-lg lt-md:(w-90% left-5% right-5%)
+    w-30rem max-h-80vh p-2 rounded-lg lt-lgp:(w-90% left-5% right-5%)
     bg-[var(--c-bg)] shadow-c"
-  tabindex="-1"
 >
   <div
     id="search-bar"
     class="grid grid-cols-[auto_1fr] items-center
       h-10 px-3 rounded-md
-      bg-[#88888811]"
+      bg-[#88888811] dark:bg-[#88888822]"
   >
     <div id="search-icon" class="i-grommet-icons:search op-60"></div>
     <label class="sr-only" for="search-input">Search</label>
@@ -40,105 +38,67 @@ import { getUrl } from '~/utils/common-utils'
   <div id="search-results" class="overflow-y-auto" data-base={getUrl('/')}></div>
 </div>
 
-<style is:global>
-  input[type='search']::-webkit-search-cancel-button {
-    display: none;
-  }
-
-  .search-results__a:first-child {
-    margin-top: 8px;
-  }
-
-  .search-results__a {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-
-    padding: 0.75rem;
-    border-radius: 6px;
-
-    opacity: 0.6;
-    background: transparent;
-
-    font-size: 1.1rem;
-    transition: opacity 0.2s ease;
-  }
-
-  .search-results__a:hover {
-    opacity: 1;
-    background: #88888811;
-  }
-
-  .search-results__title {
-    color: var(--c-text);
-  }
-
-  .search-results__excerpt {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 400;
-
-    opacity: 0.5;
-  }
-
-  mark {
-    background: transparent;
-
-    color: var(--c-text);
-    font-size: 1.06em;
-  }
-</style>
-
-<style>
-  .float-panel-closed {
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  #search-bar:hover #search-icon,
-  #search-bar:focus-within #search-icon {
-    opacity: 1;
-  }
-</style>
-
 <script>
+  /* Handle click on search switch */
+  import { dispatchToggleBackdrop } from '~/components/base/Backdrop.astro'
+
   document.addEventListener('astro:page-load', () => {
-    const handleOpen = () => {
+    const handleToggle = () => {
       const searchPanel = document.getElementById('search-panel')
-      searchPanel?.classList.toggle('float-panel-closed')
+      const isClosed = searchPanel?.classList.contains('hidden')
+      const isWidthUnder1128 = window.innerWidth < 1128
+
+      if (searchPanel && isClosed && isWidthUnder1128) {
+        dispatchToggleBackdrop(true)
+        searchPanel.classList.remove('hidden')
+        searchPanel.classList.add('fade-in')
+      } else if (searchPanel && isClosed && !isWidthUnder1128) {
+        searchPanel.classList.remove('hidden')
+        searchPanel.classList.add('fade-in')
+      } else if (searchPanel && !isClosed && !isWidthUnder1128) {
+        searchPanel.classList.add('fade-out')
+        searchPanel.addEventListener(
+          'animationend',
+          () => {
+            searchPanel?.classList.remove('fade-in', 'fade-out')
+            searchPanel?.classList.add('hidden')
+          },
+          { once: true }
+        )
+      }
     }
 
     const searchSwitch = document.getElementById('search-switch')
-    searchSwitch?.addEventListener('click', handleOpen)
+    searchSwitch?.addEventListener('click', handleToggle)
   })
 
+  /* Handle click on link or outside panel */
   const handleClose = (event: MouseEvent) => {
-    const panels = [{id: 'search-panel', ignores: ['search-switch']}]
+      const searchPanel = document.getElementById('search-panel')
+      if (!searchPanel || searchPanel.classList.contains('hidden')) return
 
-    panels.forEach(panel => {
-      const panelEl = document.getElementById(panel.id)
-      if (!panelEl || panelEl.classList.contains('float-panel-closed')) return
-
-      // check if the click event occurred outside the search panel in a non-ignored area
+      const isWidthUnder1128 = window.innerWidth < 1128
       const target = event.target
-      const isClickedOutside =
+
+      // check if the click event occurred outside the search panel
+      // in a non-ignored area ('search-switch')
+      const isClickedOutsideOnDesktop =
+        !isWidthUnder1128 &&
         target instanceof Node &&
-        !panelEl.contains(target) &&
-        !panel.ignores.some((ignoreId) => {
-          const ignoreEl = document.getElementById(ignoreId)
-          return ignoreEl?.contains(target)
-        })
+        !searchPanel.contains(target) &&
+        !document.getElementById('search-switch')?.contains(target)
 
       // check if a link within 'search-results' was clicked
       const isClickedOnLinkInSearchResults =
         target instanceof HTMLElement &&
         target.closest('#search-results') &&
-        target.closest('a');
+        target.closest('a')
 
-      if (isClickedOutside || isClickedOnLinkInSearchResults) {
-        panelEl.classList.add('float-panel-closed')
+      if (isClickedOutsideOnDesktop || isClickedOnLinkInSearchResults) {
+        if(isWidthUnder1128) dispatchToggleBackdrop(false)
+        searchPanel.classList.add('hidden')
       }
-    })
+
   }
 
   document.addEventListener('click', (event) => handleClose(event))
@@ -160,6 +120,7 @@ import { getUrl } from '~/utils/common-utils'
     }
   ]
 
+  /* Handle user input */
   const handleInput = async (event: Event) => {
     const searchResults = document.getElementById('search-results')
     if (searchResults) searchResults.innerHTML = ''
@@ -171,18 +132,18 @@ import { getUrl } from '~/utils/common-utils'
         const data = await result.data()
         // console.log('data', data)
         document.getElementById('search-results')!.innerHTML += `
-        <a href="${data.url}" class="search-results__a">
-          <div class="search-results__title">${data.meta.title}</div>
-          <div class="search-results__excerpt">${data.excerpt}</div>
+        <a href="${data.url}" class="search-results-item">
+          <div class="search-results-title">${data.meta.title}</div>
+          <div class="search-results-excerpt">${data.excerpt}</div>
         </a>`
       }
     } else {
       for (const data of fakeResults) {
         const searchResults = document.getElementById('search-results')!
         searchResults.innerHTML += `
-          <a href=${searchResults.dataset.base} class="search-results__a">
-            <div class="search-results__title">${data.meta.title}</div>
-            <div class="search-results__excerpt">${data.excerpt}</div>
+          <a href=${searchResults.dataset.base} class="search-results-item">
+            <div class="search-results-title">${data.meta.title}</div>
+            <div class="search-results-excerpt">${data.excerpt}</div>
           </a>`
       }
     }

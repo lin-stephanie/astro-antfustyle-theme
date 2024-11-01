@@ -35,14 +35,15 @@
 </div>
 
 <script>
-  import { dispatchToggleBackgrop } from '~/components/base/Backdrop.astro'
+  /* Handle click on button */
+  import { dispatchToggleBackdrop } from '~/components/base/Backdrop.astro'
 
   document.addEventListener('astro:page-load', () => {
-    const handleBtnClickToOpen = () => {
-      const navPanel = document.getElementById('nav-panel')
-      dispatchToggleBackgrop(true)
-      navPanel?.classList.remove('hidden!')
+    const navPanel = document.getElementById('nav-panel')
 
+    const handleBtnClickToOpen = () => {
+      dispatchToggleBackdrop(true)
+      navPanel?.classList.remove('hidden!')
       navPanel?.classList.add('fade-in')
     }
 
@@ -50,10 +51,8 @@
     navOpenButton?.addEventListener('click', handleBtnClickToOpen)
 
     const handleBtnClickToClose = () => {
-      const navPanel = document.getElementById('nav-panel')
-      dispatchToggleBackgrop(false)
-
       navPanel?.classList.add('fade-out')
+      dispatchToggleBackdrop(false)
       navPanel?.addEventListener(
         'animationend',
         () => {
@@ -66,66 +65,5 @@
 
     const navCloseButton = document.getElementById('nav-close-button')
     navCloseButton?.addEventListener('click', handleBtnClickToClose)
-  })
-
-  const handleCloseOnBackdropOrNavClick = (event: MouseEvent) => {
-    const panels = [{ id: 'nav-panel', ignores: [] }]
-
-    panels.forEach((panel) => {
-      const panelEl = document.getElementById(panel.id)
-      if (!panelEl) return
-
-      const target = event.target
-
-      const isClickedOnBackdropOrNav =
-        target instanceof HTMLElement &&
-        window.innerWidth < 768 &&
-        (target.closest('#backdrop') ||
-          (target.closest('#nav-panel') && target.closest('a')))
-
-      if (isClickedOnBackdropOrNav) {
-        dispatchToggleBackgrop(false)
-
-        panelEl?.classList.add('fade-out')
-        panelEl?.addEventListener(
-          'animationend',
-          () => {
-            panelEl?.classList.remove('fade-in', 'fade-out')
-            panelEl?.classList.add('hidden!')
-          },
-          { once: true }
-        )
-      }
-    })
-  }
-
-  document.addEventListener('click', (event) =>
-    handleCloseOnBackdropOrNavClick(event)
-  )
-
-  /* Close panel when 'Tab' moves focus outside */
-  document.addEventListener('keyup', (event) => {
-    const navPanel = document.getElementById('nav-panel')
-    const isOpen = !navPanel?.classList.contains('hidden!')
-
-    if (navPanel && isOpen && event.key === 'Tab') {
-      const focusEl = document.activeElement
-      const isFocusInsidePanel = navPanel.contains(focusEl)
-      console.log(focusEl)
-
-      if (!isFocusInsidePanel && focusEl?.id !== 'nav-open-button') {
-        dispatchToggleBackgrop(false)
-
-        navPanel?.classList.add('fade-out')
-        navPanel?.addEventListener(
-          'animationend',
-          () => {
-            navPanel?.classList.remove('fade-in', 'fade-out')
-            navPanel?.classList.add('hidden!')
-          },
-          { once: true }
-        )
-      }
-    }
   })
 </script>
