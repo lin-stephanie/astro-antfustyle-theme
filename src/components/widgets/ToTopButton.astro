@@ -16,8 +16,7 @@
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    const handleClick = (event: MouseEvent) => {
-      event.preventDefault()
+    const handleClick = () => {
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
@@ -25,7 +24,7 @@
     }
 
     const toTopButton = document.getElementById('to-top-button')
-    toTopButton?.addEventListener('click', (event) => handleClick(event))
+    toTopButton?.addEventListener('click', handleClick)
   })
 
   const handleScroll = () => {

@@ -6,11 +6,12 @@
   id="theme-switch"
   class="op-60 hover:op-100 op-transition"
   title="Toggles light & dark"
+  aria-label="Toggles light & dark"
 >
   <div u-i-ri-sun-line u-dark:i-ri-moon-line></div>
 </button>
 
-<!-- initialize as inline scripts for faster response, avoiding FOUC  -->
+<!-- Initialize as inline scripts for faster response, avoiding FOUC  -->
 <script is:inline data-astro-rerun>
   function initTheme() {
     let theme
@@ -67,7 +68,7 @@
       colorThemeMetaTag?.setAttribute('content', bgColor)
     }
 
-    /* user toggle button */
+    /* Handle user toggle button */
     const handleToggle = (event: MouseEvent) => {
       const currentTarget = event.currentTarget
 
@@ -124,7 +125,7 @@
     const toggleThemeButton = document.getElementById('theme-switch')
     toggleThemeButton?.addEventListener('click', (event) => handleToggle(event))
 
-    /* listening system changes */
+    /* Listening system changes */
     window
       .matchMedia('(prefers-color-scheme: dark)')
       .addEventListener('change', ({ matches }) => {

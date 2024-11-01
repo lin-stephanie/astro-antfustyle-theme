@@ -299,8 +299,8 @@ type NavBarComponentType =
 
 export interface NavBarLayout {
   /**
-   * Defines which components ('internalNavigation', 'socialLinks', 'searchButton',
-   * 'themeToggleButton', 'rssLink') are positioned on the left side of the navigation bar.
+   * Defines which components ('internalNavs', 'socialLinks', 'searchButton',
+   * 'themeButton', 'rssLink') are positioned on the left side of the navigation bar.
    *
    * @remark
    * If you want all components to appear on the right side, leave this array empty.
@@ -309,8 +309,8 @@ export interface NavBarLayout {
   left: NavBarComponentType[]
 
   /**
-   * Defines which components ('internalNavigation', 'socialLinks', 'searchButton',
-   * 'themeToggleButton', 'rssLink') are positioned on the right side of the navigation bar.
+   * Defines which components ('internalNavs', 'socialLinks', 'searchButton',
+   * 'themeButton', 'rssLink') are positioned on the right side of the navigation bar.
    *
    * @remark
    * If you want all components to appear on the left side, leave this array empty.
@@ -319,7 +319,8 @@ export interface NavBarLayout {
   right: NavBarComponentType[]
 
   /**
-   * Controls whether the navigation bar merges into a hamburger icon on mobile devices.
+   * Controls whether the 'internalNavs' and 'socialLinks' section are combined into
+   * a single navigation menu on mobile, managed through a hamburger icon.
    */
   mergeOnMobile: boolean
 }

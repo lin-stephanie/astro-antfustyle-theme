@@ -46,17 +46,19 @@ const {
       u-flex="~ items-center gap-2 lt-md:(col items-start)"
       class="no-underline"
     >
-      <div class="flex gap-2 text-lg leading-1.2em">
-        <span class="align-middle">{title}</span>
-        {
-          redirect && (
-            <span
-              u-i-carbon-arrow-up-right
-              class="flex-none ml--1.5 op-50 align-middle text-xs"
-              title="External link"
-            />
-          )
-        }
+      <div class="text-lg leading-1.2em">
+        <span class="align-middle"
+          >{title}
+          {
+            redirect && (
+              <span
+                u-i-carbon-arrow-up-right
+                class="mb-2 mr--0.5 ml--1 op-50 align-middle text-xs"
+                title="External link"
+              />
+            )
+          }</span
+        >
       </div>
       <div flex="~ gap-2 items-center">
         {

@@ -24,27 +24,26 @@ body:
     id: expected
     attributes:
       label: Expected Behavior
-      description: What SHOULD happen?
+      description: What should happen?
   - type: textarea
     id: logs
     attributes:
       label: Relevant errors (if available)
-      description: Open the browser's Developer Console by pressing **CTRL + SHIFT + I** (Windows) or **Command + Option + I** (MacOS). If there are any errors or warnings in the console, please copy and paste them here.
+      description: Open the browser's Developer Console by pressing `CTRL + SHIFT + I` (Windows) or `Command + Option + I` (MacOS). If there are any errors or warnings in the console, please copy and paste them here.
     validations:
       required: false
   - type: textarea
     id: environment
     attributes:
       label: Environment details
-      description: Specify the operating systems and browsers where this bug occurs.
+      description: Specify the operating systems and browsers where this bug occurs (run `npx envinfo --system --binaries --browsers`).
       placeholder: OS (Windows, Linux, macOS, iOS, Android), Browser (Chrome, Edge, Firefox, Safari, Opera...), Version (1.0.0)
     validations:
-      required: false
+      required: true
   - type: checkboxes
     id: validations
     attributes:
-      label: Validations
-      description: Before submitting the issue, please make sure you do the following
+      label: Before Submitting
       options:
         - label: Check that there isn't [already an issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) that reports the same bug to avoid creating a duplicate.
           required: true
