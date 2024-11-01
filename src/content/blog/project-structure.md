@@ -98,10 +98,11 @@ astro-antfustyle-theme
 | | |-prose.css                             // Prose styles for text content.
 | |-types.ts                                // TypeScript types used across the project.
 | |-utils                                   // Utility functions and helpers.
-| | |-common-utils.ts                       // General utility functions.
-| | |-datetime-utils.ts                     // Utility functions for date and time.
-| | |-post-utils.ts                         // Utility functions for working with posts.
-| | |-toc-utils.ts                          // Utility functions for generating tables of contents.
+| | |-animation.ts                          // Utility functions for Animation.
+| | |-common.ts                             // General utility functions.
+| | |-datetime.ts                           // Utility functions for date and time.
+| | |-post.ts                               // Utility functions for working with posts.
+| | |-toc.ts                                // Utility functions for generating tables of contents.
 |-tsconfig.json                             // TypeScript configuration file.
 |-unocss.config.ts                          // UnoCSS configuration for utility-first CSS.
 ```

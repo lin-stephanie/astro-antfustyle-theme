@@ -35,32 +35,21 @@
 </div>
 
 <script>
-  /* Handle click on button */
-  import { dispatchToggleBackdrop } from '~/components/base/Backdrop.astro'
+  /* Open or close nav panel when user click on button */
+  import { dispatchToggleBackdrop, toggleFadeEffect } from '~/utils/animation'
 
   document.addEventListener('astro:page-load', () => {
-    const navPanel = document.getElementById('nav-panel')
-
     const handleBtnClickToOpen = () => {
       dispatchToggleBackdrop(true)
-      navPanel?.classList.remove('hidden!')
-      navPanel?.classList.add('fade-in')
+      toggleFadeEffect('nav-panel', true, 'hidden!')
     }
 
     const navOpenButton = document.getElementById('nav-open-button')
     navOpenButton?.addEventListener('click', handleBtnClickToOpen)
 
     const handleBtnClickToClose = () => {
-      navPanel?.classList.add('fade-out')
+      toggleFadeEffect('nav-panel', false, 'hidden!')
       dispatchToggleBackdrop(false)
-      navPanel?.addEventListener(
-        'animationend',
-        () => {
-          navPanel?.classList.remove('fade-in', 'fade-out')
-          navPanel?.classList.add('hidden!')
-        },
-        { once: true }
-      )
     }
 
     const navCloseButton = document.getElementById('nav-close-button')

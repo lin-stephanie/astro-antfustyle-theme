@@ -1,11 +1,5 @@
 ---
-export function dispatchToggleBackdrop(visible: boolean) {
-  document.dispatchEvent(
-    new CustomEvent('toggle-backdrop', {
-      detail: { visible },
-    })
-  )
-}
+
 ---
 
 <div
@@ -17,64 +11,28 @@ export function dispatchToggleBackdrop(visible: boolean) {
 </div>
 
 <script>
-  import { dispatchToggleBackdrop } from './Backdrop.astro'
+  import { dispatchToggleBackdrop, toggleFadeEffect } from '~/utils/animation'
 
   /* Control Backdrop Fading */
   document.addEventListener('toggle-backdrop', ((
     event: CustomEvent<{ visible: boolean }>
   ) => {
-    const backdrop = document.getElementById('backdrop')
     const isVisible = event.detail.visible
-
-    if (backdrop) {
-      if (isVisible) {
-        backdrop.classList.remove('hidden')
-        backdrop.classList.add('fade-in')
-      } else {
-        backdrop.classList.add('fade-out')
-        backdrop.addEventListener(
-          'animationend',
-          () => {
-            backdrop.classList.remove('fade-in', 'fade-out')
-            backdrop.classList.add('hidden')
-          },
-          { once: true }
-        )
-      }
-    }
+    toggleFadeEffect('backdrop', isVisible, 'hidden')
   }) as EventListener)
 
-  /* Handle user click on backdrop to close panel */
+  /* Close panel when user click on backdrop */
   document.addEventListener('astro:page-load', () => {
     const handleClick = () => {
       const navPanel = document.getElementById('nav-panel')
       const searchPanel = document.getElementById('search-panel')
 
-      if (navPanel && !navPanel.classList.contains('hidden!')) {
-        navPanel.classList.add('fade-out')
-        dispatchToggleBackdrop(false)
-        navPanel.addEventListener(
-          'animationend',
-          () => {
-            navPanel.classList.remove('fade-in', 'fade-out')
-            navPanel.classList.add('hidden!')
-          },
-          { once: true }
-        )
-      }
+      if (navPanel && !navPanel.classList.contains('hidden!'))
+        toggleFadeEffect('nav-panel', false, 'hidden!')
+      if (searchPanel && !searchPanel.classList.contains('hidden'))
+        toggleFadeEffect('search-panel', false, 'hidden')
 
-      if (searchPanel && !searchPanel.classList.contains('hidden')) {
-        searchPanel.classList.add('fade-out')
-        dispatchToggleBackdrop(false)
-        searchPanel.addEventListener(
-          'animationend',
-          () => {
-            searchPanel.classList.remove('fade-in', 'fade-out')
-            searchPanel.classList.add('hidden')
-          },
-          { once: true }
-        )
-      }
+      dispatchToggleBackdrop(false)
     }
 
     const backdrop = document.getElementById('backdrop')
@@ -84,10 +42,7 @@ export function dispatchToggleBackdrop(visible: boolean) {
   /* Close panel when 'Tab' shifts focus outside the panel, if backdrop is present */
   document.addEventListener('keyup', (event) => {
     const backdrop = document.getElementById('backdrop')
-    if (!backdrop) return
-
-    const key = event.key === 'Tab'
-    if (!key) return
+    if (backdrop?.classList.contains('hidden') || event.key !== 'Tab') return
 
     const focusEl = document.activeElement
     const navPanel = document.getElementById('nav-panel')
@@ -99,16 +54,8 @@ export function dispatchToggleBackdrop(visible: boolean) {
       !navPanel.contains(focusEl) &&
       focusEl?.id !== 'nav-open-button'
     ) {
-      navPanel.classList.add('fade-out')
+      toggleFadeEffect('nav-panel', false, 'hidden!')
       dispatchToggleBackdrop(false)
-      navPanel.addEventListener(
-        'animationend',
-        () => {
-          navPanel.classList.remove('fade-in', 'fade-out')
-          navPanel.classList.add('hidden!')
-        },
-        { once: true }
-      )
     }
 
     if (
@@ -117,16 +64,8 @@ export function dispatchToggleBackdrop(visible: boolean) {
       !searchPanel.contains(focusEl) &&
       focusEl?.id !== 'search-switch'
     ) {
-      searchPanel.classList.add('fade-out')
+      toggleFadeEffect('search-panel', false, 'hidden')
       dispatchToggleBackdrop(false)
-      searchPanel.addEventListener(
-        'animationend',
-        () => {
-          searchPanel.classList.remove('fade-in', 'fade-out')
-          searchPanel.classList.add('hidden')
-        },
-        { once: true }
-      )
     }
   })
 </script>

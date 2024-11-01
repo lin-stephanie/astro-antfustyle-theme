@@ -1,5 +1,5 @@
 ---
-import { getUrl } from '~/utils/common-utils'
+import { getUrl } from '~/utils/common'
 ---
 
 <button
@@ -40,7 +40,7 @@ import { getUrl } from '~/utils/common-utils'
 
 <script>
   /* Handle click on search switch */
-  import { dispatchToggleBackdrop } from '~/components/base/Backdrop.astro'
+  import { dispatchToggleBackdrop, toggleFadeEffect } from '~/utils/animation'
 
   document.addEventListener('astro:page-load', () => {
     const handleToggle = () => {
@@ -48,23 +48,11 @@ import { getUrl } from '~/utils/common-utils'
       const isClosed = searchPanel?.classList.contains('hidden')
       const isWidthUnder1128 = window.innerWidth < 1128
 
-      if (searchPanel && isClosed && isWidthUnder1128) {
-        dispatchToggleBackdrop(true)
-        searchPanel.classList.remove('hidden')
-        searchPanel.classList.add('fade-in')
-      } else if (searchPanel && isClosed && !isWidthUnder1128) {
-        searchPanel.classList.remove('hidden')
-        searchPanel.classList.add('fade-in')
+      if (searchPanel && isClosed) {
+        if (isWidthUnder1128) dispatchToggleBackdrop(isWidthUnder1128)
+        toggleFadeEffect('search-panel', true, 'hidden')
       } else if (searchPanel && !isClosed && !isWidthUnder1128) {
-        searchPanel.classList.add('fade-out')
-        searchPanel.addEventListener(
-          'animationend',
-          () => {
-            searchPanel?.classList.remove('fade-in', 'fade-out')
-            searchPanel?.classList.add('hidden')
-          },
-          { once: true }
-        )
+        toggleFadeEffect('search-panel', false, 'hidden')
       }
     }
 
@@ -72,33 +60,38 @@ import { getUrl } from '~/utils/common-utils'
     searchSwitch?.addEventListener('click', handleToggle)
   })
 
-  /* Handle click on link or outside panel */
+  /* Handle click on link or outside search panel */
   const handleClose = (event: MouseEvent) => {
-      const searchPanel = document.getElementById('search-panel')
-      if (!searchPanel || searchPanel.classList.contains('hidden')) return
+    const searchPanel = document.getElementById('search-panel')
+    if (!searchPanel || searchPanel.classList.contains('hidden')) return
 
-      const isWidthUnder1128 = window.innerWidth < 1128
-      const target = event.target
+    const isWidthUnder1128 = window.innerWidth < 1128
+    const target = event.target
 
-      // check if the click event occurred outside the search panel
-      // in a non-ignored area ('search-switch')
-      const isClickedOutsideOnDesktop =
-        !isWidthUnder1128 &&
-        target instanceof Node &&
-        !searchPanel.contains(target) &&
-        !document.getElementById('search-switch')?.contains(target)
+    // check if the click event occurred outside the search panel
+    // in a non-ignored area ('search-switch')
+    const isClickedOutsideOnDesktop =
+      !isWidthUnder1128 &&
+      target instanceof Node &&
+      !searchPanel.contains(target) &&
+      !document.getElementById('search-switch')?.contains(target)
 
-      // check if a link within 'search-results' was clicked
-      const isClickedOnLinkInSearchResults =
-        target instanceof HTMLElement &&
-        target.closest('#search-results') &&
-        target.closest('a')
+    if (isClickedOutsideOnDesktop) {
+      toggleFadeEffect('search-panel', false, 'hidden')
+      return
+    }
 
-      if (isClickedOutsideOnDesktop || isClickedOnLinkInSearchResults) {
-        if(isWidthUnder1128) dispatchToggleBackdrop(false)
-        searchPanel.classList.add('hidden')
-      }
+    // check if a link within 'search-results' was clicked
+    const isClickedOnLinkInSearchResults =
+      target instanceof HTMLElement &&
+      target.closest('#search-results') &&
+      target.closest('a')
 
+    if (isClickedOnLinkInSearchResults) {
+      if (isWidthUnder1128) dispatchToggleBackdrop(false)
+      searchPanel.classList.remove('fade-in')
+      searchPanel.classList.add('hidden')
+    }
   }
 
   document.addEventListener('click', (event) => handleClose(event))

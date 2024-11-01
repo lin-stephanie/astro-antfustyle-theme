@@ -4,8 +4,8 @@ import StandardLayout from '~/layouts/StandardLayout.astro'
 import Toc from '~/components/toc/Toc.astro'
 import ShareLink from '~/components/widgets/ShareLink.astro'
 import Warning from '~/components/base/Warning.astro'
-import { formatDate } from '~/utils/datetime-utils'
-import { getFilteredPosts } from '~/utils/post-utils'
+import { formatDate } from '~/utils/datetime'
+import { getFilteredPosts } from '~/utils/post'
 import { FEATURES } from '~/config'
 
 export async function getStaticPaths() {
