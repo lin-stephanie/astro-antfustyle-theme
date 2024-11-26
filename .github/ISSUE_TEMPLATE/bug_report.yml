@@ -25,6 +25,8 @@ body:
     attributes:
       label: Expected Behavior
       description: What should happen?
+    validations:
+      required: false
   - type: textarea
     id: logs
     attributes:

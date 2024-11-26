@@ -77,18 +77,12 @@ html.dark .prose {
   font-size: 1.05em;
 }
 
-.prose pre:not(.expressive-code) {
-  padding: 0;
-  margin: 0;
-  background: transparent;
-}
-
 .prose details summary {
   padding-left: 1px;
   cursor: pointer;
 }
 
-.prose details {
+.prose details:not(.expressive-code *) {
   margin-top: 1.25em;
   margin-bottom: 1.25em;
 }

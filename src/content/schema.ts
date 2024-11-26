@@ -48,7 +48,7 @@ export const postSchema = z.object({
     .string()
     .max(60)
     .describe(
-      "**Requirde**. Sets the post title, limited to **60 characters**. This follows Moz's recommendation, ensuring approximately 90% of titles display correctly in SERPs and preventing truncation on smaller screens or social platforms. [Learn more](https://moz.com/learn/seo/title-tag)."
+      "**Required**. Sets the post title, limited to **60 characters**. This follows Moz's recommendation, ensuring approximately 90% of titles display correctly in SERPs and preventing truncation on smaller screens or social platforms. [Learn more](https://moz.com/learn/seo/title-tag)."
     ),
   subtitle: z
     .string()
@@ -65,7 +65,7 @@ export const postSchema = z.object({
   pubDate: z.coerce
     .date()
     .describe(
-      '**Requirde**. Specifies the publication date. See supported formats [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#examples).'
+      '**Required**. Specifies the publication date. See supported formats [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#examples).'
     ),
   lastModDate: z
     .union([z.coerce.date(), z.literal('')])
@@ -134,14 +134,14 @@ export type PostSchema = z.infer<typeof postSchema>
 const projectSchema = z.object({
   name: z
     .string()
-    .describe('**Requirde**. Name of the project to be displayed.'),
+    .describe('**Required**. Name of the project to be displayed.'),
   link: z
     .string()
     .url('Invalid url.')
-    .describe('**Requirde**. URL linking to the project page or repository.'),
+    .describe('**Required**. URL linking to the project page or repository.'),
   desc: z
     .string()
-    .describe('**Requirde**. A brief description summarizing the project.'),
+    .describe('**Required**. A brief description summarizing the project.'),
   icon: z
     .string()
     .regex(
@@ -149,7 +149,7 @@ const projectSchema = z.object({
       'Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [UnoCSS](https://unocss.dev/presets/icons) specs.'
     )
     .describe(
-      '**Requirde**. Icon representing the project. It must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [UnoCSS](https://unocss.dev/presets/icons) specs. [Check all available icons here](https://icones.js.org/).'
+      '**Required**. Icon representing the project. It must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [UnoCSS](https://unocss.dev/presets/icons) specs. [Check all available icons here](https://icones.js.org/).'
     ),
 })
 
@@ -165,16 +165,16 @@ export type ProjectsSchema = z.infer<typeof projectsSchema>
 
 /* Stremas */
 const streamSchema = z.object({
-  title: z.string().describe('**Requirde**. Sets the stream title.'),
+  title: z.string().describe('**Required**. Sets the stream title.'),
   pubDate: z.coerce
     .date()
     .describe(
-      '**Requirde**. Specifies the publication date. See supported formats [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#examples).'
+      '**Required**. Specifies the publication date. See supported formats [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#examples).'
     ),
   link: z
     .string()
     .url('Invalid url.')
-    .describe('**Requirde**. Specifies the URL link to the stream.'),
+    .describe('**Required**. Specifies the URL link to the stream.'),
   radio: z
     .boolean()
     .default(false)
