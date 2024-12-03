@@ -1,5 +1,5 @@
 /* SITE */
-type Url = `http://${string}` | `https://${string}`
+export type Url = `http://${string}` | `https://${string}`
 type Path = `/${string}`
 
 export interface Site {
@@ -65,7 +65,8 @@ export interface Site {
 }
 
 /* UI */
-type Icon = `i-${string}-${string}` | `i-${string}:${string}`
+export type Icon = `i-${string}-${string}` | `i-${string}:${string}`
+export type RepoWithOwner = `${string}/${string}`
 
 interface BaseNavItem {
   /**
@@ -342,6 +343,52 @@ interface Tab {
 
 export type Tabs = [Tab, Tab, ...Tab[]]
 
+interface GroupView {
+  /**
+   * Sets the maximum number of columns displayed in the group view.
+   * It is used in `src/components/views/GroupItem.astro` for `/projects` page.
+   */
+  maxGroupColumns: 2 | 3
+
+  /**
+   * Determines whether group item icons display in color when hovered over.
+   * It is used in `src/components/views/GroupItem.astro` for `/projects` page.
+   *
+   * @description
+   * If `true`, the icon for the group item will display in its original colors on hover.
+   */
+  showGroupItemColorOnHover: boolean
+}
+
+export interface GitHubView {
+  /**
+   * Defines monorepo repositories using `<owner>/<repo>` format.
+   * For monorepos, the tag name is used as the primary text for releases.
+   * It is used in `src/components/views/GithubView.astro` for `/releases`
+   */
+  monorepos: RepoWithOwner[]
+
+  /**
+   * Configures main logos for repositories or packages (for monorepos).
+   * Defaults to the owner's avatar if no custom logo is set.
+   * It is used in `src/components/views/GithubView.astro` for `/releases` page.
+   *
+   * @remark
+   * Matching supports regex or `<owner>/<repo>` format, prioritized by order.
+   */
+  mainLogoOverrides: [RepoWithOwner | RegExp, Url | Icon][]
+
+  /**
+   * Configures auxiliary logos for rrepositories or packages (for monorepos).
+   * No logo is shown if unmatched or empty.
+   * It is used in `src/components/views/GithubView.astro` for `/releases` page.
+   *
+   * @remark
+   * Matching supports regex or `<owner>/<repo>` format, prioritized by order.
+   */
+  subLogoMatches: [RepoWithOwner | RegExp, Url | Icon][]
+}
+
 export interface Ui {
   /**
    * Configures internal navigation links, used in `src/components/base/NavBar.astro`.
@@ -352,7 +399,7 @@ export interface Ui {
   internalNavs: InternalNav[]
 
   /**
-   * Specifies external social links, used in `src/components/base/NavBar.astro`.
+   * Configures external social links, used in `src/components/base/NavBar.astro`.
    *
    * @remark
    * The configuration order matches the display order.
@@ -374,19 +421,15 @@ export interface Ui {
   tabbedLayoutTabs: false | Tabs
 
   /**
-   * Sets the maximum number of columns displayed in the group view.
-   * It is used in `src/components/views/GroupItem.astro` for `/projects` page.
+   * Configures the UI of the `/projects` page, used in `src/components/views/GroupItem.astro`
+   * and `src/components/base/Categorizer.astro`.
    */
-  maxGroupColumns: 2 | 3
+  groupView: GroupView
 
   /**
-   * Determines whether group item icons display in color when hovered over.
-   * It is used in `src/components/views/GroupItem.astro` for `/projects` page.
-   *
-   * @description
-   * If `true`, the icon for the group item will display in its original colors on hover.
+   * Configures the UI of `/releases` page, used in `src/components/views/GithubView.astro`.
    */
-  showGroupItemColorOnHover: boolean
+  githubView: GitHubView
 }
 
 /* FEATURES */
