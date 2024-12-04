@@ -67,8 +67,8 @@ importers:
         specifier: ^0.38.3
         version: 0.38.3(astro@4.16.15(@types/node@22.10.0)(rollup@4.27.4)(typescript@5.7.2))
       astro-loader-github-releases:
-        specifier: ^1.2.2
-        version: 1.2.2(astro@4.16.15(@types/node@22.10.0)(rollup@4.27.4)(typescript@5.7.2))
+        specifier: ^1.2.3
+        version: 1.2.3(astro@4.16.15(@types/node@22.10.0)(rollup@4.27.4)(typescript@5.7.2))
       astro-robots-txt:
         specifier: ^1.0.0
         version: 1.0.0
@@ -1534,8 +1534,8 @@ packages:
     peerDependencies:
       astro: ^4.0.0-beta || ^5.0.0-beta || ^3.3.0
 
-  astro-loader-github-releases@1.2.2:
-    resolution: {integrity: sha512-Jj9DOEdZdZBovdqwJDlQDBbphMS+7eBBWbGPEo/YdEpmvnOxFJIrO/ZM43j53GVRSlYkBI6BSjaf4uOxPx8d1g==}
+  astro-loader-github-releases@1.2.3:
+    resolution: {integrity: sha512-ohMxYMEA49pRRdbO9Q2tyOE1pXm1DFnIaMLGOYnOmiVItLyAIyvtM6H9wZsd68lKB8xf9EyXUcvnztvtIq3GGg==}
     peerDependencies:
       astro: ^4.14.0 || ^5.0.0-beta.0
 
@@ -5578,7 +5578,7 @@ snapshots:
       astro: 4.16.15(@types/node@22.10.0)(rollup@4.27.4)(typescript@5.7.2)
       rehype-expressive-code: 0.38.3
 
-  astro-loader-github-releases@1.2.2(astro@4.16.15(@types/node@22.10.0)(rollup@4.27.4)(typescript@5.7.2)):
+  astro-loader-github-releases@1.2.3(astro@4.16.15(@types/node@22.10.0)(rollup@4.27.4)(typescript@5.7.2)):
     dependencies:
       astro: 4.16.15(@types/node@22.10.0)(rollup@4.27.4)(typescript@5.7.2)
       octokit: 4.0.2

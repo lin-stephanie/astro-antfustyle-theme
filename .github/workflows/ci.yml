@@ -23,6 +23,8 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
         node: [lts/*]
       fail-fast: false
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN_FOR_LOADER }}
 
     if: github.repository == 'lin-stephanie/astro-antfustyle-theme'
     runs-on: ${{ matrix.os }}
