@@ -5,7 +5,7 @@ import Link from '~/components/base/Link.astro'
 import GithubItem from '~/components/views/GithubItem.astro'
 import { UI } from '~/config'
 import { formatDate } from '~/utils/datetime'
-import { ensureTrailingSlash, getUrl } from '~/utils/common'
+import { getUrl } from '~/utils/common'
 import {
   matchLogo,
   extractPackageName,
@@ -90,7 +90,7 @@ if (collectionType === 'releases') {
 }
 ---
 
-<div class="flex flex-col gap-6.5 lt-sm:gap-5">
+<div class="flex flex-col gap-7 lt-sm:gap-5">
   {
     extendedReleases.map((item, index) => (
       <GithubItem
@@ -104,29 +104,37 @@ if (collectionType === 'releases') {
   }
 </div>
 
-<div class="prose mx-auto op-50 text-center text-3.75! lt-sm:text-sm!">
+<div
+  class="prose flex flex-col items-center op-50 text-center text-3.75! lt-sm:text-sm!"
+>
   <hr class="mt-3em!" />
-  <p class="my-1.2!">
-    Last fetched: <time datetime={new Date().toISOString()}
-      >{formatDate(new Date())}</time
-    > | Refresh time: Every Saturday
+  <p class="flex lt-sm:flex-col items-center my-0! lt-sm:my-1.5!">
+    <span>
+      Last fetched:
+      <time
+        class="inline-block text-[var(--fg-deeper)]"
+        datetime={new Date().toISOString()}
+        >{formatDate(new Date())}
+      </time>
+    </span>
+    <span class="lt-sm:hidden">&nbsp;|&nbsp;</span>
+    <span>
+      Refresh time:
+      <span class="text-[var(--fg-deeper)]">Every Saturday</span>
+    </span>
   </p>
-  <p class="my-1.2!">
+  <p class="my-0! lt-sm:my-1.5!">
     See
     <Link
       class="op-100!"
-      href={getUrl(
-        ensureTrailingSlash('/blog/customizing-github-activity-pages/')
-      )}
+      href={getUrl('/blog/customizing-github-activity-pages/')}
     >
       Customizing GitHub Activity Pages
     </Link>
     to configure your own
   </p>
-  <p class="my-1.2!">
-    Inspired by <Link
-      class="op-100!"
-      href={getUrl(ensureTrailingSlash('https://releases.antfu.me/'))}
+  <p class="my-0! lt-sm:my-1.5!">
+    Inspired by <Link class="op-100!" href="https://releases.antfu.me/"
       >releases.antfu.me</Link
     >
   </p>

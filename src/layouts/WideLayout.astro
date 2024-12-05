@@ -12,6 +12,7 @@ const { title, subtitle } = Astro.props
     {title}
   </h1>
   {subtitle && <p class="mt--4! op-50 text-center italic">{subtitle}</p>}
+  <slot name="button" />
 </header>
 <article class="max-w-300 mx-auto">
   <slot />

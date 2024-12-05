@@ -47,7 +47,7 @@ const releases = defineCollection({
         'lin-stephanie/astro-loaders',
         'lin-stephanie/astro-antfustyle-theme',
       ],
-      sinceDate: '2024-10-01',
+      monthsBack: 3,
       entryReturnType: 'byRelease',
     },
   }),

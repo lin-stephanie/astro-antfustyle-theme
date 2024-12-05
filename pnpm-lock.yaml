@@ -67,8 +67,8 @@ importers:
         specifier: ^0.38.3
         version: 0.38.3(astro@4.16.15(@types/node@22.10.0)(rollup@4.27.4)(typescript@5.7.2))
       astro-loader-github-releases:
-        specifier: ^1.2.3
-        version: 1.2.3(astro@4.16.15(@types/node@22.10.0)(rollup@4.27.4)(typescript@5.7.2))
+        specifier: ^1.3.0
+        version: 1.3.0(astro@4.16.15(@types/node@22.10.0)(rollup@4.27.4)(typescript@5.7.2))
       astro-robots-txt:
         specifier: ^1.0.0
         version: 1.0.0
@@ -306,6 +306,11 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
+  '@babel/parser@7.26.3':
+    resolution: {integrity: sha512-WJ/CvmY8Mea8iDXo6a7RK2wbmJITT5fN3BEkRuFlxVyNx8jOKIIhmC4fSkTcPcf8JyavbBwIe6OpiCOBXt/IcA==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
   '@babel/plugin-syntax-jsx@7.25.9':
     resolution: {integrity: sha512-ld6oezHQMZsZfp6pWtbjaNDF2tiiCYYDqQszHt5VV437lewP9aSi2Of99CK0D0XB21k7FLgnLcmQKyKzynfeAA==}
     engines: {node: '>=6.9.0'}
@@ -328,6 +333,10 @@ packages:
 
   '@babel/types@7.26.0':
     resolution: {integrity: sha512-Z/yiTPj+lDVnF7lWeKCIJzaIkI0vYO87dMpZ4bg4TDrFe4XXLFWL1TbXU27gBP3QccxV9mZICCrnjnYlJjXHOA==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/types@7.26.3':
+    resolution: {integrity: sha512-vN5p+1kl59GVKMvTHt55NzzmYVxprfJD+ql7U9NFIfKCBkYE55LYtS+WtPlaYOyzydrKI8Nezd+aZextrd+FMA==}
     engines: {node: '>=6.9.0'}
 
   '@ctrl/tinycolor@4.1.0':
@@ -1534,8 +1543,8 @@ packages:
     peerDependencies:
       astro: ^4.0.0-beta || ^5.0.0-beta || ^3.3.0
 
-  astro-loader-github-releases@1.2.3:
-    resolution: {integrity: sha512-ohMxYMEA49pRRdbO9Q2tyOE1pXm1DFnIaMLGOYnOmiVItLyAIyvtM6H9wZsd68lKB8xf9EyXUcvnztvtIq3GGg==}
+  astro-loader-github-releases@1.3.0:
+    resolution: {integrity: sha512-pdbW0PhecYKBEdtUvueE0Vfo9/akNuwfjSoWDyXrDRndMVKtCHA/Ee1vI2YLNhwqBCpJ8/AInLw5+EVRRxgT9w==}
     peerDependencies:
       astro: ^4.14.0 || ^5.0.0-beta.0
 
@@ -4271,6 +4280,10 @@ snapshots:
     dependencies:
       '@babel/types': 7.26.0
 
+  '@babel/parser@7.26.3':
+    dependencies:
+      '@babel/types': 7.26.3
+
   '@babel/plugin-syntax-jsx@7.25.9(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
@@ -4306,6 +4319,11 @@ snapshots:
       - supports-color
 
   '@babel/types@7.26.0':
+    dependencies:
+      '@babel/helper-string-parser': 7.25.9
+      '@babel/helper-validator-identifier': 7.25.9
+
+  '@babel/types@7.26.3':
     dependencies:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
@@ -5398,7 +5416,7 @@ snapshots:
 
   '@vue/compiler-core@3.5.12':
     dependencies:
-      '@babel/parser': 7.26.2
+      '@babel/parser': 7.26.3
       '@vue/shared': 3.5.12
       entities: 4.5.0
       estree-walker: 2.0.2
@@ -5411,7 +5429,7 @@ snapshots:
 
   '@vue/compiler-sfc@3.5.12':
     dependencies:
-      '@babel/parser': 7.26.2
+      '@babel/parser': 7.26.3
       '@vue/compiler-core': 3.5.12
       '@vue/compiler-dom': 3.5.12
       '@vue/compiler-ssr': 3.5.12
@@ -5578,7 +5596,7 @@ snapshots:
       astro: 4.16.15(@types/node@22.10.0)(rollup@4.27.4)(typescript@5.7.2)
       rehype-expressive-code: 0.38.3
 
-  astro-loader-github-releases@1.2.3(astro@4.16.15(@types/node@22.10.0)(rollup@4.27.4)(typescript@5.7.2)):
+  astro-loader-github-releases@1.3.0(astro@4.16.15(@types/node@22.10.0)(rollup@4.27.4)(typescript@5.7.2)):
     dependencies:
       astro: 4.16.15(@types/node@22.10.0)(rollup@4.27.4)(typescript@5.7.2)
       octokit: 4.0.2

@@ -1,5 +1,5 @@
 pnpm-lock.yaml
 SearchSwitch.astro
 GroupItem.astro
+releases.mdx
 *.md
-*.mdx
