@@ -90,14 +90,15 @@ if (collectionType === 'releases') {
 }
 ---
 
-<div class="flex flex-col gap-7 lt-sm:gap-5">
+<div class="slide-enter-content flex flex-col gap-7 lt-sm:gap-5">
   {
-    extendedReleases.map((item, index) => (
+    extendedReleases.map((item, idx) => (
       <GithubItem
         collectionType={collectionType}
+        idx={idx}
         item={item}
         preItem={
-          extendedReleases[index - 1] ? extendedReleases[index - 1] : undefined
+          extendedReleases[idx - 1] ? extendedReleases[idx - 1] : undefined
         }
       />
     ))
