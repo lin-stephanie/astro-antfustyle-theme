@@ -90,7 +90,7 @@ if (collectionType === 'releases') {
 }
 ---
 
-<div class="slide-enter-content flex flex-col gap-7 lt-sm:gap-5">
+<div class="flex flex-col gap-7 lt-sm:gap-5">
   {
     extendedReleases.map((item, idx) => (
       <GithubItem
@@ -120,8 +120,8 @@ if (collectionType === 'releases') {
     </span>
     <span class="lt-sm:hidden">&nbsp;|&nbsp;</span>
     <span>
-      Refresh time:
-      <span class="text-[var(--fg-deeper)]">Every Saturday</span>
+      Scheduled refresh:
+      <span class="text-[var(--fg-deeper)]">Saturdays 01:00 UTC</span>
     </span>
   </p>
   <p class="my-0! lt-sm:my-1.5!">
