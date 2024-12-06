@@ -8,9 +8,10 @@ import {
   transformerVariantGroup,
 } from 'unocss'
 
-import projecstData from './src/content/projects/data.json'
-import { extractIconsStartingWithI } from './src/utils/common'
 import { UI } from './src/config'
+import { extractIconsStartingWithI } from './src/utils/common'
+import projecstData from './src/content/projects/data.json'
+import { VERSION_COLOR } from './src/utils/github'
 
 import type {
   IconNavItem,
@@ -19,8 +20,7 @@ import type {
   ResponsiveSocialItem,
 } from './src/types'
 
-const { internalNavs, socialLinks } = UI
-
+const { internalNavs, socialLinks, githubView } = UI
 const navIcons = internalNavs
   .filter(
     (item) =>
@@ -28,7 +28,6 @@ const navIcons = internalNavs
       item.displayMode !== 'textHiddenOnMobile'
   )
   .map((item) => (item as IconNavItem | ResponsiveNavItem).icon)
-
 const socialIcons = socialLinks
   .filter(
     (item) =>
@@ -38,6 +37,12 @@ const socialIcons = socialLinks
   .map((item) => (item as IconSocialItem | ResponsiveSocialItem).icon)
 
 const projectIcons = extractIconsStartingWithI(projecstData.projects)
+
+const versionClass = Object.values(VERSION_COLOR).flatMap((colorString) =>
+  colorString.split(' ')
+)
+
+const subLogoIcons = githubView.subLogoMatches.map((item) => item[1])
 
 export default defineConfig({
   // will be deep-merged to the default theme
@@ -118,11 +123,6 @@ export default defineConfig({
     ...socialIcons,
     ...projectIcons,
 
-    /* Categorizer */
-    'left--4',
-    'left-[14%]',
-    'lt-lg:left--4',
-
     /* remark-directive-sugar */
     'i-carbon-logo-github',
 
@@ -132,5 +132,9 @@ export default defineConfig({
     'focus:start-1',
     'focus:top-1.5',
     'focus:op-20',
+
+    /* GithubItem */
+    ...versionClass,
+    ...subLogoIcons,
   ],
 })

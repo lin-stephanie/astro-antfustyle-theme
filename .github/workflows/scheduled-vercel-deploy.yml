@@ -1,0 +1,22 @@
+name: Scheduled Vercel Deployment
+
+on:
+  schedule:
+    - cron: '0 1 * * 6'
+
+jobs:
+  deploy:
+    if: github.repository == 'lin-stephanie/astro-antfustyle-theme'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger deployment
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$DEPLOY_HOOK_URL" ]; then
+            echo "Error: Vercel deploy hook URL is not set."
+            exit 1
+          fi
+          curl -X POST "$DEPLOY_HOOK_URL"
+          echo "Deployment triggered successfully."

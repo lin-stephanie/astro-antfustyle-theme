@@ -1,0 +1,98 @@
+---
+import Link from '~/components/base/Link.astro'
+import { formatDate } from '~/utils/datetime'
+import { VERSION_COLOR } from '~/utils/github'
+import type { ExtendedReleaseData } from './GithubView.astro'
+
+interface Props {
+  collectionType: 'releases' /*  | 'prs' */
+  idx: number
+  item: ExtendedReleaseData
+  preItem?: ExtendedReleaseData
+}
+
+const { collectionType, idx, item, preItem } = Astro.props
+
+const isDiffMonth =
+  preItem &&
+  new Date(item.publishedAt).getMonth() !==
+    new Date(preItem?.publishedAt).getMonth()
+---
+
+{
+  collectionType === 'releases' && (
+    <details
+      class={`slide-enter flex flex-col ${isDiffMonth ? 'mt-10' : ''}`}
+      style={{
+        '--enter-stage': idx,
+        '--enter-step': '60ms',
+      }}
+    >
+      {/* Logo */}
+      <summary class="flex items-center gap-4 lt-sm:gap-2 cursor-pointer">
+        <div class="flex-none relative">
+          <img
+            class={`size-10 lt-sm:size-9.5 border mt-0.2 border-gray-1 dark:border-gray-8
+            ${item.repoIsInOrganization ? 'rounded-lg' : 'rounded-full transform-scale-108'}`}
+            src={item.mainLogo}
+            alt={item.repoNameWithOwner}
+          />
+          {item.subLogo && (
+            <div
+              class={`absolute bottom--2 right--1.6 flex justify-center items-center
+              size-6 p-0.72 border border-gray:5 rounded-full
+              bg-white  dark:bg-[#121212]`}
+            >
+              {item.subLogo.includes('://') ? (
+                <img src={item.subLogo} alt="Sub logo" />
+              ) : (
+                <span class={item.subLogo} />
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Text */}
+        <div class="flex-1 flex justify-between items-center gap-2 min-w-0">
+          <div class="flex flex-col gap-0.5 min-w-0 ">
+            <Link
+              class="flex items-center op-100! text-4.4 lt-sm:text-3.9 hover:underline"
+              href={item.repoUrl}
+              external={true}
+            >
+              <span class="truncate">{item.pkgName}</span>
+            </Link>
+            <Link
+              class="flex items-center text-sm lt-sm:text-3.2 op-transition hover:underline"
+              href={item.repoUrl}
+              external={true}
+            >
+              <span class="truncate">{item.repoNameWithOwner}</span>
+            </Link>
+          </div>
+          <div class="shrink-0 flex flex-col items-end gap-0.5">
+            <Link
+              class="op-100! font-mono text-4.2 lt-sm:text-3.6 hover:underline"
+              href={item.url}
+              external={true}
+            >
+              <span>
+                v{item.versionParts[0]}
+                <span class={`rounded ${VERSION_COLOR[item.versionType]}`}>
+                  {item.versionParts[1]}
+                </span>
+              </span>
+            </Link>
+            <time
+              class="op-60 text-sm lt-sm:text-3.2"
+              datetime={item.publishedAt}
+            >
+              {formatDate(item.publishedAt, false)}
+            </time>
+          </div>
+        </div>
+      </summary>
+      <div class="prose releases-desc" set:html={item.descriptionHTML} />
+    </details>
+  )
+}

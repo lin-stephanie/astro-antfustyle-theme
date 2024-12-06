@@ -8,11 +8,12 @@ interface Props {
 }
 
 const { items } = Astro.props
-const { maxGroupColumns, showGroupItemColorOnHover } = UI
+const { maxGroupColumns, showGroupItemColorOnHover } = UI.groupView
 ---
 
 <div
-  class='grid gap-3 cols-[repeat(auto-fill,minmax(350px,1fr))] py-8 mx-auto lt-lgp:max-w-[712px]! lt-md:max-w-[350px]!'
+  class={`grid gap-3 cols-[repeat(auto-fill,minmax(350px,1fr))]
+    py-8 mx-auto lt-lgp:max-w-[712px]! lt-md:max-w-[350px]!`}
   style={`max-width: calc(350px * ${maxGroupColumns} + ${maxGroupColumns-1} * 0.75rem);`}
 >
   {

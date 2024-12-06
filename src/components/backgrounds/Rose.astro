@@ -72,9 +72,9 @@ const roses = [
       const scaleBase = getRandom(...scaleRange)
       const rotationBase = getRandom(...rotationRange)
 
-      petals.forEach((petal, index) => {
-        const scaleValue = (index + 1) * scaleBase
-        const rotateValue = (index + 1) * (r + rotationBase)
+      petals.forEach((petal, idx) => {
+        const scaleValue = (idx + 1) * scaleBase
+        const rotateValue = (idx + 1) * (r + rotationBase)
 
         // @ts-expect-error (for Property 'style' does not exist on type 'Element'.ts(2339))
         petal.style.transform = `scale(${scaleValue}, ${scaleValue}) rotate(${rotateValue}deg)`

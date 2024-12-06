@@ -65,8 +65,35 @@ export const UI: Ui = {
     { title: 'AstroBlog', path: '/feeds' },
     { title: 'AstroStreams', path: '/streams' },
   ],
-  maxGroupColumns: 3,
-  showGroupItemColorOnHover: true,
+  groupView: {
+    maxGroupColumns: 3,
+    showGroupItemColorOnHover: true,
+  },
+  githubView: {
+    monorepos: [
+      'withastro/astro',
+      'withastro/starlight',
+      'delucis/astro-embed',
+      'ascorbic/astro-loaders',
+      'lin-stephanie/astro-loaders',
+    ],
+    mainLogoOverrides: [
+      [
+        /^@astrojs\/starlight(-.*)?/,
+        'https://starlight.astro.build/favicon.svg',
+      ],
+    ],
+    subLogoMatches: [
+      [/.*theme.*/, 'i-unjs:theme-colors'],
+      [/.*github.*/, 'https://www.svgrepo.com/show/475654/github-color.svg'],
+      [/.*tweet|twitter.*/, 'i-logos:twitter'],
+      [/.*bluesky.*/, 'i-logos:bluesky'],
+      [/.*baseline.*/, 'i-logos:baseline'],
+      [/.*youtube.*/, 'i-logos:youtube-icon'],
+      [/.*vimeo.*/, 'i-logos:vimeo-icon'],
+      [/.*airtable.*/, 'i-logos:airtable'],
+    ],
+  },
 }
 
 /**

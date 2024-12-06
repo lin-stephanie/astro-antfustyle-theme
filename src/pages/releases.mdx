@@ -1,0 +1,29 @@
+---
+title: AstroEco is Releasing...
+description: 'Example: Displaying GitHub releases with astro-loader-github-releases'
+subtitle: 'Example: Displaying GitHub releases with astro-loader-github-releases'
+bgType: plum
+toc: false
+ogImage: true
+---
+
+import BaseLayout from '~/layouts/BaseLayout.astro'
+import WideLayout from '~/layouts/WideLayout.astro'
+import GithubView from '~/components/views/GithubView.astro'
+
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  bgType={frontmatter.bgType}
+  ogImage={frontmatter.ogImage}
+>
+  <header class="prose mx-auto mb-16.8 text-center">
+    <h1 class="mb-0 ml-12 lt-sm:ml-0"
+    >AstroEco is <span class="animate-pulse">Releasing...</span></h1>
+    <p class="mt--4! op-50 text-center italic"
+    >Example: Displaying GitHub releases with <a href="https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-releases" target="_blank">astro-loader-github-releases</a></p>
+  </header>
+  <div class="max-w-65ch mx-auto">
+    <GithubView collectionType="releases" />
+  </div>
+</BaseLayout>

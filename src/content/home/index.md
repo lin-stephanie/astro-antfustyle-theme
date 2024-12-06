@@ -99,7 +99,7 @@ If you find this theme helpful, consider supporting the project maintainer or th
 
 <div class="flex flex-wrap gap-4">
   <a
-    class="btn-rose inline-block"
+    class="btn-rose"
     href="https://github.com/sponsors/lin-stephanie"
     target="_blank"
     aria-label="Support Stephanie Lin (external link)"
@@ -108,7 +108,7 @@ If you find this theme helpful, consider supporting the project maintainer or th
     Support Stephanie Lin (Maintainer)
   </a>
   <a
-    class="btn-yellow inline-block"
+    class="btn-yellow"
     href="https://github.com/sponsors/antfu"
     target="_blank"
     aria-label="Support Anthony Fu (external link)"

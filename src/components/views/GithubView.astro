@@ -1,0 +1,142 @@
+---
+import { getCollection } from 'astro:content'
+
+import Link from '~/components/base/Link.astro'
+import GithubItem from '~/components/views/GithubItem.astro'
+import { UI } from '~/config'
+import { formatDate } from '~/utils/datetime'
+import { getUrl } from '~/utils/common'
+import {
+  matchLogo,
+  extractPackageName,
+  extractVersionNum,
+  processVersion,
+} from '~/utils/github'
+
+import type { RepoWithOwner, Url, Icon } from '~/types'
+import type { CollectionEntry } from 'astro:content'
+
+const MAX_PER_PKG = 5
+
+interface Props {
+  collectionType: 'releases' /*  | 'prs' */
+}
+
+export type ExtendedReleaseData = CollectionEntry<'releases'>['data'] & {
+  repoOwner: string
+  isInMonorepo: boolean
+  pkgName: string
+  mainLogo: Url | Icon
+  subLogo: Url | Icon | undefined
+  versionNum: string
+  versionType: 'major' | 'minor' | 'patch' | 'pre'
+  versionParts: [string, string]
+}
+
+const { collectionType } = Astro.props
+const { monorepos, mainLogoOverrides, subLogoMatches } = UI.githubView
+
+/* Releases */
+let releases: CollectionEntry<'releases'>[] = []
+let extendedReleases: ExtendedReleaseData[] = []
+
+if (collectionType === 'releases') {
+  releases = await getCollection(collectionType)
+  // console.log(releases)
+
+  const pkgCountMap: Record<string, number> = {}
+
+  extendedReleases = releases
+    .map((item) => {
+      const isInMonorepo = monorepos.includes(
+        item.data.repoNameWithOwner as RepoWithOwner
+      )
+      const pkgName = isInMonorepo
+        ? extractPackageName(item.data.tagName)
+        : item.data.repoName
+
+      const repoOwner = item.data.repoNameWithOwner.split('/')[0]
+      const mainLogo =
+        matchLogo(pkgName, mainLogoOverrides) ||
+        `https://github.com/${repoOwner}.png`
+      const subLogo = matchLogo(pkgName, subLogoMatches)
+
+      const versionNum = extractVersionNum(item.data.tagName)
+      const [versionType, ...versionParts] = processVersion(versionNum)
+
+      return {
+        ...item.data,
+        repoOwner,
+        isInMonorepo,
+        pkgName,
+        mainLogo,
+        subLogo,
+        versionNum,
+        versionType,
+        versionParts,
+      }
+    })
+    // filters releases to ensure each pkg has no more than a specified maximum number
+    .filter((item) => {
+      if ((pkgCountMap[item.pkgName] || 0) < MAX_PER_PKG) {
+        pkgCountMap[item.pkgName] = (pkgCountMap[item.pkgName] || 0) + 1
+        return true
+      }
+      return false
+    })
+    .sort((a, b) => {
+      return +new Date(b.publishedAt) - +new Date(a.publishedAt)
+    })
+}
+---
+
+<div class="flex flex-col gap-7 lt-sm:gap-5">
+  {
+    extendedReleases.map((item, idx) => (
+      <GithubItem
+        collectionType={collectionType}
+        idx={idx}
+        item={item}
+        preItem={
+          extendedReleases[idx - 1] ? extendedReleases[idx - 1] : undefined
+        }
+      />
+    ))
+  }
+</div>
+
+<div
+  class="prose flex flex-col items-center op-50 text-center text-3.75! lt-sm:text-sm!"
+>
+  <hr class="mt-3em!" />
+  <p class="flex lt-sm:flex-col items-center my-0! lt-sm:my-1.5!">
+    <span>
+      Last fetched:
+      <time
+        class="inline-block text-[var(--fg-deeper)]"
+        datetime={new Date().toISOString()}
+        >{formatDate(new Date())}
+      </time>
+    </span>
+    <span class="lt-sm:hidden">&nbsp;|&nbsp;</span>
+    <span>
+      Scheduled refresh:
+      <span class="text-[var(--fg-deeper)]">Saturdays 01:00 UTC</span>
+    </span>
+  </p>
+  <p class="my-0! lt-sm:my-1.5!">
+    See
+    <Link
+      class="op-100!"
+      href={getUrl('/blog/customizing-github-activity-pages/')}
+    >
+      Customizing GitHub Activity Pages
+    </Link>
+    to configure your own
+  </p>
+  <p class="my-0! lt-sm:my-1.5!">
+    Inspired by <Link class="op-100!" href="https://releases.antfu.me/"
+      >releases.antfu.me</Link
+    >
+  </p>
+</div>

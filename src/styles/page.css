@@ -1,0 +1,23 @@
+/* /releases */
+.releases-desc h2,
+.releases-desc h3,
+.releases-desc h4,
+.releases-desc h5 {
+  --uno: 'text-1em lt-sm:text-sm';
+}
+
+.releases-desc > :first-child {
+  margin-top: 1.6em;
+}
+
+.releases-desc > :last-child {
+  margin-bottom: 1.25em;
+}
+
+.releases-desc h5 a {
+  font-size: 0.875em;
+}
+
+.releases-desc li {
+  --uno: 'lt-sm:text-sm';
+}

@@ -64,7 +64,7 @@ const filteredLinks = links.filter(
 <span class="font-mono op-50">&gt; </span>
 <span class="op-50">share on</span>
 {
-  filteredLinks.map((link, index) => (
+  filteredLinks.map((link, idx) => (
     <>
       <Link
         class="op-50! hover:op-75! op-transition"
@@ -74,7 +74,7 @@ const filteredLinks = links.filter(
       >
         {link.label}
       </Link>
-      {index < filteredLinks.length - 1 && <span class="op-25">/</span>}
+      {idx < filteredLinks.length - 1 && <span class="op-25">/</span>}
     </>
   ))
 }
