@@ -1,4 +1,5 @@
 ---
+import TocButton from '~/components/toc/TocButton.astro'
 import TocItem from '~/components/toc/TocItem.astro'
 import { slug } from '~/utils/common'
 import { generateToc } from '~/utils/toc'
@@ -29,6 +30,7 @@ if (Array.isArray(FEATURES.toc) && FEATURES.toc[0]) {
 const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
 ---
 
+<!-- Greater than or equal to 1024px -->
 <aside class={`${displayMode === 'always' ? 'toc-always-on' : ''}`}>
   <nav
     class={`table-of-contents ${displayPosition === 'right' ? 'table-of-contents-right' : ''}`}
@@ -36,15 +38,12 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
   >
     <div class="table-of-contents-anchor">
       {
-        displayPosition === 'left' && (
+        displayPosition === 'left' ? (
           <div
             u-i-ri-menu-2-fill
             class={`${displayMode === 'always' ? 'op-60' : ''}`}
           />
-        )
-      }
-      {
-        displayPosition === 'right' && (
+        ) : (
           <div
             u-i-ri-menu-3-fill
             class={`${displayMode === 'always' ? 'op-60' : ''}`}
@@ -80,3 +79,31 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
     </ul>
   </nav>
 </aside>
+
+<!-- less than 1024px -->
+<TocButton>
+  {
+    !!specHeadings.length &&
+      specHeadings.map((heading) => <TocItem {heading} />)
+  }
+  {
+    !!category.length &&
+      category.map((item) => (
+        <li>
+          <a href={`#${slug(item)}`} aria-label={item}>
+            {item}
+          </a>
+        </li>
+      ))
+  }
+  {
+    !!years.length &&
+      years.map((item) => (
+        <li>
+          <a href={`#${slug(item)}`} aria-label={item}>
+            {item}
+          </a>
+        </li>
+      ))
+  }
+</TocButton>

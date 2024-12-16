@@ -4,14 +4,14 @@
 
 <button
   id="to-top-button"
-  class="z-300 fixed right-5 bottom-3
+  class="z-50 fixed right-5 bottom-6
     w-10 h-10 rounded-full
-    op-0 pointer-events-none
-    transition duration-300
-    hover:(op-100! bg-hex-8883!) print:hidden"
+    op-0 pointer-events-none op-transition
+    lt-lg:(op-50! bg-#8883 dark:bg-#8886 pointer-events-auto!)
+    hover:(op-100! bg-#8883) print:hidden"
   title="Scroll to top"
 >
-  <div u-i-ri-arrow-up-line></div>
+  <div u-i-ri:arrow-up-line></div>
 </button>
 
 <script>
@@ -22,7 +22,6 @@
         behavior: 'smooth',
       })
     }
-
     const toTopButton = document.getElementById('to-top-button')
     toTopButton?.addEventListener('click', handleClick)
   })
@@ -31,9 +30,8 @@
     const scrollThreshold = 300
     const toTopButton = document.getElementById('to-top-button')
 
-    if (toTopButton) {
+    if (toTopButton && window.matchMedia('(min-width: 1024px)').matches) {
       const scrollY = window.scrollY || document.documentElement.scrollTop
-
       if (scrollY <= scrollThreshold) {
         toTopButton.style.opacity = '0'
         toTopButton.style.pointerEvents = 'none'
@@ -43,6 +41,5 @@
       }
     }
   }
-
   window.addEventListener('scroll', handleScroll)
 </script>

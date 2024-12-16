@@ -107,24 +107,22 @@ html.dark .prose {
 .table-of-contents {
   z-index: 100;
   position: fixed;
-  top: 142px;
+  top: 8.875rem;
   bottom: 0;
-  left: 20px;
+  left: 2.05rem;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   --uno: 'lt-lg:hidden';
 
-  width: 250px;
+  width: 15.625rem;
 
-  font-size: 0.8em;
+  font-size: 0.875em;
 }
 
 .table-of-contents-anchor {
   display: flex;
   align-items: center;
-
-  padding-left: 0.8rem;
 
   font-size: 1rem;
   opacity: 0.3;
@@ -140,7 +138,6 @@ html.dark .prose {
   overflow-y: auto;
 
   height: 100%;
-  padding-bottom: 1.25rem;
   margin-top: 0.25rem;
 
   opacity: 0;
@@ -155,18 +152,26 @@ html.dark .prose {
   opacity: 0.75;
 }
 
-.table-of-contents ul > li::before {
+.table-of-contents ul > li::before,
+#toc-panel ul > li::before {
   display: none;
 }
 
-.table-of-contents ul > li {
+.table-of-contents ul > li,
+#toc-panel ul > li {
   padding-left: 0.8rem;
   margin-top: 0.5em;
 
   line-height: 1.6em;
 }
 
-.table-of-contents ul > li > a {
+.table-of-contents > ul > li,
+#toc-panel > ul > li {
+  padding-left: 0rem;
+}
+
+.table-of-contents ul > li > a,
+#toc-panel ul > li > a {
   display: block;
   overflow-x: hidden;
 
@@ -181,17 +186,28 @@ html.dark .prose {
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.table-of-contents ul > li > a:hover {
+.table-of-contents ul > li > a:hover,
+#toc-panel ul > li > a:hover {
   border-bottom: 0px;
 }
 
 .table-of-contents-right.table-of-contents {
   left: auto;
-  right: 32px;
+  right: 2rem;
 }
 
 .table-of-contents-right .table-of-contents-anchor {
   align-self: flex-end;
+}
+
+#toc-panel ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#toc-panel ul > li > a {
+  color: inherit;
+  opacity: 0.6;
 }
 
 /* Expressive Code */
@@ -240,7 +256,7 @@ html.dark .prose {
 /* Medium Zoom */
 .medium-zoom-overlay,
 .medium-zoom-image--opened {
-  z-index: 400;
+  z-index: 300;
 }
 
 /* rehype-autolink-headings */
