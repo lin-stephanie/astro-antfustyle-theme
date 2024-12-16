@@ -25,10 +25,13 @@
   document.addEventListener('astro:page-load', () => {
     const handleClick = () => {
       const navPanel = document.getElementById('nav-panel')
+      const tocPanel = document.getElementById('toc-panel')
       const searchPanel = document.getElementById('search-panel')
 
       if (navPanel && !navPanel.classList.contains('hidden!'))
         toggleFadeEffect('nav-panel', false, 'hidden!')
+      if (tocPanel && !tocPanel.classList.contains('hidden!'))
+        toggleFadeEffect('toc-panel', false, 'hidden!')
       if (searchPanel && !searchPanel.classList.contains('hidden'))
         toggleFadeEffect('search-panel', false, 'hidden')
 
@@ -46,6 +49,7 @@
 
     const focusEl = document.activeElement
     const navPanel = document.getElementById('nav-panel')
+    const tocPanel = document.getElementById('toc-panel')
     const searchPanel = document.getElementById('search-panel')
 
     if (
@@ -55,6 +59,16 @@
       focusEl?.id !== 'nav-open-button'
     ) {
       toggleFadeEffect('nav-panel', false, 'hidden!')
+      dispatchToggleBackdrop(false)
+    }
+
+    if (
+      tocPanel &&
+      !tocPanel.classList.contains('hidden!') &&
+      !tocPanel.contains(focusEl) &&
+      focusEl?.id !== 'toc-open-button'
+    ) {
+      toggleFadeEffect('toc-panel', false, 'hidden!')
       dispatchToggleBackdrop(false)
     }
 

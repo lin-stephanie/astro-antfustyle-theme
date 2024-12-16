@@ -50,7 +50,7 @@ frontmatter to <code>false</code> or remove it to publish the post.`
     <Fragment slot="head">
       {
         frontmatter.pubDate && (
-          <p class="slide-enter-50 mt--6! opacity-50">
+          <p class="mt--6! opacity-50">
             <time datetime={pubDate}>{formatDate(pubDate)}</time>
             {minutesRead !== 0 && <span>· {minutesRead} min</span>}
             {lastModDate && (
@@ -63,7 +63,9 @@ frontmatter to <code>false</code> or remove it to publish the post.`
       }
       {frontmatter.draft && <Warning rawHTMLString={warningHTML} />}
     </Fragment>
-    <Content />
+    <div class="slide-enter-content">
+      <Content />
+    </div>
   </StandardLayout>
   {
     Array.isArray(share) && share[0] && frontmatter.share && (

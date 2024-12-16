@@ -21,4 +21,6 @@ const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
 ---
 
 {tocEnabled && <Toc {headings} />}
-<Content />
+<div class="slide-enter-content">
+  <Content />
+</div>
