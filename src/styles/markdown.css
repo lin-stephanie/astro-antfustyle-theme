@@ -105,17 +105,19 @@ html.dark .prose {
 
 /* Toc */
 .table-of-contents {
-  z-index: 100;
   position: fixed;
   top: 8.875rem;
   bottom: 0;
   left: 2.05rem;
-  overflow: hidden;
+
+  z-index: 100;
   display: flex;
   flex-direction: column;
   --uno: 'lt-lg:hidden';
+  overflow: hidden;
 
   width: 15.625rem;
+  max-height: 74vh;
 
   font-size: 0.875em;
 }
@@ -198,6 +200,10 @@ html.dark .prose {
 
 .table-of-contents-right .table-of-contents-anchor {
   align-self: flex-end;
+}
+
+#toc-panel > ul {
+  overflow-y: auto;
 }
 
 #toc-panel ul {

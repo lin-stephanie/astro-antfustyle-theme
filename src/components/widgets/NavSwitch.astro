@@ -15,17 +15,11 @@
 
 <div
   id="nav-panel"
-  class="z-200 fixed top-20 right-8
-    hidden! flex flex-col gap-6
-    py-6 px-10 rounded-lg lt-md:(w-90% left-5% right-5%)
+  class="z-200 fixed top-20 left-5% right-5%
+    hidden! flex flex-col gap-5
+    w-90% max-h-82vh py-6 px-8 rounded-lg
     bg-[var(--c-bg)] shadow-c"
 >
-  <button
-    id="nav-close-button"
-    class="self-end mb--6 op-60 hover:op-100 op-transition"
-  >
-    <div class="i-ri-close-large-fill"></div>
-  </button>
   <ul>
     <slot name="text" />
   </ul>
@@ -35,7 +29,7 @@
 </div>
 
 <script>
-  /* Open or close nav panel when user click on button */
+  /* Open nav panel when user click on button */
   import { dispatchToggleBackdrop, toggleFadeEffect } from '~/utils/animation'
 
   document.addEventListener('astro:page-load', () => {
@@ -46,13 +40,5 @@
 
     const navOpenButton = document.getElementById('nav-open-button')
     navOpenButton?.addEventListener('click', handleBtnClickToOpen)
-
-    const handleBtnClickToClose = () => {
-      toggleFadeEffect('nav-panel', false, 'hidden!')
-      dispatchToggleBackdrop(false)
-    }
-
-    const navCloseButton = document.getElementById('nav-close-button')
-    navCloseButton?.addEventListener('click', handleBtnClickToClose)
   })
 </script>

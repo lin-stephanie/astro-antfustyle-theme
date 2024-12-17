@@ -16,16 +16,13 @@
 
 <div
   id="toc-panel"
-  class="hidden! z-200 fixed top-20 right-8
-    flex flex-col gap-2
-    py-6 px-10 rounded-lg lt-lg:(w-90% left-5% right-5%)
+  class="z-200 fixed top-20 left-5% right-5%
+    hidden! flex flex-col gap-1
+    w-90% max-h-82vh py-6 px-8 rounded-lg
     bg-[var(--c-bg)] shadow-c"
 >
-  <div class="flex justify-between items-center">
-    <div class="op-80 text-lg font-600">Table of Contents</div>
-    <button id="toc-close-button" class="op-60 hover:op-100 op-transition">
-      <div u-i-ri:close-large-fill></div>
-    </button>
+  <div class="pb-2.5 b-b b-[var(--c-scrollbar)] op-80 text-4.4 font-600">
+    Table of Contents
   </div>
   <ul>
     <slot />
@@ -38,7 +35,6 @@
   document.addEventListener('astro:page-load', () => {
     /* Open toc panel when user click on button */
     const handleBtnClickToOpen = () => {
-      console.log('open')
       dispatchToggleBackdrop(true)
       toggleFadeEffect('toc-panel', true, 'hidden!')
     }
@@ -46,15 +42,13 @@
     const tocOpenButton = document.getElementById('toc-open-button')
     tocOpenButton?.addEventListener('click', handleBtnClickToOpen)
 
-    /* Close toc panel when user click on close button or link */
+    /* Close toc panel when user click on link */
     const handleClickToClose = (event: MouseEvent) => {
       const target = event.target
+      const isClickedOnLink =
+        target instanceof HTMLElement && target.closest('a')
 
-      const isClickedOnCloseBtnOrLink =
-        target instanceof HTMLElement &&
-        (target.closest('a') || target.closest('#toc-close-button'))
-
-      if (isClickedOnCloseBtnOrLink) {
+      if (isClickedOnLink) {
         toggleFadeEffect('toc-panel', false, 'hidden!')
         dispatchToggleBackdrop(false)
       }

@@ -49,7 +49,6 @@ html {
     scrollbar-color: var(--c-scrollbar) var(--c-bg);
   }
 
-  .table-of-contents > ul,
   #search-results {
     scrollbar-width: none;
   }
