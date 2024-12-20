@@ -77,8 +77,17 @@ export function processVersion(
     versionType = 'pre'
   }
 
-  const nonHighlighted = parts.slice(0, highlightedIndex).join('')
-  const highlighted = parts.slice(highlightedIndex).join('')
+  const nonHighlightedPart = parts.slice(0, highlightedIndex).join('')
+  const highlightedPart = parts.slice(highlightedIndex).join('')
 
-  return [versionType, nonHighlighted, highlighted]
+  return [versionType, nonHighlightedPart, highlightedPart]
+}
+
+/**
+ * Check if the current time is in the same month as the previous time
+ */
+export function isDiffMonth(currentTime: string, preTime?: string) {
+  return preTime
+    ? new Date(currentTime).getMonth() !== new Date(preTime!).getMonth()
+    : false
 }

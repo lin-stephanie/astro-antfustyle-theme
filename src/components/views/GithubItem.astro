@@ -2,97 +2,135 @@
 import Link from '~/components/base/Link.astro'
 import { formatDate } from '~/utils/datetime'
 import { VERSION_COLOR } from '~/utils/github'
-import type { ExtendedReleaseData } from './GithubView.astro'
 
-interface Props {
-  collectionType: 'releases' /*  | 'prs' */
-  idx: number
-  item: ExtendedReleaseData
-  preItem?: ExtendedReleaseData
-}
+import type { ExtendedReleaseData, ExtendedPrData } from './GithubView.astro'
 
-const { collectionType, idx, item, preItem } = Astro.props
+type Props =
+  | {
+      collectionType: 'releases'
+      idx: number
+      item: ExtendedReleaseData
+      isDiffMonth: boolean
+    }
+  | {
+      collectionType: 'prs'
+      idx: number
+      item: ExtendedPrData
+      isDiffMonth: boolean
+    }
 
-const isDiffMonth =
-  preItem &&
-  new Date(item.publishedAt).getMonth() !==
-    new Date(preItem?.publishedAt).getMonth()
+const { collectionType, idx, item, isDiffMonth } = Astro.props
+
+const isOrg =
+  collectionType === 'releases'
+    ? item.repoIsInOrganization
+    : item.repository.isInOrganization
+
+const mainLogoSrc = item.mainLogo
+const mainLogoAlt =
+  collectionType === 'releases'
+    ? item.repoNameWithOwner
+    : item.repository.nameWithOwner
+const subLogoSrc = item.subLogo
+
+const firstLinkHref = item.url
+const firstLinkText = collectionType === 'releases' ? item.pkgName : item.title
+
+const secondLinkHref =
+  collectionType === 'releases' ? item.repoUrl : item.repository.url
+const secondLinkText =
+  collectionType === 'releases'
+    ? item.repoNameWithOwner
+    : item.repository.nameWithOwner
+
+const time = collectionType === 'releases' ? item.publishedAt : item.createdAt
+const content =
+  collectionType === 'releases' ? item.descriptionHTML : item.bodyHTML
 ---
 
-{
-  collectionType === 'releases' && (
-    <details
-      class={`slide-enter flex flex-col ${isDiffMonth ? 'mt-10' : ''}`}
-      style={{
-        '--enter-stage': idx,
-        '--enter-step': '60ms',
-      }}
-    >
-      {/* Logo */}
-      <summary class="flex items-center gap-4 lt-sm:gap-2 cursor-pointer">
-        <div class="flex-none relative">
-          <img
-            class={`size-10 lt-sm:size-9.5 border mt-0.2 border-gray-1 dark:border-gray-8
-            ${item.repoIsInOrganization ? 'rounded-lg' : 'rounded-full transform-scale-108'}`}
-            src={item.mainLogo}
-            alt={item.repoNameWithOwner}
-          />
-          {item.subLogo && (
-            <div
-              class={`absolute bottom--2 right--1.6 flex justify-center items-center
+<details
+  class={`slide-enter flex flex-col ${isDiffMonth ? 'mt-12 lt-sm:mt-10' : ''}`}
+  style={{
+    '--enter-stage': idx,
+    '--enter-step': '60ms',
+  }}
+>
+  {/* Logo */}
+  <summary class="flex items-center gap-4 lt-sm:gap-2 cursor-pointer">
+    <div class="flex-none relative">
+      <img
+        class={`size-11 lt-sm:size-10 border mt-0.2 border-gray-1 dark:border-gray-8
+            ${isOrg ? 'rounded-lg' : 'rounded-full transform-scale-108'}`}
+        src={mainLogoSrc}
+        alt={mainLogoAlt}
+      />
+      {
+        subLogoSrc && (
+          <div
+            class={`absolute bottom--2 right--1.6 flex justify-center items-center
               size-6 p-0.72 border border-gray:5 rounded-full
               bg-white  dark:bg-[#121212]`}
-            >
-              {item.subLogo.includes('://') ? (
-                <img src={item.subLogo} alt="Sub logo" />
-              ) : (
-                <span class={item.subLogo} />
-              )}
-            </div>
-          )}
-        </div>
+          >
+            {subLogoSrc.includes('://') ? (
+              <img src={subLogoSrc} alt="Sub logo" />
+            ) : (
+              <span class={subLogoSrc} />
+            )}
+          </div>
+        )
+      }
+    </div>
 
-        {/* Text */}
-        <div class="flex-1 flex justify-between items-center gap-2 min-w-0">
-          <div class="flex flex-col gap-0.5 min-w-0 ">
-            <Link
-              class="flex items-center op-100! text-4.4 lt-sm:text-3.9 hover:underline"
-              href={item.repoUrl}
-              external={true}
-            >
-              <span class="truncate">{item.pkgName}</span>
-            </Link>
-            <Link
-              class="flex items-center text-sm lt-sm:text-3.2 op-transition hover:underline"
-              href={item.repoUrl}
-              external={true}
-            >
-              <span class="truncate">{item.repoNameWithOwner}</span>
-            </Link>
-          </div>
-          <div class="shrink-0 flex flex-col items-end gap-0.5">
-            <Link
-              class="op-100! font-mono text-4.2 lt-sm:text-3.6 hover:underline"
-              href={item.url}
-              external={true}
-            >
-              <span>
-                v{item.versionParts[0]}
-                <span class={`rounded ${VERSION_COLOR[item.versionType]}`}>
-                  {item.versionParts[1]}
-                </span>
-              </span>
-            </Link>
-            <time
-              class="op-60 text-sm lt-sm:text-3.2"
-              datetime={item.publishedAt}
-            >
-              {formatDate(item.publishedAt, false)}
-            </time>
-          </div>
+    {/* Text */}
+    <div class="flex-1 flex justify-between items-center gap-2 min-w-0">
+      <div class="flex flex-col gap-0.5 min-w-0">
+        <Link
+          class="flex items-center gap-1.5 op-100! text-4.4 lt-sm:text-3.9 hover:underline"
+          href={firstLinkHref}
+          external={true}
+        >
+          {
+            collectionType === 'prs' &&
+              (item.state === 'MERGED' ? (
+                <span
+                  u-i-bx:git-merge
+                  class="text-purple-500 dark:text-purple-400 size-4.5 lt-sm:size-4 shrink-0"
+                />
+              ) : (
+                <span
+                  u-i-bx:git-pull-request
+                  class="text-green-500 dark:text-green-400 size-4.5 lt-sm:size-4 shrink-0"
+                />
+              ))
+          }
+          <span class="truncate">{firstLinkText}</span>
+        </Link>
+        <div class="flex items-center text-sm lt-sm:text-3.2 op-transition">
+          <Link class="truncate" href={secondLinkHref} external={true}>
+            {secondLinkText}
+          </Link>
         </div>
-      </summary>
-      <div class="prose releases-desc" set:html={item.descriptionHTML} />
-    </details>
-  )
-}
+      </div>
+      <div class="shrink-0 flex flex-col items-end gap-0.6">
+        <Link
+          class="op-100! font-mono text-4.2 lt-sm:text-3.6 hover:underline"
+          href={firstLinkHref}
+          external={true}
+        >
+          {
+            collectionType === 'releases' && (
+              <span>
+                v{item.versionParts[0]}<span class={`rounded ${VERSION_COLOR[item.versionType]}`}>{item.versionParts[1]}</span>
+              </span>
+            )
+          }
+          {collectionType === 'prs' && <span>#{item.number}</span>}
+        </Link>
+        <time class="op-60 text-sm lt-sm:text-3.2" datetime={time} title={time}>
+          {formatDate(time, false)}
+        </time>
+      </div>
+    </div>
+  </summary>
+  <div class="prose github-item-content" set:html={content} />
+</details>

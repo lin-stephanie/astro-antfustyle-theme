@@ -11,15 +11,14 @@ import {
   extractPackageName,
   extractVersionNum,
   processVersion,
+  isDiffMonth,
 } from '~/utils/github'
 
 import type { RepoWithOwner, Url, Icon } from '~/types'
 import type { CollectionEntry } from 'astro:content'
 
-const MAX_PER_PKG = 5
-
 interface Props {
-  collectionType: 'releases' /*  | 'prs' */
+  collectionType: 'releases' | 'prs'
 }
 
 export type ExtendedReleaseData = CollectionEntry<'releases'>['data'] & {
@@ -33,6 +32,12 @@ export type ExtendedReleaseData = CollectionEntry<'releases'>['data'] & {
   versionParts: [string, string]
 }
 
+export type ExtendedPrData = CollectionEntry<'prs'>['data'] & {
+  mainLogo: Url | Icon
+  subLogo: Url | Icon | undefined
+}
+
+const MAX_PER_PKG = 5
 const { collectionType } = Astro.props
 const { monorepos, mainLogoOverrides, subLogoMatches } = UI.githubView
 
@@ -42,8 +47,6 @@ let extendedReleases: ExtendedReleaseData[] = []
 
 if (collectionType === 'releases') {
   releases = await getCollection(collectionType)
-  // console.log(releases)
-
   const pkgCountMap: Record<string, number> = {}
 
   extendedReleases = releases
@@ -88,25 +91,65 @@ if (collectionType === 'releases') {
       return +new Date(b.publishedAt) - +new Date(a.publishedAt)
     })
 }
+
+/* Prs */
+let prs: CollectionEntry<'prs'>[] = []
+let extendedPrs: ExtendedPrData[] = []
+if (collectionType === 'prs') {
+  prs = await getCollection(collectionType)
+
+  extendedPrs = prs
+    .filter((item) => item.data.state !== 'CLOSED' && !item.data.isDraft)
+    .map((item) => {
+      const mainLogo =
+        matchLogo(item.data.repository.name, mainLogoOverrides) ||
+        `https://github.com/${item.data.repository.owner.login}.png`
+      const subLogo = matchLogo(item.data.repository.name, subLogoMatches)
+
+      return {
+        ...item.data,
+        mainLogo,
+        subLogo,
+      }
+    })
+}
 ---
 
-<div class="flex flex-col gap-7 lt-sm:gap-5">
+<div class="flex flex-col gap-8 lt-sm:gap-6">
   {
-    extendedReleases.map((item, idx) => (
-      <GithubItem
-        collectionType={collectionType}
-        idx={idx}
-        item={item}
-        preItem={
-          extendedReleases[idx - 1] ? extendedReleases[idx - 1] : undefined
-        }
-      />
-    ))
+    collectionType === 'releases' &&
+      extendedReleases.map((item, idx) => (
+        <GithubItem
+          collectionType={collectionType}
+          idx={idx}
+          item={item}
+          isDiffMonth={isDiffMonth(
+            item.publishedAt,
+            extendedReleases[idx - 1]
+              ? extendedReleases[idx - 1].publishedAt
+              : undefined
+          )}
+        />
+      ))
+  }
+  {
+    collectionType === 'prs' &&
+      extendedPrs.map((item, idx) => (
+        <GithubItem
+          collectionType={collectionType}
+          idx={idx}
+          item={item}
+          isDiffMonth={isDiffMonth(
+            item.createdAt,
+            extendedPrs[idx - 1] ? extendedPrs[idx - 1].createdAt : undefined
+          )}
+        />
+      ))
   }
 </div>
 
 <div
-  class="prose flex flex-col items-center op-50 text-center text-3.75! lt-sm:text-sm!"
+  class="prose flex flex-col items-center mx-a op-50 text-center text-3.75! lt-sm:text-sm!"
 >
   <hr class="mt-3em!" />
   <p class="flex lt-sm:flex-col items-center my-0! lt-sm:my-1.5!">
@@ -115,13 +158,14 @@ if (collectionType === 'releases') {
       <time
         class="inline-block text-[var(--fg-deeper)]"
         datetime={new Date().toISOString()}
+        title={new Date().toISOString()}
         >{formatDate(new Date())}
       </time>
     </span>
     <span class="lt-sm:hidden">&nbsp;|&nbsp;</span>
     <span>
       Scheduled refresh:
-      <span class="text-[var(--fg-deeper)]">Saturdays 01:00 UTC</span>
+      <span class="text-[var(--fg-deeper)]">Every Saturday</span>
     </span>
   </p>
   <p class="my-0! lt-sm:my-1.5!">
@@ -135,8 +179,14 @@ if (collectionType === 'releases') {
     to configure your own
   </p>
   <p class="my-0! lt-sm:my-1.5!">
-    Inspired by <Link class="op-100!" href="https://releases.antfu.me/"
-      >releases.antfu.me</Link
+    Inspired by
+    <Link
+      class="op-100!"
+      href={collectionType === 'releases'
+        ? 'https://releases.antfu.me/'
+        : 'https://prs.atinux.com/'}
     >
+      {collectionType === 'releases' ? 'releases.antfu.me' : 'prs.atinux.com'}
+    </Link>
   </p>
 </div>

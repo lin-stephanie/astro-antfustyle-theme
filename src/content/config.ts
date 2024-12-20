@@ -2,6 +2,7 @@ import { glob } from 'astro/loaders'
 import { defineCollection } from 'astro:content'
 import { feedLoader } from '@ascorbic/feed-loader'
 import { githubReleasesLoader } from 'astro-loader-github-releases'
+import { githubPrsLoader } from 'astro-loader-github-prs'
 import { pageSchema, postSchema, projectsSchema, streamsSchema } from './schema'
 
 const pages = defineCollection({
@@ -53,6 +54,14 @@ const releases = defineCollection({
   }),
 })
 
+const prs = defineCollection({
+  loader: githubPrsLoader({
+    search:
+      'repo:withastro/astro repo:withastro/starlight repo:lin-stephanie/astro-antfustyle-theme',
+    monthsBack: 1,
+  }),
+})
+
 export const collections = {
   pages,
   blog,
@@ -61,4 +70,5 @@ export const collections = {
   streams,
   feeds,
   releases,
+  prs,
 }

@@ -1,23 +1,24 @@
-/* /releases */
-.releases-desc h2,
-.releases-desc h3,
-.releases-desc h4,
-.releases-desc h5 {
+/* /releases & /prs */
+.github-item-content h1,
+.github-item-content h2,
+.github-item-content h3,
+.github-item-content h4,
+.github-item-content h5 {
   --uno: 'text-1em lt-sm:text-sm';
 }
 
-.releases-desc > :first-child {
+.github-item-content > :first-child {
   margin-top: 1.6em;
 }
 
-.releases-desc > :last-child {
+.github-item-content > :last-child {
   margin-bottom: 1.25em;
 }
 
-.releases-desc h5 a {
+.github-item-content h5 a {
   font-size: 0.875em;
 }
 
-.releases-desc li {
+.github-item-content li {
   --uno: 'lt-sm:text-sm';
 }

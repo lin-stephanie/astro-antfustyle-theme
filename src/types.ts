@@ -22,7 +22,7 @@ export interface Site {
 
   /**
    * Specifies the site name for formatting the `title` in the frontmatter as `<pageTitle> - <siteTitle>`.
-   * It is used for the title and meta tags, found in `src/components/base/Head.astro`.
+   * Used for the title and meta tags, found in `src/components/base/Head.astro`.
    */
   title: string
 
@@ -346,13 +346,13 @@ export type Tabs = [Tab, Tab, ...Tab[]]
 interface GroupView {
   /**
    * Sets the maximum number of columns displayed in the group view.
-   * It is used in `src/components/views/GroupItem.astro` for `/projects` page.
+   * Used in `src/components/views/GroupItem.astro`.
    */
   maxGroupColumns: 2 | 3
 
   /**
    * Determines whether group item icons display in color when hovered over.
-   * It is used in `src/components/views/GroupItem.astro` for `/projects` page.
+   * Used in `src/components/views/GroupItem.astro`.
    *
    * @description
    * If `true`, the icon for the group item will display in its original colors on hover.
@@ -364,14 +364,14 @@ export interface GitHubView {
   /**
    * Defines monorepo repositories using `<owner>/<repo>` format.
    * For monorepos, the tag name is used as the primary text for releases.
-   * It is used in `src/components/views/GithubView.astro` for `/releases`
+   * Used in `src/components/views/GithubView.astro`.
    */
   monorepos: RepoWithOwner[]
 
   /**
    * Configures main logos for repositories or packages (for monorepos).
    * Defaults to the owner's avatar if no custom logo is set.
-   * It is used in `src/components/views/GithubView.astro` for `/releases` page.
+   * Used in `src/components/views/GithubView.astro`.
    *
    * @remark
    * Matching supports regex or `<owner>/<repo>` format, prioritized by order.
@@ -380,8 +380,8 @@ export interface GitHubView {
 
   /**
    * Configures auxiliary logos for rrepositories or packages (for monorepos).
-   * No logo is shown if unmatched or empty.
-   * It is used in `src/components/views/GithubView.astro` for `/releases` page.
+   * No logo is shown if unmatched.
+   * Used in `src/components/views/GithubView.astro`.
    *
    * @remark
    * Matching supports regex or `<owner>/<repo>` format, prioritized by order.
@@ -421,13 +421,13 @@ export interface Ui {
   tabbedLayoutTabs: false | Tabs
 
   /**
-   * Configures the UI of the `/projects` page, used in `src/components/views/GroupItem.astro`
+   * Configures the `/projects` UIs, used in `src/components/views/GroupItem.astro`
    * and `src/components/base/Categorizer.astro`.
    */
   groupView: GroupView
 
   /**
-   * Configures the UI of `/releases` page, used in `src/components/views/GithubView.astro`.
+   * Configures the `/releases` and `prs` UIs, used in `src/components/views/GithubView.astro`.
    */
   githubView: GitHubView
 }

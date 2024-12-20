@@ -1,5 +1,12 @@
+# avoid formatting
 pnpm-lock.yaml
+*.md
+
+# will error due to incorrect processing
 SearchSwitch.astro
 GroupItem.astro
+GithubItem.astro
+
+# avoid HTML mismatches after formatting
 releases.mdx
-*.md
+prs.mdx

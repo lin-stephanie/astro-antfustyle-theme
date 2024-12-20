@@ -78,10 +78,7 @@ export const UI: Ui = {
       'lin-stephanie/astro-loaders',
     ],
     mainLogoOverrides: [
-      [
-        /^@astrojs\/starlight(-.*)?/,
-        'https://starlight.astro.build/favicon.svg',
-      ],
+      [/starlight/, 'https://starlight.astro.build/favicon.svg'],
     ],
     subLogoMatches: [
       [/.*theme.*/, 'i-unjs:theme-colors'],
