@@ -99,7 +99,12 @@ if (collectionType === 'prs') {
   prs = await getCollection(collectionType)
 
   extendedPrs = prs
-    .filter((item) => item.data.state !== 'CLOSED' && !item.data.isDraft)
+    .filter(
+      (item) =>
+        item.data.state !== 'CLOSED' &&
+        !item.data.isDraft &&
+        !/\b(?:chore|docs|i18n)\b/.test(item.data.title)
+    )
     .map((item) => {
       const mainLogo =
         matchLogo(item.data.repository.name, mainLogoOverrides) ||

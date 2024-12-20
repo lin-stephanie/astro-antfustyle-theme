@@ -43,8 +43,6 @@ const releases = defineCollection({
       repos: [
         'withastro/astro',
         'withastro/starlight',
-        'delucis/astro-embed',
-        'ascorbic/astro-loaders',
         'lin-stephanie/astro-loaders',
         'lin-stephanie/astro-antfustyle-theme',
       ],
