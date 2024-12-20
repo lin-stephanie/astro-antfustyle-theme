@@ -15,7 +15,7 @@ This guide provides instructions on how to stay up-to-date with the latest theme
 ## Updating to the Latest Theme Version
 
 If you've made significant changes to your project, syncing may not be straightforward. 
-You may consider checking the [theme's changelog](https://astro-antfustyle-theme.vercel.app/changelog/) and manually updating each file selectively (this is the only option if you're not using Git). Alternatively, for a more efficient approach, you can follow the steps below.
+You may consider checking the [theme's changelog](../../changelog/) and manually updating each file selectively (this is the only option if you're not using Git). Alternatively, for a more efficient approach, you can follow the steps below.
 
 Before syncing, pay special attention  to directories or files you have customized or modified, such as: `src/content/`, `public/`, `src/config.ts`, `ec.config.mjs`, `src/pages/manifest.webmanifest.js`, and any new CSS files you've created for style modifications.
 

@@ -84,9 +84,9 @@ The theme includes a VS Code snippet for auto-generating this frontmatter (locat
 
 Once frontmatter is set, start writing your post!
 
-To see how basic Markdown renders, refer to the [Markdown Syntax Guide](https://astro-antfustyle-theme.vercel.app/blog/markdown-syntax-guide/). To explore how to use MDX to enhance your flexibility in writing posts, check the [MDX Docs](https://mdxjs.com/docs/) and [MDX in Astro](https://docs.astro.build/en/guides/integrations-guide/mdx/#mdx-in-astro).
+To see how basic Markdown renders, refer to the [Markdown Syntax Guide](../markdown-syntax-guide/). To explore how to use MDX to enhance your flexibility in writing posts, check the [MDX Docs](https://mdxjs.com/docs/) and [MDX in Astro](https://docs.astro.build/en/guides/integrations-guide/mdx/#mdx-in-astro).
 
-Regardless of whether you're using Markdown or MDX, _don't miss out on the [Markdown/MDX extended features](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/) supported by this theme_, including callouts (admonitions/alerts), fully-featured code blocks, image captions and links, video embeddings, styled GitHub links, and more.
+Regardless of whether you're using Markdown or MDX, _don't miss out on the [Markdown/MDX extended features](../markdown-mdx-extended-features/) supported by this theme_, including callouts (admonitions/alerts), fully-featured code blocks, image captions and links, video embeddings, styled GitHub links, and more.
 
 Additionally, the title (set by the `title` property in the YAML frontmatter) is automatically rendered as an h1. You don’t need to include the title again in the post, and it’s recommended to start with h2 headings. 
 

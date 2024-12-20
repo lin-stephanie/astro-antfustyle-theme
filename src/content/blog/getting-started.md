@@ -96,26 +96,26 @@ You can explore the current theme freely. Additionally, the following commands a
 >
 > You can execute `npm install -g pnpm` to [install `pnpm`](https://pnpm.io/installation) globally. Alternatively, you can [enable `corepack`](https://github.com/nodejs/corepack) (allows you to manage package manager versions directly via Node.js) or [install the `ni` tool](https://github.com/antfu-collective/ni) (simplifies running commands across different package managers).
 >
-> If you want to use a different package manager, make sure to [convert the project to your chosen package manager](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#revert-from-pnpm-to-npm-or-yarn) before running its commands.
+> If you want to use a different package manager, make sure to [convert the project to your chosen package manager](../faqs-and-known-issues/#revert-from-pnpm-to-npm-or-yarn) before running its commands.
 
 ## Configure the Project
 
 > [!important]
-> Before configuring, it is advisable to review [**Project Structure**](https://astro-antfustyle-theme.vercel.app/blog/project-structure/) for an overview of the project and how it’s organized.
+> Before configuring, it is advisable to review [**Project Structure**](../project-structure/) for an overview of the project and how it’s organized.
 
 Configuration can be done in two steps:
 
-- [**Basic Configuration**](https://astro-antfustyle-theme.vercel.app/blog/basic-configuration/): Customize the `src/config.ts` file.
-- [**Advanced Configuration**](https://astro-antfustyle-theme.vercel.app/blog/advanced-configuration/): Customize the LOGOs, site icons, styles, fonts and footer.
+- [**Basic Configuration**](../basic-configuration/): Customize the `src/config.ts` file.
+- [**Advanced Configuration**](../advanced-configuration/): Customize the LOGOs, site icons, styles, fonts and footer.
 
 ## Authoring Content
 
 Once configured, ensure the project is running correctly in your browser, then start creating or migrating your content. Jump to the section you're interested in:
 
-- [**Add New Posts**](https://astro-antfustyle-theme.vercel.app/blog/add-new-posts/): For creating posts, writing tips, and guidelines.
-- [**Recreate Current Pages**](https://astro-antfustyle-theme.vercel.app/blog/recreate-current-pages/): For recreating content for the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, and `404` pages, as well as deleting pages.
-- [**Markdown Syntax Guide**](https://astro-antfustyle-theme.vercel.app/blog/markdown-syntax-guide/): Showcase the rendering of Markdown syntax in this theme.
-- [**Markdown/MDX Extended Features**](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/): Extended syntax supported by the theme, including callouts (admonitions/alerts), fully-featured code blocks, image captions and links, video embeddings, styled GitHub links, and more.
+- [**Add New Posts**](../add-new-posts/): For creating posts, writing tips, and guidelines.
+- [**Recreate Current Pages**](../recreate-current-pages/): For recreating content for the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, and `404` pages, as well as deleting pages.
+- [**Markdown Syntax Guide**](../markdown-syntax-guide/): Showcase the rendering of Markdown syntax in this theme.
+- [**Markdown/MDX Extended Features**](../markdown-mdx-extended-features/): Extended syntax supported by the theme, including callouts (admonitions/alerts), fully-featured code blocks, image captions and links, video embeddings, styled GitHub links, and more.
 
 ## Deploy Your Project
 
@@ -126,19 +126,19 @@ Refer to [Astro’s Deployment Guide](https://docs.astro.build/en/guides/deploy/
 
 ## Sync Updates
 
-Just like other open-source projects, this theme gets regular bug fixes and feature updates. To keep your customized project up to date, be sure to sync the latest changes. For more details, check out the [sync updates guide](https://astro-antfustyle-theme.vercel.app/blog/sync-updates/).
+Just like other open-source projects, this theme gets regular bug fixes and feature updates. To keep your customized project up to date, be sure to sync the latest changes. For more details, check out the [sync updates guide](../sync-updates/).
 
-To stay informed about the latest changes, visit the [changelog](https://astro-antfustyle-theme.vercel.app/changelog/) or [releases](https://github.com/lin-stephanie/astro-antfustyle-theme/releases) pages. You can also [subscribe to the theme's RSS feed](https://astro-antfustyle-theme.vercel.app/rss.xml) for updates.
+To stay informed about the latest changes, visit the [changelog](../../changelog/) or [releases](https://github.com/lin-stephanie/astro-antfustyle-theme/releases) pages. You can also [subscribe to the theme's RSS feed](../../rss.xml) for updates.
 
 ## Next Steps
 
 You can dive deeper into the theme through the following sections:
 
-- [**Managing Image Assets**](https://astro-antfustyle-theme.vercel.app/blog/managing-image-assets/): Best practices for using images in Markdown/MDX.
-- [**About Open Graph Images**](https://astro-antfustyle-theme.vercel.app/blog/about-open-graph-images/): How to customize or auto-generate Open Graph images.
-- [**FAQs and Known Issues**](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/): Get more insights into the theme's details.
+- [**Managing Image Assets**](../managing-image-assets/): Best practices for using images in Markdown/MDX.
+- [**About Open Graph Images**](../about-open-graph-images/): How to customize or auto-generate Open Graph images.
+- [**FAQs and Known Issues**](../faqs-and-known-issues/): Get more insights into the theme's details.
 
-Additionally, feel free to explore the theme's [tech stack](https://astro-antfustyle-theme.vercel.app/projects/). For parts not mentioned or clarified in the guide, you might find answers in the [Astro Docs](https://docs.astro.build/en/getting-started/). You can also follow the [Astro Blog](https://astro.build/blog/) or join the [Astro Lounge](https://discord.com/invite/grF4GTXXYm) community.
+Additionally, feel free to explore the theme's [tech stack](../../projects/). For parts not mentioned or clarified in the guide, you might find answers in the [Astro Docs](https://docs.astro.build/en/getting-started/). You can also follow the [Astro Blog](https://astro.build/blog/) or join the [Astro Lounge](https://discord.com/invite/grF4GTXXYm) community.
 
 ## Wrapping Up
 

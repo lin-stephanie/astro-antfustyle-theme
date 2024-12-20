@@ -12,7 +12,7 @@ In the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyl
 
 ## Creating Pages
 
-In [Project Structure](https://astro-antfustyle-theme.vercel.app/blog/project-structure/), it is mentioned that the theme’s organizational strategy is to store all substantive content in the `src/content` directory, while the `src/pages` directory uses `.mdx` files to assemble content into structured, styled layouts.
+In [Project Structure](../project-structure/), it is mentioned that the theme’s organizational strategy is to store all substantive content in the `src/content` directory, while the `src/pages` directory uses `.mdx` files to assemble content into structured, styled layouts.
 
 Open any `.mdx` file in `src/pages`, and you'll notice a similar structure: YAML frontmatter + imported Astro components + JSX with layout components nesting view components.
 
@@ -86,7 +86,7 @@ Finally, update the frontmatter in `src/pages/projects.mdx`.
 
 ## Updating `/changelog` Page
 
-To recreate the `/changelog` page, please follow the [Add New Posts](https://astro-antfustyle-theme.vercel.app/blog/add-new-posts/). The content for the `/changelog` page, stored in the `src/content/changelog/` directory, belongs to the `changelog` content collection. This collection also uses `schema: postSchema` for frontmatter types.
+To recreate the `/changelog` page, please follow the [Add New Posts](../add-new-posts/). The content for the `/changelog` page, stored in the `src/content/changelog/` directory, belongs to the `changelog` content collection. This collection also uses `schema: postSchema` for frontmatter types.
 
 ## Updating `/streams` Page
 

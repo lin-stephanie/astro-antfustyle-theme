@@ -19,7 +19,7 @@ import { getUrl } from '~/utils/common'
   ogImage={frontmatter.ogImage}
 >
   <WideLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
-    <div slot="button" class="flex flex-warp justify-center items-center gap-4">
+    <div slot="button" class="flex flex-wrap justify-center items-center gap-4">
       <a class="btn-orange" href={getUrl('/releases/')}>
         <div class="i-ph:rocket-launch-duotone transition-all ease-out duration-200"></div>
         <p class="inline-block my-0! ml-1.5">Latest Releases</p>

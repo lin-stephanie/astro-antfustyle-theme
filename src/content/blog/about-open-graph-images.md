@@ -61,7 +61,7 @@ The template (located in `plugins/og-template/markup.ts`) for auto-generated OG 
 - `title`: Determined by the `title` field in the Markdown/MDX frontmatter; for fallback images, `FEATURE.image[1].fallbackTitle` is used.
 - `bgType`: Set in the MDX frontmatter within `src/pages/`, using `FEATURE.image[1].fallbackBgType`(also for fallback image) if not set or set to `false`.
 
-For details on how to replace the logo in the template, refer to [Advanced Configuration - Customizing Logo](https://astro-antfustyle-theme.vercel.app/blog/advanced-configuration/#customizing-logo).
+For details on how to replace the logo in the template, refer to [Advanced Configuration - Customizing Logo](../advanced-configuration/#customizing-logo).
 
 "Below are the OG images generated with `bgType` set to 'plum', 'rose', 'dot', and 'particle':
 
@@ -83,7 +83,7 @@ This theme uses a custom remark plugin (located in [`plugins/remark-generate-og-
 
 ## Extra Tips
 
-Auto-generated OG images are compressed with :link{id=lovell/sharp style=github}. For custom images, consider [manual compression](https://astro-antfustyle-theme.vercel.app/blog/managing-image-assets/#image-compression). 
+Auto-generated OG images are compressed with :link{id=lovell/sharp style=github}. For custom images, consider [manual compression](../managing-image-assets/#image-compression). 
 
 If an image with the same name as the Markdown/MDX file (or the directory for `index.md/index.mdx`) already exists in `/public/og-images/`, it won’t be regenerated. To regenerate it, manually delete the corresponding image from the `/public/og-images/` directory.
 

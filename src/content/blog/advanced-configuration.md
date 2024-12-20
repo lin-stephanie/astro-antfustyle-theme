@@ -8,7 +8,7 @@ share: true
 ogImage: true
 ---
 
-This post is an advanced guide on customizing the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme). If you have not yet configured the `src/config.ts` file, it is recommended to first review [Basic Configuration](https://astro-antfustyle-theme.vercel.app/blog/basic-configuration/).
+This post is an advanced guide on customizing the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme). If you have not yet configured the `src/config.ts` file, it is recommended to first review [Basic Configuration](../blog/basic-configuration/).
 
 ## Customizing Logo
 
@@ -69,7 +69,7 @@ You may need to adjust the SVG element's `width`, `height`, and `viewBox` attrib
 
 > [!important]- Adjust Black Elements in Your Logo
 > 
-> Since the [theme’s OG Images](https://astro-antfustyle-theme.vercel.app/blog/about-open-graph-images/#template-for-auto-generated-og-images) use a black background, modify any pure black elements in your logo to white for better visibility.
+> Since the [theme’s OG Images](../blog/about-open-graph-images/#template-for-auto-generated-og-images) use a black background, modify any pure black elements in your logo to white for better visibility.
 
 ## Replacing the Website Icon
 
@@ -148,7 +148,7 @@ If you don't need PWA support, you can delete `manifest.webmanifest.js`, `icon-1
 
 ## Customizing Website Styles
 
-While the theme offers some quick [UI configuration options](https://astro-antfustyle-theme.vercel.app/blog/basic-configuration/#configuring-ui) in the `src/config.ts`, these are limited. If you're familiar with CSS, you can fully customize the website styles, but it's recommended to follow the methods outlined below.
+While the theme offers some quick [UI configuration options](../basic-configuration/#configuring-ui) in the `src/config.ts`, these are limited. If you're familiar with CSS, you can fully customize the website styles, but it's recommended to follow the methods outlined below.
 
 **Styling approaches**
 
@@ -327,6 +327,6 @@ Finally, you may want to:
 
 This is a general overview of what you can customize in the project. If you're proficient with code, there's even more you can personalize!
 
-Next, check out [Getting Started - Authoring Content](https://astro-antfustyle-theme.vercel.app/blog/getting-started/#authoring-content) to learn how to tailor each page to your liking.
+Next, check out [Authoring Content](../getting-started/#authoring-content) to learn how to tailor each page to your liking.
 
 If you encounter any issues, find errors, or see opportunities for improvement, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions) or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls). Your feedback is highly appreciated! ❤️

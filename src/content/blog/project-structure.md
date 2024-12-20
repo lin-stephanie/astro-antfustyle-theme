@@ -131,7 +131,7 @@ Here’s how the theme’s pages correlate to collections and utilize zod schema
 | `/projects`                                           | `src/pages/projects.mdx`           | `src/content/projects/`                                                                                            | `projectsSchema`          |
 | `/changelog`                                          | `src/pages/changelog/index.mdx`    | `src/content/changelog/`                                                                                           | `postSchema`              |
 | `/changelog/xxx`                                      | `src/pages/changelog/[slug].astro` | `src/content/changelog/`                                                                                           | `postSchema`              |
-| `/feeds`                                              | `src/pages/feeds.mdx`              | [Data fetched externally](https://astro-antfustyle-theme.vercel.app/blog/recreate-current-pages/#about-feeds-page) | -                         |
+| `/feeds`                                              | `src/pages/feeds.mdx`              | [Data fetched externally](../recreate-current-pages/#about-feeds-page) | -                         |
 | `/streams`                                            | `src/pages/streams.mdx`            | `src/content/streams/`                                                                                             | `streamsSchema`           |                      |
 
 </div>
@@ -152,15 +152,15 @@ This structure improves maintainability and scalability, and adherence to the fi
 > 
 > Supports component imports, simplifying the organization of page structures with layout/view components.
 > 
-> Processed through Astro’s remark and rehype pipelines, enabling custom remark plugins to [automatically generate matching OG images](https://astro-antfustyle-theme.vercel.app/blog/about-open-graph-images/#how-this-theme-automatically-generates-og-images) for each page.
+> Processed through Astro’s remark and rehype pipelines, enabling custom remark plugins to [automatically generate matching OG images](../about-open-graph-images/#how-this-theme-automatically-generates-og-images) for each page.
 > 
-> Additionally, the `.mdx` files in the `src/pages/` are also defined as content collections. See [Recreate Current Pages - Creating Pages](https://astro-antfustyle-theme.vercel.app/blog/recreate-current-pages/#creating-pages) for more details.
+> Additionally, the `.mdx` files in the `src/pages/` are also defined as content collections. See [Recreate Current Pages - Creating Pages](../recreate-current-pages/#creating-pages) for more details.
 
 ## Wrapping Up
 
 This article provides a clear overview of the theme project’s structure and the reasoning behind its organization. By following these guidelines, you can maintain a scalable and manageable setup, while still having the flexibility to adapt it to your needs.
 
-You can also explore [Managing Image Assets](https://astro-antfustyle-theme.vercel.app/blog/managing-image-assets/), or dive deeper into the [tech stack](https://astro-antfustyle-theme.vercel.app/projects/) used in the theme to familiarize yourself with its features.
+You can also explore [Managing Image Assets](../managing-image-assets/), or dive deeper into the [tech stack](../../projects/) used in the theme to familiarize yourself with its features.
 
 If you encounter any issues, find errors, or see opportunities for improvement as you explore the theme, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions), or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls). Your feedback is highly appreciated! 
 
