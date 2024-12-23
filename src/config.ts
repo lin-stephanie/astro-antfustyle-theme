@@ -18,14 +18,12 @@ export const UI: Ui = {
       title: 'Blog',
       displayMode: 'alwaysText',
       text: 'Blog',
-      // icon: 'i-ri-article-line',
     },
     {
       path: '/projects',
       title: 'Projects',
       displayMode: 'alwaysText',
       text: 'Projects',
-      // icon: 'i-ri-lightbulb-line',
     },
     {
       path: '/changelog',
@@ -43,8 +41,8 @@ export const UI: Ui = {
       icon: 'i-uil-github-alt',
     },
     {
-      link: 'https://github.com/lin-stephanie/astro-antfustyle-theme',
-      title: `${SITE.author} on Twitter`,
+      link: 'https://x.com/astrodotbuild',
+      title: 'Astro on Twitter',
       displayMode: 'alwaysIcon',
       icon: 'i-ri-twitter-x-fill',
     },

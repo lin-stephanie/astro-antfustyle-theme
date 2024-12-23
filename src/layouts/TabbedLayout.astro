@@ -26,13 +26,9 @@ const isActive = (href: string) =>
   currentPath === getUrl(ensureTrailingSlash(href))
 ---
 
-<nav
-  id="nav-tabs"
-  class="prose m-auto mb-8 animate-none!"
-  aria-label="Page sections"
->
+<nav id="nav-tabs" class="prose mx-auto mb-8" aria-label="Page sections">
   <div
-    u-flex="~ gap-3 lt-sm:(col wrap gap-1) "
+    u-flex="~ gap-3 lt-sm:(col wrap gap-1)"
     class="mb-0 text-3xl select-none"
     role="tablist"
   >
@@ -60,9 +56,9 @@ const isActive = (href: string) =>
   </div>
   {subtitle && <p class="mt-4! op-50 italic">{subtitle}</p>}
 </nav>
-<article class="prose m-auto">
+<div class="prose mx-auto">
   <slot />
-</article>
+</div>
 
 <style>
   .link {
