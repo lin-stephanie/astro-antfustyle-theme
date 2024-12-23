@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { items } = Astro.props
-const { maxGroupColumns, showGroupItemColorOnHover } = UI.groupView
+const { maxGroupColumns } = UI.groupView
 ---
 
 <div
@@ -24,7 +24,7 @@ const { maxGroupColumns, showGroupItemColorOnHover } = UI.groupView
           bg-transparent hover:bg-[#88888811]
           text-4.4 transition-all duration-300`}
         href={item.link}
-        title={item.name}
+        aria-hidden={true}
         external={true}
       >
         <div class="pt-2 pr-5">
@@ -38,11 +38,3 @@ const { maxGroupColumns, showGroupItemColorOnHover } = UI.groupView
     ))
   }
 </div>
-
-{showGroupItemColorOnHover && (
-  <style>
-    .link:hover .icon {
-      filter: saturate(1);
-    }
-  </style>
-)}

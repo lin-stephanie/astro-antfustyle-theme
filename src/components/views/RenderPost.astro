@@ -15,12 +15,8 @@ const { collectionType, slug, pageToc } = Astro.props
 
 const post = await getEntry(collectionType, slug)
 const { Content, headings } = await post.render()
-
 const { toc } = FEATURES
-const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
 ---
 
-{tocEnabled && <Toc {headings} />}
-<div class="slide-enter-content">
-  <Content />
-</div>
+{Array.isArray(toc) && toc[0] && pageToc && <Toc {headings} />}
+<Content />

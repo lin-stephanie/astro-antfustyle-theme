@@ -543,6 +543,13 @@ interface OgImageConfig {
   fallbackBgType: BgType
 }
 
+interface slideEnterAnimConfig {
+  /**
+   * Adjusts the animation speed (ms). Smaller values speed up; larger values slow down.
+   */
+  enterStep: number
+}
+
 export interface Features {
   /**
    * Globally controls the sharing feature, which allows visitors to share content to social platforms.
@@ -573,4 +580,9 @@ export interface Features {
    * Generated images are stored in `/public/og-images`.
    */
   ogImage: FeatureConfig<OgImageConfig>
+
+  /**
+   * Controls whether to enable slide enter animation on each page.
+   */
+  slideEnterAnim: FeatureConfig<slideEnterAnimConfig>
 }

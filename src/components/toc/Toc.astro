@@ -30,10 +30,11 @@ if (Array.isArray(FEATURES.toc) && FEATURES.toc[0]) {
 const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
 ---
 
-<!-- Greater than or equal to 1024px -->
-<aside class={`${displayMode === 'always' ? 'toc-always-on' : ''}`}>
+<aside>
+  <!-- Greater than or equal to 1024px -->
   <nav
-    class={`table-of-contents ${displayPosition === 'right' ? 'table-of-contents-right' : ''}`}
+    class={`table-of-contents ${displayPosition === 'right' ? 'table-of-contents-right' : ''}
+      ${displayMode === 'always' ? 'toc-always-on' : ''}`}
     {style}
   >
     <div class="table-of-contents-anchor">
@@ -78,32 +79,32 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
       }
     </ul>
   </nav>
-</aside>
 
-<!-- less than 1024px -->
-<TocButton>
-  {
-    !!specHeadings.length &&
-      specHeadings.map((heading) => <TocItem {heading} />)
-  }
-  {
-    !!category.length &&
-      category.map((item) => (
-        <li>
-          <a href={`#${slug(item)}`} aria-label={item}>
-            {item}
-          </a>
-        </li>
-      ))
-  }
-  {
-    !!years.length &&
-      years.map((item) => (
-        <li>
-          <a href={`#${slug(item)}`} aria-label={item}>
-            {item}
-          </a>
-        </li>
-      ))
-  }
-</TocButton>
+  <!-- less than 1024px -->
+  <TocButton>
+    {
+      !!specHeadings.length &&
+        specHeadings.map((heading) => <TocItem {heading} />)
+    }
+    {
+      !!category.length &&
+        category.map((item) => (
+          <li>
+            <a href={`#${slug(item)}`} aria-label={item}>
+              {item}
+            </a>
+          </li>
+        ))
+    }
+    {
+      !!years.length &&
+        years.map((item) => (
+          <li>
+            <a href={`#${slug(item)}`} aria-label={item}>
+              {item}
+            </a>
+          </li>
+        ))
+    }
+  </TocButton>
+</aside>

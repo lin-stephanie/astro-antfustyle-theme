@@ -14,7 +14,7 @@ import Footer from '~/components/base/Footer.astro'
 import ToTopButton from '~/components/widgets/ToTopButton.astro'
 import Backdrop from '~/components/base/Backdrop.astro'
 
-import { SITE } from '~/config'
+import { SITE, FEATURES } from '~/config'
 import { getUrl } from '~/utils/common'
 
 import type { BgType } from '~/types'
@@ -30,6 +30,12 @@ interface Props {
 
 const { title, description, ogImage, bgType, pubDate, lastModDate } =
   Astro.props
+
+const { slideEnterAnim } = FEATURES
+const slideEnterAnimEnabled = Array.isArray(slideEnterAnim) && slideEnterAnim[0]
+const style = slideEnterAnimEnabled
+  ? { '--enter-step': `${slideEnterAnim[1].enterStep}ms` }
+  : undefined
 ---
 
 <!doctype html>
@@ -41,6 +47,8 @@ const { title, description, ogImage, bgType, pubDate, lastModDate } =
   <body
     class="relative flex flex-col min-h-screen
       font-sans text-gray-700 dark:text-gray-200"
+    data-no-sliding={!slideEnterAnimEnabled ? true : undefined}
+    {style}
   >
     <!-- Background -->
     {bgType && <Background type={bgType} />}
@@ -57,11 +65,11 @@ const { title, description, ogImage, bgType, pubDate, lastModDate } =
       <slot />
       {
         Astro.url.pathname !== getUrl('/') && (
-          <div class="prose slide-enter animate-delay-1000! m-auto mt-8 print:hidden">
+          <footer class="slide-enter animate-delay-1000! prose mx-auto mt-8 print:hidden">
             <slot name="share" />
             <br />
             <BackLink />
-          </div>
+          </footer>
         )
       }
     </main>
@@ -71,26 +79,19 @@ const { title, description, ogImage, bgType, pubDate, lastModDate } =
     <!-- Panel Backdrop (on mobile) -->
     <Backdrop />
 
-    <!-- Progress Bar -->
+    <!-- Progress Bar & Image Zoom -->
     <script>
+      /* nprogress */
       import nprogress from 'nprogress'
-
       document.addEventListener('astro:before-preparation', () => {
         nprogress.start()
       })
-
       document.addEventListener('astro:page-load', () => {
         nprogress.done()
       })
 
       /* medium-zoom */
-      // https://github.com/francoischalifour/medium-zoom/pull/206
-      // Astro's View Transitions feature deletes styles and class names injected by
-      // medium-zoom when navigating to a new page, which causes the zoom effect to
-      // disappear after page transition, so import css and js files separately and
-      // re-attach the zoom effect.
       import mediumZoom from 'medium-zoom/dist/pure'
-
       const zoom = mediumZoom({
         background: 'rgb(0 0 0 / 0.8)',
       })

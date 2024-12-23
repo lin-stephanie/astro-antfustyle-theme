@@ -30,13 +30,7 @@ const {
 } = Astro.props
 ---
 
-<div
-  class="slide-enter"
-  style={{
-    '--enter-stage': idx,
-    '--enter-step': '60ms',
-  }}
->
+<div class="slide-enter" style={{ '--enter-stage': idx }}>
   <Link
     class="block border-b-none! mb-6 mt-2 op-transition!"
     href={redirect ?? getUrl(`/${collectionType}/${postSlug}/`)}

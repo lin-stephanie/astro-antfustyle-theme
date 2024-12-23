@@ -59,12 +59,6 @@ export default defineConfig({
   // define utility classes and the resulting CSS
   rules: [
     [
-      /^slide-enter-(\d+)$/,
-      ([_, n]) => ({
-        '--enter-stage': n,
-      }),
-    ],
-    [
       /^bg-radial-gradient-(\d+)$/,
       ([, n]) => {
         return {
