@@ -10,7 +10,7 @@
   aria-expanded="false"
   aria-controls="nav-panel"
 >
-  <div class="i-ri-menu-line"></div>
+  <div u-i-ri-menu-line></div>
 </button>
 
 <div
@@ -29,10 +29,10 @@
 </div>
 
 <script>
-  /* Open nav panel when user click on button */
   import { dispatchToggleBackdrop, toggleFadeEffect } from '~/utils/animation'
 
   document.addEventListener('astro:page-load', () => {
+    /* Open nav panel when user click on button */
     const handleBtnClickToOpen = () => {
       dispatchToggleBackdrop(true)
       toggleFadeEffect('nav-panel', true, 'hidden!')

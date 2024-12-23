@@ -8,7 +8,7 @@ import { getUrl } from '~/utils/common'
   title="Search"
   aria-label="Search"
 >
-  <div u-i-grommet-icons:search></div>
+  <div u-i-grommet-icons-search></div>
 </button>
 
 <div
@@ -25,7 +25,7 @@ import { getUrl } from '~/utils/common'
       h-10 px-3 rounded-md
       bg-[#88888811] dark:bg-[#88888822]"
   >
-    <div id="search-icon" class="i-grommet-icons:search op-60"></div>
+    <div u-i-grommet-icons-search id="search-icon" class="op-60"></div>
     <label class="sr-only" for="search-input">Search</label>
     <input
       type="search"
@@ -39,9 +39,9 @@ import { getUrl } from '~/utils/common'
 </div>
 
 <script>
-  /* Handle click on search switch */
   import { dispatchToggleBackdrop, toggleFadeEffect } from '~/utils/animation'
 
+  /* Handle click on search switch to open or close */
   document.addEventListener('astro:page-load', () => {
     const handleToggle = () => {
       const searchPanel = document.getElementById('search-panel')
@@ -60,7 +60,7 @@ import { getUrl } from '~/utils/common'
     searchSwitch?.addEventListener('click', handleToggle)
   })
 
-  /* Handle click on link or outside search panel */
+  /* Handle click on link or outside search panel to close */
   const handleClose = (event: MouseEvent) => {
     const searchPanel = document.getElementById('search-panel')
     if (!searchPanel || searchPanel.classList.contains('hidden')) return
