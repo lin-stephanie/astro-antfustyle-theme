@@ -123,4 +123,5 @@ export const FEATURES: Features = {
       fallbackBgType: 'plum',
     },
   ],
+  slideEnterAnim: [true, { enterStep: 60 }],
 }

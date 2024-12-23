@@ -132,7 +132,7 @@ html.dark .prose {
 }
 
 *:hover > .table-of-contents > .table-of-contents-anchor,
-.toc-always-on .table-of-contents > .table-of-contents-anchor {
+.toc-always-on.table-of-contents > .table-of-contents-anchor {
   opacity: 1;
 }
 
@@ -146,7 +146,7 @@ html.dark .prose {
   transition: all 700ms;
 }
 
-.toc-always-on .table-of-contents > ul {
+.toc-always-on.table-of-contents > ul {
   opacity: 0.6;
 }
 

@@ -3,7 +3,7 @@ import { slug } from '~/utils/common'
 import { UI } from '~/config'
 
 interface Props {
-  idx: number
+  idx?: number
   text: string
   needId?: boolean
   wide?: boolean
@@ -15,20 +15,14 @@ const { maxGroupColumns } = UI.groupView
 
 <div
   {...needId ? { id: slug(text) } : {}}
-  class="relative h-20
-    pointer-events-none select-none
-    slide-enter"
-  style={{
-    '--enter-stage': idx - 2,
-    '--enter-step': '60ms',
-  }}
+  class={`relative h-20 pointer-events-none select-none ${idx !== undefined ? 'slide-enter' : ''}`}
+  style={idx !== undefined ? { '--enter-stage': idx - 2 } : undefined}
 >
   {
     !wide ? (
       <span
         class="absolute left--12 top--8
-          op-10
-          text-8em text-stroke-2 text-stroke-hex-aaa font-bold color-transparent"
+          op-10 text-8em text-stroke-2 text-stroke-hex-aaa font-bold color-transparent"
       >
         {text}
       </span>

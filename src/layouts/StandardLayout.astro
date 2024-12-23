@@ -3,30 +3,54 @@ interface Props {
   title: string
   subtitle?: string
   isSearchable?: boolean
+  isCentered?: boolean
 }
 
-const { title, subtitle, isSearchable = false } = Astro.props
+const {
+  title,
+  subtitle,
+  isSearchable = false,
+  isCentered = false,
+} = Astro.props
 ---
 
-<header class="prose m-auto mb-8">
+<header
+  class:list={{
+    'prose mx-auto mb-8': true,
+    'text-center': isCentered,
+  }}
+>
   <h1
-    class="slide-enter-50 mb-0"
     data-pagefind-body={isSearchable ? true : undefined}
     data-pagefind-weight={isSearchable ? '10' : undefined}
     data-pagefind-meta={isSearchable ? 'title' : undefined}
   >
     {title}
   </h1>
-  {
-    subtitle && (
-      <p class="animate-none mt--4! mb-8! op-50! italic">{subtitle}</p>
-    )
-  }
+  {subtitle && <p class="mt--4! op-50 italic">{subtitle}</p>}
   <slot name="head" />
 </header>
-<article
-  data-pagefind-body={isSearchable ? true : undefined}
-  class="prose m-auto"
->
-  <slot />
-</article>
+{
+  Astro.slots.has('article') && (
+    <article
+      class="slide-enter-content prose mx-auto"
+      data-pagefind-body={isSearchable ? true : undefined}
+    >
+      <slot name="article" />
+    </article>
+  )
+}
+{
+  Astro.slots.has('list') && (
+    <div class="prose mx-auto">
+      <slot name="list" />
+    </div>
+  )
+}
+{
+  Astro.slots.has('wide') && (
+    <div class="max-w-300 mx-auto">
+      <slot name="wide" />
+    </div>
+  )
+}

@@ -14,7 +14,7 @@ import Footer from '~/components/base/Footer.astro'
 import ToTopButton from '~/components/widgets/ToTopButton.astro'
 import Backdrop from '~/components/base/Backdrop.astro'
 
-import { SITE } from '~/config'
+import { SITE, FEATURES } from '~/config'
 import { getUrl } from '~/utils/common'
 
 import type { BgType } from '~/types'
@@ -30,6 +30,12 @@ interface Props {
 
 const { title, description, ogImage, bgType, pubDate, lastModDate } =
   Astro.props
+
+const { slideEnterAnim } = FEATURES
+const slideEnterAnimEnabled = Array.isArray(slideEnterAnim) && slideEnterAnim[0]
+const style = slideEnterAnimEnabled
+  ? { '--enter-step': `${slideEnterAnim[1].enterStep}ms` }
+  : undefined
 ---
 
 <!doctype html>
@@ -41,6 +47,8 @@ const { title, description, ogImage, bgType, pubDate, lastModDate } =
   <body
     class="relative flex flex-col min-h-screen
       font-sans text-gray-700 dark:text-gray-200"
+    data-no-sliding={!slideEnterAnimEnabled ? true : undefined}
+    {style}
   >
     <!-- Background -->
     {bgType && <Background type={bgType} />}

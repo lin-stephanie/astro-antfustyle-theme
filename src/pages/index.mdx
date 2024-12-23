@@ -18,6 +18,11 @@ import RenderPost from '~/components/views/RenderPost.astro'
   ogImage={frontmatter.ogImage}
 >
   <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
-    <RenderPost pageToc={frontmatter.toc} collectionType="home" slug="index" />
+    <RenderPost
+      slot="article"
+      pageToc={frontmatter.toc}
+      collectionType="home"
+      slug="index"
+    />
   </StandardLayout>
 </BaseLayout>

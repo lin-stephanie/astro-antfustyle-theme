@@ -28,8 +28,8 @@ const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
 }
 {
   Object.keys(projects).map((key, idx) => (
-    <div class="slide-enter" style={{ '--enter-stage': idx + 1 }}>
-      <Categorizer {idx} text={key} needId={tocEnabled} wide={true} />
+    <div class="slide-enter" style={{ '--enter-stage': idx }}>
+      <Categorizer text={key} needId={tocEnabled} wide={true} />
       <GroupItem items={projects[key]} />
     </div>
   ))

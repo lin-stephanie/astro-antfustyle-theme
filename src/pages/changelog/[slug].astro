@@ -41,12 +41,11 @@ frontmatter to <code>false</code> or remove it to publish the post.`
   {pubDate}
   {lastModDate}
 >
-  {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
   <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
     <Fragment slot="head">
       {
         frontmatter.pubDate && (
-          <p class="slide-enter-50 mt--6! opacity-50">
+          <p class="mt--6! op-50">
             <time datetime={pubDate}>{formatDate(pubDate)}</time>
             {minutesRead !== 0 && <span>· {minutesRead} min</span>}
             {lastModDate && (
@@ -59,13 +58,16 @@ frontmatter to <code>false</code> or remove it to publish the post.`
       }
       {frontmatter.draft && <Warning rawHTMLString={warningHTML} />}
     </Fragment>
-    <div class="slide-enter-content">
+    <Fragment slot="article">
+      {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
       <Content />
-    </div>
+    </Fragment>
   </StandardLayout>
-  {
-    Array.isArray(share) && share[0] && frontmatter.share && (
-      <ShareLink slot="share" config={share[1]} />
-    )
-  }
+  <Fragment slot="share">
+    {
+      Array.isArray(share) && share[0] && frontmatter.share && (
+        <ShareLink config={share[1]} />
+      )
+    }
+  </Fragment>
 </BaseLayout>
