@@ -89,7 +89,8 @@ import { getUrl } from '~/utils/common'
 
     if (isClickedOnLinkInSearchResults) {
       if (isWidthUnder1128) dispatchToggleBackdrop(false)
-      searchPanel.classList.remove('fade-in')
+      if (!window.matchMedia('(prefers-reduced-motion)').matches)
+        searchPanel.classList.remove('fade-in')
       searchPanel.classList.add('hidden')
     }
   }

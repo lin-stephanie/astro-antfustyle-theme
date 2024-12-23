@@ -217,14 +217,12 @@ html {
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .fade-in {
-    animation: fade-in 0.3s forwards;
-  }
+.fade-in {
+  animation: fade-in 0.3s forwards;
+}
 
-  .fade-out {
-    animation: fade-out 0.3s forwards;
-  }
+.fade-out {
+  animation: fade-out 0.3s forwards;
 }
 
 /* Search */
