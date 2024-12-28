@@ -1,7 +1,7 @@
 ---
 title: Sync Updates
 description: How to sync your project with the latest version of the Astro AntfuStyle Theme
-pubDate: 2022-10-04
+pubDate: 2021-06-06
 lastModDate: ''
 toc: true
 share: true

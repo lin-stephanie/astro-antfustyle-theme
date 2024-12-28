@@ -23,6 +23,7 @@ This live demo will guide you through setup and customization, offering helpful 
 - [Directive Sugar](./blog/markdown-mdx-extended-features/#image-caption--link) for Both Markdown/MDX
 - [Code Syntax Highlighting & Annotations](./blog/markdown-mdx-extended-features/#fully-featured-code-blocks)
 - Customizable Animated Backgrounds (Take a look around!)
+- [Showcase Your GitHub Releases and PRs](./blog/customizing-github-activity-pages)
 
 **User Experience**
 
@@ -35,7 +36,7 @@ This live demo will guide you through setup and customization, offering helpful 
 - Social Media Sharing Features
 - [Image Zoom](./blog/faqs-and-known-issues/#image-zoom) Preview
 
-> More features are continuously being added!
+> Preparing to upgrade to Astro 5 with more features! 🚀
 
 ---
 

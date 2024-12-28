@@ -1,7 +1,7 @@
 ---
 title: About Open Graph Images
 description: How to configure OG images in the Astro AntfuStyle Theme
-pubDate: 2021-10-02
+pubDate: 2020-01-02
 lastModDate: ''
 toc: true
 share: true

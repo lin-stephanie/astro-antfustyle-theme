@@ -2,7 +2,7 @@
 title: Basic Configuration
 description: How to configure Astro AntfuStyle Theme
 pubDate: 2024-10-02
-lastModDate: ''
+lastModDate: 2024-12-27
 toc: true
 share: true
 ogImage: true
@@ -34,35 +34,78 @@ The `SITE` object is used to configure the basic information of your website, an
 
 The `UI` object allows you to configure navigation, social links, page views, and more. Its configuration options are as follows:
 
+| Option                          | Type                            | Description                                                                                                                                                                       |
+| ------------------------------- | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`internalNavs`](#internalnav)  | `InternalNav[]`                 | Configures internal navigation links. The configuration order matches the display order.                                                                                          |
+| [`socialLinks`](#sociallink)    | `SocialLink[]`                  | Configures external social links. The configuration order matches the display order.                                                                                              |
+| [`NavBarLayout`](#navbarlayout) | `NavBarLayout`                  | Controls the layout of the navigation bar.                                                                                                                                        |
+| `tabbedLayoutTabs`              | `false \| [Tab, Tab, ...Tab[]]` | Enables and configures for tabs within a tabbed layout. If your website does not use the `TabbedLayout`, you can set it to `false`. Otherwise, required before using this layout. |
+| [`groupView`](#groupview)       | `GroupView`                     | Configures the `/projects` UIs.                                                                                                                                                   |
+| [`githubView`](#githubview)     | `GitHubView`                    | Configures the `/releases` and `prs` UIs.                                                                                                                                         |
 
-| Options                     | Type                            | Description                                                                                                                                                                         | Example                                                                                                                                                            |
-| --------------------------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `internalNavs`              | `InternalNav[]`                 | Configures internal navigation links. The configuration order matches the display order.                                                                                            | `[ { path: '/blog', title: 'Blog', displayMode: 'textToIconOnMobile', text: 'Blog', icon: 'i-ri-article-line' }, ... ]`                                            |
-| `socialLinks`               | `SocialLink[]`                  | Specifies external social links. The configuration order matches the display order.                                                                                                 | `[ { link: 'https://github.com/lin-stephanie/astro-antfustyle-theme', title: 'AntfuStyle on Github', displayMode: 'alwaysIcon', icon: 'i-uil-github-alt' }, ... ]` |
-| `NavBarLayout`              | `NavBarLayout`                  | Controls the layout of the navigation bar by defining components positioned on the `left` and `right` sides. Additionally, by configuring `mergeOnMobile`, you can control whether the 'internalNavs' and 'socialLinks' components are combined into a single navigation menu on mobile. | `{ left: [], right: ['internalNavs', 'socialLinks', 'searchButton', 'themeButton', 'rssLink'], mergeOnMobile: true }`                                                                   |
-| `tabbedLayoutTabs`          | `false \| [Tab, Tab, ...Tab[]]` | Enables tabs in the layout if set, defining `title` and `path` for each tab. If not using a tabbed layout, this can be set to `false`.                                              | ` [ { title: 'Changelog', path: '/changelog' }, { title: 'AstroBlog', path: '/feeds' }, ...]`                                                                      |
-| `maxGroupColumns`           | `2 \| 3`                        | Sets the maximum number of columns to display in the group view (e.g., for `/projects` page), controlling the grid layout.                                                          | 3                                                                                                                                                                  |
-| `showGroupItemColorOnHover` | `boolean`                       | Determines whether group item icons display in color when hovered over.                                                                                                             | `false`                                                                                                                                                            |
+### `InternalNav`
 
-The properties of the `InternalNav` configuration object are as follows:
+The properties of the `InternalNav` configuration are as follows:
 
-| Properties (* required)      | Type                                                                                                           | Description                                                                                                                                            | Example                                                                                                                                                                                                                                                                                                      |
-| ------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `path`*       | `/${string}`                                                                                                   | Specifies the navigation path. It must start with `/`.                                                                                                 | `'/blog'`、`'/blog/'`                                                                                                                                                                                                                                                                                         |
-| `title`*      | `string`                                                                                                       | Sets the content displayed on hover for accessibility.                                                                                                 | `'Blog'`                                                                                                                                                                                                                                                                                                     |
-| `displayMode` | `'alwaysText'` \| `'alwaysIcon'` \| `'textHiddenOnMobile'` \| `'iconHiddenOnMobile'` \| `'textToIconOnMobile'` | Defines how the navigation item is displayed responsively. Different modes control the visibility of text or icon depending on the viewport size.      | `'textToIconOnMobile'`                                                                                                                                                                                                                                                                                       |
-| `text`        | `string`                                                                                                       | Sets the text displayed for the navigation item. Required for `displayMode` values `'alwaysText'`, `'textHiddenOnMobile'`, and `'textToIconOnMobile'`. | `'Blog'`                                                                                                                                                                                                                                                                                                     |
+| Property      | Type                                                                                                           | Description                                                                                                                                            | Example                                                                                                                                                                                                                                                          |
+| ------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `path`        | `/${string}`                                                                                                   | Specifies the navigation path. It must start with `/`.                                                                                                 | `'/blog'`、`'/blog/'`                                                                                                                                                                                                                                             |
+| `title`       | `string`                                                                                                       | Sets the content displayed on hover for accessibility.                                                                                                 | `'Blog'`                                                                                                                                                                                                                                                         |
+| `displayMode` | `'alwaysText'` \| `'alwaysIcon'` \| `'textHiddenOnMobile'` \| `'iconHiddenOnMobile'` \| `'textToIconOnMobile'` | Defines how the navigation item is displayed responsively. Different modes control the visibility of text or icon depending on the viewport size.      | `'textToIconOnMobile'`                                                                                                                                                                                                                                           |
+| `text`        | `string`                                                                                                       | Sets the text displayed for the navigation item. Required for `displayMode` values `'alwaysText'`, `'textHiddenOnMobile'`, and `'textToIconOnMobile'`. | `'Blog'`                                                                                                                                                                                                                                                         |
 | `icon`        | `Icon`                                                                                                         | Sets the icon displayed for the navigation item. Required for `displayMode` values `'alwaysIcon'`, `'iconHiddenOnMobile'`, and `'textToIconOnMobile'`. | `'i-ri-article-line'`<br>（The icon format follows the `i-<collection>-<icon>` or `i-<collection>:<icon>` format as per [UnoCSS specs](https://unocss.dev/presets/icons). See [Icon Usage](../faqs-and-known-issues/#icon-usage) for details on setting up icons） |
+
+### `SocialLink`
+
+The properties of the `SocialLink` configuration are as follows:
+
+| Property      | Type                                                                                                           | Description                                                                                                                                        | Example                                                                                                                                                                                                                                                          |
+| ------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `link`        | ``http://${string}` \| `https://${string}``                                                                    | Set the URL to the social platform.                                                                                                                | `'https://x.com/astrodotbuild'`                                                                                                                                                                                                                                  |
+| `title`       | `string`                                                                                                       | Sets the content displayed on hover for accessibility.                                                                                             | `Follow ${SITE.author} on Twitter`                                                                                                                                                                                                                               |
+| `displayMode` | `'alwaysText'` \| `'alwaysIcon'` \| `'textHiddenOnMobile'` \| `'iconHiddenOnMobile'` \| `'textToIconOnMobile'` | Defines how the social item is displayed responsively. Different modes control the visibility of text or icon depending on the viewport size.      | `'alwaysIcon'`                                                                                                                                                                                                                                                   |
+| `text`        | `string`                                                                                                       | Sets the text displayed for the social item. Required for `displayMode` values `'alwaysText'`, `'textHiddenOnMobile'`, and `'textToIconOnMobile'`. | `'GitHub'`                                                                                                                                                                                                                                                       |
+| `icon`        | `Icon`                                                                                                         | Sets the icon displayed for the social item. Required for `displayMode` values `'alwaysIcon'`, `'iconHiddenOnMobile'`, and `'textToIconOnMobile'`. | `'i-ri-article-line'`<br>（The icon format follows the `i-<collection>-<icon>` or `i-<collection>:<icon>` format as per [UnoCSS specs](https://unocss.dev/presets/icons). See [Icon Usage](../faqs-and-known-issues/#icon-usage) for details on setting up icons） |
+
+### `NavBarLayout`
+
+The properties of the `NavBarLayout` configuration are as follows:
+
+| Property        | Type                    | Description                                                                                                                                                | Example                                                                                                                                          |
+| --------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `left`          | `NavBarComponentType[]` | Defines which components ('internalNavs', 'socialLinks', 'searchButton', 'themeButton', 'rssLink') are positioned on the left side of the navigation bar.  | `[]` (If you want all components to appear on the right side, leave this array empty)                                                            |
+| `right`         | `NavBarComponentType[]` | Defines which components ('internalNavs', 'socialLinks', 'searchButton', 'themeButton', 'rssLink') are positioned on the right side of the navigation bar. | `['internalNavs', 'socialLinks', 'searchButton', themeButton', 'rssLink']` (Components in `left` and `right` arrays must not contain duplicates) |
+| `mergeOnMobile` | `boolean`               | Controls whether the 'internalNavs' and 'socialLinks' section are combined into a single navigation menu on mobile, managed through a hamburger icon.      | `true`                                                                                                                                           |
+
+### `GroupView`
+
+The properties of the `GroupView` configuration are as follows:
+
+| Property                    | Type      | Description                                                                                                                                                  | Example |
+| --------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `maxGroupColumns`           | `2 \| 3`  | Sets the maximum number of columns displayed in the group view.                                                                                              | `3`     |
+| `showGroupItemColorOnHover` | `boolean` | Determines whether group item icons display in color when hovered over. If `true`, the icon for the group item will display in its original colors on hover. | `true`  |
+
+### `GithubView`
+
+The properties of the `GithubView` configuration are as follows:
+
+| Property            | Type                                       | Description                                                                                                                                | Example                                                                                                |
+| ------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `monorepos`         | `${string}/${string}[]`                    | Defines monorepo repositories using `<owner>/<repo>` format. For monorepos, the tag name is used as the primary text for `/releases` page. | `['withastro/astro']` (If you want all components to appear on the right side, leave this array empty) |
+| `mainLogoOverrides` | `[RepoWithOwner \| RegExp, Url \| Icon][]` | Configures main logos for repositories or packages (for monorepos). Defaults to the owner's avatar if no custom logo is set.               | `[/starlight/, 'https://starlight.astro.build/favicon.svg']` (Prioritized by order)                    |
+| `subLogoMatches`    | `[RepoWithOwner \| RegExp, Url \| Icon][]` | Configures auxiliary logos for rrepositories or packages (for monorepos). No logo is shown if unmatched.                                   | `[/tweet/, 'i-logos-twitter']`  (Prioritized by order)                                                 |
 
 ## Configuring `FEATURES`
 
-The `FEATURES` object globally controls feature activation and configures options for each feature as follows:
+The `FEATURES` object globally controls the activation and configuration of special features. Each feature can be managed as follows:
 
+- Set to `false` or `[false, {...}]` to disable the feature.
+- Set to `[true, {...}]` to enable the feature and configure its options.
 
-**Share Feature Configuration**
+### Share
 
-
-| Options                        | Type                       | Description                                                                       | Example                                               |
+| Option                         | Type                       | Description                                                                       | Example                                               |
 | ------------------------------ | -------------------------- | --------------------------------------------------------------------------------- | ----------------------------------------------------- |
 | `twitter`                      | `FeatureConfig<Mentioned>` | Configures Twitter sharing. If enabled, adds a mention to the specified username. | `[true, '@userName']`                                 |
 | `mastodon`                     | `FeatureConfig<Mentioned>` | Configures Mastodon sharing. If enabled, adds a mention to the specified user.    | `[true, '[@userName@serverName](@ste7lin@fairy.id)']` |
@@ -73,8 +116,7 @@ The `FEATURES` object globally controls feature activation and configures option
 | `whatsapp`                     | `boolean`                  | Controls whether to include WhatsApp for sharing.                                 | `true`                                                |
 | `email`                        | `boolean`                  | Controls whether to include Email for sharing.                                    | `true`                                                |
 
-
-**TOC Feature Configuration**
+### TOC
 
 | Options           | Type                         | Description                                                                         | Example   |
 | ----------------- | ---------------------------- | ----------------------------------------------------------------------------------- | --------- |
@@ -83,14 +125,19 @@ The `FEATURES` object globally controls feature activation and configures option
 | `displayPosition` | `'left' \| 'right'`          | Sets the position of TOC on the page (either on the left or right).                 | `'left'`  |
 | `displayMode`     | `'always' \| 'hover'`        | Controls whether the TOC is always visible or only appears when hovering.           | `'hover'` |
 
-**OG Image Feature Configuration**
+### OG Image
 
-| Options          | Type                                     | Description                                                                                                                                                                                                                                                                                                | Example              |
-| ---------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `authorOrBrand`  | `string`                                 | Defines your name or brand name that will be displayed on the OG image.                                                                                                                                                                                                                                    | `'Your name'`        |
-| `fallbackTitle`  | `string`                                 | Sets the fallback title for OG images. Used when the `title` in the frontmatter is missing or invalid.                                                                                                                                                                                                     | `'Site Description'` |
+| Options          | Type                                     | Description                                                                                                                                         | Example              |
+| ---------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `authorOrBrand`  | `string`                                 | Defines your name or brand name that will be displayed on the OG image.                                                                             | `'Your name'`        |
+| `fallbackTitle`  | `string`                                 | Sets the fallback title for OG images. Used when the `title` in the frontmatter is missing or invalid.                                              | `'Site Description'` |
 | `fallbackBgType` | `'plum' \| 'dot' \| 'rose' \|'particle'` | Sets the fallback background for OG images. This value is only used for the fallback OG image and as the background when `bgType` is not specified. | `'plum'`             |
 
+### Slide Enter Animation
+
+| Options          | Type                                     | Description                                                                                                                                         | Example              |
+| ---------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `enterStep`      | `number`                                 | Adjusts the animation speed (ms). Smaller values speed up; larger values slow down.                                                                 | `60`                 |
 
 After making these changes, ensure the project runs smoothly in the browser before moving on to [Advanced Configuration](../advanced-configuration/). 🧗‍♂️
  

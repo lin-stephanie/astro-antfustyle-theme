@@ -1,7 +1,7 @@
 ---
 title: FAQs and Known Issues
 description: FAQs and known issues in Astro AntfuStyle Theme
-pubDate: 2021-10-01
+pubDate: 2020-01-01
 lastModDate: ''
 toc: true
 share: true
@@ -144,4 +144,8 @@ Here are some unresolved issues found during theme development. If you have a so
 
 3. Automatically generated OG Images don’t support emojis, and titles may occasionally overflow the image boundary, making them partially invisible, despite margins and padding being set in the template.
 
-Thank you for taking the time to explore and use the Astro AntfuStyle Theme. Let’s keep pushing forward and making great things happen --- your input is always welcome! 🙌
+Thank you for taking the time to explore and use the Astro AntfuStyle Theme. 
+
+If you encounter any issues, find errors, or see opportunities for improvement, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions) or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls).
+
+Let’s keep pushing forward and making great things happen --- your input is always welcome! 🙌

@@ -1,7 +1,7 @@
 ---
-title: Add New Posts
+title: Adding New Posts
 description: "How to create new posts in Astro AntfuStyle Theme: guidelines, tips, and tricks"
-pubDate: 2023-10-04
+pubDate: 2023-12-06
 lastModDate: ''
 toc: true
 share: true
@@ -50,7 +50,7 @@ All `.md` and `.mdx` files in the `src/content/blog/` belong to the `blog` conte
 Each post requires [YAML frontmatter](https://jekyllrb.com/docs/front-matter/) , which adds metadata at the top of Markdown/MDX files. The frontmatter fields for `blog` posts are defined by `schema: postSchema`in `src/content/schema.ts` as follows:
 
 
-| Properties(* required) | Type(default)                                | Description                                                                                                                                                                                                                                                    |
+| Property (* required) | Type (default)                                | Description                                                                                                                                                                                                                                                    |
 | --------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `title`*                    | `string`                                          | Sets the post title, limited to **60 characters**. This follows [Moz's recommendation](https://moz.com/learn/seo/title-tag), ensuring approximately 90% of titles display correctly in SERPs and preventing truncation on smaller screens or social platforms. |
 | `subtitle`                  | `string` (`''`)                                   | Provides a post subtitle. If provided, it will be displayed below the title. If not needed, leave the field as an empty string or delete it.                                                                                                                   |
@@ -90,13 +90,12 @@ Regardless of whether you're using Markdown or MDX, _don't miss out on the [Mark
 
 Additionally, the title (set by the `title` property in the YAML frontmatter) is automatically rendered as an h1. You don’t need to include the title again in the post, and it’s recommended to start with h2 headings. 
 
-> [!important]
+> [!important]- TOC Excludes `title` Property Defined in Frontmatter
 > 
-> Note that even if you configure `FEATURES.toc[1].minHeadingLevel` in `src/config.ts` to include `1`, the title set by the `title` property won't be included in the auto-generated TOC --- it only includes h1 headings written in the Markdown/MDX content.
+> Note that even if you configure `FEATURES.toc[1].minHeadingLevel` in `src/config.ts` to include `1`, the title set by the `title` property in frontmatter won't be included in the auto-generated TOC --- it only includes h1 headings written in the Markdown/MDX content.
 
 ## Wrapping Up
 
 Here’s how to create a new post in the theme. Once completed, you can preview your post in real-time at `/blog/if-stored-in-subdirectory/your-post-name` in your browser.
-
 
 Happy writing, and may your content reach a wide and engaged audience! 🌎

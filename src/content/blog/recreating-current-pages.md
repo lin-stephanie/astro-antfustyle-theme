@@ -1,14 +1,14 @@
 ---
-title: Recreate Current Pages
+title: Recreating Current Pages
 description: How to edit existing pages in Astro AntfuStyle Theme
-pubDate: 2023-10-03
-lastModDate: ''
+pubDate: 2023-12-03
+lastModDate: 2024-12-27
 toc: true
 share: true
 ogImage: true
 ---
 
-In the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme), you can recreate content for the `/`, `/projects`, `/changelog`, `/streams`,  `/feeds`,  and `404` pages. This post also explains how to create a page within the theme.
+In the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme), you can customize the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, and `404` pages. This post also covers creating or removing pages. For `/releases` and `/prs`, see [Customizing GitHub Activity Pages](../customizing-github-activity-pages/).
 
 ## Creating Pages
 
@@ -16,11 +16,11 @@ In [Project Structure](../project-structure/), it is mentioned that the theme’
 
 Open any `.mdx` file in `src/pages`, and you'll notice a similar structure: YAML frontmatter + imported Astro components + JSX with layout components nesting view components.
 
-The theme defined all `.mdx` files in `src/pages/` belong to the `pages` content collection. This is enabled by [Astro’s experimental Content Layer API](https://astro.build/blog/astro-4140/#experimental-content-layer-api), introduced in Astro 4.14, allowing content to exist outside `src/content/`. 
+The theme defined all `.mdx` files in `src/pages/` belong to the `pages` content collection. This is enabled by [Astro’s Content Layer API](https://astro.build/blog/astro-4140/#experimental-content-layer-api), introduced in Astro 4.14, allowing content to exist outside `src/content/`. 
 
 The frontmatter fields for `pages` content collection are defined by `schema: pageSchema`in `src/content/schema.ts` as follows:
 
-| Property (* required) | Type (default)                                                                          | Description                                                                                                                                                                                                                                      |
+| Property | Type (default)                                                                          | Description                                                                                                                                                                                                                                      |
 | --------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `title`               | `string` (`''`)                                                                         | Sets the page title, formatted with `SITE.title` as `<pageTitle> - <siteTitle>` for metadata and automatic OG image generation. If undefined or empty, only `<siteTitle>` is displayed, and OG image generation is skipped.                      |
 | `subtitle`            | `string` (`''`)                                                                         | Provides a page subtitle. If provided, it will be displayed below the title. If not needed, leave the field as an empty string or delete it.                                                                                                     |
@@ -43,7 +43,9 @@ By creating pages this way, you can manage metadata and control features across 
 > 
 > When using the `RenderPost` component, ensure that `collectionType` and `slug` correspond to a directory and file in `src/content/` (excluding the extension).
 
-## Updating Homepage and `404` Page
+## Updating Pages
+
+### Homepage and `404` Page
 
 To update the homepage, open `src/content/home/index.md` and start writing the content you want to present.
 
@@ -53,7 +55,7 @@ To update the 404 page, you can directly edit `src/pages/404.mdx`.
 > 
 > Since the `home` content collection doesn't have a defined frontmatter type in `src/content/config.ts`, you don't need to write any frontmatter. Just focus on the main content, and it should work fine.
 
-## Updating  `/projects` Page
+### `/projects` Page
 
 Open `src/content/projects/data.json`, delete the existing content, and use the following as a base:
 
@@ -70,25 +72,23 @@ Open `src/content/projects/data.json`, delete the existing content, and use the 
 
 The `projects` field type is `Record<string, projectSchema[]>`. `projectSchema` is defined as follows:
 
-| Property (* required) | Type (default)                                                                          | Description                                                                                                                                                                                                                                      |
-| --------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `title`               | `string` (`''`)                                                                         | Sets the page title, formatted with `SITE.title` as `<pageTitle> - <siteTitle>` for metadata and automatic OG image generation. If undefined or empty, only `<siteTitle>` is displayed, and OG image generation is skipped.                      |
-| `subtitle`            | `string` (`''`)                                                                         | Provides a page subtitle. If provided, it will be displayed below the title. If not needed, leave the field as an empty string or delete it.                                                                                                     |
-| `description`         | `string` (`''`)                                                                         | Provides a brief description, used in meta tags for SEO and sharing purposes. If not needed, leave the field as an empty string or delete it, and the `SITE.description` will be used directly.                                                  |
-| `bgType`              | `z.union([z.literal(false), z.enum(['plum', 'dot', 'rose', 'particle'])])`<br>(`false`) | Specifies whether to apply a background on this page and select its type. If not needed, delete the field or set to `false`.                                                                                                                     |
-| `toc`                 | `boolean` (`false`)                                                                     | Controls whether the table of contents (TOC) is generated for the page.                                                                                                                                                                          |
-| `ogImage`             | `z.union([z.string(), z.boolean()])`<br>(`true`)                                        | Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field or set to `true`. To disable it, set the field to `false`. To use a custom image, provide the full filename from `/public/og-images/`. |
+| Property (* required) | Type     | Description                                                                                                                            |
+| --------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`*               | `string` | Name of the project to be displayed.                                                                                                   |
+| `link`*               | `string` | URL linking to the project page or repository.                                                                                         |
+| `desc`*               | `string` | A brief description summarizing the project.                                                                                           |
+| `icon`*               | `Icon`   | Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [UnoCSS](https://unocss.dev/presets/icons) specs. |
 
 
 The theme also includes a code snippet for generating `projectSchema`. Type `projectData` to trigger it, then use `tab` to modify the values.
 
 Finally, update the frontmatter in `src/pages/projects.mdx`.
 
-## Updating `/changelog` Page
+### `/changelog` Page
 
-To recreate the `/changelog` page, please follow the [Add New Posts](../add-new-posts/). The content for the `/changelog` page, stored in the `src/content/changelog/` directory, belongs to the `changelog` content collection. This collection also uses `schema: postSchema` for frontmatter types.
+To recreate the `/changelog` page, please follow the [Adding New Posts](../adding-new-posts/). The content for the `/changelog` page, stored in the `src/content/changelog/` directory, belongs to the `changelog` content collection. This collection also uses `schema: postSchema` for frontmatter types.
 
-## Updating `/streams` Page
+### `/streams` Page
 
 Similarly to adding projects,  open `src/content/streams/data.json`, delete the existing content, and use the following as a base:
 
@@ -103,11 +103,11 @@ Similarly to adding projects,  open `src/content/streams/data.json`, delete the 
 
 The `streams` field type is `streamSchema[]`. `streamSchema` is defined as follows:
 
-| Field (* required) | Type      | Description                                                                                                                                                         |
+| Property (* required) | Type      | Description                                                                                                                                                         |
 | ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title` *           | `string`  | Sets the stream title.                                                                                                                                              |
-| `pubDate` *         | `date`    | Specifies the publication date. See supported formats [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#examples). |
-| `link` *           | `string`  | Specifies the URL link to the stream.                                                                                                                               |
+| `title`*           | `string`  | Sets the stream title.                                                                                                                                              |
+| `pubDate`*         | `date`    | Specifies the publication date. See supported formats [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#examples). |
+| `link`*           | `string`  | Specifies the URL link to the stream.                                                                                                                               |
 | `radio`            | `boolean` | Indicates whether the stream is a radio broadcast. If `true`, an icon will be added to the stream item in the list.                                                 |
 | `video`            | `boolean` | Indicates whether the stream is a video broadcast. If `true`, an icon will be added to the stream item in the list.                                                 |
 | `platform`         | `string`  | Specifies the platform where the stream is published.                                                                                                               |
@@ -117,11 +117,11 @@ As with `projectSchema`, you can use a code snippet to generate `streamSchema` b
 Finally, update the frontmatter in `src/pages/streams.mdx`.
 
 > [!note]
-> `projects.schema.json` and `streams.schema.json` are auto-generated by Astro, offering autocompletion, validation, and other useful features in your editor ([Learn more](https://docs.astro.build/en/guides/content-collections/#enabling-json-schema-generation)). 
+> `projects.schema.json` and `streams.schema.json` are auto-generated by Astro 4.13.0, offering autocompletion, validation, and other useful features in your editor ([Learn more](https://v4.docs.astro.build/en/guides/content-collections/#enabling-json-schema-generation)). 
 
-##  About `/feeds` Page
+### `/feeds` Page
 
-The `/feeds` page displays content fetched via :link{id=@ascorbic/feed-loader style=github}. You can define an external data source (like RSS, RDF, or Atom feeds) for the `feeds` collection using the following:
+The `/feeds` page displays content fetched via [@ascorbic/feed-loader](https://www.npmjs.com/package/@ascorbic/feed-loader). You can define an external data source (like RSS, RDF, or Atom feeds) for the `feeds` collection using the following:
 
 ```ts title='src/content/config.ts'
 import { feedLoader } from '@ascorbic/feed-loader'
@@ -133,9 +133,11 @@ const feeds = defineCollection({
 })
 ```
 
-The imported `feedLoader` is an [Astro Loader](https://5-0-0-beta.docs.astro.build/en/reference/loader-reference/#what-is-a-loader), a core component of the [experimental Content Layer API](https://astro.build/blog/astro-4140/#experimental-content-layer-api). This allows you to fetch content from any source, including remote APIs, opening up more possibilities beyond local content. If interested, you can explore [community loaders](https://astro.build/blog/community-loaders) or [search on Npm](https://www.npmjs.com/search?q=keywords:astro-loader) for more options.
+> [!tip]- Utilizing Astro Loaders for Feed Integration
+> 
+> `feedLoader` is [Astro loaders](https://docs.astro.build/en/reference/content-loader-reference/#what-is-a-loader) built with the Content Loader API, enabling data fetching from various sources as content collections. This API, introduced in [Astro 4.14](https://astro.build/blog/astro-4140/#experimental-content-layer-api), became stable in [Astro 5](https://astro.build/blog/astro-5/#content-layer).
 
-## Deleting Pages
+## Removing Pages
 
 Using remove the `/changelog` page as an example:
 
@@ -185,4 +187,6 @@ export const UI: Ui = {
 
 ## Wrapping Up
 
-Some of the pages mentioned above involve the use of Astro's experimental Content Layer API. If you're interested, you can check out the [latest guide on Content Collections in Astro 5-0-0-beta](https://5-0-0-beta.docs.astro.build/en/guides/content-collections/#_top). 🧭
+That's all about customizing pages in this theme. Thanks for reading! 
+
+If you encounter any issues, find errors, or see opportunities for improvement, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions) or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls). Your feedback is highly appreciated! ❤️

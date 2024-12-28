@@ -2,7 +2,7 @@
 title: Project Structure
 description: Introduces the structure of the Astro AntfuStyle Theme
 pubDate: 2024-10-03
-lastModDate: ''
+lastModDate: 2024-12-27
 toc: true
 share: true
 ogImage: true
@@ -75,9 +75,8 @@ astro-antfustyle-theme
 | |-env.d.ts                                // TypeScript declaration file for environment variables.
 | |-layouts                                 // Layout components for different page structures.
 | | |-BaseLayout.astro                      // Base layout used across the site.
-| | |-StandardLayout.astro                  // For regular content(used in `/`, `/blog/[...slug]`).
-| | |-TabbedLayout.astro                    // For tabbed content (used in `/changelog`, `/streams`, `/feeds`).
-| | |-WideLayout.astro                      // For full-width content (used in `/projects`).
+| | |-StandardLayout.astro                  // Standard layout for most pages.
+| | |-TabbedLayout.astro                    // Tabbed layout for easy content navigation.
 | |-pages                                   // Directory for generating pages in the Astro project.
 | | |-404.mdx                               // Custom 404 error page.
 | | |-blog                                  // Blog post pages.
@@ -90,6 +89,8 @@ astro-antfustyle-theme
 | | |-index.mdx                             // Homepage in Markdown.
 | | |-manifest.webmanifest.js               // Web app manifest file for mobile and PWA support.
 | | |-projects.mdx                          // Projects page.
+| | |-prs.mdx                               // Render your GitHub pull requests.
+| | |-releases.mdx                          // Render your GitHub releases.
 | | |-rss.xml.js                            // RSS feed generator.
 | | |-streams.mdx                           // Streams page.
 | |-styles                                  // Stylesheets for the project.
@@ -101,6 +102,7 @@ astro-antfustyle-theme
 | | |-animation.ts                          // Utility functions for Animation.
 | | |-common.ts                             // General utility functions.
 | | |-datetime.ts                           // Utility functions for date and time.
+| | |-github.ts                             // Utility functions for handling GitHub data.
 | | |-post.ts                               // Utility functions for working with posts.
 | | |-toc.ts                                // Utility functions for generating tables of contents.
 |-tsconfig.json                             // TypeScript configuration file.
@@ -113,7 +115,7 @@ The above annotations provide a brief overview of the roles of directories and f
 
 The [`src/pages/`](https://docs.astro.build/en/basics/project-structure/#srcpages) directory is a critical part of Astro, responsible for generating website pages, with each page corresponding to a route based on its file name. While Astro supports `.astro`, `.md`, and `.mdx` files for this purpose, **this theme exclusively uses `.astro` and `.mdx` files for generating pages** (the reasoning behind this will be explained below).
 
-The [`src/content/`](https://docs.astro.build/en/basics/project-structure/#srccontent) directory is another reserved directory in Astro. It is designated for organizing content collections (supporting `.md` and `.mdx` files) and data collections (supporting `.yaml` and `.json` files). Additionally, it supports [type-checking frontmatter and JSON using zod schemas](https://docs.astro.build/en/guides/content-collections/#defining-datatypes-with-zod). Each new directory created inside `src/content/` represents a new content or data collection (**with the directory name serving as the collection name**). This is where you’ll store the real content of your site.
+The [`src/content/`](https://docs.astro.build/en/basics/project-structure/#srccontent) directory is another reserved directory in [Astro 4](https://v4.docs.astro.build/en/guides/content-collections/). It is designated for organizing content collections (supporting `.md` and `.mdx` files) and data collections (supporting `.yaml` and `.json` files). Additionally, it supports [type-checking frontmatter and JSON using zod schemas](https://docs.astro.build/en/guides/content-collections/#defining-datatypes-with-zod). Each new directory created inside `src/content/` represents a new content or data collection (with the directory name serving as the collection name). This is where you’ll store the real content of your site.
 
 It is recommended to review the [Astro's Content Collections Docs](https://docs.astro.build/en/guides/content-collections/) to get a basic understanding of what Collections are and how to define them. 
 
@@ -123,16 +125,18 @@ Here’s how the theme’s pages correlate to collections and utilize zod schema
 
 <div class='overflow-x-auto'>
 
-| URL Path                                              | Page File Location                 | Content/Data Collection Path                                                                                       | Zod Schema for Collection |
-| ----------------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------- |
-| `/`                                                   | `src/pages/index.mdx`              | `src/content/home/`                                                                                                | -                         |
-| `/blog`                                               | `src/pages/blog/index.mdx`         | `src/content/blog/`                                                                                                | `postSchema`              |
-| `/blog/post-name` <br>`/blog/sequences/one/two/three` | `src/pages/blog/[...slug].astro`   | `src/content/blog/`                                                                                                | `postSchema`              |
-| `/projects`                                           | `src/pages/projects.mdx`           | `src/content/projects/`                                                                                            | `projectsSchema`          |
-| `/changelog`                                          | `src/pages/changelog/index.mdx`    | `src/content/changelog/`                                                                                           | `postSchema`              |
-| `/changelog/xxx`                                      | `src/pages/changelog/[slug].astro` | `src/content/changelog/`                                                                                           | `postSchema`              |
-| `/feeds`                                              | `src/pages/feeds.mdx`              | [Data fetched externally](../recreate-current-pages/#about-feeds-page) | -                         |
-| `/streams`                                            | `src/pages/streams.mdx`            | `src/content/streams/`                                                                                             | `streamsSchema`           |                      |
+| URL Path                                              | Page File Location                 | Content/Data Collection Path                                       | Zod Schema for Collection |
+| ----------------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------ | ------------------------- |
+| `/`                                                   | `src/pages/index.mdx`              | `src/content/home/`                                                | -                         |
+| `/blog`                                               | `src/pages/blog/index.mdx`         | `src/content/blog/`                                                | `postSchema`              |
+| `/blog/post-name` <br>`/blog/sequences/one/two/three` | `src/pages/blog/[...slug].astro`   | `src/content/blog/`                                                | `postSchema`              |
+| `/projects`                                           | `src/pages/projects.mdx`           | `src/content/projects/`                                            | `projectsSchema`          |
+| `/changelog`                                          | `src/pages/changelog/index.mdx`    | `src/content/changelog/`                                           | `postSchema`              |
+| `/changelog/xxx`                                      | `src/pages/changelog/[slug].astro` | `src/content/changelog/`                                           | `postSchema`              |
+| `/feeds`                                              | `src/pages/feeds.mdx`              | [Via Astro loader](../recreating-current-pages/#feeds-page) | -                         |
+| `/streams`                                            | `src/pages/streams.mdx`            | `src/content/streams/`                                             | `streamsSchema`           |
+| `/releases`                                           | `src/pages/releases.mdx`           | [Via Astro loader](../customizing-github-activity-pages/)          | -                         |
+| `/prs`                                                 | `src/pages/prs.mdx`                | [Via Astro loader](../customizing-github-activity-pages/)          | -                         |
 
 </div>
 
@@ -154,7 +158,7 @@ This structure improves maintainability and scalability, and adherence to the fi
 > 
 > Processed through Astro’s remark and rehype pipelines, enabling custom remark plugins to [automatically generate matching OG images](../about-open-graph-images/#how-this-theme-automatically-generates-og-images) for each page.
 > 
-> Additionally, the `.mdx` files in the `src/pages/` are also defined as content collections. See [Recreate Current Pages - Creating Pages](../recreate-current-pages/#creating-pages) for more details.
+> Additionally, the `.mdx` files in the `src/pages/` are also defined as content collections. [More details](../recreating-current-pages/#creating-pages).
 
 ## Wrapping Up
 

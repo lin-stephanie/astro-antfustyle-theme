@@ -1,8 +1,8 @@
 ---
 title: Getting Started
-description: How to quickly build your personal website (blog/portfolio) with Astro AntfuStyle Theme
+description: How to quickly build your personal website with Astro AntfuStyle Theme
 pubDate: 2024-10-04
-lastModDate: ''
+lastModDate: 2024-12-27
 toc: true
 share: true
 ogImage: true
@@ -57,7 +57,7 @@ yarn create astro --template lin-stephanie/astro-antfustyle-theme
 pnpm dlx create-astro --template lin-stephanie/astro-antfustyle-theme
 ```
 
-> [!tip] 
+> [!tip]- Using Zip Files Instead of Git
 > If you prefer not to use Git, you can [download the ZIP file](https://github.com/lin-stephanie/astro-antfustyle-theme/archive/refs/heads/main.zip), extract it, and work directly in your local directory.
 
 ## Launch the Project
@@ -100,22 +100,20 @@ You can explore the current theme freely. Additionally, the following commands a
 
 ## Configure the Project
 
-> [!important]
-> Before configuring, it is advisable to review [**Project Structure**](../project-structure/) for an overview of the project and how it’s organized.
-
-Configuration can be done in two steps:
+Before configuring, it is advisable to review [**Project Structure**](../project-structure/) for an overview of the project and how it’s organized. Configuration can be done in two steps:
 
 - [**Basic Configuration**](../basic-configuration/): Customize the `src/config.ts` file.
-- [**Advanced Configuration**](../advanced-configuration/): Customize the LOGOs, site icons, styles, fonts and footer.
+- [**Advanced Configuration**](../advanced-configuration/): Customize the LOGOs, site icons, styles, fonts and more.
 
 ## Authoring Content
 
 Once configured, ensure the project is running correctly in your browser, then start creating or migrating your content. Jump to the section you're interested in:
 
-- [**Add New Posts**](../add-new-posts/): For creating posts, writing tips, and guidelines.
-- [**Recreate Current Pages**](../recreate-current-pages/): For recreating content for the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, and `404` pages, as well as deleting pages.
-- [**Markdown Syntax Guide**](../markdown-syntax-guide/): Showcase the rendering of Markdown syntax in this theme.
-- [**Markdown/MDX Extended Features**](../markdown-mdx-extended-features/): Extended syntax supported by the theme, including callouts (admonitions/alerts), fully-featured code blocks, image captions and links, video embeddings, styled GitHub links, and more.
+- [**Adding New Posts**](../adding-new-posts/): How to create posts with tips and guidelines.
+- [**Recreating Current Pages**](../recreating-current-pages/): Steps to recreate content for the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, and `404` pages, as well as creating and removing pages.
+- :badge[NEW]{color=#f87171}[**Customizing GitHub Activity Pages**](../customizing-github-activity-pages/): Showcase your project releases or pull requests on GitHub.
+- [**Markdown Syntax Guide**](../markdown-syntax-guide/): Showcase of Markdown rendering in this theme.
+- [**Markdown/MDX Extended Features**](../markdown-mdx-extended-features/): Advanced features like callouts, code blocks, image captions, video embedding, and more.
 
 ## Deploy Your Project
 
@@ -142,10 +140,8 @@ Additionally, feel free to explore the theme's [tech stack](../../projects/). Fo
 
 ## Wrapping Up
 
-Congratulations on completing the setup! 🎉 Hopefully, this theme meets your blogging or portfolio needs.
+Congratulations on completing the setup! Hopefully, this theme meets your needs.
 
-If you encounter any issues, find errors, or see opportunities for improvement, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions) or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls). Your feedback is invaluable to making this theme even better!
+If you encounter any issues, find errors, or see opportunities for improvement, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions) or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls). Your feedback is invaluable to making this theme even better! 🌟
 
-Thank you for taking the time to read this guide. ❤️ 
-
-Happy coding and enjoy building with the Astro AntfuStyle Theme! 🌟
+Thank you for taking the time to read this guide. Happy coding and enjoy building with the Astro AntfuStyle Theme! ❤️ 

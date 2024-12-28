@@ -1,7 +1,7 @@
 ---
 title: Markdown/MDX Extended Features
 description: The special syntax available in Astro AntfuStyle Theme to extend Markdown/MDX features
-pubDate: 2023-10-01
+pubDate: 2022-03-04
 lastModDate: ''
 toc: true
 share: true
@@ -404,7 +404,7 @@ The custom directive wraps an image inside a link, making it clickable.
 
 ## Video Embedding（`::video`）
 
-Similarly, this theme includes predefined directives through a custom `remark-sugar-directive` plugin (located in `plugins/remark-sugar-directive.ts`), enabling quick implementation of features like video embedding, styled GitHub links, badge-like markers and details dropdown as described below.
+Similarly, this theme includes predefined directives through a custom `remark-sugar-directive` plugin (located in `plugins/remark-sugar-directive.ts`), enabling quick implementation of features like video embedding, styled GitHub links, badges and details dropdown as described below.
 
 The custom `::video` directive allows for consistent video embedding across different platforms, with flexible options for configuration.
 
@@ -482,7 +482,7 @@ You can customize icons with the `imageUrl` parameter or adjust button styles us
 Thanks for making it this far! Writing is no easy task --- maybe you'd like to  :link[send a little encouragement my way ❤️]{link=https://github.com/sponsors/lin-stephanie imageUrl=https://github.githubassets.com/assets/mona-e50f14d05e4b.png}.
 
 
-## Badge-Like Markers（`:badge`）
+## Badges（`:badge`）
 
 The `:badge` directive allows you to add customizable markers to improve document visuals.
 

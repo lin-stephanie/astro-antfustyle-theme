@@ -1,7 +1,7 @@
 ---
 title: Managing Image Assets
 description: How to organize and use images in the Astro AntfuStyle Theme
-pubDate: 2021-10-03
+pubDate: 2020-01-03
 lastModDate: ''
 toc: true
 share: true

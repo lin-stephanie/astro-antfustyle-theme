@@ -8,7 +8,7 @@ share: true
 ogImage: true
 ---
 
-This post is an advanced guide on customizing the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme). If you have not yet configured the `src/config.ts` file, it is recommended to first review [Basic Configuration](../blog/basic-configuration/).
+This post is an advanced guide on customizing the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme). If you have not yet configured the `src/config.ts` file, it is recommended to first review [Basic Configuration](../basic-configuration/).
 
 ## Customizing Logo
 
@@ -316,14 +316,16 @@ const copyrightText = `© ${currentYear} ${SITE.author}`
 
 Of course, it would greatly appreciated if you could also keep the `Powered by Astro AntfuStyle Theme` part to help more people discover it. 😊
 
-## Wrapping Up
+## Final Cleanup
 
 Finally, you may want to:
 
-- Delete the `.github` directory (for repo workflows and templates).
+- Delete the `.github` directory Remove the `.github` directory (mainly for workflows and templates, but the `scheduled-vercel-deploy.yml` file may be useful for [Customizing GitHub Activity Pages](../customizing-github-activity-pages/#automate-data-refreshing)).
 - Clean up `public/og-images/`, `src/content/` and `src/assets/` directories。
 - Check `.vscode/settings.json` for adjustments.  
 - Rewrite `README.md`.
+
+## Wrapping Up
 
 This is a general overview of what you can customize in the project. If you're proficient with code, there's even more you can personalize!
 

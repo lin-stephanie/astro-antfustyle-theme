@@ -352,7 +352,7 @@ interface GroupView {
 
   /**
    * Determines whether group item icons display in color when hovered over.
-   * Used in `src/components/views/GroupItem.astro`.
+   * Used in `src/components/views/GroupView.astro` and `src/components/base/Categorizer.astro`.
    *
    * @description
    * If `true`, the icon for the group item will display in its original colors on hover.
@@ -363,15 +363,13 @@ interface GroupView {
 export interface GitHubView {
   /**
    * Defines monorepo repositories using `<owner>/<repo>` format.
-   * For monorepos, the tag name is used as the primary text for releases.
-   * Used in `src/components/views/GithubView.astro`.
+   * For monorepos, the tag name is used as the primary text for `/releases` page.
    */
   monorepos: RepoWithOwner[]
 
   /**
    * Configures main logos for repositories or packages (for monorepos).
    * Defaults to the owner's avatar if no custom logo is set.
-   * Used in `src/components/views/GithubView.astro`.
    *
    * @remark
    * Matching supports regex or `<owner>/<repo>` format, prioritized by order.
@@ -381,7 +379,6 @@ export interface GitHubView {
   /**
    * Configures auxiliary logos for rrepositories or packages (for monorepos).
    * No logo is shown if unmatched.
-   * Used in `src/components/views/GithubView.astro`.
    *
    * @remark
    * Matching supports regex or `<owner>/<repo>` format, prioritized by order.
@@ -407,7 +404,7 @@ export interface Ui {
   socialLinks: SocialLink[]
 
   /**
-   * Controls the layout of the navigation bar,  used in `src/components/base/NavBar.astro`.
+   * Controls the layout of the navigation bar, used in `src/components/base/NavBar.astro`.
    */
   navBarLayout: NavBarLayout
 
@@ -421,8 +418,7 @@ export interface Ui {
   tabbedLayoutTabs: false | Tabs
 
   /**
-   * Configures the `/projects` UIs, used in `src/components/views/GroupItem.astro`
-   * and `src/components/base/Categorizer.astro`.
+   * Configures the `/projects` UIs.
    */
   groupView: GroupView
 

@@ -77,10 +77,10 @@ export const UI: Ui = {
       [/starlight/, 'https://starlight.astro.build/favicon.svg'],
     ],
     subLogoMatches: [
-      [/theme/, 'i-unjs:theme-colors'],
+      [/theme/, 'i-unjs-theme-colors'],
       [/github/, 'https://www.svgrepo.com/show/475654/github-color.svg'],
-      [/tweet/, 'i-logos:twitter'],
-      [/bluesky/, 'i-logos:bluesky'],
+      [/tweet/, 'i-logos-twitter'],
+      [/bluesky/, 'i-logos-bluesky'],
     ],
   },
 }
