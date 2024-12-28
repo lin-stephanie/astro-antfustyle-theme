@@ -65,8 +65,8 @@ name: Scheduled Vercel Deployment
 
 on:
   schedule:
-	# https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
-	# Adjust the time for triggering this workflow
+    # https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
+    # Adjust the time for triggering this workflow
     - cron: '0 1 * * 6'
 
 jobs:

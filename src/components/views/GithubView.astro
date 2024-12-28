@@ -9,7 +9,6 @@ import { getUrl } from '~/utils/common'
 import {
   matchLogo,
   extractPackageName,
-  extractVersionNum,
   processVersion,
   isDiffMonth,
 } from '~/utils/github'
@@ -22,12 +21,10 @@ interface Props {
 }
 
 export type ExtendedReleaseData = CollectionEntry<'releases'>['data'] & {
-  repoOwner: string
   isInMonorepo: boolean
   pkgName: string
   mainLogo: Url | Icon
   subLogo: Url | Icon | undefined
-  versionNum: string
   versionType: 'major' | 'minor' | 'patch' | 'pre'
   versionParts: [string, string]
 }
@@ -58,23 +55,21 @@ if (collectionType === 'releases') {
         ? extractPackageName(item.data.tagName)
         : item.data.repoName
 
-      const repoOwner = item.data.repoNameWithOwner.split('/')[0]
       const mainLogo =
         matchLogo(pkgName, mainLogoOverrides) ||
-        `https://github.com/${repoOwner}.png`
+        `https://github.com/${item.data.repoOwner}.png`
       const subLogo = matchLogo(pkgName, subLogoMatches)
 
-      const versionNum = extractVersionNum(item.data.tagName)
-      const [versionType, ...versionParts] = processVersion(versionNum)
+      const [versionType, ...versionParts] = processVersion(
+        item.data.versionNum
+      )
 
       return {
         ...item.data,
-        repoOwner,
         isInMonorepo,
         pkgName,
         mainLogo,
         subLogo,
-        versionNum,
         versionType,
         versionParts,
       }
