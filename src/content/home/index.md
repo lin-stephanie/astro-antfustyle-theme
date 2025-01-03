@@ -11,15 +11,15 @@ This live demo will guide you through setup and customization, offering helpful 
 - Optimized Local Image Handling
 - VS Code Snippets for Quick Coding
 - Well-organized [Project Structure](./blog/project-structure/)
+- Outstanding [Lighthouse Performance](./blog/faqs-and-known-issues/#lighthouse-scores)
 
 **Content Management**
 
 - Type Safety
 - Markdown & MDX Support
-- Table of Contents Generation
-- [Dynamic OG Image Generation](./blog/about-open-graph-images/)
 - KaTeX Math Integration
-- [Callouts (Alerts/Admonitions)](./blog/markdown-mdx-extended-features/#callouts-alerts--admonitions)
+- [Dynamic OG Image Generation](./blog/about-open-graph-images/)
+- [Callouts (Alerts / Admonitions)](./blog/markdown-mdx-extended-features/#callouts-alerts--admonitions)
 - [Directive Sugar](./blog/markdown-mdx-extended-features/#image-caption--link) for Both Markdown/MDX
 - [Code Syntax Highlighting & Annotations](./blog/markdown-mdx-extended-features/#fully-featured-code-blocks)
 - Customizable Animated Backgrounds (Take a look around!)
@@ -27,16 +27,17 @@ This live demo will guide you through setup and customization, offering helpful 
 
 **User Experience**
 
+- Responsive Layout
+- Full-platform TOC support
+- Light & Dark Modes Toggle
+- Smooth View Transitions
+- Loading Progress Indicator
+- [Image Zoom](./blog/faqs-and-known-issues/#image-zoom) Preview
 - [Search Functionality](./blog/faqs-and-known-issues/#search-functionality)
 - [Accessibility Enhancements](./blog/faqs-and-known-issues/#about-seo-and-accessibility)
-- Smooth View Transitions
-- Responsive Layout
-- Light & Dark Modes Toggle
-- Loading Progress Indicator
-- Social Media Sharing Features
-- [Image Zoom](./blog/faqs-and-known-issues/#image-zoom) Preview
+- Social Media Sharing
 
-> Preparing to upgrade to Astro 5 with more features! 🚀
+> Preparing to upgrade to Astro 5 with [more features](https://github.com/users/lin-stephanie/projects/4)! 🚀
 
 ---
 

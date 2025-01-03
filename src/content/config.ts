@@ -56,7 +56,7 @@ const prs = defineCollection({
   loader: githubPrsLoader({
     search:
       'repo:withastro/astro repo:withastro/starlight repo:lin-stephanie/astro-antfustyle-theme',
-    monthsBack: 1,
+    monthsBack: 2,
   }),
 })
 

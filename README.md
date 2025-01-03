@@ -21,15 +21,15 @@ AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme f
 - Optimized Local Image Handling
 - VS Code Snippets for Quick Coding
 - Well-organized [Project Structure](https://astro-antfustyle-theme.vercel.app/blog/project-structure/)
+- Outstanding [Lighthouse Performance](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#lighthouse-scores)
 
 **Content Management**
 
 - Type Safety
 - Markdown & MDX Support
-- Table of Contents Generation
-- [Dynamic OG Image Generation](https://astro-antfustyle-theme.vercel.app/blog/about-open-graph-images/)
 - KaTeX Math Integration
-- [Callouts (Alerts/Admonitions)](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#callouts-alerts--admonitions)
+- [Dynamic OG Image Generation](https://astro-antfustyle-theme.vercel.app/blog/about-open-graph-images/)
+- [Callouts (Alerts / Admonitions)](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#callouts-alerts--admonitions)
 - [Directive Sugar](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#image-caption--link) for Both Markdown/MDX
 - [Code Syntax Highlighting & Annotations](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#fully-featured-code-blocks)
 - Customizable Animated Backgrounds ([Preview](#preview))
@@ -37,16 +37,17 @@ AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme f
 
 **User Experience**
 
+- Responsive Layout
+- Full-platform TOC support
+- Light & Dark Modes Toggle
+- Smooth View Transitions
+- Loading Progress Indicator
+- [Image Zoom](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#image-zoom) Preview
 - [Search Functionality](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#search-functionality)
 - [Accessibility Enhancements](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#about-seo-and-accessibility)
-- Smooth View Transitions
-- Responsive Layout
-- Light & Dark Modes Toggle
-- Loading Progress Indicator
 - Social Media Sharing Features
-- [Image Zoom](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#image-zoom) Preview
 
-> Preparing to upgrade to Astro 5 with more features! 🚀
+> Preparing to upgrade to Astro 5 with [more features](https://github.com/users/lin-stephanie/projects/4/views/4)! 🚀
 
 ## Docs
 

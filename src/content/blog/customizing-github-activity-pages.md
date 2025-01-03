@@ -9,7 +9,7 @@ share: true
 ogImage: true
 ---
 
-This post guides you on recreating the `/releases` and `/prs` pages in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to highlight your GitHub releases and pull requests.
+This post guides you on recreating the [`/releases`](../../releases) and [`/prs`](../../prs) pages in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to showcase your GitHub releases and pull requests.
 
 ## Configure the Loaders
 

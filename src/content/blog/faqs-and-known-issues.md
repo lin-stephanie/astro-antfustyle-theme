@@ -19,7 +19,7 @@ ogImage: true
 
 The accessibility score is not perfect due to "Background and foreground colors do not have a sufficient contrast ratio", which is a result of the theme's styling. If you don’t mind this, the theme performs very well in Lighthouse. A high-contrast version is planned.
 
-You can also check the live demo’s performance on PageSpeed Insights: [https://pagespeed.web.dev/](https://pagespeed.web.dev/analysis/https-astro-antfustyle-theme-vercel-app/5fxzc8trkj?form_factor=desktop)
+You can also check the live demo’s performance on PageSpeed Insights: [https://pagespeed.web.dev/](https://pagespeed.web.dev/)
 
 ### About SEO and Accessibility
 

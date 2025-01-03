@@ -1,7 +1,7 @@
 ---
 title: Markdown Syntax Guide
 description: Presentation of basic Markdown syntax in Astro AntfuStyle Theme
-pubDate: 2022-03-02
+pubDate: 2022-03-04
 lastModDate: ''
 toc: true
 share: true

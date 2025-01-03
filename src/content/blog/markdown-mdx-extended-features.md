@@ -1,7 +1,7 @@
 ---
-title: Markdown/MDX Extended Features
+title: Markdown / MDX Extended Features
 description: The special syntax available in Astro AntfuStyle Theme to extend Markdown/MDX features
-pubDate: 2022-03-04
+pubDate: 2022-03-02
 lastModDate: ''
 toc: true
 share: true
