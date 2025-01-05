@@ -8,6 +8,13 @@ import { FEATURES } from '~/config'
 import type { MarkdownHeading } from 'astro'
 import type { HeadingLevel } from '~/types'
 
+interface TocConfig {
+  minHeadingLevel: HeadingLevel
+  maxHeadingLevel: HeadingLevel
+  displayPosition: 'left' | 'right'
+  displayMode: 'hover' | 'always'
+}
+
 interface Props {
   headings?: MarkdownHeading[]
   category?: string[]
@@ -17,42 +24,76 @@ interface Props {
 
 const { headings = [], category = [], years = [], style } = Astro.props
 
-let minHeadingLevel: HeadingLevel = 2
-let maxHeadingLevel: HeadingLevel = 4
-let displayPosition = 'left'
-let displayMode = 'hover'
+const getTocConfig = () => {
+  const defaultConfig: TocConfig = {
+    minHeadingLevel: 2,
+    maxHeadingLevel: 4,
+    displayPosition: 'left',
+    displayMode: 'hover',
+  }
 
-if (Array.isArray(FEATURES.toc) && FEATURES.toc[0]) {
-  ;({ minHeadingLevel, maxHeadingLevel, displayPosition, displayMode } =
-    FEATURES.toc[1])
+  if (!Array.isArray(FEATURES.toc) || !FEATURES.toc[0]) {
+    return defaultConfig
+  }
+
+  return { ...defaultConfig, ...FEATURES.toc[1] }
 }
 
+const isArticle = !!headings.length
+const { minHeadingLevel, maxHeadingLevel, displayPosition, displayMode } =
+  getTocConfig()
 const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
 ---
 
 <aside>
-  <!-- Greater than or equal to 1024px -->
-  <nav
-    class={`table-of-contents ${displayPosition === 'right' ? 'table-of-contents-right' : ''}
-      ${displayMode === 'always' ? 'toc-always-on' : ''}`}
-    {style}
+  <table-of-contents
+    data-min-h={isArticle ? minHeadingLevel : undefined}
+    data-max-h={isArticle ? maxHeadingLevel : undefined}
   >
-    <div class="table-of-contents-anchor">
-      {
-        displayPosition === 'left' ? (
-          <div
-            u-i-ri-menu-2-fill
-            class={`${displayMode === 'always' ? 'op-60' : ''}`}
-          />
-        ) : (
-          <div
-            u-i-ri-menu-3-fill
-            class={`${displayMode === 'always' ? 'op-60' : ''}`}
-          />
-        )
-      }
-    </div>
-    <ul>
+    <!-- Greater than or equal to 1024px -->
+    <nav
+      class={`toc-desktop ${displayPosition === 'right' ? 'toc-desktop-right' : ''}
+      ${displayMode === 'always' ? 'toc-desktop-on' : ''}`}
+      {style}
+    >
+      <div
+        class:list={{
+          'toc-desktop-anchor': true,
+          'i-ri-menu-2-fill': displayPosition === 'left',
+          'i-ri-menu-3-fill': displayPosition === 'right',
+          'op-60': displayMode === 'always',
+        }}
+      >
+      </div>
+      <ul>
+        {
+          !!specHeadings.length &&
+            specHeadings.map((heading) => <TocItem {heading} />)
+        }
+        {
+          !!category.length &&
+            category.map((item) => (
+              <li>
+                <a href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
+                  {item}
+                </a>
+              </li>
+            ))
+        }
+        {
+          !!years.length &&
+            years.map((item) => (
+              <li>
+                <a href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
+                  {item}
+                </a>
+              </li>
+            ))
+        }
+      </ul>
+    </nav>
+    <!-- less than 1024px -->
+    <TocButton>
       {
         !!specHeadings.length &&
           specHeadings.map((heading) => <TocItem {heading} />)
@@ -61,7 +102,7 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
         !!category.length &&
           category.map((item) => (
             <li>
-              <a href={`#${slug(item)}`} aria-label={item}>
+              <a href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
                 {item}
               </a>
             </li>
@@ -71,40 +112,154 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
         !!years.length &&
           years.map((item) => (
             <li>
-              <a href={`#${slug(item)}`} aria-label={item}>
+              <a href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
                 {item}
               </a>
             </li>
           ))
       }
-    </ul>
-  </nav>
-
-  <!-- less than 1024px -->
-  <TocButton>
-    {
-      !!specHeadings.length &&
-        specHeadings.map((heading) => <TocItem {heading} />)
-    }
-    {
-      !!category.length &&
-        category.map((item) => (
-          <li>
-            <a href={`#${slug(item)}`} aria-label={item}>
-              {item}
-            </a>
-          </li>
-        ))
-    }
-    {
-      !!years.length &&
-        years.map((item) => (
-          <li>
-            <a href={`#${slug(item)}`} aria-label={item}>
-              {item}
-            </a>
-          </li>
-        ))
-    }
-  </TocButton>
+    </TocButton>
+  </table-of-contents>
 </aside>
+
+<script>
+  export class Toc extends HTMLElement {
+    #minH: number | undefined
+    #maxH: number | undefined
+    #observer: IntersectionObserver | null = null
+    #headingMapToc = new Map<Element, HTMLAnchorElement[]>()
+
+    connectedCallback() {
+      this.#onIdle(() => this.#init())
+    }
+
+    disconnectedCallback() {
+      this.#cleanup()
+    }
+
+    #init = () => {
+      this.#minH = this.#getHeadingLevel(this.dataset.minH)
+      this.#maxH = this.#getHeadingLevel(this.dataset.maxH)
+
+      // map heading elements to their corresponding toc links
+      const tocLinks = this.#getElements('a', false) as HTMLAnchorElement[]
+      this.#generateHeadingMapToc(tocLinks)
+
+      // get all belonging heading elements on the page
+      const headings =
+        this.#minH && this.#maxH
+          ? this.#getElements(
+              this.#getTocHeadingsSelector(this.#minH, this.#maxH)
+            )
+          : this.#getElements('.toc-heading')
+
+      // observe heading elements to trigger highlight change
+      this.#observer = new IntersectionObserver(
+        (entries) => this.#onIntersect(entries),
+        {
+          root: null,
+          rootMargin: '0% 0% -75% 0%',
+          threshold: 0,
+        }
+      )
+
+      for (const headingEl of headings) {
+        this.#observer.observe(headingEl)
+      }
+    }
+
+    #onIdle = (cb: IdleRequestCallback) =>
+      (window.requestIdleCallback || ((cb) => setTimeout(cb, 1)))(cb)
+
+    #onIntersect = (entries: IntersectionObserverEntry[]) => {
+      // get latest trigger heading element
+      const sortedEntries = entries.sort((a, b) => b.time - a.time)
+      const latestTriggerHeading = sortedEntries[0]?.target
+      if (!latestTriggerHeading) return
+
+      // get need to highlight heading element
+      // (avoid highlight next heading when scrolling up)
+      const isLocatedBelow =
+        latestTriggerHeading.getBoundingClientRect().top >
+        window.innerHeight / 4
+      const targetHeading = isLocatedBelow
+        ? this.#getPreviousHeading(this.#headingMapToc, latestTriggerHeading)
+        : latestTriggerHeading
+
+      // handle highlight change
+      for (const tocLinkEl of this.#headingMapToc.values()) {
+        tocLinkEl.forEach((item) => item.removeAttribute('aria-current'))
+      }
+      if (targetHeading) {
+        const currentLink = this.#headingMapToc.get(targetHeading)
+        currentLink?.forEach((item) =>
+          item.setAttribute('aria-current', 'true')
+        )
+      }
+    }
+
+    #getHeadingLevel = (level: string | undefined) => {
+      return level ? parseInt(level, 10) : undefined
+    }
+
+    #getElements = (selector: string, fromDocument = true) => {
+      return fromDocument
+        ? Array.from(document.querySelectorAll(selector))
+        : Array.from(this.querySelectorAll(selector))
+    }
+
+    #generateHeadingMapToc = (tocLinks: HTMLAnchorElement[]) => {
+      for (const link of tocLinks) {
+        const { hash } = new URL(link.href)
+        const id = hash.replace(/^#/, '')
+        const headingEl = document.getElementById(id)
+
+        if (headingEl) {
+          if (this.#headingMapToc.has(headingEl)) {
+            this.#headingMapToc.get(headingEl)?.push(link)
+          } else {
+            this.#headingMapToc.set(headingEl, [link])
+          }
+        }
+      }
+    }
+
+    // returns a CSS selector string for the specified heading levels
+    #getTocHeadingsSelector = (
+      minH: number,
+      maxH: number,
+      baseSelector = ''
+    ) => {
+      const levelSelectors = []
+      for (let i = minH; i <= maxH; i++) {
+        baseSelector
+          ? levelSelectors.push(`${baseSelector} h${i}`)
+          : levelSelectors.push(`h${i}`)
+      }
+
+      return levelSelectors.join(', ')
+    }
+
+    #getPreviousHeading = (
+      headingMapToc: Map<Element, HTMLAnchorElement[]>,
+      curHeading: Element
+    ) => {
+      let prevHeading = null
+
+      for (const h of headingMapToc.keys()) {
+        if (h === curHeading) return prevHeading
+        prevHeading = h
+      }
+
+      return null
+    }
+
+    #cleanup() {
+      this.#observer?.disconnect()
+      this.#observer = null
+      this.#headingMapToc.clear()
+    }
+  }
+
+  customElements.define('table-of-contents', Toc)
+</script>

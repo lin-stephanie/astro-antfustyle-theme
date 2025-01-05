@@ -12,11 +12,7 @@ const { slug, children, text } = heading
 <li>
   {
     slug && (
-      <a
-        href={`#${slug}`}
-        title={text}
-        aria-label={`Scroll to section: ${text}`}
-      >
+      <a href={`#${slug}`} aria-label={`Scroll to ${text}`}>
         {text}
       </a>
     )
