@@ -15,7 +15,9 @@ const { maxGroupColumns } = UI.groupView
 
 <div
   {...needId ? { id: slug(text) } : {}}
-  class={`relative h-20 pointer-events-none select-none ${idx !== undefined ? 'slide-enter' : ''}`}
+  class={`toc-heading relative h-20
+    pointer-events-none select-none
+    ${idx !== undefined ? 'slide-enter' : ''}`}
   style={idx !== undefined ? { '--enter-stage': idx - 2 } : undefined}
 >
   {

@@ -130,5 +130,9 @@ export default defineConfig({
     /* GithubItem */
     ...versionClass,
     ...subLogoIcons,
+
+    /* Toc */
+    'i-ri-menu-2-fill',
+    'i-ri-menu-3-fill',
   ],
 })
