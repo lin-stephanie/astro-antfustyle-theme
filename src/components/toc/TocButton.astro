@@ -7,14 +7,14 @@
   class="z-50 fixed right-5 bottom-18
     w-10 h-10 rounded-full
     op-0 bg-#8883 dark:bg-#8886 pointer-events-none op-transition
-    lt-lg:(op-50 pointer-events-auto)
+    lt-lgp:(op-50 pointer-events-auto)
     hover:op-100 print:hidden"
   title="Open table of contents"
 >
   <div u-i-lucide-table-of-contents></div>
 </button>
 
-<div
+<nav
   id="toc-panel"
   class="z-200 fixed top-20 left-5% right-5%
     hidden! flex flex-col
@@ -27,7 +27,7 @@
   <ul>
     <slot />
   </ul>
-</div>
+</nav>
 
 <script>
   import { dispatchToggleBackdrop, toggleFadeEffect } from '~/utils/animation'
