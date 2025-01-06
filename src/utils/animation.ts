@@ -1,15 +1,4 @@
 /**
- * Dispatches a 'toggle-backdrop' custom event to toggle backdrop visibility.
- */
-export function dispatchToggleBackdrop(visible: boolean) {
-  document.dispatchEvent(
-    new CustomEvent('toggle-backdrop', {
-      detail: { visible },
-    })
-  )
-}
-
-/**
  * Controls the fading animation of an element,
  * showing or hiding it based on visibility.
  *

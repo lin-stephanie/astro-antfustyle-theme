@@ -46,6 +46,7 @@ AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme f
 - [Search Functionality](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#search-functionality)
 - [Accessibility Enhancements](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#about-seo-and-accessibility)
 - Social Media Sharing Features
+- Keyboard-Friendly
 
 > Preparing to upgrade to Astro 5 with [more features](https://github.com/users/lin-stephanie/projects/4/views/4)! 🚀
 

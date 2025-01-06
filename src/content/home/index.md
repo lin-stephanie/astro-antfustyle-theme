@@ -36,6 +36,7 @@ This live demo will guide you through setup and customization, offering helpful 
 - [Search Functionality](./blog/faqs-and-known-issues/#search-functionality)
 - [Accessibility Enhancements](./blog/faqs-and-known-issues/#about-seo-and-accessibility)
 - Social Media Sharing
+- Keyboard-Friendly
 
 > Preparing to upgrade to Astro 5 with [more features](https://github.com/users/lin-stephanie/projects/4)! 🚀
 

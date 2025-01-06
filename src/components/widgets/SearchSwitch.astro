@@ -39,7 +39,7 @@ import { getUrl } from '~/utils/common'
 </div>
 
 <script>
-  import { dispatchToggleBackdrop, toggleFadeEffect } from '~/utils/animation'
+  import { toggleFadeEffect } from '~/utils/animation'
 
   /* Handle click on search switch to open or close */
   document.addEventListener('astro:page-load', () => {
@@ -49,7 +49,7 @@ import { getUrl } from '~/utils/common'
       const isWidthUnder1128 = window.innerWidth < 1128
 
       if (searchPanel && isClosed) {
-        if (isWidthUnder1128) dispatchToggleBackdrop(isWidthUnder1128)
+        if (isWidthUnder1128) toggleFadeEffect('backdrop', true, 'hidden')
         toggleFadeEffect('search-panel', true, 'hidden')
       } else if (searchPanel && !isClosed && !isWidthUnder1128) {
         toggleFadeEffect('search-panel', false, 'hidden')
@@ -88,7 +88,7 @@ import { getUrl } from '~/utils/common'
       target.closest('a')
 
     if (isClickedOnLinkInSearchResults) {
-      if (isWidthUnder1128) dispatchToggleBackdrop(false)
+      if (isWidthUnder1128) toggleFadeEffect('backdrop', false, 'hidden')
       if (!window.matchMedia('(prefers-reduced-motion)').matches)
         searchPanel.classList.remove('fade-in')
       searchPanel.classList.add('hidden')

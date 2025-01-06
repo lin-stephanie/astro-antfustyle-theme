@@ -11,75 +11,52 @@
 </div>
 
 <script>
-  import { dispatchToggleBackdrop, toggleFadeEffect } from '~/utils/animation'
+  import { toggleFadeEffect } from '~/utils/animation'
 
-  /* Control Backdrop Fading */
-  document.addEventListener('toggle-backdrop', ((
-    event: CustomEvent<{ visible: boolean }>
-  ) => {
-    const isVisible = event.detail.visible
-    toggleFadeEffect('backdrop', isVisible, 'hidden')
-  }) as EventListener)
+  const PANELS = [
+    { id: 'nav-panel', button: 'nav-open-button', hiddenClass: 'hidden!' },
+    { id: 'toc-panel', button: 'toc-open-button', hiddenClass: 'hidden!' },
+    { id: 'search-panel', button: 'search-switch', hiddenClass: 'hidden' },
+  ]
 
   /* Close panel when user click on backdrop */
   document.addEventListener('astro:page-load', () => {
     const handleClick = () => {
-      const navPanel = document.getElementById('nav-panel')
-      const tocPanel = document.getElementById('toc-panel')
-      const searchPanel = document.getElementById('search-panel')
-
-      if (navPanel && !navPanel.classList.contains('hidden!'))
-        toggleFadeEffect('nav-panel', false, 'hidden!')
-      if (tocPanel && !tocPanel.classList.contains('hidden!'))
-        toggleFadeEffect('toc-panel', false, 'hidden!')
-      if (searchPanel && !searchPanel.classList.contains('hidden'))
-        toggleFadeEffect('search-panel', false, 'hidden')
-
-      dispatchToggleBackdrop(false)
+      for (const { id, hiddenClass } of PANELS) {
+        const panel = document.getElementById(id)
+        if (panel && !panel.classList.contains(hiddenClass)) {
+          toggleFadeEffect(id, false, hiddenClass)
+          break
+        }
+      }
+      toggleFadeEffect('backdrop', false, 'hidden')
     }
-
     const backdrop = document.getElementById('backdrop')
     backdrop?.addEventListener('click', handleClick)
   })
 
-  /* Close panel when 'Tab' shifts focus outside the panel, if backdrop is present */
-  document.addEventListener('keyup', (event) => {
-    const backdrop = document.getElementById('backdrop')
-    if (backdrop?.classList.contains('hidden') || event.key !== 'Tab') return
+  /* Close panel and backdrop when 'Tab' shifts focus outside the panel
+    or 'Escape' is pressed, if backdrop is present */
+  const handleKeyUp = (event: KeyboardEvent) => {
+    if (event.key !== 'Tab' && event.key !== 'Escape') return
 
     const focusEl = document.activeElement
-    const navPanel = document.getElementById('nav-panel')
-    const tocPanel = document.getElementById('toc-panel')
-    const searchPanel = document.getElementById('search-panel')
+    PANELS.forEach(({ id, button, hiddenClass }) => {
+      const panel = document.getElementById(id)
+      const isFocusOutside = !panel?.contains(focusEl) && focusEl?.id !== button
 
-    if (
-      navPanel &&
-      !navPanel.classList.contains('hidden!') &&
-      !navPanel.contains(focusEl) &&
-      focusEl?.id !== 'nav-open-button'
-    ) {
-      toggleFadeEffect('nav-panel', false, 'hidden!')
-      dispatchToggleBackdrop(false)
-    }
-
-    if (
-      tocPanel &&
-      !tocPanel.classList.contains('hidden!') &&
-      !tocPanel.contains(focusEl) &&
-      focusEl?.id !== 'toc-open-button'
-    ) {
-      toggleFadeEffect('toc-panel', false, 'hidden!')
-      dispatchToggleBackdrop(false)
-    }
-
-    if (
-      searchPanel &&
-      !searchPanel.classList.contains('hidden') &&
-      !searchPanel.contains(focusEl) &&
-      focusEl?.id !== 'search-switch'
-    ) {
-      toggleFadeEffect('search-panel', false, 'hidden')
-      dispatchToggleBackdrop(false)
-    }
-  })
+      if (
+        panel &&
+        !panel.classList.contains(hiddenClass) &&
+        (isFocusOutside || event.key === 'Escape')
+      ) {
+        toggleFadeEffect(id, false, hiddenClass)
+        toggleFadeEffect('backdrop', false, 'hidden')
+        if (panel.contains(focusEl)) {
+          document.getElementById(button)?.focus()
+        }
+      }
+    })
+  }
+  document.addEventListener('keyup', (event) => handleKeyUp(event))
 </script>

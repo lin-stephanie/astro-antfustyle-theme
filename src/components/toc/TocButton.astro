@@ -30,12 +30,12 @@
 </nav>
 
 <script>
-  import { dispatchToggleBackdrop, toggleFadeEffect } from '~/utils/animation'
+  import { toggleFadeEffect } from '~/utils/animation'
 
   document.addEventListener('astro:page-load', () => {
     /* Open toc panel when user click on button */
     const handleBtnClickToOpen = () => {
-      dispatchToggleBackdrop(true)
+      toggleFadeEffect('backdrop', true, 'hidden')
       toggleFadeEffect('toc-panel', true, 'hidden!')
     }
 
@@ -50,7 +50,7 @@
 
       if (isClickedOnLink) {
         toggleFadeEffect('toc-panel', false, 'hidden!')
-        dispatchToggleBackdrop(false)
+        toggleFadeEffect('backdrop', false, 'hidden')
       }
     }
 

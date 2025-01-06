@@ -29,12 +29,12 @@
 </div>
 
 <script>
-  import { dispatchToggleBackdrop, toggleFadeEffect } from '~/utils/animation'
+  import { toggleFadeEffect } from '~/utils/animation'
 
   document.addEventListener('astro:page-load', () => {
     /* Open nav panel when user click on button */
     const handleBtnClickToOpen = () => {
-      dispatchToggleBackdrop(true)
+      toggleFadeEffect('backdrop', true, 'hidden')
       toggleFadeEffect('nav-panel', true, 'hidden!')
     }
 
