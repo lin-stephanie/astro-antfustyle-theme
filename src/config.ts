@@ -95,7 +95,8 @@ export const FEATURES: Features = {
     true,
     {
       twitter: [true, '@ste7lin'],
-      mastodon: [true, '@ste7lin@fairy.id'],
+      bluesky: [true, '@ste7lin.bsky.social'],
+      mastodon: false,
       facebook: false,
       pinterest: false,
       reddit: false,

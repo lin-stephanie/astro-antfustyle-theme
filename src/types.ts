@@ -436,23 +436,29 @@ export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6
 
 export interface ShareConfig {
   /**
-   * Twitter sharing configuration:
+   * Configures Twitter sharing:
    *  - Set to `false` or `[false, '@userName']` to disable.
    *  - Set to `[true, '@userName']` to enable and mention you.
    *
-   * @description
-   * If an empty string is used, '@userName' will be excluded from the shared text.
+   * If an empty string is used, '@userName' will not appear in the pre-filled sharing text.
    */
   twitter: FeatureConfig<Mentioned>
 
   /**
-   * Mastodon sharing configuration:
+   * Configures Bluesky sharing:
+   *  - Set to `false` or `[false, '@handle']` to disable.
+   *  - Set to `[true, '@handle']` to enable and mention you.
+   *
+   * If an empty string is used, '@handle' will not appear in the pre-filled sharing text.
+   */
+  bluesky: FeatureConfig<Mentioned>
+
+  /**
+   * Configures Mastodon sharing:
    *  - Set to `false` or `[false, '@userName@serverName']` to disable.
    *  - Set to `[true, '@userName@serverName']` to enable and mention you.
    *
-   * @description
-   * If an empty string is used, the username will not be included in the shared text.
-   * If set to an empty string, '@userName@serverName' will be excluded from the shared text.
+   * If an empty string is used, '@userName@serverName' will not appear in the pre-filled sharing text.
    */
   mastodon: FeatureConfig<Mentioned>
 
