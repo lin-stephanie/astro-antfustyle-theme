@@ -14,7 +14,7 @@ import Footer from '~/components/base/Footer.astro'
 import ToTopButton from '~/components/widgets/ToTopButton.astro'
 import Backdrop from '~/components/base/Backdrop.astro'
 
-import { SITE, FEATURES } from '~/config'
+import { SITE, UI, FEATURES } from '~/config'
 import { getUrl } from '~/utils/common'
 
 import type { BgType } from '~/types'
@@ -31,11 +31,17 @@ interface Props {
 const { title, description, ogImage, bgType, pubDate, lastModDate } =
   Astro.props
 
+let style: Record<string, string> = {}
+
 const { slideEnterAnim } = FEATURES
-const slideEnterAnimEnabled = Array.isArray(slideEnterAnim) && slideEnterAnim[0]
-const style = slideEnterAnimEnabled
-  ? { '--enter-step': `${slideEnterAnim[1].enterStep}ms` }
-  : undefined
+const enableSlideEnterAnim = Array.isArray(slideEnterAnim) && slideEnterAnim[0]
+if (enableSlideEnterAnim)
+  style['--enter-step'] = `${slideEnterAnim[1].enterStep}ms`
+
+const { externalLink } = UI
+const hasCustomCursor =
+  externalLink.cursorType.length > 0 && externalLink.cursorType !== 'pointer'
+if (hasCustomCursor) style['--external-link-cursor'] = externalLink.cursorType
 ---
 
 <!doctype html>
@@ -47,8 +53,8 @@ const style = slideEnterAnimEnabled
   <body
     class="relative flex flex-col min-h-screen
       font-sans text-gray-700 dark:text-gray-200"
-    data-no-sliding={!slideEnterAnimEnabled ? true : undefined}
-    {style}
+    style={Object.keys(style).length !== 0 ? style : undefined}
+    data-no-sliding={!enableSlideEnterAnim ? true : undefined}
   >
     <!-- Background -->
     {bgType && <Background type={bgType} />}

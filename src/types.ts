@@ -386,6 +386,38 @@ export interface GitHubView {
   subLogoMatches: [RepoWithOwner | RegExp, Url | Icon][]
 }
 
+interface ExternalLink {
+  /**
+   * Controls whether external links are opened in a new tab.
+   * Used in `src/components/base/Link.astro` and `plugins/index.ts`.
+   */
+  newTab: boolean
+
+  /**
+   * Specifies the cursor type for external links.
+   * Accepts {@link https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#keyword standard keywords},
+   * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#url custom URLs},
+   * or an empty string to default to `'pointer'` for matching internal links.
+   *
+   * Used in `plugins/index.ts`, it only applies to external links generated from
+   * `[]()` syntax in Markdown / MDX, not direct `<a>` elements.
+   *
+   * @example
+   * 'url("/images/new-tab.png") 10 10, pointer'
+   */
+  cursorType: string
+
+  /**
+   * Controls whether to add an indicator to external links when `newTab` is `true`,
+   * showing they open in a new tab for accessibility.
+   * Skip this if `cursorType` already uses an image for the same purpose.
+   *
+   * Used in `plugins/index.ts`, it only applies to external links generated from
+   * `[]()` syntax in Markdown / MDX, not direct `<a>` elements.
+   */
+  showNewTabIcon: boolean
+}
+
 export interface Ui {
   /**
    * Configures internal navigation links, used in `src/components/base/NavBar.astro`.
@@ -426,6 +458,11 @@ export interface Ui {
    * Configures the `/releases` and `prs` UIs, used in `src/components/views/GithubView.astro`.
    */
   githubView: GitHubView
+
+  /**
+   * Configures external links' behavior and appearance.
+   */
+  externalLink: ExternalLink
 }
 
 /* FEATURES */

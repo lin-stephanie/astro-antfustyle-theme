@@ -1,4 +1,5 @@
 ---
+import { UI } from '~/config'
 import type { HTMLAttributes } from 'astro/types'
 
 interface Props extends HTMLAttributes<'a'> {
@@ -10,15 +11,21 @@ interface Props extends HTMLAttributes<'a'> {
 
 const { href, title, external = false, class: className, ...rest } = Astro.props
 
-const newTitle = external && title ? `${title} (external link)` : title
+const { externalLink } = UI
+
+const openInNewTab = external && externalLink.newTab
+const targetAttr = openInNewTab ? '_blank' : undefined
+const relAttr = openInNewTab ? 'noopener noreferrer' : undefined
+const ariaLabel = title ? title : openInNewTab ? 'Open in new tab' : undefined
 ---
 
 <a
   class={className}
   {href}
-  title={newTitle}
-  target={external ? '_blank' : '_self'}
-  aria-label={newTitle}
+  {title}
+  aria-label={ariaLabel}
+  target={targetAttr}
+  rel={relAttr}
   {...rest}
 >
   <slot /></a
