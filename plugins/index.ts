@@ -49,21 +49,11 @@ export const rehypePlugins: RehypePlugins = [
   [
     rehypeExternalLinks,
     {
-      rel: 'noopener noreferrer',
+      rel: UI.externalLink.newTab ? 'noopener noreferrer' : [],
       content: (el: Parameters<CreateProperties>[0]) => {
         if (!UI.externalLink.newTab || !UI.externalLink.showNewTabIcon)
           return null
 
-        // ignore remark-directive-sugar generated links
-        const elClass = el.properties.class
-        if (
-          elClass &&
-          typeof elClass === 'string' &&
-          elClass.includes('sugar-link')
-        )
-          return null
-
-        // ignore links containing images
         let hasImage = false
         visit(el, 'element', (childNode) => {
           if (childNode.tagName === 'img') {
@@ -82,16 +72,6 @@ export const rehypePlugins: RehypePlugins = [
         if (!UI.externalLink.newTab || !UI.externalLink.showNewTabIcon)
           return null
 
-        // ignore remark-directive-sugar generated links
-        const elClass = el.properties.class
-        if (
-          elClass &&
-          typeof elClass === 'string' &&
-          elClass.includes('sugar-link')
-        )
-          return null
-
-        // ignore links containing images
         let hasImage = false
         visit(el, 'element', (childNode) => {
           if (childNode.tagName === 'img') {

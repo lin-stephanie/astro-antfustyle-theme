@@ -6,16 +6,27 @@ interface Props extends HTMLAttributes<'a'> {
   href: string
   title?: string
   external?: boolean
+  rel?: string
   children: HTMLElement | HTMLElement[] | string
 }
 
-const { href, title, external = false, class: className, ...rest } = Astro.props
+const {
+  href,
+  title,
+  external = false,
+  rel,
+  class: className,
+  ...rest
+} = Astro.props
 
 const { externalLink } = UI
 
 const openInNewTab = external && externalLink.newTab
 const targetAttr = openInNewTab ? '_blank' : undefined
-const relAttr = openInNewTab ? 'noopener noreferrer' : undefined
+const relAttr =
+  rel || openInNewTab
+    ? `${openInNewTab ? 'noopener noreferrer' : ''} ${rel ? rel : ''}`.trim()
+    : undefined
 const ariaLabel = title ? title : openInNewTab ? 'Open in new tab' : undefined
 ---
 
