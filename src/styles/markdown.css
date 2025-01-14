@@ -376,6 +376,7 @@ html:not(.dark) .img-dark {
 
   background: #8882;
   transform: translateY(3px);
+  transition: all 300ms ease-in-out !important;
 }
 
 .sugar-link-rounded {
@@ -392,6 +393,7 @@ html:not(.dark) .img-dark {
 
   background: #8882;
   transform: translateY(6px);
+  transition: all 300ms ease-in-out !important;
 }
 
 .sugar-link-square:hover,

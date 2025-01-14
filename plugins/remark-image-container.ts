@@ -87,8 +87,7 @@ function remarkImageContainer() {
         const attributes = node.attributes || {}
 
         data.hName = 'a'
-        const defaultAttrs = { target: '_blank' }
-        data.hProperties = { ...defaultAttrs, ...attributes }
+        data.hProperties = attributes
       } else if (node.name.match(IMAGE_DIR_REGEXP)) {
         /* image-* */
         const match = node.name.match(IMAGE_DIR_REGEXP)
