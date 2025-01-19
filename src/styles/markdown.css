@@ -449,18 +449,10 @@ html:not(.dark) .img-dark {
 
 /* rehype-external-links */
 .new-tab-icon {
-  margin-left: 0.05rem;
+  margin-left: 0.1rem;
   margin-bottom: 0.3rem;
 
-  opacity: 0.3;
-  transition: opacity 0.3s ease-in-out;
-
   font-size: 0.6em;
-}
-
-a:hover .new-tab-icon,
-a:focus .new-tab-icon {
-  opacity: 1;
 }
 
 .external-link-cursor {
