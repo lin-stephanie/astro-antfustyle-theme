@@ -5,16 +5,18 @@ import type { HTMLAttributes } from 'astro/types'
 interface Props extends HTMLAttributes<'a'> {
   href: string
   title?: string
-  external?: boolean
   rel?: string
+  external?: boolean
+  enableNewTabWarning?: boolean
   children: HTMLElement | HTMLElement[] | string
 }
 
 const {
   href,
   title,
-  external = false,
   rel,
+  external = false,
+  enableNewTabWarning = false,
   class: className,
   ...rest
 } = Astro.props
@@ -28,29 +30,57 @@ const relAttr =
     ? `${openInNewTab ? 'noopener noreferrer' : ''} ${rel ? rel : ''}`.trim()
     : undefined
 const ariaLabel = title ? title : openInNewTab ? 'Open in new tab' : undefined
+
+const showCursor =
+  openInNewTab &&
+  enableNewTabWarning &&
+  externalLink.cursorType &&
+  externalLink.cursorType !== 'pointer'
+
+const showIcon =
+  openInNewTab && enableNewTabWarning && externalLink.showNewTabIcon
 ---
 
 <a
-  class={className}
+  class:list={[
+    'op-60 no-underline hover:op-100',
+    className,
+    { 'external-link-cursor': showCursor },
+  ]}
   {href}
   {title}
   aria-label={ariaLabel}
-  target={targetAttr}
   rel={relAttr}
+  target={targetAttr}
   {...rest}
 >
-  <slot /></a
->
-
-<style>
-  a {
-    opacity: 0.6;
-    cursor: pointer;
-    text-decoration: none;
+  {
+    Astro.slots.has('default') && (
+      <>
+        <slot />
+        {showIcon && (
+          <span
+            u-i-carbon-arrow-up-right
+            class="new-tab-icon ml-0!"
+            aria-hidden="true"
+          />
+        )}
+      </>
+    )
   }
-
-  a:hover {
-    opacity: 1;
-    text-decoration-color: inherit;
+  {
+    Astro.slots.has('title') && (
+      <span class="text-lg leading-1.3em align-middle">
+        <slot name="title" />
+        {showIcon && (
+          <span
+            u-i-carbon-arrow-up-right
+            class="new-tab-icon ml--1! mb-1.8!"
+            aria-hidden="true"
+          />
+        )}
+      </span>
+    )
   }
-</style>
+  <slot name="end" />
+</a>

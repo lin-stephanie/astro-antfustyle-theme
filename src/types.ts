@@ -389,7 +389,8 @@ export interface GitHubView {
 interface ExternalLink {
   /**
    * Controls whether external links are opened in a new tab.
-   * Used in `src/components/base/Link.astro` and `plugins/index.ts`.
+   *
+   * Used in `plugins/index.ts` and `src/components/base/Link.astro`.
    */
   newTab: boolean
 
@@ -399,11 +400,18 @@ interface ExternalLink {
    * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#url custom URLs},
    * or an empty string to default to `'pointer'` for matching internal links.
    *
-   * Used in `plugins/index.ts`, it only applies to external links generated from
-   * `[]()` syntax in Markdown / MDX, not direct `<a>` elements.
+   * It handles external links from `[]()` in Markdown/MDX,
+   * not direct `<a>` elements. To process `<a>` elements, install `rehype-raw`
+   * and configure it before `rehype-external-links`.
+   *
+   * To apply it to other external links in the site's UI,
+   * set `enableNewTabWarning: true` in `src/components/base/Link.astro`
+   * or pass it locally to the `Link` component as needed.
+   *
+   * Used in `plugins/index.ts`, `src/layouts/BaseLayout.astro` and `src/components/base/Link.astro`.
    *
    * @example
-   * 'url("/images/new-tab.png") 10 10, pointer'
+   * 'url("/images/new-tab.svg") 10 10, pointer'
    */
   cursorType: string
 
@@ -412,8 +420,15 @@ interface ExternalLink {
    * showing they open in a new tab for accessibility.
    * Skip this if `cursorType` already uses an image for the same purpose.
    *
-   * Used in `plugins/index.ts`, it only applies to external links generated from
-   * `[]()` syntax in Markdown / MDX, not direct `<a>` elements.
+   * It handles external links from `[]()` in Markdown/MDX,
+   * not direct `<a>` elements. To process `<a>` elements, install `rehype-raw`
+   * and configure it before `rehype-external-links`.
+   *
+   * To apply it to other external links in the site's UI,
+   * set `enableNewTabWarning: true` in `src/components/base/Link.astro`
+   * or pass it locally to the `Link` component as needed.
+   *
+   * Used in `plugins/index.ts` and `src/components/base/Link.astro`.
    */
   showNewTabIcon: boolean
 }
