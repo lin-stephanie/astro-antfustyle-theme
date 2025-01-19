@@ -1,9 +1,8 @@
 ---
-import Link from './Link.astro'
+import Link from '~/components/base/Link.astro'
 import { SITE } from '~/config'
 
 const currentYear = new Date().getFullYear()
-
 const copyrightText = `© ${currentYear} ${SITE.author}`
 ---
 
@@ -17,7 +16,6 @@ const copyrightText = `© ${currentYear} ${SITE.author}`
         <Link
           class="op-100! color-[--fg]!"
           href="https://github.com/lin-stephanie/astro-antfustyle-theme"
-          title="AntfuStyle on GitHub"
           external={true}
         >
           Astro AntfuStyle Theme

@@ -10,6 +10,7 @@ ogImage: true
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
 import GithubView from '~/components/views/GithubView.astro'
+import Link from '~/components/base/Link.astro'
 
 <BaseLayout
   title={frontmatter.title}
@@ -22,7 +23,7 @@ import GithubView from '~/components/views/GithubView.astro'
       <h1 class="ml-12 lt-sm:ml-0"
       >AstroEco is <span class="animate-pulse">Contributing...</span></h1>
       <p class="mt--4! op-50 italic"
-      >Example: Displaying GitHub pull requests using <a href="https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-prs" target="_blank">astro-loader-github-prs</a></p>
+      >Example: Displaying GitHub pull requests using <Link href="https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-prs" external={true}>astro-loader-github-prs</Link></p>
     </Fragment>
     <GithubView slot="github" collectionType="prs" />
   </StandardLayout>

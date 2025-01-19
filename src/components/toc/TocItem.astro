@@ -1,4 +1,5 @@
 ---
+import Link from '~/components/base/Link.astro'
 import type { TocHeading } from '~/utils/toc'
 
 interface Props {
@@ -12,9 +13,9 @@ const { slug, children, text } = heading
 <li>
   {
     slug && (
-      <a href={`#${slug}`} aria-label={`Scroll to ${text}`}>
+      <Link href={`#${slug}`} aria-label={`Scroll to ${text}`}>
         {text}
-      </a>
+      </Link>
     )
   }
   {
