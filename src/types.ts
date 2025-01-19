@@ -386,6 +386,45 @@ export interface GitHubView {
   subLogoMatches: [RepoWithOwner | RegExp, Url | Icon][]
 }
 
+interface ExternalLink {
+  /**
+   * Controls whether external links are opened in a new tab.
+   *
+   * Used in `plugins/index.ts` and `src/components/base/Link.astro`.
+   */
+  newTab: boolean
+
+  /**
+   * Specifies the cursor type for external links.
+   * Accepts {@link https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#keyword standard keywords},
+   * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#url custom URLs},
+   * or an empty string to default to `'pointer'` for matching internal links.
+   *
+   * To apply it to other external links in the site's UI,
+   * set `enableNewTabWarning` to `true` in `src/components/base/Link.astro`
+   * or locally pass `enableNewTabWarning: true` to the Link component as needed.
+   *
+   * Used in `plugins/index.ts`, `src/layouts/BaseLayout.astro` and `src/components/base/Link.astro`.
+   *
+   * @example
+   * 'url("/images/new-tab.svg") 10 10, pointer'
+   */
+  cursorType: string
+
+  /**
+   * Controls whether to add an indicator to external links when `newTab` is `true`,
+   * showing they open in a new tab for accessibility.
+   * Skip this if `cursorType` already uses an image for the same purpose.
+   *
+   * To apply it to other external links in the site's UI,
+   * set `enableNewTabWarning` to `true` in `src/components/base/Link.astro`
+   * or locally pass `enableNewTabWarning: true` to the Link component as needed.
+   *
+   * Used in `plugins/index.ts` and `src/components/base/Link.astro`.
+   */
+  showNewTabIcon: boolean
+}
+
 export interface Ui {
   /**
    * Configures internal navigation links, used in `src/components/base/NavBar.astro`.
@@ -426,6 +465,11 @@ export interface Ui {
    * Configures the `/releases` and `prs` UIs, used in `src/components/views/GithubView.astro`.
    */
   githubView: GitHubView
+
+  /**
+   * Configures external links' behavior and appearance.
+   */
+  externalLink: ExternalLink
 }
 
 /* FEATURES */

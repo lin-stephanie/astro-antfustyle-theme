@@ -1,7 +1,6 @@
 ---
-import Link from './Link.astro'
+import Link from '~/components/base/Link.astro'
 import { ensureTrailingSlash, getUrl } from '~/utils/common'
-
 import type { InternalNav, SocialLink } from '~/types'
 
 type Props =
@@ -128,6 +127,7 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
           class="lt-md:hidden op-transition"
           href={item.link}
           title={item.title}
+          rel="me"
           external={true}
         >
           {(item.displayMode === 'alwaysIcon' ||
@@ -149,16 +149,10 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
               class="block op-transition"
               href={item.link}
               title={item.title}
+              rel="me"
               external={true}
             >
-              <span>
-                {item.text}
-                <span
-                  u-i-carbon-arrow-up-right
-                  class="mb-2 mr--0.5 ml--1 op-50 align-middle text-xs"
-                  title="External link"
-                />
-              </span>
+              <span>{item.text}</span>
             </Link>
           </li>
         )
@@ -169,6 +163,7 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
             class="block op-transition"
             href={item.link}
             title={item.title}
+            rel="me"
             external={true}
           >
             <div class={item.icon} />
@@ -185,6 +180,7 @@ const { type, item, mergeOnMobile, mobileItemType } = Astro.props
         } op-transition`}
         href={item.link}
         title={item.title}
+        rel="me"
         external={true}
       >
         {(item.displayMode === 'alwaysText' ||

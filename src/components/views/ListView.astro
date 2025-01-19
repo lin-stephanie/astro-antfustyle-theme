@@ -1,12 +1,14 @@
 ---
 import { getCollection, getEntry } from 'astro:content'
+
 import Categorizer from '~/components/base/Categorizer.astro'
 import ListItem from '~/components/views/ListItem.astro'
 import Toc from '~/components/toc/Toc.astro'
 import Warning from '~/components/base/Warning.astro'
+
+import { FEATURES } from '~/config'
 import { isSameYear, getYear } from '~/utils/datetime'
 import { getFilteredPosts, getSortedPosts } from '~/utils/post'
-import { FEATURES } from '~/config'
 
 import type {
   CollectionEntry,
@@ -112,7 +114,7 @@ const warningHTML = `The '${collectionType}' collection type does not
 
 {
   (collectionType === 'blog' || collectionType === 'changelog') && (
-    <ul aria-label="Post list">
+    <div aria-label="Post list">
       {sortedBlogItems.length === 0 ? (
         <div class="py-2 op-50">nothing here yet</div>
       ) : (
@@ -150,13 +152,13 @@ const warningHTML = `The '${collectionType}' collection type does not
           )
         })
       )}
-    </ul>
+    </div>
   )
 }
 
 {
   collectionType === 'streams' && (
-    <ul aria-label="Stream list">
+    <div aria-label="Stream list">
       {sortedStreamItems.length === 0 ? (
         <div class="py-2 op-50">nothing here yet</div>
       ) : (
@@ -187,13 +189,13 @@ const warningHTML = `The '${collectionType}' collection type does not
           )
         })
       )}
-    </ul>
+    </div>
   )
 }
 
 {
   collectionType === 'feeds' && (
-    <ul aria-label="Feed list">
+    <div aria-label="Feed list">
       {sortedFeedItems.length === 0 ? (
         <div class="py-2 op-50">nothing here yet</div>
       ) : (
@@ -231,7 +233,7 @@ const warningHTML = `The '${collectionType}' collection type does not
           )
         })
       )}
-    </ul>
+    </div>
   )
 }
 

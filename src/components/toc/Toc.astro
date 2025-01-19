@@ -1,4 +1,5 @@
 ---
+import Link from '~/components/base/Link.astro'
 import TocButton from '~/components/toc/TocButton.astro'
 import TocItem from '~/components/toc/TocItem.astro'
 import { slug } from '~/utils/common'
@@ -74,9 +75,9 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
           !!category.length &&
             category.map((item) => (
               <li>
-                <a href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
+                <Link href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
                   {item}
-                </a>
+                </Link>
               </li>
             ))
         }
@@ -84,9 +85,9 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
           !!years.length &&
             years.map((item) => (
               <li>
-                <a href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
+                <Link href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
                   {item}
-                </a>
+                </Link>
               </li>
             ))
         }
@@ -102,9 +103,9 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
         !!category.length &&
           category.map((item) => (
             <li>
-              <a href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
+              <Link href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
                 {item}
-              </a>
+              </Link>
             </li>
           ))
       }
@@ -112,9 +113,9 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
         !!years.length &&
           years.map((item) => (
             <li>
-              <a href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
+              <Link href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
                 {item}
-              </a>
+              </Link>
             </li>
           ))
       }

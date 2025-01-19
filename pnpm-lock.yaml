@@ -144,6 +144,9 @@ importers:
       rehype-katex:
         specifier: ^7.0.1
         version: 7.0.1
+      rehype-raw:
+        specifier: ^7.0.0
+        version: 7.0.0
       remark-directive:
         specifier: ^3.0.0
         version: 3.0.0

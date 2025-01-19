@@ -83,6 +83,11 @@ export const UI: Ui = {
       [/bluesky/, 'i-logos-bluesky'],
     ],
   },
+  externalLink: {
+    newTab: true,
+    cursorType: 'url("/images/new-tab.svg") 10 10, pointer',
+    showNewTabIcon: false,
+  },
 }
 
 /**

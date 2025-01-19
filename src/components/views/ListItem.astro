@@ -1,5 +1,6 @@
 ---
 import Link from '~/components/base/Link.astro'
+
 import { getUrl } from '~/utils/common'
 import { formatDate } from '~/utils/datetime'
 
@@ -32,57 +33,46 @@ const {
 
 <div class="slide-enter" style={{ '--enter-stage': idx }}>
   <Link
-    class="block border-b-none! mb-6 mt-2 op-transition!"
+    u-flex="~ items-center lt-md:(col items-start) gap-2"
+    class="border-b-none! mb-6 mt-2 op-transition!"
     href={redirect ?? getUrl(`/${collectionType}/${postSlug}/`)}
     external={redirect ? true : false}
+    enableNewTabWarning={redirect ? true : false}
   >
-    <li
-      u-flex="~ items-center gap-2 lt-md:(col items-start)"
-      class="no-underline"
-    >
-      <div class="text-lg leading-1.2em">
-        <span class="align-middle"
-          >{title}
-          {
-            redirect && (
-              <span
-                u-i-carbon-arrow-up-right
-                class="mb-2 mr--0.5 ml--1 op-50 align-middle text-xs"
-                title="External link"
-              />
-            )
-          }</span
-        >
-      </div>
-      <div flex="~ gap-2 items-center">
-        {
-          video && (
-            <span
-              u-i-ri-film-line
-              class="flex-none op-50 align-middle"
-              title="Provided in video"
-            />
-          )
-        }
-        {
-          radio && (
-            <span
-              u-i-ri-radio-line
-              class="flex-none op-50 align-middle"
-              title="Provided in radio"
-            />
-          )
-        }
-        <span class="op-50 text-sm ws-nowrap">
-          {formatDate(date, false)}
-        </span>
-        {
-          typeof minutesRead === 'number' && minutesRead > 0 && (
-            <span class="op-40 text-sm ws-nowrap">· {minutesRead} min</span>
-          )
-        }
-        {platform && <span class="op-40 text-sm ws-nowrap">· {platform}</span>}
-      </div>
-    </li>
+    <Fragment slot="title">{title}</Fragment>
+    <span slot="end" u-flex="~ gap-2 items-center">
+      {
+        video && (
+          <span
+            u-i-ri-film-line
+            class="flex-none op-50 align-middle"
+            title="Provided in video"
+            aria-label="Provided in video"
+          />
+        )
+      }
+      {
+        radio && (
+          <span
+            u-i-ri-radio-line
+            class="flex-none op-50 align-middle"
+            title="Provided in radio"
+            aria-label="Provided in radio"
+          />
+        )
+      }
+      <time
+        class="op-50 text-sm ws-nowrap"
+        datetime={new Date(date).toISOString()}
+      >
+        {formatDate(date, false)}
+      </time>
+      {
+        typeof minutesRead === 'number' && minutesRead > 0 && (
+          <span class="op-40 text-sm ws-nowrap">· {minutesRead} min</span>
+        )
+      }
+      {platform && <span class="op-40 text-sm ws-nowrap">· {platform}</span>}
+    </span>
   </Link>
 </div>
