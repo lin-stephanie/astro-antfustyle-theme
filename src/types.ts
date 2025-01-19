@@ -400,13 +400,9 @@ interface ExternalLink {
    * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#url custom URLs},
    * or an empty string to default to `'pointer'` for matching internal links.
    *
-   * It handles external links from `[]()` in Markdown/MDX,
-   * not direct `<a>` elements. To process `<a>` elements, install `rehype-raw`
-   * and configure it before `rehype-external-links`.
-   *
    * To apply it to other external links in the site's UI,
-   * set `enableNewTabWarning: true` in `src/components/base/Link.astro`
-   * or pass it locally to the `Link` component as needed.
+   * set `enableNewTabWarning` to `true` in `src/components/base/Link.astro`
+   * or locally pass `enableNewTabWarning: true` to the Link component as needed.
    *
    * Used in `plugins/index.ts`, `src/layouts/BaseLayout.astro` and `src/components/base/Link.astro`.
    *
@@ -420,13 +416,9 @@ interface ExternalLink {
    * showing they open in a new tab for accessibility.
    * Skip this if `cursorType` already uses an image for the same purpose.
    *
-   * It handles external links from `[]()` in Markdown/MDX,
-   * not direct `<a>` elements. To process `<a>` elements, install `rehype-raw`
-   * and configure it before `rehype-external-links`.
-   *
    * To apply it to other external links in the site's UI,
-   * set `enableNewTabWarning: true` in `src/components/base/Link.astro`
-   * or pass it locally to the `Link` component as needed.
+   * set `enableNewTabWarning` to `true` in `src/components/base/Link.astro`
+   * or locally pass `enableNewTabWarning: true` to the Link component as needed.
    *
    * Used in `plugins/index.ts` and `src/components/base/Link.astro`.
    */

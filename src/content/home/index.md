@@ -47,52 +47,23 @@ This live demo will guide you through setup and customization, offering helpful 
   <a
     class="inline-block ml-1.5 op-75 hover:op-100"
     href="https://github.com/lin-stephanie/astro-antfustyle-theme"
-    target="_blank"
-    aria-label="AntfuStyle on GitHub (external link)"
   >
-    <span i-simple-icons-github></span>
-    GitHub repo
-  </a>
+  <span i-simple-icons-github></span> GitHub repo</a>
 </p>
 
 <p>
   <span class="inline-block mr-1.5 mb-2">Find me on</span>
   <span class="inline-flex flex-wrap gap-2 op-75 hover:op-100">
-    <a
-      href="https://github.com/lin-stephanie/astro-antfustyle-theme"
-      target="_blank"
-      aria-label="Find me on GitHub (external link)"
-    >
-      <span i-simple-icons-github></span> GitHub
-    </a>
-    <a
-      href="https://github.com/lin-stephanie/astro-antfustyle-theme"
-      target="_blank"
-      aria-label="Find me on Twitter (external link)"
-    >
-      <span i-ri-twitter-x-fill></span> Twitter
-    </a>
-    <a
-      href="https://github.com/lin-stephanie/astro-antfustyle-theme"
-      target="_blank"
-      aria-label="Find me on Instagram (external link)"
-    >
-      <span i-simple-icons-instagram></span> Instagram
-    </a>
-    <a
-      href="https://github.com/lin-stephanie/astro-antfustyle-theme"
-      target="_blank"
-      aria-label="Find me on Mastodon (external link)"
-    >
-      <span i-simple-icons-mastodon></span> Mastodon
-    </a>
-    <a
-      href="https://github.com/lin-stephanie/astro-antfustyle-theme"
-      target="_blank"
-      aria-label="Find me on YouTube (external link)"
-    >
-      <span i-simple-icons-youtube></span> YouTube
-    </a>
+    <a href="https://github.com/lin-stephanie/astro-antfustyle-theme">
+      <span i-simple-icons-github></span> GitHub</a>
+    <a href="https://github.com/lin-stephanie/astro-antfustyle-theme">
+      <span i-ri-twitter-x-fill></span> Twitter</a>
+    <a href="https://github.com/lin-stephanie/astro-antfustyle-theme">
+      <span i-simple-icons-instagram></span> Instagram</a>
+    <a href="https://github.com/lin-stephanie/astro-antfustyle-theme">
+      <span i-simple-icons-mastodon></span> Mastodon</a>
+    <a href="https://github.com/lin-stephanie/astro-antfustyle-theme">
+      <span i-simple-icons-youtube></span> YouTube</a>
   </span>
 </p>
 
@@ -101,22 +72,8 @@ This live demo will guide you through setup and customization, offering helpful 
 If you find this theme helpful, consider supporting the project maintainer or the style designer. Your support means more than you know. Thank you! ❤️
 
 <div class="flex flex-wrap gap-4">
-  <a
-    class="btn-rose"
-    href="https://github.com/sponsors/lin-stephanie"
-    target="_blank"
-    aria-label="Support Stephanie Lin (external link)"
-  >
-    <div class="i-ph-heart-duotone transition-all ease-out duration-200"></div>
-    Support Stephanie Lin (Maintainer)
-  </a>
-  <a
-    class="btn-yellow"
-    href="https://github.com/sponsors/antfu"
-    target="_blank"
-    aria-label="Support Anthony Fu (external link)"
-  >
-    <div class="i-ph-lightning-duotone transition-all ease-out duration-200"></div>
-    Support Anthony Fu (Designer)
-  </a>
+  <a class="btn-rose" href="https://github.com/sponsors/lin-stephanie">
+    <span class="i-ph-heart-duotone"></span> Support Stephanie Lin (Maintainer)</a>
+  <a class="btn-yellow" href="https://github.com/sponsors/antfu">
+    <span class="i-ph-lightning-duotone"></span> Support Anthony Fu (Designer)</a>
 </div>
