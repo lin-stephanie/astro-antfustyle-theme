@@ -84,8 +84,8 @@ export const UI: Ui = {
     ],
   },
   externalLink: {
-    newTab: true,
-    cursorType: 'url("/images/new-tab.svg") 10 10, pointer',
+    newTab: false,
+    cursorType: '',
     showNewTabIcon: false,
   },
 }

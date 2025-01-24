@@ -13,8 +13,6 @@
 }
 
 .prose a {
-  font-weight: inherit;
-  text-decoration: none;
   border-bottom: 1px solid rgba(125, 125, 125, 0.3);
   transition: border 0.3s ease-in-out;
 }
@@ -184,7 +182,7 @@ html.dark .prose {
   white-space: nowrap;
 
   opacity: 0.75;
-  --uno: 'hover:op-100';
+
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 

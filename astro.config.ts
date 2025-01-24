@@ -16,7 +16,6 @@ export default defineConfig({
     sitemap(),
     robotsTxt(),
     unocss({
-      // https://unocss.dev/integrations/astro#style-reset
       injectReset: true,
     }),
     astroExpressiveCode(),

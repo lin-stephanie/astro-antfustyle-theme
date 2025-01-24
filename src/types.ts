@@ -4,16 +4,18 @@ type Path = `/${string}`
 
 export interface Site {
   /**
-   * Specifies the final deployed URL, which must start with `http://` or `https://`. It will be passed to the
-   * {@link https://docs.astro.build/en/reference/configuration-reference/#site `site`} config in Astro,
-   * used for generating canonical URLs, `rss.xml` and other features.
+   * Specifies the final deployed URL, which must start with `http://` or `https://`.
+   *
+   * It will be passed to the {@link https://docs.astro.build/en/reference/configuration-reference/#site `site`}
+   * config in Astro, used for generating canonical URLs, `rss.xml` and other features.
    */
   website: Url
 
   /**
-   * Specifies the base path for your site, which must start with `/`. It wiil be passed to the
-   * {@link https://docs.astro.build/en/reference/configuration-reference/#base `base`} config in Astro,
-   * used when deploying to a subdirectory.
+   * Specifies the base path for your site, which must start with `/`.
+   *
+   * It wiil be passed to the {@link https://docs.astro.build/en/reference/configuration-reference/#base `base`}
+   * config in Astro, used when deploying to a subdirectory.
    *
    * @example
    * `/my-site/` (for a site deployed to `https://example.com/my-site/`)
@@ -22,6 +24,7 @@ export interface Site {
 
   /**
    * Specifies the site name for formatting the `title` in the frontmatter as `<pageTitle> - <siteTitle>`.
+   *
    * Used for the title and meta tags, found in `src/components/base/Head.astro`.
    */
   title: string
@@ -39,9 +42,9 @@ export interface Site {
   /**
    * Specifies the primary language of the document content, found in `src/layouts/BaseLayout.astro`.
    *
-   * @description
    * It must be a single 'language tag' in the format defined in
-   * {@link https://datatracker.ietf.org/doc/html/rfc5646#appendix-A RFC 5646: Tags for Identifying Languages} (also known as BCP 47).
+   * {@link https://datatracker.ietf.org/doc/html/rfc5646#appendix-A RFC 5646: Tags for Identifying Languages}
+   * (also known as BCP 47).
    *
    * @example
    * 'zh-Hant' (Chinese written using the Traditional Chinese script)
@@ -53,7 +56,6 @@ export interface Site {
    * Specifies the page content's language and region for better content display on social platforms,
    * found in `src/components/base/Head.astro`.
    *
-   * @description
    * It must be in `language_TERRITORY` format, which you can find in
    * {@link https://www.unicode.org/cldr/charts/44/supplemental/language_territory_information.html Language-Territory Information}.
    *
@@ -93,15 +95,18 @@ interface TextNavItem extends BaseNavItem {
    *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
    *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
    *
-   * @remark
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
    */
   displayMode: 'alwaysText' | 'textHiddenOnMobile'
 
   /**
    * Sets the text displayed for the navigation item.
-   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   *
+   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
    */
   text: string
 }
@@ -116,19 +121,21 @@ export interface IconNavItem extends BaseNavItem {
    *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
    *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
    *
-   * @remark
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
    */
   displayMode: 'alwaysIcon' | 'iconHiddenOnMobile'
 
   /**
    * Sets the icon displayed for the navigation item.
-   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    *
-   * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
    * as per {@link https://unocss.dev/presets/icons UnoCSS} specs.
+   *
+   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
    *
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
@@ -148,25 +155,29 @@ export interface ResponsiveNavItem extends BaseNavItem {
    *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
    *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
    *
-   * @remark
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
    */
   displayMode: 'textToIconOnMobile' | 'iconToTextOnMobile'
 
   /**
    * Sets the text displayed for the navigation item.
-   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   *
+   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
    */
   text: string
 
   /**
    * Sets the icon displayed for the navigation item.
-   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    *
-   * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
    * as per {@link https://unocss.dev/presets/icons UnoCSS} specs.
+   *
+   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
    *
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
@@ -187,7 +198,6 @@ interface BaseSocialItem {
   /**
    * Sets the content displayed on hover for accessibility.
    *
-   * @description
    * You can use template literals to reference other configuration items.
    *
    * @example
@@ -206,15 +216,18 @@ interface TextSocialItem extends BaseSocialItem {
    *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
    *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
    *
-   * @remark
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
    */
   displayMode: 'alwaysText' | 'textHiddenOnMobile'
 
   /**
    * Sets the text displayed for the social item.
-   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   *
+   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
    */
   text: string
 }
@@ -229,19 +242,21 @@ export interface IconSocialItem extends BaseSocialItem {
    *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
    *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
    *
-   * @remark
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
    */
   displayMode: 'alwaysIcon' | 'iconHiddenOnMobile'
 
   /**
    * Sets the icon displayed the social platform.
-   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    *
-   * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
    * as per {@link https://unocss.dev/presets/icons UnoCSS} specs.
+   *
+   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
    *
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
@@ -262,24 +277,29 @@ export interface ResponsiveSocialItem extends BaseSocialItem {
    *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
    *
    * @remark
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
+   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
    */
   displayMode: 'textToIconOnMobile' | 'iconToTextOnMobile'
 
   /**
    * Sets the text displayed for the social item.
-   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
+   *
+   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
    */
   text: string
 
   /**
    * Sets the icon displayed the social platform.
-   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile' or 'textToIconOnMobile'.
    *
-   * @description
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
    * as per {@link https://unocss.dev/presets/icons UnoCSS} specs.
+   *
+   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
+   * or 'textToIconOnMobile'.
    *
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
@@ -303,7 +323,6 @@ export interface NavBarLayout {
    * Defines which components ('internalNavs', 'socialLinks', 'searchButton',
    * 'themeButton', 'rssLink') are positioned on the left side of the navigation bar.
    *
-   * @remark
    * If you want all components to appear on the right side, leave this array empty.
    * Components in `left` and `right` arrays must not contain duplicates.
    */
@@ -313,7 +332,6 @@ export interface NavBarLayout {
    * Defines which components ('internalNavs', 'socialLinks', 'searchButton',
    * 'themeButton', 'rssLink') are positioned on the right side of the navigation bar.
    *
-   * @remark
    * If you want all components to appear on the left side, leave this array empty.
    * Components in `left` and `right` arrays must not contain duplicates.
    */
@@ -346,16 +364,17 @@ export type Tabs = [Tab, Tab, ...Tab[]]
 interface GroupView {
   /**
    * Sets the maximum number of columns displayed in the group view.
+   *
    * Used in `src/components/views/GroupItem.astro`.
    */
   maxGroupColumns: 2 | 3
 
   /**
    * Determines whether group item icons display in color when hovered over.
-   * Used in `src/components/views/GroupView.astro` and `src/components/base/Categorizer.astro`.
    *
-   * @description
    * If `true`, the icon for the group item will display in its original colors on hover.
+   *
+   * Used in `src/components/views/GroupView.astro` and `src/components/base/Categorizer.astro`.
    */
   showGroupItemColorOnHover: boolean
 }
@@ -363,25 +382,24 @@ interface GroupView {
 export interface GitHubView {
   /**
    * Defines monorepo repositories using `<owner>/<repo>` format.
+   *
    * For monorepos, the tag name is used as the primary text for `/releases` page.
    */
   monorepos: RepoWithOwner[]
 
   /**
    * Configures main logos for repositories or packages (for monorepos).
-   * Defaults to the owner's avatar if no custom logo is set.
    *
-   * @remark
-   * Matching supports regex or `<owner>/<repo>` format, prioritized by order.
+   * Matching supports regex or `<owner>/<repo>` format, prioritized by order,
+   * and defaults to the owner's avatar if no custom logo is specified.
    */
   mainLogoOverrides: [RepoWithOwner | RegExp, Url | Icon][]
 
   /**
-   * Configures auxiliary logos for rrepositories or packages (for monorepos).
-   * No logo is shown if unmatched.
+   * Configures auxiliary logos for repositories or packages (for monorepos).
    *
-   * @remark
-   * Matching supports regex or `<owner>/<repo>` format, prioritized by order.
+   * Matching supports regex or `<owner>/<repo>` format, prioritized by order,
+   * with no logo displayed for unmatched cases.
    */
   subLogoMatches: [RepoWithOwner | RegExp, Url | Icon][]
 }
@@ -427,32 +445,31 @@ interface ExternalLink {
 
 export interface Ui {
   /**
-   * Configures internal navigation links, used in `src/components/base/NavBar.astro`.
+   * Sets internal navigation links in display order.
    *
-   * @remark
-   * The configuration order matches the display order.
+   * Used in `src/components/base/NavBar.astro`.
    */
   internalNavs: InternalNav[]
 
   /**
-   * Configures external social links, used in `src/components/base/NavBar.astro`.
-   *
-   * @remark
-   * The configuration order matches the display order.
+   * Sets external social links in display order.
    */
   socialLinks: SocialLink[]
 
   /**
-   * Controls the layout of the navigation bar, used in `src/components/base/NavBar.astro`.
+   * Controls the layout of the navigation bar.
+   *
+   * Used in `src/components/base/NavBar.astro`.
    */
   navBarLayout: NavBarLayout
 
   /**
-   * Enables and configures for tabs within a tabbed layout, used in `src/layouts/TabbedLayout.astro`.
+   * Enables and configures for tabs within a tabbed layout.
    *
-   * @description
    * If your website does not use the `TabbedLayout`, you can set it to `false`.
    * Otherwise, required before using this layout.
+   *
+   * Used in `src/layouts/TabbedLayout.astro`.
    */
   tabbedLayoutTabs: false | Tabs
 
@@ -462,7 +479,9 @@ export interface Ui {
   groupView: GroupView
 
   /**
-   * Configures the `/releases` and `prs` UIs, used in `src/components/views/GithubView.astro`.
+   * Configures the `/releases` and `prs` UIs.
+   *
+   * Used in `src/components/views/GithubView.astro`.
    */
   githubView: GitHubView
 
@@ -539,14 +558,16 @@ export interface ShareConfig {
 
 interface TocConfig {
   /**
-   * Sets the minimum heading level for TOC, constrained to a valid heading level (h1-h6).
-   * Must be less than or equal to {@link maxHeadingLevel}.
+   * Sets the minimum heading level for TOC.
+   *
+   * Must be a valid heading level (h1-h6) and not greater than {@link maxHeadingLevel}.
    */
   minHeadingLevel: HeadingLevel
 
   /**
-   * Sets the maximum heading level for TOC, constrained to a valid heading level (h1-h6).
-   * Must be greater than or equal to {@link minHeadingLevel}.
+   * Sets the maximum heading level for TOC.
+   *
+   * Must be a valid heading level (h1-h6) and not lower than {@link minHeadingLevel}.
    */
   maxHeadingLevel: HeadingLevel
 
@@ -564,12 +585,12 @@ interface TocConfig {
 interface OgImageConfig {
   /**
    * Defines your name or brand name that will be displayed on the OG image.
-   * Displayed above the title to enhance recognition.
    */
   authorOrBrand: string
 
   /**
    * Sets the fallback title for OG images.
+   *
    * Used when the `title` in the frontmatter is missing or invalid.
    */
   fallbackTitle: string
@@ -577,12 +598,10 @@ interface OgImageConfig {
   /**
    * Sets the fallback background for OG images.
    *
-   * @description
    * By default, the background used for auto-generated OG images is based on the `bgType` set in frontmatter.
    * This value is only used for the fallback OG image (stored at `/public/og-images/og-image.png`)
    * and as the background when `bgType` is not specified.
    *
-   * @note
    * A fallback OG image is the default image used when the specified or auto-generated OG image is missing.
    * You can delete the existing file to regenerate a new one.
    */
@@ -598,10 +617,9 @@ interface slideEnterAnimConfig {
 
 export interface Features {
   /**
-   * Globally controls the sharing feature, which allows visitors to share content to social platforms.
+   * Globally controls the sharing feature, displaying social sharing links
+   * at the bottom of all posts when enabled.
    *
-   * @description
-   * When enabled, sharing links are displayed at the bottom of all posts.
    * To disable for a specific post, set the `share` field in the frontmatter to `false`.
    */
   share: FeatureConfig<ShareConfig>
@@ -609,21 +627,19 @@ export interface Features {
   /**
    * Globally controls the TOC feature and related options.
    *
-   * @description
    * To disable for a specific post or page, set the `toc` field in the frontmatter to `false`.
-   * The TOC is automatically hidden when the viewport width is less than 1024px.
    */
   toc: FeatureConfig<TocConfig>
 
   /**
-   * Globally controls OG image auto-generation and related options.
-   * If disabled, deleting the fallback /public/og-images/og-image.png won’t regenerate it.
+   * Globally controls global OG image auto-generation and related options.
    *
-   * @description
-   * Automatically generate OG images for Markdown/MDX files when the `ogImage` field
-   * is not present in the frontmatter or is set to `true`.
-   * To disable for a specific post, set the `ogImage` field in the frontmatter to `false`.
-   * Generated images are stored in `/public/og-images`.
+   * - Automatically generates OG images for Markdown/MDX files when:
+   *   - The `ogImage` field is absent in frontmatter, or
+   *   - The `ogImage` field is set to `true`.
+   * - To disable for a specific post, set `ogImage: false` in the frontmatter.
+   * - Generated images are saved in `/public/og-images`.
+   * - If disabled, deleting `/public/og-images/og-image.png` won't regenerate it.
    */
   ogImage: FeatureConfig<OgImageConfig>
 

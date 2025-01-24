@@ -87,9 +87,10 @@ if (collectionType === 'releases') {
     })
 }
 
-/* Prs */
+/* PRs */
 let prs: CollectionEntry<'prs'>[] = []
 let extendedPrs: ExtendedPrData[] = []
+
 if (collectionType === 'prs') {
   prs = await getCollection(collectionType)
 

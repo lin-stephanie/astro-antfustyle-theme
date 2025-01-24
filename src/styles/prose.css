@@ -13,7 +13,7 @@
 .prose a {
   color: var(--fg-deeper);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: inherit;
 }
 .prose strong {
   color: var(--fg-deep);
