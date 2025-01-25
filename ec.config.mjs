@@ -7,9 +7,10 @@ export default defineEcConfig({
   /* Basics */
   defaultLocale: 'en-US',
   defaultProps: {
-    preserveIndent: true,
     wrap: false,
+    preserveIndent: true,
     showLineNumbers: false,
+    collapseStyle: 'collapsible-auto',
   },
   minSyntaxHighlightingColorContrast: 0,
 

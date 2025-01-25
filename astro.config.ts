@@ -15,9 +15,7 @@ export default defineConfig({
   integrations: [
     sitemap(),
     robotsTxt(),
-    unocss({
-      injectReset: true,
-    }),
+    unocss({ injectReset: true }),
     astroExpressiveCode(),
     mdx(),
   ],

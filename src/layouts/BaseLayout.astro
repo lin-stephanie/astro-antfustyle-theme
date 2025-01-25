@@ -38,10 +38,12 @@ const enableSlideEnterAnim = Array.isArray(slideEnterAnim) && slideEnterAnim[0]
 if (enableSlideEnterAnim)
   style['--enter-step'] = `${slideEnterAnim[1].enterStep}ms`
 
-const { externalLink } = UI
+const {
+  externalLink: { newTab, cursorType },
+} = UI
 const hasCustomCursor =
-  externalLink.cursorType.length > 0 && externalLink.cursorType !== 'pointer'
-if (hasCustomCursor) style['--external-link-cursor'] = externalLink.cursorType
+  newTab && cursorType.length > 0 && cursorType !== 'pointer'
+if (hasCustomCursor) style['--external-link-cursor'] = cursorType
 ---
 
 <!doctype html>

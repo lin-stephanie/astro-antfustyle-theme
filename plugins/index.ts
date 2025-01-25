@@ -7,7 +7,6 @@ import remarkMath from 'remark-math'
 import remarkReadingTime from './remark-reading-time'
 import remarkGenerateOgImage from './remark-generate-og-image'
 
-import rehypeRaw from 'rehype-raw'
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import rehypeCallouts from 'rehype-callouts'
 import rehypeKatex from 'rehype-katex'
@@ -35,8 +34,6 @@ export const remarkPlugins: RemarkPlugins = [
 ]
 
 export const rehypePlugins: RehypePlugins = [
-  // https://github.com/rehypejs/rehype-raw
-  rehypeRaw,
   // https://docs.astro.build/en/guides/markdown-content/#heading-ids-and-plugins
   rehypeHeadingIds,
   // https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex
@@ -99,15 +96,14 @@ export const rehypePlugins: RehypePlugins = [
         if (UI.externalLink.newTab) {
           props.target = '_blank'
           props.ariaLabel = 'Open in new tab'
-        }
-
-        if (
-          UI.externalLink.cursorType.length > 0 &&
-          UI.externalLink.cursorType !== 'pointer'
-        ) {
-          props.className = Array.isArray(el.properties.className)
-            ? [...el.properties.className, 'external-link-cursor']
-            : ['external-link-cursor']
+          if (
+            UI.externalLink.cursorType.length > 0 &&
+            UI.externalLink.cursorType !== 'pointer'
+          ) {
+            props.className = Array.isArray(el.properties.className)
+              ? [...el.properties.className, 'external-link-cursor']
+              : ['external-link-cursor']
+          }
         }
 
         return props

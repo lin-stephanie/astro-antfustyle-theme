@@ -57,8 +57,7 @@ const showIcon =
   {
     Astro.slots.has('default') && (
       <>
-        <slot />
-        {showIcon && (
+        <slot />{showIcon && (
           <span
             u-i-carbon-arrow-up-right
             class="new-tab-icon ml-0!"
@@ -67,8 +66,7 @@ const showIcon =
         )}
       </>
     )
-  }
-  {
+  }{
     Astro.slots.has('title') && (
       <span class="text-lg leading-1.3em align-middle">
         <slot name="title" />
@@ -81,6 +79,5 @@ const showIcon =
         )}
       </span>
     )
-  }
-  <slot name="end" />
-</a>
+  }<slot name="end" /></a
+>
