@@ -181,38 +181,58 @@ function demo() {
 this is a regular line
 ```
 
-```diff
-+ this line will be marked as inserted
-- this line will be marked as deleted
-  this is a regular line
+```diff lang="js"
+  function thisIsJavaScript() {
+    // This entire block gets highlighted as JavaScript,
+    // and we can still add diff markers to it!
+-   console.log('Old code to be removed')
++   console.log('New and shiny code!')
+  }
 ```
 
-##### Marking individual text inside lines (Plaintext search strings)
+##### Marking individual text inside lines
 
 ```js "given text"
+// Plaintext search strings
 function demo() {
   // Mark any given text inside lines
   return 'Multiple matches of the given text are supported'
 }
 ```
 
-##### Marking individual text inside lines (Regular expressions)
+##### Marking individual text inside lines
 
 ```ts /ye[sp]/
+// Regular expressions
 console.log('The words yes and yep will be marked.')
 ```
 
 ```sh /\/ho.*\//
+# Regular expressions
 echo "Test" > /home/test.txt
 ```
 
-##### Marking individual text inside lines (Selecting inline marker types (mark, ins, del))
+```ts /ye(s|p)/
+// Regular expressions
+If you only want to mark certain parts matched by your regular expression, you can use capture groups. 
+
+For example, the expression `/ye(s|p)/` will match yes and yep, but only mark the character s or p:
+```
+
+```ts /ye(?:s|p)/
+// Regular expressions
+To prevent this special treatment of capture groups, you can convert them to non-capturing groups by adding ?: after the opening parenthesis. For example:
+
+This block uses `/ye(?:s|p)/`, which causes the full
+matching words "yes" and "yep" to be marked.
+```
 
 ```js "return true;" ins="inserted" del="deleted"
+// Selecting inline marker types (mark, ins, del)
 function demo() {
-  console.log('These are inserted and deleted marker types')
+  console.log('These are inserted and deleted marker types');
   // The return statement uses the default marker type
-  return true
+  return true;
 }
 ```
 
@@ -250,7 +270,7 @@ function getLongString() {
 
 ##### Collapsible sections
 
-```js collapse={1-5, 12-14}
+```js collapse={1-5, 12-14, 21-24}
 // All this boilerplate setup code will be collapsed
 import { someBoilerplateEngine } from '@example/some-boilerplate'
 import { evenMoreBoilerplate } from '@example/even-more-boilerplate'
@@ -264,8 +284,17 @@ function calcFn() {
   // You can have multiple collapsed sections
   const a = 1
   const b = 2
-  return a + b
+  const c = a + b
+
+  // This will remain visible
+  console.log(`Calculation result: ${a} + ${b} = ${c}`)
+  return c
 }
+
+// All this code until the end of the block will be collapsed again
+engine.closeConnection()
+engine.freeMemory()
+engine.shutdown({ reason: 'End of example boilerplate code' })
 ```
 
 ##### Displaying line numbers per block
@@ -282,9 +311,8 @@ console.log('Hello?')
 console.log('Sorry, do you know what line I am on?')
 ```
 
-##### Changing the starting line number
-
 ```js showLineNumbers startLineNumber=5
+// Changing the starting line number
 console.log('Greetings from line 5!')
 console.log('I am on line 6')
 ```
@@ -294,15 +322,16 @@ console.log('I am on line 6')
 Build on :link[remark-directive]{id=remark/remark-directive style='github'} with a custom `remark-image-container` plugin (located in `plugins/remark-image-container.ts`) to quickly add image captions，links and more.
 
 > [!tip]
+>
 > You can refer to the [Remark Directive Syntax](https://github.com/micromark/micromark-extension-directive?tab=readme-ov-file#syntax) for a quick overview of its basic rules --- it’s easy to understand and remember!
 
 ### `:::image-figure`
 
 The custom directive creates a block with an image, figcaption, and optional styling, much like a figure in academic papers.
 
-`:::image-figure[caption]{<figcaption> attrs}`: The square brackets hold the figcaption (if not set, the alt text from `![]()` will be used as the default), and curly braces are for inline styles or supported attributes.
+`:::image-figure[caption]{figcaption attrs}`: The square brackets hold the figcaption (if not set, the alt text from `![]()` will be used as the default), and curly braces are for inline styles or supported attributes.
 
-`![alt](image path)(<img> attrs)`: Standard Markdown image syntax with optional attributes inside parentheses (powered by :link[remark-imgattr]{#OliverSpeir/remark-imgattr style=github}, allowing you to adjust the size of individual images).
+`![alt](image path)(img attrs)`: Standard Markdown image syntax with optional attributes inside parentheses (powered by :link[remark-imgattr]{#OliverSpeir/remark-imgattr style=github}, allowing customization of attributes for the generated `<img>` elements).
 
 ```md title=':::image-figure.md'
 :::image-figure[This Is a **Figcaption** with _`<figure>` Attrs_]{style="text-align:center;color:orange"}
@@ -310,7 +339,7 @@ The custom directive creates a block with an image, figcaption, and optional sty
 :::
 
 :::image-figure[This is a **figcaption** with _`<img>` attrs_.]
-![](~/assets/markdown-mdx-extended-featurs/og-image.png)(width:600)
+![](~/assets/markdown-mdx-extended-featurs/og-image.png)(style: width:600px;)
 :::
 
 <!-- 💡 Use `(class:no-zoom)` to disable zoom -->
@@ -320,7 +349,7 @@ The custom directive creates a block with an image, figcaption, and optional sty
 
 <!-- 💡 If no `[caption]`, use alt text as figcaption. -->
 :::image-figure
-![If [caption] not set, the alt text from ![]() will be used as the figcaption.](~/assets/markdown-mdx-extended-featurs/og-image.png)
+![If `[caption]` not set, the alt text from `![]()` will be used as the figcaption.](~/assets/markdown-mdx-extended-featurs/og-image.png)
 :::
 
 <!-- 💡 Images for light (img-light) and dark (img-dark) modes -->
@@ -342,7 +371,7 @@ The custom directive creates a block with an image, figcaption, and optional sty
 :::
 
 :::image-figure[This is a **figcaption** with _`<img>` attrs_.]
-![](~/assets/markdown-mdx-extended-featurs/og-image.png)(width:600)
+![](~/assets/markdown-mdx-extended-featurs/og-image.png)(style: width:600px;)
 :::
 
 :::image-figure[This is a **figcaption** with `class:no-zoom`.]
@@ -350,7 +379,7 @@ The custom directive creates a block with an image, figcaption, and optional sty
 :::
 
 :::image-figure
-![If [caption] not set, the alt text from ![]() will be used as the figcaption.](~/assets/markdown-mdx-extended-featurs/og-image.png)
+![If `[caption]` not set, the alt text from `![]()` will be used as the figcaption.](~/assets/markdown-mdx-extended-featurs/og-image.png)
 :::
 
 :::image-figure[This example shows different images for light (add `class:img-light`) and dark (add `class:img-dark`) modes.]
@@ -358,6 +387,10 @@ The custom directive creates a block with an image, figcaption, and optional sty
 
 ![](~/assets/markdown-mdx-extended-featurs/plum-light.png)(class:img-dark)
 :::
+
+> [!warning] 
+> 
+> Setting an image's `width` attribute directly may cause blurriness. [Learn more](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions/17)
 
 ### `:::image-a`
 
@@ -393,7 +426,7 @@ The custom directive wraps an image inside a link, making it clickable.
 :::
 
 :::image-a{href="https://github.com/lin-stephanie/astro-antfustyle-theme" style="display:block" .custom-class}
-![OG image](~/assets/markdown-mdx-extended-featurs/og-image.png)(style: margin-bottom: 2rem; transform:scaleX(1.1) scaleY(1.1);, loading: eager)
+![OG image](~/assets/markdown-mdx-extended-featurs/og-image.png)(style: margin-bottom: -1rem; transform:scaleX(1.1) scaleY(1.1);, loading: eager)
 :::
 
 ::::image-a{href="https://github.com/lin-stephanie/astro-antfustyle-theme"}

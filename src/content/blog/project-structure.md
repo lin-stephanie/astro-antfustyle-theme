@@ -144,7 +144,7 @@ Further explanation on the decision process of when to use which file format in 
 
 `.astro`: Used for reusable components (`src/components/`), constructing page layouts (`src/layouts/`), and generating multiple static pages through [dynamic routing](https://docs.astro.build/en/guides/routing/#static-ssg-mode) ( `src/pages/blog/[...slug].astro`, as only `.astro` files can handle [Astro API](https://docs.astro.build/en/reference/api-reference/#getstaticpaths) calls).
 
-`.mdx`: Used for generating single static pages through [static routing](https://docs.astro.build/en/guides/routing/#static-routes) (`src/pages/xxx.mdx`), and when component-style markup and JS expressions are needed in posts (this theme does not cover such usage).
+`.mdx`: Used for generating single static pages through [static routing](https://docs.astro.build/en/guides/routing/#static-routes) (`src/pages/xxx.mdx`), and when component-style markup and JS expressions are needed in posts.
 
 `.md`: Used for authoring text-heavy content like blog posts and documentation where no components are needed (`src/content/blog/xxx.md`, `src/content/home/index.md`, `src/content/changelog/xxx.md`).
 

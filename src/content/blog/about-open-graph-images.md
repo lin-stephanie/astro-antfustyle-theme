@@ -31,7 +31,8 @@ ogImage: specified-og-image.png
 ---
 ```
 
-> [!warning]
+> [!important]
+>
 > If the image isn’t found in `/public/og-images/`, a fallback `og-image.png` will be used.
 
 **Method 2**: Set `ogImage` to `true` or remove the field to automatically generate an OG image, saved in `/public/og-images/`. The generated filename will match the Markdown/MDX file, or the directory if it's named `index.md` or `index.mdx`. For example:
@@ -46,11 +47,13 @@ ogImage: true
 ```
 
 > [!warning]
+>
 > OG images won’t generate if the frontmatter has `redirect`, `draft: true`, or is missing the `title` field.
 
 **Method 3**: Set `ogImage` to `false` to prevent generation and use the fallback OG image instead. A fallback OG image named `og-image.png` is stored in `/public/og-images/`, ensuring that any page shared on social platforms displays an image.  
 
 > [!important]
+>
 > If you need to regenerate the fallback OG image or after modifying `FEATURE.ogImage`, delete `og-image.png` to create a new fallback image.
 
 ## Template for Auto-Generated OG Images

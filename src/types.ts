@@ -407,22 +407,17 @@ export interface GitHubView {
 interface ExternalLink {
   /**
    * Controls whether external links are opened in a new tab.
-   *
-   * Used in `plugins/index.ts` and `src/components/base/Link.astro`.
+   * See {@link https://github.com/lin-stephanie/astro-antfustyle-theme/pull/15 #15} for details.
    */
   newTab: boolean
 
   /**
-   * Specifies the cursor type for external links.
+   * Specifies the cursor type for external links when `newTab` is `true`.
+   * See {@link https://github.com/lin-stephanie/astro-antfustyle-theme/pull/15 #15} for details.
+   *
    * Accepts {@link https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#keyword standard keywords},
    * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#url custom URLs},
-   * or an empty string to default to `'pointer'` for matching internal links.
-   *
-   * To apply it to other external links in the site's UI,
-   * set `enableNewTabWarning` to `true` in `src/components/base/Link.astro`
-   * or locally pass `enableNewTabWarning: true` to the Link component as needed.
-   *
-   * Used in `plugins/index.ts`, `src/layouts/BaseLayout.astro` and `src/components/base/Link.astro`.
+   * or an empty string, defaulting to 'pointer' like internal links.
    *
    * @example
    * 'url("/images/new-tab.svg") 10 10, pointer'
@@ -430,15 +425,8 @@ interface ExternalLink {
   cursorType: string
 
   /**
-   * Controls whether to add an indicator to external links when `newTab` is `true`,
-   * showing they open in a new tab for accessibility.
-   * Skip this if `cursorType` already uses an image for the same purpose.
-   *
-   * To apply it to other external links in the site's UI,
-   * set `enableNewTabWarning` to `true` in `src/components/base/Link.astro`
-   * or locally pass `enableNewTabWarning: true` to the Link component as needed.
-   *
-   * Used in `plugins/index.ts` and `src/components/base/Link.astro`.
+   * Controls whether to add an indicator to external links when `newTab` is `true`.
+   * See {@link https://github.com/lin-stephanie/astro-antfustyle-theme/pull/15 #15} for details.
    */
   showNewTabIcon: boolean
 }
@@ -487,6 +475,9 @@ export interface Ui {
 
   /**
    * Configures external links' behavior and appearance.
+   *
+   * Used in `plugins/index.ts`, `src/components/base/Link.astro`
+   * and `src/layouts/BaseLayout.astro`.
    */
   externalLink: ExternalLink
 }

@@ -273,13 +273,12 @@ By default, UnoCSS fetches fonts from the provider's CDN. To host fonts locally,
 
 You can directly modify the `src/components/base/Footer.astro` file. For instance, if you want to apply the [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license, you can update the code as follows:
 
-```astro title='src/components/base/Footer.astro' ins={14-21} collapse={1-8,24-34}
+```astro title='src/components/base/Footer.astro' ins={13-20} collapse={1-8,23-34}
 ---
-import Link from './Link.astro'
+import Link from '~/components/base/Link.astro'
 import { SITE } from '~/config'
 
 const currentYear = new Date().getFullYear()
-
 const copyrightText = `© ${currentYear} ${SITE.author}`
 ---
 
@@ -303,7 +302,6 @@ const copyrightText = `© ${currentYear} ${SITE.author}`
         <Link
           class="op-100! color-[--fg]!"
           href="https://github.com/lin-stephanie/astro-antfustyle-theme"
-          title="AntfuStyle on GitHub"
           external={true}
         >
           Astro AntfuStyle Theme

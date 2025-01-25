@@ -58,6 +58,7 @@ pnpm dlx create-astro --template lin-stephanie/astro-antfustyle-theme
 ```
 
 > [!tip]- Using Zip Files Instead of Git
+>
 > If you prefer not to use Git, you can [download the ZIP file](https://github.com/lin-stephanie/astro-antfustyle-theme/archive/refs/heads/main.zip), extract it, and work directly in your local directory.
 
 ## Launch the Project
@@ -120,6 +121,7 @@ Once configured, ensure the project is running correctly in your browser, then s
 Refer to [Astro’s Deployment Guide](https://docs.astro.build/en/guides/deploy/) to choose your preferred platform and follow its guide. Ensure the `SITE.website` option in the `src/config.ts` is correctly set before deploying!
 
 > [!tip]- Deploying Without a Git Repository Using CLI Tools
+>
 > If you aren’t using GitHub and any other Git provider for deployment, follow the [CLI Deployment Guide](https://docs.astro.build/en/guides/deploy/#cli-deployment) to deploy without a Git repository, such as using [Vercel CLI](https://vercel.com/docs/deployments/deploy-with-vercel-cli#deploying-to-vercel-with-vercel-cli) or [Netlify CLI](https://docs.netlify.com/functions/deploy/#manual-deploys-with-cli).
 
 ## Sync Updates

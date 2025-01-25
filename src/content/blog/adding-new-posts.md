@@ -34,7 +34,7 @@ src/content/blog
 Use Markdown for simple posts with minimal interaction. You can also embed HTML and [UnoCSS](https://unocss.dev/) directly in Markdown, e.g.:
 
 ```md title='src/content/home/index.md' wrap
-Visit Astro AntfuStyle Theme on <a href="https://github.com/antfu" target="_blank" class="inline-block ml-1 op-75"><span class="i-simple-icons-github"></span> GitHub</a>
+Visit the theme's <a class="inline-block ml-1.5 op-75 hover:op-100" href="https://github.com/lin-stephanie/astro-antfustyle-theme"><span i-simple-icons-github></span> GitHub repo</a>
 ```
 
 Use MDX if:
