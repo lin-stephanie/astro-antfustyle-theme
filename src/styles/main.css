@@ -277,3 +277,7 @@ input[type='search']::-webkit-search-cancel-button {
   color: var(--c-text);
   font-size: 1.06em;
 }
+
+svg.typst-inline {
+  display: inline;
+}

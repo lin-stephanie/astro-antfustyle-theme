@@ -128,4 +128,5 @@ export const FEATURES: Features = {
     },
   ],
   slideEnterAnim: [true, { enterStep: 60 }],
+  preferredMathEngine: 'katex',
 }

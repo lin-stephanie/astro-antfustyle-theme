@@ -10,6 +10,8 @@ import remarkGenerateOgImage from './remark-generate-og-image'
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import rehypeCallouts from 'rehype-callouts'
 import rehypeKatex from 'rehype-katex'
+// @ts-expect-error: No type declarations available for this module
+import rehypeTypst from '@myriaddreamin/rehype-typst'
 import rehypeExternalLinks from 'rehype-external-links'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
@@ -36,8 +38,16 @@ export const remarkPlugins: RemarkPlugins = [
 export const rehypePlugins: RehypePlugins = [
   // https://docs.astro.build/en/guides/markdown-content/#heading-ids-and-plugins
   rehypeHeadingIds,
-  // https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex
-  rehypeKatex,
+  (() => {
+    switch (FEATURES.preferredMathEngine) {
+      // https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex
+      case 'katex':
+        return rehypeKatex
+      // https://github.com/Myriad-Dreamin/typst.ts/tree/main/projects/rehype-typst
+      case 'typst':
+        return rehypeTypst
+    }
+  })(),
   // https://github.com/lin-stephanie/rehype-callouts
   [
     rehypeCallouts,
