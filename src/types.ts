@@ -40,7 +40,8 @@ export interface Site {
   author: string
 
   /**
-   * Specifies the primary language of the document content, found in `src/layouts/BaseLayout.astro`.
+   * Specifies the primary language of the document content,
+   * found in `src/layouts/BaseLayout.astro` and `src/utils/datetime.ts`.
    *
    * It must be a single 'language tag' in the format defined in
    * {@link https://datatracker.ietf.org/doc/html/rfc5646#appendix-A RFC 5646: Tags for Identifying Languages}

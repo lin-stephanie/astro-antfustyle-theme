@@ -82,12 +82,3 @@ export function processVersion(
 
   return [versionType, nonHighlightedPart, highlightedPart]
 }
-
-/**
- * Check if the current time is in the same month as the previous time
- */
-export function isDiffMonth(currentTime: string, preTime?: string) {
-  return preTime
-    ? new Date(currentTime).getMonth() !== new Date(preTime!).getMonth()
-    : false
-}

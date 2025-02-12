@@ -1,15 +1,20 @@
-import dayjs from 'dayjs'
+import { SITE } from '../config'
 
 /**
  * Formats a given date into a human-readable string.
  */
-export function formatDate(d: Date | string, showYear = true) {
-  const date = dayjs(d)
+export function formatDate(d: Date | string, showYear = true, useUTC = false) {
+  const date = typeof d === 'string' ? new Date(d) : d
+  if (isNaN(date.getTime())) throw new Error('Invalid Date')
 
-  if (!showYear /* || date.year() === dayjs().year() */)
-    return date.format('MMM D')
+  const options: Intl.DateTimeFormatOptions = {
+    month: 'short',
+    day: 'numeric',
+    ...(showYear && { year: 'numeric' }),
+    ...(useUTC && { timeZone: 'UTC' }),
+  }
 
-  return date.format('MMM D, YYYY')
+  return date.toLocaleDateString(SITE.lang, options)
 }
 
 /**
@@ -39,4 +44,13 @@ export function getCurrentFormattedTime() {
   const seconds = now.getSeconds().toString().padStart(2, '0')
 
   return `${hours}:${minutes}:${seconds}`
+}
+
+/**
+ * Check if the current time is in the same month as the previous time
+ */
+export function isDiffMonth(currentTime: string, preTime?: string) {
+  return preTime
+    ? new Date(currentTime).getMonth() !== new Date(preTime!).getMonth()
+    : false
 }

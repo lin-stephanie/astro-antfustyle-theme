@@ -11,7 +11,7 @@ import {
 import { UI } from './src/config'
 import { extractIconsStartingWithI } from './src/utils/common'
 import projecstData from './src/content/projects/data.json'
-import { VERSION_COLOR } from './src/utils/github'
+import { VERSION_COLOR } from './src/utils/data'
 
 import type {
   IconNavItem,

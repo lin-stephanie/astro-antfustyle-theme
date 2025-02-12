@@ -4,14 +4,9 @@ import { getCollection } from 'astro:content'
 import Link from '~/components/base/Link.astro'
 import GithubItem from '~/components/views/GithubItem.astro'
 import { UI } from '~/config'
-import { formatDate } from '~/utils/datetime'
+import { formatDate, isDiffMonth } from '~/utils/datetime'
 import { getUrl } from '~/utils/common'
-import {
-  matchLogo,
-  extractPackageName,
-  processVersion,
-  isDiffMonth,
-} from '~/utils/github'
+import { matchLogo, extractPackageName, processVersion } from '~/utils/data'
 
 import type { RepoWithOwner, Url, Icon } from '~/types'
 import type { CollectionEntry } from 'astro:content'
