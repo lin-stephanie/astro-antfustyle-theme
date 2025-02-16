@@ -9,6 +9,7 @@ export const SITE: Site = {
   author: 'Stephanie Lin',
   lang: 'en',
   ogLocale: 'en_US',
+  imageDomains: ['cdn.bsky.app'],
 }
 
 export const UI: Ui = {
@@ -24,6 +25,13 @@ export const UI: Ui = {
       title: 'Projects',
       displayMode: 'alwaysText',
       text: 'Projects',
+    },
+    {
+      path: '/highlights',
+      title: 'Highlights',
+      displayMode: 'iconToTextOnMobile',
+      text: 'Highlights',
+      icon: 'i-ri-movie-ai-line',
     },
     {
       path: '/changelog',

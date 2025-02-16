@@ -1,0 +1,27 @@
+---
+title: Highlights
+subtitle: Showcase your creative work or curated posts
+description: Showcase your creative work or curated posts
+bgType: false
+toc: false
+ogImage: true
+---
+
+import BaseLayout from '~/layouts/BaseLayout.astro'
+import StandardLayout from '~/layouts/StandardLayout.astro'
+import CardView from '~/components/views/CardView.astro'
+
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  bgType={frontmatter.bgType}
+  ogImage={frontmatter.ogImage}
+>
+  <StandardLayout
+    title={frontmatter.title}
+    subtitle={frontmatter.subtitle}
+    isCentered={true}
+  >
+    <CardView collectionType="highlights" />
+  </StandardLayout>
+</BaseLayout>

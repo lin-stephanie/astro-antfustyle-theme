@@ -6,7 +6,8 @@ export interface Site {
   /**
    * Specifies the final deployed URL, which must start with `http://` or `https://`.
    *
-   * It will be passed to the {@link https://docs.astro.build/en/reference/configuration-reference/#site `site`}
+   * It will be passed to the
+   * {@link https://docs.astro.build/en/reference/configuration-reference/#site `site`}
    * config in Astro, used for generating canonical URLs, `rss.xml` and other features.
    */
   website: Url
@@ -14,7 +15,8 @@ export interface Site {
   /**
    * Specifies the base path for your site, which must start with `/`.
    *
-   * It wiil be passed to the {@link https://docs.astro.build/en/reference/configuration-reference/#base `base`}
+   * It wiil be passed to the
+   * {@link https://docs.astro.build/en/reference/configuration-reference/#base `base`}
    * config in Astro, used when deploying to a subdirectory.
    *
    * @example
@@ -65,6 +67,19 @@ export interface Site {
    * 'fr_FR'
    */
   ogLocale: string
+
+  /**
+   * Specifies a list of permitted image source domains for **remote** image optimization.
+   *
+   * It wiil be passed to the
+   * {@link https://docs.astro.build/en/reference/configuration-reference/#imagedomains `image.domains`}
+   * config in Astro, used when displaying
+   * {@link https://docs.astro.build/en/guides/images/#display-optimized-images-with-the-image--component optimized versions with the built-in `<Image />` Astro component}.
+   *
+   * @example
+   * ['astro.build']
+   */
+  imageDomains: string[]
 }
 
 /* UI */
