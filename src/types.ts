@@ -639,4 +639,9 @@ export interface Features {
    * Controls whether to enable slide enter animation on each page.
    */
   slideEnterAnim: FeatureConfig<slideEnterAnimConfig>
+
+  /**
+   * Controls the underlying math engine used for rendering math equations.
+   */
+  preferredMathEngine: 'katex' | 'typst'
 }

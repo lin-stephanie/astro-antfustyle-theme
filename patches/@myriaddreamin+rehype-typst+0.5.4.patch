@@ -1,0 +1,19 @@
+diff --git a/node_modules/@myriaddreamin/rehype-typst/lib/index.js b/node_modules/@myriaddreamin/rehype-typst/lib/index.js
+index 056fe8e..2d6f876 100644
+--- a/node_modules/@myriaddreamin/rehype-typst/lib/index.js
++++ b/node_modules/@myriaddreamin/rehype-typst/lib/index.js
+@@ -118,12 +118,11 @@ export default function rehypeTypst(options) {
+         root.children[0].properties.style = `vertical-align: -${shiftEm}em;`;
+         root.children[0].properties.height = `${height / defaultEm}em`;
+         root.children[0].properties.width = `${width / defaultEm}em`;
+-        if (!root.children[0].classNames) root.children[0].classNames = [];
++        if (!root.children[0].properties.className) root.children[0].properties.className = [];
+         if (displayMode) {
+           root.children[0].properties.style += '; display: block; margin: 0 auto;';
+-          root.children[0].classNames;
+         } else {
+-          root.children[0].classNames.push('typst-inline');
++          root.children[0].properties.className.push('typst-inline');
+         }
+         result = /** @type {Array<ElementContent>} */ (root.children);
+       }
