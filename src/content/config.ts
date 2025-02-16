@@ -1,8 +1,11 @@
 import { glob } from 'astro/loaders'
 import { defineCollection } from 'astro:content'
+
 import { feedLoader } from '@ascorbic/feed-loader'
 import { githubReleasesLoader } from 'astro-loader-github-releases'
 import { githubPrsLoader } from 'astro-loader-github-prs'
+import { blueskyPostsLoader } from 'astro-loader-bluesky-posts'
+
 import { pageSchema, postSchema, projectsSchema, streamsSchema } from './schema'
 
 const pages = defineCollection({
@@ -60,6 +63,28 @@ const prs = defineCollection({
   }),
 })
 
+const highlights = defineCollection({
+  loader: blueskyPostsLoader({
+    uris: [
+      'at://astro.build/app.bsky.feed.post/3lfwu3pka2c2j',
+      'at://astro.build/app.bsky.feed.post/3lfsayyhu4c2j',
+      'at://astro.build/app.bsky.feed.post/3lf3iyptedc2e',
+      'at://astro.build/app.bsky.feed.post/3lcv2yftszs2z',
+      'at://astro.build/app.bsky.feed.post/3lcdimk36e226',
+      'at://astro.build/app.bsky.feed.post/3lbkb6hizhk2f',
+      'at://sarah11918.rainsberger.ca/app.bsky.feed.post/3lh3aonbqes2y',
+      'at://sarah11918.rainsberger.ca/app.bsky.feed.post/3laf6xckg3l2x',
+      'at://mk.gg/app.bsky.feed.post/3la2snrsnhd2a',
+      'at://jay.bsky.team/app.bsky.feed.post/3lbd2eaura22r',
+      'at://jay.bsky.team/app.bsky.feed.post/3lbayyemhzs2v',
+      'at://bsky.app/app.bsky.feed.post/3larljiyi7s2v',
+    ],
+    newlineHandling: 'paragraph',
+    fetchThread: true,
+    fetchOnlyAuthorReplies: true,
+  }),
+})
+
 export const collections = {
   pages,
   blog,
@@ -69,4 +94,5 @@ export const collections = {
   feeds,
   releases,
   prs,
+  highlights,
 }

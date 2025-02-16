@@ -1,0 +1,58 @@
+---
+import { Image } from 'astro:assets'
+
+import type { LocalImageProps, RemoteImageProps } from 'astro:assets'
+import type { SwiperOptions } from 'swiper/types'
+
+export interface ImageData {
+  src: string
+  alt: string
+}
+
+interface Props {
+  images: ImageData[]
+  imageProps?: LocalImageProps | RemoteImageProps
+  swiperOptions?: SwiperOptions
+  class?: string
+}
+
+const { images, imageProps, swiperOptions, class: className } = Astro.props
+---
+
+<swiper-container
+  style="--swiper-pagination-color: #374151"
+  class={className}
+  pagination="true"
+  pagination-clickable="true"
+  autoplay-delay="3000"
+  autoplay-disable-on-interaction="true"
+  mousewheel="true"
+  effect="fade"
+  keyboard="true"
+  a11y-enabled="true"
+  {...swiperOptions}
+>
+  {
+    images.map((item) => (
+      <swiper-slide>
+        <Image
+          class="aspect-[16/9] object-cover"
+          src={item.src}
+          alt={item.alt}
+          inferSize
+          {...imageProps}
+        />
+      </swiper-slide>
+    ))
+  }
+</swiper-container>
+
+<script>
+  import { register } from 'swiper/element/bundle'
+  import 'swiper/css'
+  import 'swiper/css/autoplay'
+  import 'swiper/css/effect-fade'
+  import 'swiper/css/pagination'
+
+  register()
+</script>

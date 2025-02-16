@@ -1,0 +1,169 @@
+---
+import { Image } from 'astro:assets'
+
+import Link from '~/components/base/Link.astro'
+import SwiperCarousel from '~/components/widgets/SwiperCarousel.astro'
+import { formatDate } from '~/utils/datetime'
+
+import type { HTMLAttributes } from 'astro/types'
+import type { LocalImageProps, RemoteImageProps } from 'astro:assets'
+import type { ImageData } from '~/components/widgets/SwiperCarousel.astro'
+
+interface VideoData {
+  src: string
+  alt: string
+  thumbnail: string
+}
+
+interface ExternalData {
+  uri: string
+  title: string
+  description: string
+  thumb: string
+}
+
+export interface CardItemData {
+  date: Date | string
+  text?: string
+  html?: string
+  link?: string
+  embedType?: 'image' | 'video' | 'external' | 'record' | 'record-with-media'
+  images?: ImageData[]
+  video?: VideoData
+  external?: ExternalData
+  record?: Record<string, unknown>
+}
+
+interface Props {
+  idx?: number
+  item: CardItemData
+  compact?: boolean
+  imageProps?: LocalImageProps | RemoteImageProps
+  videoProps?: HTMLAttributes<'video'>
+  class?: string
+}
+
+const {
+  // idx,
+  item,
+  compact = false,
+  imageProps,
+  videoProps,
+  class: className,
+} = Astro.props
+const {
+  date,
+  text,
+  html,
+  link,
+  embedType,
+  images,
+  video,
+  external /* , record */,
+} = item
+---
+
+<section class={className}>
+  <div
+    class="flex flex-col overflow-hidden
+      b b-[#8884] rounded-lg bg-white dark:bg-black
+      shadow-transition-500 hover:(shadow-custom_0_3_20_-5)"
+  >
+    {
+      (embedType === 'image' || embedType === 'video') && (
+        <div class="b-b b-b-[#8884]">
+          {embedType === 'image' &&
+            images &&
+            (images.length > 1 ? (
+              <SwiperCarousel images={images} imageProps={imageProps} />
+            ) : (
+              <Image
+                class="aspect-[16/9] object-cover"
+                src={images[0].src}
+                alt={images[0].alt}
+                inferSize
+                {...imageProps}
+              />
+            ))}
+
+          {embedType === 'video' && video && (
+            <video
+              class="aspect-[16/9] object-cover"
+              src={video.src}
+              poster={video.thumbnail}
+              aria-label={video.alt}
+              autoplay
+              muted
+              loop
+              playsinline
+              {...videoProps}
+            />
+          )}
+        </div>
+      )
+    }
+    {
+      embedType === 'external' && external && (
+        <Link
+          class="flex flex-col b b-[#8884] rounded-lg mt-3 mx-3 overflow-hidden op-100!"
+          href={external.uri}
+        >
+          {!compact && external.thumb && (
+            <Image
+              class="b-b b-b-[#8884] aspect-[1.91/1] object-cover"
+              src={external.thumb}
+              alt={external.title}
+              inferSize
+              {...imageProps}
+            />
+          )}
+          <div class="flex flex-col px-3 pt-2 pb-1">
+            {!compact && (
+              <div class="flex flex-col gap-1 pb-1.5 b-b b-b-[#8884]">
+                <p class="text-sm font-600">{external.title}</p>
+                <p class="text-xs">{external.description}</p>
+              </div>
+            )}
+            <div class="flex items-center gap-1 pt-1 text-[0.72rem] op-70">
+              <p i-hugeicons-earth class="size-1em" />
+              <p>{new URL(external.uri).hostname}</p>
+            </div>
+          </div>
+        </Link>
+      )
+    }
+    <div class="p-4 pb-3">
+      {
+        link ? (
+          <>
+            {html && <div class="prose card-item-prose" set:html={html} />}
+            {text && (
+              <Link class="prose card-item-prose" href={link}>
+                {text}
+              </Link>
+            )}
+            {date && (
+              <div class="flex justify-between items-center pt-3 text-sm">
+                <Link class="op-50" href={link}>
+                  {formatDate(date)}
+                </Link>
+                {/* <p i-icon-park:down /> */}
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            {html && <div class="prose card-item-prose" set:html={html} />}
+            {text && <p class="prose card-item-prose">{text}</p>}
+            {date && (
+              <div class="flex justify-between items-center pt-3 text-sm">
+                <p class="op-50">{formatDate(date)}</p>
+                {/* <p i-icon-park:down /> */}
+              </div>
+            )}
+          </>
+        )
+      }
+    </div>
+  </div>
+</section>

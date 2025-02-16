@@ -1,3 +1,5 @@
+import type { CollectionEntry } from 'astro:content'
+import type { CardItemData } from '~/components/views/CardItem.astro'
 import type { GitHubView } from '~/types'
 
 export const VERSION_COLOR = {
@@ -81,4 +83,65 @@ export function processVersion(
   const highlightedPart = parts.slice(highlightedIndex).join('')
 
   return [versionType, nonHighlightedPart, highlightedPart]
+}
+
+/**
+ * Processes Bluesky posts and converts them into `CardItem` interface.
+ **/
+export function processBlueskyPosts(
+  data: CollectionEntry<'highlights'>[]
+): CardItemData[] {
+  return data.map((item) => {
+    const { indexedAt, html, link, embed, author } = item.data.post
+
+    const card: CardItemData = {
+      date: indexedAt,
+      html: html,
+      link: link,
+    }
+
+    if (embed && typeof embed.$type === 'string') {
+      const typeStr = embed.$type
+      if (typeStr.startsWith('app.bsky.embed.images')) {
+        card.embedType = 'image'
+        if (Array.isArray(embed.images)) {
+          card.images = embed.images.map((img) => ({
+            src: img.thumb ?? img.fullsize ?? '',
+            alt: img.alt ?? '',
+          }))
+        }
+      } else if (typeStr.startsWith('app.bsky.embed.video')) {
+        card.embedType = 'video'
+        card.video = {
+          src: `https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${author.did}&cid=${embed.cid}`,
+          alt: (embed.alt as string) ?? '',
+          thumbnail: (embed.thumbnail as string) ?? '',
+        }
+      } else if (typeStr.startsWith('app.bsky.embed.external')) {
+        card.embedType = 'external'
+        const ext = embed.external as {
+          uri: string
+          title: string
+          description: string
+          thumb: string
+        }
+        if (ext) {
+          card.external = {
+            uri: ext.uri ?? '',
+            title: ext.title ?? '',
+            description: ext.description ?? '',
+            thumb: ext.thumb ?? '',
+          }
+        }
+      } /* else if (typeStr.startsWith('app.bsky.embed.recordWithMedia')) {
+        card.embedType = 'record-with-media'
+        card.record = {}
+      } */ else if (typeStr.startsWith('app.bsky.embed.record')) {
+        card.embedType = 'record'
+        card.record = embed.record as Record<string, unknown> | undefined
+      }
+    }
+
+    return card
+  })
 }
