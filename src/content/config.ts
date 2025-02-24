@@ -66,21 +66,22 @@ const prs = defineCollection({
 const highlights = defineCollection({
   loader: blueskyPostsLoader({
     uris: [
+      'at://astro.build/app.bsky.feed.post/3lifesehhok27',
+      'at://sarah11918.rainsberger.ca/app.bsky.feed.post/3lh3aonbqes2y',
       'at://astro.build/app.bsky.feed.post/3lfwu3pka2c2j',
       'at://astro.build/app.bsky.feed.post/3lfsayyhu4c2j',
       'at://astro.build/app.bsky.feed.post/3lf3iyptedc2e',
       'at://astro.build/app.bsky.feed.post/3lcv2yftszs2z',
+      'at://astro.build/app.bsky.feed.post/3lcl5ndm52c2s',
       'at://astro.build/app.bsky.feed.post/3lcdimk36e226',
       'at://astro.build/app.bsky.feed.post/3lbkb6hizhk2f',
-      'at://sarah11918.rainsberger.ca/app.bsky.feed.post/3lh3aonbqes2y',
-      'at://sarah11918.rainsberger.ca/app.bsky.feed.post/3laf6xckg3l2x',
-      'at://mk.gg/app.bsky.feed.post/3la2snrsnhd2a',
       'at://jay.bsky.team/app.bsky.feed.post/3lbd2eaura22r',
       'at://jay.bsky.team/app.bsky.feed.post/3lbayyemhzs2v',
       'at://bsky.app/app.bsky.feed.post/3larljiyi7s2v',
     ],
     newlineHandling: 'paragraph',
     fetchThread: true,
+    threadDepth: 4,
     fetchOnlyAuthorReplies: true,
   }),
 })

@@ -12,7 +12,7 @@ import type { CardItemData } from '~/components/views/CardItem.astro'
 
 interface Props {
   collectionType: ContentCollectionKey | DataCollectionKey
-  mode: 'masonry' | 'grid'
+  mode?: 'masonry'
   gap?: 'number'
   minCardWidth?: number
   maxCardWidth?: number
@@ -23,15 +23,17 @@ const {
   mode = 'masonry',
   gap = 16,
   minCardWidth = 350,
-  maxCardWidth = 1500,
+  maxCardWidth = 1000,
 } = Astro.props
 
 let highlights: CollectionEntry<'highlights'>[] = []
 let processedHighlights: CardItemData[] = []
 if (collectionType === 'highlights') {
   highlights = await getCollection(collectionType)
-  processedHighlights = processBlueskyPosts(highlights).sort(
-    (a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
+  processedHighlights = processBlueskyPosts(highlights).sort((a, b) =>
+    !a.date || !b.date
+      ? 0
+      : new Date(b.date).valueOf() - new Date(a.date).valueOf()
   )
 }
 ---
@@ -39,7 +41,7 @@ if (collectionType === 'highlights') {
 {
   mode === 'masonry' && (
     <responsive-masonry
-      class="block relative w-full min-h-screen op-0 op-transition"
+      class="block relative w-full min-h-screen op-0 op-transition-500"
       data-gap={gap}
       data-min-card-width={minCardWidth}
       data-max-card-width={maxCardWidth}
@@ -55,7 +57,7 @@ if (collectionType === 'highlights') {
   export class ResponsiveMasonry extends HTMLElement {
     #initialized = false
     #resizeObserver: ResizeObserver | null = null
-    // #mutationObserver: MutationObserver | null = null
+    #mutationObserver: MutationObserver | null = null
     #debounceTimeout: number | null = null
 
     static get observedAttributes() {
@@ -66,7 +68,7 @@ if (collectionType === 'highlights') {
       return {
         gap: this.#getParseInt(this.dataset.gap || '16'),
         minCardWidth: this.#getParseInt(this.dataset.minCardWidth || '350'),
-        maxCardWidth: this.#getParseInt(this.dataset.maxCardWidth || '1500'),
+        maxCardWidth: this.#getParseInt(this.dataset.maxCardWidth || '1000'),
       }
     }
 
@@ -77,11 +79,11 @@ if (collectionType === 'highlights') {
       this.#resizeObserver = new ResizeObserver(this.#handleResize)
       this.#resizeObserver.observe(this)
 
-      /* this.#mutationObserver = new MutationObserver(this.#handleDOMChanges)
+      this.#mutationObserver = new MutationObserver(this.#handleDOMChanges)
       this.#mutationObserver.observe(this, {
-        childList: true,
+        subtree: true,
         attributeFilter: ['class'],
-      }) */
+      })
 
       this.#updateLayout()
     }
@@ -92,10 +94,10 @@ if (collectionType === 'highlights') {
         this.#resizeObserver = null
       }
 
-      /* if (this.#mutationObserver) {
+      if (this.#mutationObserver) {
         this.#mutationObserver.disconnect()
         this.#mutationObserver = null
-      } */
+      }
 
       if (this.#debounceTimeout) {
         window.clearTimeout(this.#debounceTimeout)
@@ -125,16 +127,29 @@ if (collectionType === 'highlights') {
       }
       this.#debounceTimeout = window.setTimeout(() => {
         this.#updateLayout()
-      }, 200)
+      }, 100)
     }
 
     #handleResize = () => {
       this.#debounceUpdateLayout()
     }
 
-    /* #handleDOMChanges = () => {
-      this.#debounceUpdateLayout()
-    } */
+    #handleDOMChanges = (mutations: MutationRecord[]) => {
+      for (const m of mutations) {
+        const target = m.target
+
+        if (target instanceof HTMLElement && target.nodeName === 'SWIPER-SLIDE')
+          break
+
+        if (
+          target instanceof HTMLElement &&
+          target.parentNode?.nodeName === 'BUTTON'
+        ) {
+          this.#updateLayout()
+          break
+        }
+      }
+    }
 
     #updateLayout = () => {
       const cards = Array.from(
@@ -167,7 +182,7 @@ if (collectionType === 'highlights') {
 
       const maxHeight = Math.max(...columnHeights)
       this.style.height = `${maxHeight}px`
-      this.classList.remove('op-0')
+      if (this.classList.contains('op-0')) this.classList.remove('op-0')
     }
   }
 

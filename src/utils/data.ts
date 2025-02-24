@@ -1,3 +1,12 @@
+import {
+  AppBskyEmbedImages,
+  AppBskyEmbedVideo,
+  AppBskyEmbedExternal,
+  AppBskyEmbedRecord,
+  AppBskyEmbedRecordWithMedia,
+} from '@atproto/api'
+import { atUriToPostUri } from 'astro-loader-bluesky-posts'
+
 import type { CollectionEntry } from 'astro:content'
 import type { CardItemData } from '~/components/views/CardItem.astro'
 import type { GitHubView } from '~/types'
@@ -86,13 +95,14 @@ export function processVersion(
 }
 
 /**
- * Processes Bluesky posts and converts them into `CardItem` interface.
- **/
-export function processBlueskyPosts(
-  data: CollectionEntry<'highlights'>[]
-): CardItemData[] {
-  return data.map((item) => {
-    const { indexedAt, html, link, embed, author } = item.data.post
+ * Processes Bluesky posts and converts them into `CardItemData` interface.
+ */
+export function processBlueskyPosts(data: CollectionEntry<'highlights'>[]) {
+  const cards: CardItemData[] = []
+
+  for (const item of data) {
+    const { post, replies } = item.data
+    const { indexedAt, html, link, embed, author } = post
 
     const card: CardItemData = {
       date: indexedAt,
@@ -100,48 +110,93 @@ export function processBlueskyPosts(
       link: link,
     }
 
-    if (embed && typeof embed.$type === 'string') {
-      const typeStr = embed.$type
-      if (typeStr.startsWith('app.bsky.embed.images')) {
-        card.embedType = 'image'
-        if (Array.isArray(embed.images)) {
-          card.images = embed.images.map((img) => ({
-            src: img.thumb ?? img.fullsize ?? '',
-            alt: img.alt ?? '',
-          }))
-        }
-      } else if (typeStr.startsWith('app.bsky.embed.video')) {
-        card.embedType = 'video'
+    if (embed) {
+      if (AppBskyEmbedImages.isView(embed))
+        card.images = embed.images.map((img) => ({
+          src: img.thumb,
+          alt: img.alt,
+        }))
+
+      if (AppBskyEmbedVideo.isView(embed))
         card.video = {
           src: `https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${author.did}&cid=${embed.cid}`,
-          alt: (embed.alt as string) ?? '',
-          thumbnail: (embed.thumbnail as string) ?? '',
+          alt: embed.alt ?? '',
+          thumbnail: embed.thumbnail ?? '',
         }
-      } else if (typeStr.startsWith('app.bsky.embed.external')) {
-        card.embedType = 'external'
-        const ext = embed.external as {
-          uri: string
-          title: string
-          description: string
-          thumb: string
+
+      if (AppBskyEmbedExternal.isView(embed))
+        card.external = {
+          uri: embed.external.uri,
+          title: embed.external.title,
+          description: embed.external.description,
+          thumb: embed.external.thumb ?? '',
         }
-        if (ext) {
-          card.external = {
-            uri: ext.uri ?? '',
-            title: ext.title ?? '',
-            description: ext.description ?? '',
-            thumb: ext.thumb ?? '',
+
+      if (AppBskyEmbedRecord.isView(embed)) {
+        if (AppBskyEmbedRecord.isViewRecord(embed.record)) {
+          const { uri, value, author } = embed.record
+
+          card.quote = {
+            uri: atUriToPostUri(uri),
+            text: value.text as string,
+            author: {
+              link: `https://bsky.app/profile/${author.handle}`,
+              avatar: author.avatar ?? '',
+              name: author.displayName ?? '',
+              handle: author.handle,
+            },
           }
         }
-      } /* else if (typeStr.startsWith('app.bsky.embed.recordWithMedia')) {
-        card.embedType = 'record-with-media'
-        card.record = {}
-      } */ else if (typeStr.startsWith('app.bsky.embed.record')) {
-        card.embedType = 'record'
-        card.record = embed.record as Record<string, unknown> | undefined
+      }
+
+      if (AppBskyEmbedRecordWithMedia.isView(embed)) {
+        const { record, media } = embed
+
+        if (media) {
+          if (AppBskyEmbedImages.isView(media))
+            card.images = media.images.map((img) => ({
+              src: img.thumb,
+              alt: img.alt,
+            }))
+
+          if (AppBskyEmbedVideo.isView(media))
+            card.video = {
+              src: `https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${author.did}&cid=${media.cid}`,
+              alt: media.alt ?? '',
+              thumbnail: media.thumbnail ?? '',
+            }
+
+          if (AppBskyEmbedExternal.isView(media))
+            card.external = {
+              uri: media.external.uri,
+              title: media.external.title,
+              description: media.external.description,
+              thumb: media.external.thumb ?? '',
+            }
+        }
+
+        if (AppBskyEmbedRecord.isViewRecord(record.record)) {
+          const { uri, value, author } = record.record
+
+          card.quote = {
+            uri: atUriToPostUri(uri),
+            text: value.text as string,
+            author: {
+              link: `https://bsky.app/profile/${author.handle}`,
+              avatar: author.avatar ?? '',
+              name: author.displayName ?? '',
+              handle: author.handle,
+            },
+          }
+        }
       }
     }
 
-    return card
-  })
+    if (replies && replies.length > 0) {
+      card.details = replies.map((reply) => reply.html)
+    }
+
+    cards.push(card)
+  }
+  return cards
 }

@@ -33,6 +33,9 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.2.1
         version: 3.2.1
+      '@atproto/api':
+        specifier: ^0.14.2
+        version: 0.14.2
       '@eslint/js':
         specifier: ^9.19.0
         version: 9.19.0
@@ -67,8 +70,8 @@ importers:
         specifier: ^0.40.1
         version: 0.40.1(astro@4.16.18(@types/node@22.10.10)(rollup@4.27.4)(typescript@5.7.3))
       astro-loader-bluesky-posts:
-        specifier: ^1.1.0
-        version: 1.1.0(astro@4.16.18(@types/node@22.10.10)(rollup@4.27.4)(typescript@5.7.3))
+        specifier: ^1.2.0
+        version: 1.2.0(astro@4.16.18(@types/node@22.10.10)(rollup@4.27.4)(typescript@5.7.3))
       astro-loader-github-prs:
         specifier: ^1.1.1
         version: 1.1.1(astro@4.16.18(@types/node@22.10.10)(rollup@4.27.4)(typescript@5.7.3))
@@ -259,20 +262,20 @@ packages:
   '@astrojs/yaml2ts@0.2.1':
     resolution: {integrity: sha512-CBaNwDQJz20E5WxzQh4thLVfhB3JEEGz72wRA+oJp6fQR37QLAqXZJU0mHC+yqMOQ6oj0GfRPJrz6hjf+zm6zA==}
 
-  '@atproto/api@0.13.35':
-    resolution: {integrity: sha512-vsEfBj0C333TLjDppvTdTE0IdKlXuljKSveAeI4PPx/l6eUKNnDTsYxvILtXUVzwUlTDmSRqy5O4Ryh78n1b7g==}
+  '@atproto/api@0.14.2':
+    resolution: {integrity: sha512-TRhgRWOftDOTNWcqP0kE1upDn0++o37imW91NaBVkeapqK7QToVsiJbCQC5l1+EPJ7/BJ5o4IgjZx5ZdENh07A==}
 
   '@atproto/common-web@0.4.0':
     resolution: {integrity: sha512-ZYL0P9myHybNgwh/hBY0HaBzqiLR1B5/ie5bJpLQAg0whRzNA28t8/nU2vh99tbsWcAF0LOD29M8++LyENJLNQ==}
 
-  '@atproto/lexicon@0.4.6':
-    resolution: {integrity: sha512-RbiwXcnTuLp9vQrNoQ7xly8HyifKkovqCYtbfXVwqdylWYKPhmRsYkRfcPNv/lILhT9Lm0GVnxNwGGwvvgIsfA==}
+  '@atproto/lexicon@0.4.7':
+    resolution: {integrity: sha512-/x6h3tAiDNzSi4eXtC8ke65B7UzsagtlGRHmUD95698x5lBRpDnpizj0fZWTZVYed5qnOmz/ZEue+v3wDmO61g==}
 
-  '@atproto/syntax@0.3.2':
-    resolution: {integrity: sha512-JLMhTbXER1Im98RrozfsLAZARGIAzKCZEm+Inh1IF00XU6tHcoGKS+HOw0Uy4R2r04yvxoFs8fswmwAhmMpMdw==}
+  '@atproto/syntax@0.3.3':
+    resolution: {integrity: sha512-F1LZweesNYdBbZBXVa72N/cSvchG8Q1tG4/209ZXbIuM3FwQtkgn+zgmmV4P4ORmhOeXPBNXvMBpcqiwx/gEQQ==}
 
-  '@atproto/xrpc@0.6.8':
-    resolution: {integrity: sha512-+KW0NcwdFyLziccYimX6tPkORiwwxlJPqlkVL9bJyj8nJ0aB8cyqo9HXkziMI+R6ansB1BuWQ0tfdPlLLwrUcA==}
+  '@atproto/xrpc@0.6.9':
+    resolution: {integrity: sha512-vQGA7++DYMNaHx3C7vEjT+2X6hYYLG7JNbBnDLWu0km1/1KYXgRkAz4h+FfYqg1mvzvIorHU7DAs5wevkJDDlw==}
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -333,8 +336,8 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  '@babel/parser@7.26.7':
-    resolution: {integrity: sha512-kEvgGGgEjRUutvdVvZhbn/BxVt+5VSpwXz1j3WYXQbXDo8KzFOPNG2GQbdAiNq8g6wn1yKk7C/qrke03a84V+w==}
+  '@babel/parser@7.26.9':
+    resolution: {integrity: sha512-81NWa1njQblgZbQHxWHpxxCzNsa3ZwvFqpUg7P+NNUU6f3UU2jBEg4OlF/J6rl8+PQGh1q6/zWScd001YwcA5A==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -362,8 +365,8 @@ packages:
     resolution: {integrity: sha512-Z/yiTPj+lDVnF7lWeKCIJzaIkI0vYO87dMpZ4bg4TDrFe4XXLFWL1TbXU27gBP3QccxV9mZICCrnjnYlJjXHOA==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/types@7.26.7':
-    resolution: {integrity: sha512-t8kDRGrKXyp6+tjUh7hw2RLyclsW4TRoRvRHtSyAX9Bb5ldlFh+90YAYY6awRXrlB4G5G2izNeGySpATlFzmOg==}
+  '@babel/types@7.26.9':
+    resolution: {integrity: sha512-Y3IR1cRnOxOCDvMmNiym7XpXQ93iGDDPHx+Zj+NM+rg0fBaShfQLkg+hKPaZCEvg5N/LeCo4+Rj/i3FuJsIQaw==}
     engines: {node: '>=6.9.0'}
 
   '@ctrl/tinycolor@4.1.0':
@@ -1735,8 +1738,8 @@ packages:
     peerDependencies:
       astro: ^4.0.0-beta || ^5.0.0-beta || ^3.3.0
 
-  astro-loader-bluesky-posts@1.1.0:
-    resolution: {integrity: sha512-c06hmoqNc2l0/Afy/9J1uczS7f10Y8pMVNszol2CF8+FoJVEoCXkSX4fNI9CPlLuC1AkZPcnJUObG6qoqIY6uA==}
+  astro-loader-bluesky-posts@1.2.0:
+    resolution: {integrity: sha512-UBijJgSupLU3hRP1PyaXEW218KKQJx8p8g9OV41Mx+aQ0+LjXZ3MioGXELr/9xMoC2gJsVPfAuRUQoBT2gf+fg==}
     peerDependencies:
       astro: '>=4.14.0 <6.0.0'
 
@@ -4351,6 +4354,9 @@ packages:
   zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
+  zod@3.24.2:
+    resolution: {integrity: sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==}
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
@@ -4495,38 +4501,38 @@ snapshots:
     dependencies:
       yaml: 2.5.1
 
-  '@atproto/api@0.13.35':
+  '@atproto/api@0.14.2':
     dependencies:
       '@atproto/common-web': 0.4.0
-      '@atproto/lexicon': 0.4.6
-      '@atproto/syntax': 0.3.2
-      '@atproto/xrpc': 0.6.8
+      '@atproto/lexicon': 0.4.7
+      '@atproto/syntax': 0.3.3
+      '@atproto/xrpc': 0.6.9
       await-lock: 2.2.2
       multiformats: 9.9.0
       tlds: 1.255.0
-      zod: 3.23.8
+      zod: 3.24.2
 
   '@atproto/common-web@0.4.0':
     dependencies:
       graphemer: 1.4.0
       multiformats: 9.9.0
       uint8arrays: 3.0.0
-      zod: 3.23.8
+      zod: 3.24.2
 
-  '@atproto/lexicon@0.4.6':
+  '@atproto/lexicon@0.4.7':
     dependencies:
       '@atproto/common-web': 0.4.0
-      '@atproto/syntax': 0.3.2
+      '@atproto/syntax': 0.3.3
       iso-datestring-validator: 2.2.2
       multiformats: 9.9.0
-      zod: 3.23.8
+      zod: 3.24.2
 
-  '@atproto/syntax@0.3.2': {}
+  '@atproto/syntax@0.3.3': {}
 
-  '@atproto/xrpc@0.6.8':
+  '@atproto/xrpc@0.6.9':
     dependencies:
-      '@atproto/lexicon': 0.4.6
-      zod: 3.23.8
+      '@atproto/lexicon': 0.4.7
+      zod: 3.24.2
 
   '@babel/code-frame@7.26.2':
     dependencies:
@@ -4609,9 +4615,9 @@ snapshots:
     dependencies:
       '@babel/types': 7.26.0
 
-  '@babel/parser@7.26.7':
+  '@babel/parser@7.26.9':
     dependencies:
-      '@babel/types': 7.26.7
+      '@babel/types': 7.26.9
 
   '@babel/plugin-syntax-jsx@7.25.9(@babel/core@7.26.0)':
     dependencies:
@@ -4652,7 +4658,7 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
-  '@babel/types@7.26.7':
+  '@babel/types@7.26.9':
     dependencies:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
@@ -5863,7 +5869,7 @@ snapshots:
 
   '@vue/compiler-core@3.5.12':
     dependencies:
-      '@babel/parser': 7.26.7
+      '@babel/parser': 7.26.9
       '@vue/shared': 3.5.12
       entities: 4.5.0
       estree-walker: 2.0.2
@@ -5876,7 +5882,7 @@ snapshots:
 
   '@vue/compiler-sfc@3.5.12':
     dependencies:
-      '@babel/parser': 7.26.7
+      '@babel/parser': 7.26.9
       '@vue/compiler-core': 3.5.12
       '@vue/compiler-dom': 3.5.12
       '@vue/compiler-ssr': 3.5.12
@@ -6043,9 +6049,9 @@ snapshots:
       astro: 4.16.18(@types/node@22.10.10)(rollup@4.27.4)(typescript@5.7.3)
       rehype-expressive-code: 0.40.1
 
-  astro-loader-bluesky-posts@1.1.0(astro@4.16.18(@types/node@22.10.10)(rollup@4.27.4)(typescript@5.7.3)):
+  astro-loader-bluesky-posts@1.2.0(astro@4.16.18(@types/node@22.10.10)(rollup@4.27.4)(typescript@5.7.3)):
     dependencies:
-      '@atproto/api': 0.13.35
+      '@atproto/api': 0.14.2
       astro: 4.16.18(@types/node@22.10.10)(rollup@4.27.4)(typescript@5.7.3)
 
   astro-loader-github-prs@1.1.1(astro@4.16.18(@types/node@22.10.10)(rollup@4.27.4)(typescript@5.7.3)):
@@ -9532,5 +9538,7 @@ snapshots:
       zod: 3.23.8
 
   zod@3.23.8: {}
+
+  zod@3.24.2: {}
 
   zwitch@2.0.4: {}

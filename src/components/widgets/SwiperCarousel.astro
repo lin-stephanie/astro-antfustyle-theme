@@ -4,13 +4,11 @@ import { Image } from 'astro:assets'
 import type { LocalImageProps, RemoteImageProps } from 'astro:assets'
 import type { SwiperOptions } from 'swiper/types'
 
-export interface ImageData {
-  src: string
-  alt: string
-}
-
-interface Props {
-  images: ImageData[]
+export interface Props {
+  images: {
+    src: string
+    alt: string
+  }[]
   imageProps?: LocalImageProps | RemoteImageProps
   swiperOptions?: SwiperOptions
   class?: string
