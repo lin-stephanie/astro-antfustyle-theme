@@ -1,30 +1,29 @@
 ---
 import { getEntry } from 'astro:content'
+
 import Toc from '~/components/toc/Toc.astro'
 import Categorizer from '~/components/base/Categorizer.astro'
 import GroupItem from '~/components/views/GroupItem.astro'
-import { FEATURES, UI } from '~/config'
+import { FEATURES } from '~/config'
 
 interface Props {
   pageToc: boolean
 }
 
 const { pageToc } = Astro.props
+const { toc } = FEATURES
 
 const entry = await getEntry('projects', 'data')
 const { projects } = entry.data
 
-const { toc } = FEATURES
 const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
-
-const { showGroupItemColorOnHover } = UI.groupView
 ---
 
 {
   tocEnabled && (
     <Toc
       category={Object.keys(projects)}
-      style={toc[1].displayPosition === 'right' ? 'text-align:end' : ''}
+      style={toc[1].displayPosition === 'right' ? 'right: -5rem' : undefined}
     />
   )
 }
@@ -36,11 +35,3 @@ const { showGroupItemColorOnHover } = UI.groupView
     </div>
   ))
 }
-
-{showGroupItemColorOnHover && (
-  <style>
-    .link:hover .icon {
-      filter: saturate(1);
-    }
-  </style>
-)}

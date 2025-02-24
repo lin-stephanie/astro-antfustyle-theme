@@ -2,11 +2,15 @@
 import Link from '~/components/base/Link.astro'
 import { getUrl } from '~/utils/common'
 
+interface Props {
+  class?: string
+}
+
 const { class: className } = Astro.props
 ---
 
 <Link
-  class=`op-transition ${className}`
+  class:list={['op-transition', className]}
   href={getUrl('/rss.xml')}
   title="RSS Feed"
   external={true}

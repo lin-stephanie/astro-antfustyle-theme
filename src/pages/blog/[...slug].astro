@@ -17,6 +17,10 @@ export async function getStaticPaths() {
   }))
 }
 
+const WARNING_HTML = `This is a draft post that will not be published
+in production. Set the post's <code>draft</code> property in
+frontmatter to <code>false</code> or remove it to publish the post.`
+
 const { post } = Astro.props
 const { data: frontmatter } = post
 const { Content, headings, remarkPluginFrontmatter } = await post.render()
@@ -27,11 +31,6 @@ const lastModDate =
   frontmatter.lastModDate && frontmatter.lastModDate.toISOString()
 const minutesRead =
   frontmatter.minutesRead || remarkPluginFrontmatter.minutesRead
-
-/* Exception */
-const warningHTML = `This is a draft post that will not be published
-in production. Set the post's <code>draft</code> property in
-frontmatter to <code>false</code> or remove it to publish the post.`
 ---
 
 <BaseLayout
@@ -60,7 +59,7 @@ frontmatter to <code>false</code> or remove it to publish the post.`
           </p>
         )
       }
-      {frontmatter.draft && <Warning rawHTMLString={warningHTML} />}
+      {frontmatter.draft && <Warning html={WARNING_HTML} />}
     </Fragment>
     <Fragment slot="article">
       {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}

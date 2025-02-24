@@ -193,11 +193,7 @@ html.dark .prose {
 
 .toc-desktop-right.toc-desktop {
   left: auto;
-  right: 2rem;
-}
-
-.toc-desktop-right .toc-desktop-anchor {
-  align-self: flex-end;
+  right: 0rem;
 }
 
 #toc-panel > ul {

@@ -1,6 +1,6 @@
 ---
 title: AstroEco is Releasing...
-description: 'Example: Displaying GitHub releases using astro-loader-github-releases'
+description: Display your GitHub releases using astro-loader-github-releases
 subtitle: ''
 bgType: plum
 toc: false
@@ -18,13 +18,13 @@ import Link from '~/components/base/Link.astro'
   bgType={frontmatter.bgType}
   ogImage={frontmatter.ogImage}
 >
-  <StandardLayout isCentered={true} isWideMargin={true}>
+  <StandardLayout class="max-w-65ch" isCentered={true}>
     <Fragment slot="head">
       <h1 class="ml-12 lt-sm:ml-0"
       >AstroEco is <span class="animate-pulse">Releasing...</span></h1>
       <p class="mt--4! op-50 italic"
-      >Example: Displaying GitHub releases using <Link href="https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-releases" external={true}>astro-loader-github-releases</Link></p>
+      >Display your GitHub releases using <Link href="https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-releases" external={true}>astro-loader-github-releases</Link></p>
     </Fragment>
-    <GithubView slot="github" collectionType="releases" />
+    <GithubView collectionType="releases" />
   </StandardLayout>
 </BaseLayout>

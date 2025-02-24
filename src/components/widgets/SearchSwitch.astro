@@ -95,7 +95,7 @@ import { getUrl } from '~/utils/common'
     }
   }
 
-  document.addEventListener('click', (event) => handleClose(event))
+  document.addEventListener('click', handleClose)
 </script>
 
 <script>
@@ -144,7 +144,7 @@ import { getUrl } from '~/utils/common'
   }
 
   const searchInput = document.getElementById('search-input')
-  searchInput?.addEventListener('input', (event) => handleInput(event))
+  searchInput?.addEventListener('input', handleInput)
 </script>
 
 {import.meta.env.PROD &&

@@ -1,6 +1,7 @@
 ---
 import Link from '~/components/base/Link.astro'
 import { UI } from '~/config'
+
 import type { ProjectSchema } from '~/content/schema'
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
 }
 
 const { items } = Astro.props
-const { maxGroupColumns } = UI.groupView
+const { maxGroupColumns, showGroupItemColorOnHover } = UI.groupView
 ---
 
 <div
@@ -40,3 +41,11 @@ const { maxGroupColumns } = UI.groupView
     ))
   }
 </div>
+
+{showGroupItemColorOnHover && (
+  <style>
+    .link:hover .icon {
+      filter: saturate(1);
+    }
+  </style>
+)}

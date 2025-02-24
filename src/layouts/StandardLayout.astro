@@ -4,6 +4,7 @@ interface Props {
   subtitle?: string
   isSearchable?: boolean
   isCentered?: boolean
+  class?: string
 }
 
 const {
@@ -11,6 +12,7 @@ const {
   subtitle,
   isSearchable = false,
   isCentered = false,
+  class: className,
 } = Astro.props
 ---
 
@@ -45,24 +47,9 @@ const {
   )
 }
 {
-  Astro.slots.has('list') && (
-    <div class="prose mx-auto">
-      <slot name="list" />
+  Astro.slots.has('default') && (
+    <div class:list={['mx-auto', className]}>
+      <slot />
     </div>
   )
 }
-{
-  Astro.slots.has('wide') && (
-    <div class="max-w-300 mx-auto">
-      <slot name="wide" />
-    </div>
-  )
-}
-{
-  Astro.slots.has('github') && (
-    <div class="max-w-65ch mx-auto">
-      <slot name="github" />
-    </div>
-  )
-}
-<slot />

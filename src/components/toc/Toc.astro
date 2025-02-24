@@ -53,15 +53,16 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
   >
     <!-- Greater than or equal to 1128px -->
     <nav
-      class={`toc-desktop ${displayPosition === 'right' ? 'toc-desktop-right' : ''}
-      ${displayMode === 'always' ? 'toc-desktop-on' : ''}`}
+      class:list={{
+        'toc-desktop': true,
+        'toc-desktop-right': displayPosition === 'right',
+        'toc-desktop-on': displayMode === 'always',
+      }}
       {style}
     >
       <div
         class:list={{
-          'toc-desktop-anchor': true,
-          'i-ri-menu-2-fill': displayPosition === 'left',
-          'i-ri-menu-3-fill': displayPosition === 'right',
+          'toc-desktop-anchor i-ri-menu-2-fill': true,
           'op-60': displayMode === 'always',
         }}
       >
@@ -93,7 +94,7 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
         }
       </ul>
     </nav>
-    <!-- less than 1024px -->
+    <!-- less than 1128px -->
     <TocButton>
       {
         !!specHeadings.length &&
@@ -124,7 +125,7 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
 </aside>
 
 <script>
-  export class Toc extends HTMLElement {
+  class Toc extends HTMLElement {
     #minH: number | undefined
     #maxH: number | undefined
     #observer: IntersectionObserver | null = null
@@ -179,6 +180,8 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
       if (!latestTriggerHeading) return
 
       // get need to highlight heading element
+      // (if current heading is located below 1/4 of the viewport,
+      // highlight previous heading)
       // (avoid highlight next heading when scrolling up)
       const isLocatedBelow =
         latestTriggerHeading.getBoundingClientRect().top >
@@ -255,7 +258,7 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
       return null
     }
 
-    #cleanup() {
+    #cleanup = () => {
       this.#observer?.disconnect()
       this.#observer = null
       this.#headingMapToc.clear()

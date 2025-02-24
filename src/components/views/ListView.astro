@@ -23,7 +23,9 @@ interface Props {
 }
 
 const { collectionType, pageToc } = Astro.props
-const validCollectionType = ['blog', 'changelog', 'streams', 'feeds']
+const VALID_COLLECTION_TYPE = ['blog', 'changelog', 'streams', 'feeds']
+const WARNING = `The '${collectionType}' collection type is not built-in.
+  Modify <code>ListView.astro</code> to render it.`
 
 /* Toc */
 const { toc } = FEATURES
@@ -102,12 +104,6 @@ if (collectionType === 'feeds') {
       .map((year) => year.toString())
   }
 }
-
-/* Exception */
-const warningHTML = `The '${collectionType}' collection type does not
-  belong to the built-in types 'blog', 'feeds', or 'streams'. You may
-  need to modify the <code>ListView.astro</code> logic for your defined
-  collection types to render the list.`
 ---
 
 {tocEnabled && <Toc {years} />}
@@ -237,8 +233,4 @@ const warningHTML = `The '${collectionType}' collection type does not
   )
 }
 
-{
-  !validCollectionType.includes(collectionType) && (
-    <Warning rawHTMLString={warningHTML} />
-  )
-}
+{!VALID_COLLECTION_TYPE.includes(collectionType) && <Warning html={WARNING} />}

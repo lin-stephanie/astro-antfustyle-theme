@@ -20,9 +20,9 @@ import RenderPost from '~/components/views/RenderPost.astro'
   <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
     <RenderPost
       slot="article"
-      pageToc={frontmatter.toc}
       collectionType="home"
       slug="index"
+      pageToc={frontmatter.toc}
     />
   </StandardLayout>
 </BaseLayout>

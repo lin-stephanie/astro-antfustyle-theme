@@ -36,8 +36,7 @@ const isActive = (href: string) =>
       tabs.map((tab) => (
         <Link
           class:list={{
-            'link': true,
-            'op-transition!': true,
+            'link op-transition!': true,
             'active': isActive(tab.path),
             'inactive': !isActive(tab.path),
           }}

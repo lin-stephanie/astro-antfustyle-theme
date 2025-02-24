@@ -1,7 +1,7 @@
 ---
 title: Projects
-subtitle: Tech Stack for the Astro AntfuStyle Theme & Credits
-description: Tech Stack for the Astro AntfuStyle Theme & Credits
+subtitle: Tech Stack & Credits for the Astro AntfuStyle Theme
+description: Tech Stack & Credits for the Astro AntfuStyle Theme
 bgType: dot
 toc: true
 ogImage: false
@@ -21,6 +21,7 @@ import { getUrl } from '~/utils/common'
   ogImage={frontmatter.ogImage}
 >
   <StandardLayout
+    class="max-w-300"
     title={frontmatter.title}
     subtitle={frontmatter.subtitle}
     isCentered={true}
@@ -35,6 +36,6 @@ import { getUrl } from '~/utils/common'
         <span class="ml-1.5">Recent Pull Requests</span>
       </Link>
     </div>
-    <GroupView slot="wide" pageToc={frontmatter.toc} />
+    <GroupView pageToc={frontmatter.toc} />
   </StandardLayout>
 </BaseLayout>

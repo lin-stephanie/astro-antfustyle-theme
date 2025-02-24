@@ -1,9 +1,9 @@
 ---
 interface Props {
-  rawHTMLString: string
+  html: string
 }
 
-const { rawHTMLString } = Astro.props
+const { html } = Astro.props
 ---
 
 <div
@@ -31,6 +31,6 @@ const { rawHTMLString } = Astro.props
     <div class="callout-title-inner">WARNING</div>
   </div>
   <div class="callout-content">
-    <p set:html={rawHTMLString} />
+    <p set:html={html} />
   </div>
 </div>

@@ -17,7 +17,11 @@ import ListView from '~/components/views/ListView.astro'
   bgType={frontmatter.bgType}
   ogImage={frontmatter.ogImage}
 >
-  <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle}>
-    <ListView slot="list" pageToc={frontmatter.toc} collectionType="blog" />
+  <StandardLayout
+    class="prose"
+    title={frontmatter.title}
+    subtitle={frontmatter.subtitle}
+  >
+    <ListView collectionType="blog" pageToc={frontmatter.toc} />
   </StandardLayout>
 </BaseLayout>
