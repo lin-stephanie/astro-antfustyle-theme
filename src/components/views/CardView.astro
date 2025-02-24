@@ -1,0 +1,190 @@
+---
+import { getCollection } from 'astro:content'
+import CardItem from '~/components/views/CardItem.astro'
+import { processBlueskyPosts } from '~/utils/data'
+
+import type {
+  CollectionEntry,
+  ContentCollectionKey,
+  DataCollectionKey,
+} from 'astro:content'
+import type { CardItemData } from '~/components/views/CardItem.astro'
+
+interface Props {
+  collectionType: ContentCollectionKey | DataCollectionKey
+  mode?: 'masonry'
+  gap?: 'number'
+  minCardWidth?: number
+  maxCardWidth?: number
+}
+
+const {
+  collectionType,
+  mode = 'masonry',
+  gap = 16,
+  minCardWidth = 350,
+  maxCardWidth = 1000,
+} = Astro.props
+
+let highlights: CollectionEntry<'highlights'>[] = []
+let processedHighlights: CardItemData[] = []
+if (collectionType === 'highlights') {
+  highlights = await getCollection(collectionType)
+  processedHighlights = processBlueskyPosts(highlights).sort((a, b) =>
+    !a.date || !b.date
+      ? 0
+      : new Date(b.date).valueOf() - new Date(a.date).valueOf()
+  )
+}
+---
+
+{
+  mode === 'masonry' && (
+    <responsive-masonry
+      class="block relative w-full min-h-screen op-0 op-transition-500"
+      data-gap={gap}
+      data-min-card-width={minCardWidth}
+      data-max-card-width={maxCardWidth}
+    >
+      {processedHighlights.map((item) => (
+        <CardItem class="card-masonry absolute top-0 left-0" item={item} />
+      ))}
+    </responsive-masonry>
+  )
+}
+
+<script>
+  export class ResponsiveMasonry extends HTMLElement {
+    #initialized = false
+    #resizeObserver: ResizeObserver | null = null
+    #mutationObserver: MutationObserver | null = null
+    #debounceTimeout: number | null = null
+
+    static get observedAttributes() {
+      return ['data-gap', 'data-min-card-width', 'data-max-card-width']
+    }
+
+    get #config() {
+      return {
+        gap: this.#getParseInt(this.dataset.gap || '16'),
+        minCardWidth: this.#getParseInt(this.dataset.minCardWidth || '350'),
+        maxCardWidth: this.#getParseInt(this.dataset.maxCardWidth || '1000'),
+      }
+    }
+
+    connectedCallback() {
+      if (this.#initialized) return
+      this.#initialized = true
+
+      this.#resizeObserver = new ResizeObserver(this.#handleResize)
+      this.#resizeObserver.observe(this)
+
+      this.#mutationObserver = new MutationObserver(this.#handleDOMChanges)
+      this.#mutationObserver.observe(this, {
+        subtree: true,
+        attributeFilter: ['class'],
+      })
+
+      this.#updateLayout()
+    }
+
+    disconnectedCallback() {
+      if (this.#resizeObserver) {
+        this.#resizeObserver.disconnect()
+        this.#resizeObserver = null
+      }
+
+      if (this.#mutationObserver) {
+        this.#mutationObserver.disconnect()
+        this.#mutationObserver = null
+      }
+
+      if (this.#debounceTimeout) {
+        window.clearTimeout(this.#debounceTimeout)
+        this.#debounceTimeout = null
+      }
+
+      this.#initialized = false
+    }
+
+    attributeChangedCallback = (
+      _name: string,
+      oldValue: string,
+      newValue: string
+    ) => {
+      if (this.#initialized && oldValue !== newValue) {
+        this.#debounceUpdateLayout()
+      }
+    }
+
+    #getParseInt = (data: string) => {
+      return parseInt(data, 10)
+    }
+
+    #debounceUpdateLayout = () => {
+      if (this.#debounceTimeout) {
+        window.clearTimeout(this.#debounceTimeout)
+      }
+      this.#debounceTimeout = window.setTimeout(() => {
+        this.#updateLayout()
+      }, 100)
+    }
+
+    #handleResize = () => {
+      this.#debounceUpdateLayout()
+    }
+
+    #handleDOMChanges = (mutations: MutationRecord[]) => {
+      for (const m of mutations) {
+        const target = m.target
+
+        if (target instanceof HTMLElement && target.nodeName === 'SWIPER-SLIDE')
+          break
+
+        if (
+          target instanceof HTMLElement &&
+          target.parentNode?.nodeName === 'BUTTON'
+        ) {
+          this.#updateLayout()
+          break
+        }
+      }
+    }
+
+    #updateLayout = () => {
+      const cards = Array.from(
+        this.querySelectorAll('.card-masonry')
+      ) as HTMLElement[]
+      if (!cards.length) return
+
+      const { gap, minCardWidth, maxCardWidth } = this.#config
+      const containerWidth = this.offsetWidth
+
+      let columns = Math.floor(containerWidth / minCardWidth)
+      columns = Math.min(columns, cards.length)
+      columns = Math.max(1, columns)
+
+      const totalGapWidth = gap * (columns - 1)
+      let cardWidth = (containerWidth - totalGapWidth) / columns
+      cardWidth = Math.min(cardWidth, maxCardWidth)
+
+      const columnHeights: number[] = new Array(columns).fill(0)
+      cards.forEach((card, index) => {
+        const column = index % columns
+        const left = column * (cardWidth + gap)
+        const top = columnHeights[column]
+
+        card.style.width = `${cardWidth}px`
+        card.style.transform = `translate(${left}px, ${top}px)`
+
+        columnHeights[column] += card.offsetHeight + gap
+      })
+
+      const maxHeight = Math.max(...columnHeights)
+      this.style.height = `${maxHeight}px`
+      if (this.classList.contains('op-0')) this.classList.remove('op-0')
+    }
+  }
+
+  customElements.define('responsive-masonry', ResponsiveMasonry)
+</script>

@@ -1,3 +1,14 @@
+import {
+  AppBskyEmbedImages,
+  AppBskyEmbedVideo,
+  AppBskyEmbedExternal,
+  AppBskyEmbedRecord,
+  AppBskyEmbedRecordWithMedia,
+} from '@atproto/api'
+import { atUriToPostUri } from 'astro-loader-bluesky-posts'
+
+import type { CollectionEntry } from 'astro:content'
+import type { CardItemData } from '~/components/views/CardItem.astro'
 import type { GitHubView } from '~/types'
 
 export const VERSION_COLOR = {
@@ -81,4 +92,111 @@ export function processVersion(
   const highlightedPart = parts.slice(highlightedIndex).join('')
 
   return [versionType, nonHighlightedPart, highlightedPart]
+}
+
+/**
+ * Processes Bluesky posts and converts them into `CardItemData` interface.
+ */
+export function processBlueskyPosts(data: CollectionEntry<'highlights'>[]) {
+  const cards: CardItemData[] = []
+
+  for (const item of data) {
+    const { post, replies } = item.data
+    const { indexedAt, html, link, embed, author } = post
+
+    const card: CardItemData = {
+      date: indexedAt,
+      html: html,
+      link: link,
+    }
+
+    if (embed) {
+      if (AppBskyEmbedImages.isView(embed))
+        card.images = embed.images.map((img) => ({
+          src: img.thumb,
+          alt: img.alt,
+        }))
+
+      if (AppBskyEmbedVideo.isView(embed))
+        card.video = {
+          src: `https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${author.did}&cid=${embed.cid}`,
+          alt: embed.alt ?? '',
+          thumbnail: embed.thumbnail ?? '',
+        }
+
+      if (AppBskyEmbedExternal.isView(embed))
+        card.external = {
+          uri: embed.external.uri,
+          title: embed.external.title,
+          description: embed.external.description,
+          thumb: embed.external.thumb ?? '',
+        }
+
+      if (AppBskyEmbedRecord.isView(embed)) {
+        if (AppBskyEmbedRecord.isViewRecord(embed.record)) {
+          const { uri, value, author } = embed.record
+
+          card.quote = {
+            uri: atUriToPostUri(uri),
+            text: value.text as string,
+            author: {
+              link: `https://bsky.app/profile/${author.handle}`,
+              avatar: author.avatar ?? '',
+              name: author.displayName ?? '',
+              handle: author.handle,
+            },
+          }
+        }
+      }
+
+      if (AppBskyEmbedRecordWithMedia.isView(embed)) {
+        const { record, media } = embed
+
+        if (media) {
+          if (AppBskyEmbedImages.isView(media))
+            card.images = media.images.map((img) => ({
+              src: img.thumb,
+              alt: img.alt,
+            }))
+
+          if (AppBskyEmbedVideo.isView(media))
+            card.video = {
+              src: `https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${author.did}&cid=${media.cid}`,
+              alt: media.alt ?? '',
+              thumbnail: media.thumbnail ?? '',
+            }
+
+          if (AppBskyEmbedExternal.isView(media))
+            card.external = {
+              uri: media.external.uri,
+              title: media.external.title,
+              description: media.external.description,
+              thumb: media.external.thumb ?? '',
+            }
+        }
+
+        if (AppBskyEmbedRecord.isViewRecord(record.record)) {
+          const { uri, value, author } = record.record
+
+          card.quote = {
+            uri: atUriToPostUri(uri),
+            text: value.text as string,
+            author: {
+              link: `https://bsky.app/profile/${author.handle}`,
+              avatar: author.avatar ?? '',
+              name: author.displayName ?? '',
+              handle: author.handle,
+            },
+          }
+        }
+      }
+    }
+
+    if (replies && replies.length > 0) {
+      card.details = replies.map((reply) => reply.html)
+    }
+
+    cards.push(card)
+  }
+  return cards
 }

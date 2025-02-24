@@ -70,10 +70,15 @@ export default defineConfig({
 
   // combine multiple rules as utility classes
   shortcuts: [
-    ['op-transition', 'transition-opacity duration-300 ease-in-out'],
     [
-      'shadow-c',
-      'shadow-[0_0_20px_rgba(0,0,0,0.2)] dark:shadow-[0_0_30px_rgba(255,255,255,0.4)]',
+      /^(\w+)-transition(?:-(\d+))?$/,
+      (match) =>
+        `transition-${match[1] === 'op' ? 'opacity' : match[1]} duration-${match[2] ? match[2] : '300'} ease-in-out`,
+    ],
+    [
+      /^shadow-custom_(-?\d+)_(-?\d+)_(-?\d+)_(-?\d+)$/,
+      ([_, x, y, blur, spread]) =>
+        `shadow-[${x}px_${y}px_${blur}px_${spread}px_rgba(0,0,0,0.2)] dark:shadow-[${x}px_${y}px_${blur}px_${spread}px_rgba(255,255,255,0.4)]`,
     ],
     [
       /^btn-(\w+)$/,

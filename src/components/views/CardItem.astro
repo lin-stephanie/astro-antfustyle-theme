@@ -1,0 +1,274 @@
+---
+import { Image } from 'astro:assets'
+
+import Link from '~/components/base/Link.astro'
+import SwiperCarousel from '~/components/widgets/SwiperCarousel.astro'
+import { formatDate } from '~/utils/datetime'
+
+import type { HTMLAttributes } from 'astro/types'
+import type { LocalImageProps, RemoteImageProps } from 'astro:assets'
+
+interface ImageData {
+  src: string
+  alt: string
+}
+
+interface VideoData {
+  src: string
+  alt: string
+  thumbnail: string
+}
+
+interface ExternalData {
+  uri: string
+  title: string
+  description: string
+  thumb: string
+}
+
+interface QuoteData {
+  uri: string
+  text: string
+  author: {
+    link: string
+    avatar: string
+    name: string
+    handle: string
+  }
+}
+
+export interface CardItemData {
+  date?: Date | string
+  text?: string
+  html?: string
+  link?: string
+  images?: ImageData[]
+  video?: VideoData
+  external?: ExternalData
+  quote?: QuoteData
+  details?: string[]
+}
+
+interface Props {
+  // idx?: number
+  item: CardItemData
+  imageProps?: LocalImageProps | RemoteImageProps
+  videoProps?: HTMLAttributes<'video'>
+  class?: string
+}
+
+const {
+  // idx,
+  item,
+  imageProps,
+  videoProps,
+  class: className,
+} = Astro.props
+
+const COMPACT = false
+const MAX_DETAILS = 3
+
+const { date, text, html, link, images, video, external, quote, details } = item
+const MediaContainer = link ? Link : 'div'
+const Content = details ? 'collapsible-content' : 'div'
+---
+
+<section class={className}>
+  <div
+    class="overflow-hidden flex flex-col
+      b b-[#8884] rounded-lg bg-white dark:bg-black
+      shadow-transition-500 hover:(shadow-custom_0_3_20_-5)"
+  >
+    {
+      ((images && images.length > 0) || video) && (
+        <MediaContainer
+          class="b-b b-b-[#8884] op-100!"
+          href={link || undefined}
+        >
+          {images &&
+            (images.length > 1 ? (
+              <SwiperCarousel images={images} imageProps={imageProps} />
+            ) : (
+              <Image
+                class="aspect-[16/9] object-cover"
+                src={images[0].src}
+                alt={images[0].alt}
+                inferSize
+                {...imageProps}
+              />
+            ))}
+
+          {video && (
+            <video
+              class="w-full aspect-[16/9] object-cover"
+              src={video.src}
+              poster={video.thumbnail}
+              aria-label={video.alt}
+              autoplay
+              muted
+              loop
+              playsinline
+              {...videoProps}
+            />
+          )}
+        </MediaContainer>
+      )
+    }
+    {
+      external && (
+        <Link
+          class="overflow-hidden flex flex-col b b-[#8884] rounded-lg mt-3 mx-3 op-100! shadow-transition-500 hover:(shadow-custom_0_5_15_-3)"
+          href={external.uri}
+        >
+          {!COMPACT && external.thumb && (
+            <Image
+              class="b-b b-b-[#8884] aspect-[1.91/1] object-cover"
+              src={external.thumb}
+              alt={external.title}
+              inferSize
+              {...imageProps}
+            />
+          )}
+          <div class="flex flex-col px-3 pt-2 pb-1">
+            <div class="flex flex-col gap-1 pb-1.5 b-b b-b-[#8884]">
+              <p class="text-sm font-600">{external.title}</p>
+              <p class="text-xs">{external.description}</p>
+            </div>
+            <div class="flex items-center gap-1 pt-1 text-[0.72rem] op-70">
+              <div u-i-hugeicons-earth class="size-1em" aria-hidden="true" />
+              <p>{new URL(external.uri).hostname}</p>
+            </div>
+          </div>
+        </Link>
+      )
+    }
+    {
+      quote && (
+        <div class="overflow-hidden flex flex-col gap-2 b b-[#8884] rounded-lg p-2 mt-3 mx-3 text-sm shadow-transition-500 hover:(shadow-custom_0_5_15_-3)">
+          <div class="flex items-center gap-1">
+            <Image
+              class="size-1em rounded-full object-cover"
+              src={quote.author.avatar}
+              alt={quote.author.name}
+              inferSize
+            />
+            <p class="truncate">
+              <span class="font-600">{quote.author.name}</span>
+              <Link class="op-transition" href={quote.author.link}>
+                {`@${quote.author.handle}`}
+              </Link>
+            </p>
+          </div>
+          <Link class="op-80!" href={quote.uri}>
+            <p class="line-height-normal">{quote.text}</p>
+          </Link>
+        </div>
+      )
+    }
+    <Content class="p-4 pb-3">
+      {html && <div class="prose card-item-prose" set:html={html} />}
+      {text && <p class="prose card-item-prose">{text}</p>}
+      {
+        details && (
+          <div
+            class="card-item-details"
+            style="max-height: 0; overflow-y: clip;"
+          >
+            <ol class="relative border-s border-gray-200 dark:border-gray-700">
+              {details.slice(0, MAX_DETAILS + 1).map((detail, idx) => (
+                <li class="ms-4 mb-6 last:mb-0">
+                  <div class="absolute start--1.6 w-3 h-3 border rounded-full border-white dark:border-gray-900 mt-1.5 bg-gray-200 dark:bg-gray-700" />
+                  {idx < MAX_DETAILS && (
+                    <div class="prose card-item-prose" set:html={detail} />
+                  )}
+                  {link && idx === MAX_DETAILS && (
+                    <Link class="prose card-item-prose op-100!" href={link}>
+                      View more...
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </div>
+        )
+      }
+      {
+        date && (
+          <div class="flex justify-between items-center pt-3 text-sm">
+            {link ? (
+              <Link class="flex-auto op-transition" href={link}>
+                {formatDate(date)}
+              </Link>
+            ) : (
+              <p class="op-60">{formatDate(date)}</p>
+            )}
+            {details && (
+              <button class="details-switch op-50 op-transition hover:op-100">
+                <div u-i-famicons-chevron-down-sharp class="icon-down" />
+                <div u-i-famicons-chevron-up-sharp class="icon-up hidden" />
+              </button>
+            )}
+          </div>
+        )
+      }
+    </Content>
+  </div>
+</section>
+
+<script>
+  class CollapsibleContent extends HTMLElement {
+    #isExpanded = false
+    #detailsContainer: HTMLElement | null = null
+    #button: HTMLElement | null = null
+    #upIcon: HTMLElement | null = null
+    #downIcon: HTMLElement | null = null
+    #handleClick: (() => void) | null = null
+
+    connectedCallback() {
+      this.#detailsContainer = this.querySelector('.card-item-details')
+      this.#button = this.querySelector('.details-switch')
+      this.#downIcon = this.querySelector('.icon-down')
+      this.#upIcon = this.querySelector('.icon-up')
+
+      this.#isExpanded = false
+      this.#setupEventListeners()
+    }
+
+    disconnectedCallback() {
+      this.#cleanup()
+    }
+
+    #setupEventListeners = () => {
+      if (!this.#button) return
+
+      this.#handleClick = () => {
+        if (!this.#detailsContainer || !this.#upIcon || !this.#downIcon) return
+
+        this.#isExpanded = !this.#isExpanded
+
+        if (this.#isExpanded) {
+          this.#detailsContainer.style.marginTop = '1.1rem'
+          this.#detailsContainer.style.maxHeight = `${this.#detailsContainer.scrollHeight}px`
+          this.#upIcon.classList.remove('hidden')
+          this.#downIcon.classList.add('hidden')
+        } else {
+          this.#detailsContainer.style.marginTop = '0'
+          this.#detailsContainer.style.maxHeight = '0'
+          this.#upIcon.classList.add('hidden')
+          this.#downIcon.classList.remove('hidden')
+        }
+      }
+
+      this.#button.addEventListener('click', this.#handleClick)
+    }
+
+    #cleanup = () => {
+      if (this.#button && this.#handleClick) {
+        this.#button.removeEventListener('click', this.#handleClick)
+        this.#handleClick = null
+      }
+    }
+  }
+
+  customElements.define('collapsible-content', CollapsibleContent)
+</script>
