@@ -5,6 +5,7 @@ import Link from '~/components/base/Link.astro'
 import SwiperCarousel from '~/components/widgets/SwiperCarousel.astro'
 import { formatDate } from '~/utils/datetime'
 
+import type { ImageMetadata } from 'astro'
 import type { HTMLAttributes } from 'astro/types'
 import type { LocalImageProps, RemoteImageProps } from 'astro:assets'
 
@@ -16,14 +17,14 @@ interface ImageData {
 interface VideoData {
   src: string
   alt: string
-  thumbnail: string
+  poster: string
 }
 
 interface ExternalData {
   uri: string
   title: string
   description: string
-  thumb: string
+  img: string
 }
 
 interface QuoteData {
@@ -70,7 +71,36 @@ const MAX_DETAILS = 3
 
 const { date, text, html, link, images, video, external, quote, details } = item
 const MediaContainer = link ? Link : 'div'
-const Content = details ? 'collapsible-content' : 'div'
+const CardContent = details ? 'collapsible-content' : 'div'
+
+let proccessedImages:
+  | ImageData[]
+  | { src: string | ImageMetadata; alt: string }[] = []
+if (images && images.length > 0) {
+  if (images.some((image) => !image.src.startsWith('http'))) {
+    const localImages = import.meta.glob<{ default: ImageMetadata }>(
+      '/src/assets/**/*.{jpg,jpeg,png,webp}'
+    )
+
+    proccessedImages = await Promise.all(
+      images.map(async (image) => {
+        if (!image.src.startsWith('http') && !localImages[image.src])
+          throw new Error(
+            `"${image.src}" does not exist in glob: "/src/assets/**/*.{jpg,jpeg,png,webp}"`
+          )
+
+        return {
+          src: image.src.startsWith('http')
+            ? image.src
+            : (await localImages[image.src]()).default,
+          alt: image.alt,
+        }
+      })
+    )
+  } else {
+    proccessedImages = images
+  }
+}
 ---
 
 <section class={className}>
@@ -87,13 +117,19 @@ const Content = details ? 'collapsible-content' : 'div'
         >
           {images &&
             (images.length > 1 ? (
-              <SwiperCarousel images={images} imageProps={imageProps} />
+              <SwiperCarousel
+                images={proccessedImages}
+                imageProps={imageProps}
+              />
             ) : (
+              // @ts-expect-error(ignore)
               <Image
                 class="aspect-[16/9] object-cover"
-                src={images[0].src}
+                src={proccessedImages[0].src}
                 alt={images[0].alt}
-                inferSize
+                {...(typeof images[0].src === 'string'
+                  ? { inferSize: true }
+                  : {})}
                 {...imageProps}
               />
             ))}
@@ -102,7 +138,7 @@ const Content = details ? 'collapsible-content' : 'div'
             <video
               class="w-full aspect-[16/9] object-cover"
               src={video.src}
-              poster={video.thumbnail}
+              poster={video.poster}
               aria-label={video.alt}
               autoplay
               muted
@@ -120,10 +156,10 @@ const Content = details ? 'collapsible-content' : 'div'
           class="overflow-hidden flex flex-col b b-[#8884] rounded-lg mt-3 mx-3 op-100! shadow-transition-500 hover:(shadow-custom_0_5_15_-3)"
           href={external.uri}
         >
-          {!COMPACT && external.thumb && (
+          {!COMPACT && external.img && (
             <Image
               class="b-b b-b-[#8884] aspect-[1.91/1] object-cover"
-              src={external.thumb}
+              src={external.img}
               alt={external.title}
               inferSize
               {...imageProps}
@@ -165,7 +201,14 @@ const Content = details ? 'collapsible-content' : 'div'
         </div>
       )
     }
-    <Content class="p-4 pb-3">
+    <CardContent class="p-4 pb-3">
+      {
+        Astro.slots.has('default') && (
+          <div class="prose card-item-prose">
+            <slot />
+          </div>
+        )
+      }
       {html && <div class="prose card-item-prose" set:html={html} />}
       {text && <p class="prose card-item-prose">{text}</p>}
       {
@@ -211,7 +254,7 @@ const Content = details ? 'collapsible-content' : 'div'
           </div>
         )
       }
-    </Content>
+    </CardContent>
   </div>
 </section>
 

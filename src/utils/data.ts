@@ -121,7 +121,7 @@ export function processBlueskyPosts(data: CollectionEntry<'highlights'>[]) {
         card.video = {
           src: `https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${author.did}&cid=${embed.cid}`,
           alt: embed.alt ?? '',
-          thumbnail: embed.thumbnail ?? '',
+          poster: embed.thumbnail ?? '',
         }
 
       if (AppBskyEmbedExternal.isView(embed))
@@ -129,7 +129,7 @@ export function processBlueskyPosts(data: CollectionEntry<'highlights'>[]) {
           uri: embed.external.uri,
           title: embed.external.title,
           description: embed.external.description,
-          thumb: embed.external.thumb ?? '',
+          img: embed.external.thumb ?? '',
         }
 
       if (AppBskyEmbedRecord.isView(embed)) {
@@ -163,7 +163,7 @@ export function processBlueskyPosts(data: CollectionEntry<'highlights'>[]) {
             card.video = {
               src: `https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${author.did}&cid=${media.cid}`,
               alt: media.alt ?? '',
-              thumbnail: media.thumbnail ?? '',
+              poster: media.thumbnail ?? '',
             }
 
           if (AppBskyEmbedExternal.isView(media))
@@ -171,7 +171,7 @@ export function processBlueskyPosts(data: CollectionEntry<'highlights'>[]) {
               uri: media.external.uri,
               title: media.external.title,
               description: media.external.description,
-              thumb: media.external.thumb ?? '',
+              img: media.external.thumb ?? '',
             }
         }
 

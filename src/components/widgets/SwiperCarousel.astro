@@ -1,12 +1,13 @@
 ---
 import { Image } from 'astro:assets'
 
+import type { ImageMetadata } from 'astro'
 import type { LocalImageProps, RemoteImageProps } from 'astro:assets'
 import type { SwiperOptions } from 'swiper/types'
 
 export interface Props {
   images: {
-    src: string
+    src: string | ImageMetadata
     alt: string
   }[]
   imageProps?: LocalImageProps | RemoteImageProps
@@ -33,11 +34,12 @@ const { images, imageProps, swiperOptions, class: className } = Astro.props
   {
     images.map((item) => (
       <swiper-slide>
+        {/* @ts-expect-error(ignore) */}
         <Image
           class="aspect-[16/9] object-cover"
           src={item.src}
           alt={item.alt}
-          inferSize
+          {...(typeof item.src === 'string' ? { inferSize: true } : {})}
           {...imageProps}
         />
       </swiper-slide>
