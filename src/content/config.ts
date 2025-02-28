@@ -41,17 +41,16 @@ const feeds = defineCollection({
 
 const releases = defineCollection({
   loader: githubReleasesLoader({
-    loadMode: 'repoList',
-    modeConfig: {
-      repos: [
-        'withastro/astro',
-        'withastro/starlight',
-        'lin-stephanie/astro-loaders',
-        'lin-stephanie/astro-antfustyle-theme',
-      ],
-      monthsBack: 3,
-      entryReturnType: 'byRelease',
-    },
+    mode: 'repoList',
+    repos: [
+      'withastro/astro',
+      'withastro/starlight',
+      'lin-stephanie/astro-loaders',
+      'lin-stephanie/astro-antfustyle-theme',
+    ],
+    monthsBack: 3,
+    entryReturnType: 'byRelease',
+    clearStore: true,
   }),
 })
 
@@ -60,6 +59,7 @@ const prs = defineCollection({
     search:
       'repo:withastro/astro repo:withastro/starlight repo:lin-stephanie/astro-antfustyle-theme',
     monthsBack: 2,
+    clearStore: true,
   }),
 })
 

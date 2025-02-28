@@ -22,10 +22,10 @@ export default ts.config(
   },
   // https://eslint.org/docs/latest/use/configure/configuration-files#using-predefined-configurations
   js.configs.recommended,
-  ...ts.configs.recommended,
-  ...ts.configs.stylistic,
-  ...astro.configs.recommended,
-  ...astro.configs['jsx-a11y-recommended'],
+  ts.configs.recommended,
+  ts.configs.stylistic,
+  astro.configs.recommended,
+  astro.configs['jsx-a11y-recommended'],
   prettier,
   {
     rules: {

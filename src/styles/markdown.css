@@ -300,13 +300,13 @@ h6:focus .header-anchor {
   font-size: 15px;
 }
 
-.callout .callout-icon {
-  padding-right: 2px;
-}
-
 .callout p {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.callout-title-icon {
+  padding-right: 2px;
 }
 
 /* :::iamge-* */

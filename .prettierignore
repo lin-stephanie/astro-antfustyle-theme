@@ -4,7 +4,7 @@ pnpm-lock.yaml
 
 # avoid error due to incorrect processing
 SearchSwitch.astro
-GroupView.astro
+GroupItem.astro
 GithubItem.astro
 
 # avoid HTML mismatches
