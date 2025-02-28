@@ -2,7 +2,7 @@
 title: Project Structure
 description: Introduces the structure of the Astro AntfuStyle Theme
 pubDate: 2024-10-03
-lastModDate: 2024-12-27
+lastModDate: 2024-02-28
 toc: true
 share: true
 ogImage: true
@@ -85,24 +85,26 @@ astro-antfustyle-theme
 | | |-changelog                             // Changlog post pages.
 | | | |-[slug].astro                        // Dynamic routing for individual changlog posts.
 | | | |-index.mdx                           // Changlog index page.
-| | |-feeds.mdx                             // Feeds page.
+| | |-feeds.mdx                             // Example: fetching Astro Blog using @ascorbic/feed-loader.
+| | |-highlights.mdx                        // Showcase your creative work or curated posts.
 | | |-index.mdx                             // Homepage in Markdown.
 | | |-manifest.webmanifest.js               // Web app manifest file for mobile and PWA support.
-| | |-projects.mdx                          // Projects page.
+| | |-projects.mdx                          // Showcase your projects.
 | | |-prs.mdx                               // Render your GitHub pull requests.
 | | |-releases.mdx                          // Render your GitHub releases.
 | | |-rss.xml.js                            // RSS feed generator.
-| | |-streams.mdx                           // Streams page.
+| | |-streams.mdx                           // Example: displaying Astro Streams with local JSON data.
 | |-styles                                  // Stylesheets for the project.
 | | |-main.css                              // Main styles for the project.
 | | |-markdown.css                          // Styles for rendering Markdown content.
+| | |-page.css                              // Styles for specific page.
 | | |-prose.css                             // Prose styles for text content.
 | |-types.ts                                // TypeScript types used across the project.
 | |-utils                                   // Utility functions and helpers.
 | | |-animation.ts                          // Utility functions for Animation.
 | | |-common.ts                             // General utility functions.
+| | |-data.ts                               // Utility functions for handling GitHub/Bluesky data.
 | | |-datetime.ts                           // Utility functions for date and time.
-| | |-github.ts                             // Utility functions for handling GitHub data.
 | | |-post.ts                               // Utility functions for working with posts.
 | | |-toc.ts                                // Utility functions for generating tables of contents.
 |-tsconfig.json                             // TypeScript configuration file.
@@ -125,18 +127,19 @@ Here’s how the theme’s pages correlate to collections and utilize zod schema
 
 <div class='overflow-x-auto'>
 
-| URL Path                                              | Page File Location                 | Content/Data Collection Path                                       | Zod Schema for Collection |
-| ----------------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------ | ------------------------- |
-| `/`                                                   | `src/pages/index.mdx`              | `src/content/home/`                                                | -                         |
-| `/blog`                                               | `src/pages/blog/index.mdx`         | `src/content/blog/`                                                | `postSchema`              |
-| `/blog/post-name` <br>`/blog/sequences/one/two/three` | `src/pages/blog/[...slug].astro`   | `src/content/blog/`                                                | `postSchema`              |
-| `/projects`                                           | `src/pages/projects.mdx`           | `src/content/projects/`                                            | `projectsSchema`          |
-| `/changelog`                                          | `src/pages/changelog/index.mdx`    | `src/content/changelog/`                                           | `postSchema`              |
-| `/changelog/xxx`                                      | `src/pages/changelog/[slug].astro` | `src/content/changelog/`                                           | `postSchema`              |
-| `/feeds`                                              | `src/pages/feeds.mdx`              | [Via Astro loader](../recreating-current-pages/#feeds-page) | -                         |
-| `/streams`                                            | `src/pages/streams.mdx`            | `src/content/streams/`                                             | `streamsSchema`           |
-| `/releases`                                           | `src/pages/releases.mdx`           | [Via Astro loader](../customizing-github-activity-pages/)          | -                         |
-| `/prs`                                                 | `src/pages/prs.mdx`                | [Via Astro loader](../customizing-github-activity-pages/)          | -                         |
+| URL Path                                              | Page File Location                 | Content/Data Collection Path                                     | Zod Schema for Collection |
+| ----------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------- | ------------------------- |
+| `/`                                                   | `src/pages/index.mdx`              | `src/content/home/`                                              | -                         |
+| `/blog`                                               | `src/pages/blog/index.mdx`         | `src/content/blog/`                                              | `postSchema`              |
+| `/blog/post-name` <br>`/blog/sequences/one/two/three` | `src/pages/blog/[...slug].astro`   | `src/content/blog/`                                              | `postSchema`              |
+| `/projects`                                           | `src/pages/projects.mdx`           | `src/content/projects/`                                          | `projectsSchema`          |
+| `/changelog`                                          | `src/pages/changelog/index.mdx`    | `src/content/changelog/`                                         | `postSchema`              |
+| `/changelog/xxx`                                      | `src/pages/changelog/[slug].astro` | `src/content/changelog/`                                         | `postSchema`              |
+| `/feeds`                                              | `src/pages/feeds.mdx`              | [Via Astro loader](../recreating-current-pages/#feeds-page)      | Default by Astro loader   |
+| `/streams`                                            | `src/pages/streams.mdx`            | `src/content/streams/`                                           | `streamsSchema`           |
+| `/releases`                                           | `src/pages/releases.mdx`           | [Via Astro loader](../customizing-github-activity-pages/)        | Default by Astro loader   |
+| `/prs`                                                | `src/pages/prs.mdx`                | [Via Astro loader](../customizing-github-activity-pages/)        | Default by Astro loader   |
+| `/highlughts`                                         | `src/pages/highlights.mdx`         | [Via Astro loader](../recreating-current-pages/#highlights-page) | Default by Astro loader   |
 
 </div>
 
@@ -169,5 +172,3 @@ You can also explore [Managing Image Assets](../managing-image-assets/), or dive
 If you encounter any issues, find errors, or see opportunities for improvement as you explore the theme, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions), or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls). Your feedback is highly appreciated! 
 
 Thank you for your interest in this project! 😊
-
-

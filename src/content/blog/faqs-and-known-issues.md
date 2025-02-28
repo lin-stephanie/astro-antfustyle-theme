@@ -2,7 +2,7 @@
 title: FAQs and Known Issues
 description: FAQs and known issues in Astro AntfuStyle Theme
 pubDate: 2020-01-01
-lastModDate: ''
+lastModDate: 2025-02-28
 toc: true
 share: true
 ogImage: true
@@ -114,7 +114,7 @@ You can control the search index dynamically in `src/layouts/StandardLayout.astr
 
 Search for `data-pagefind-` in the editor to see the current setup.
 
-> [!warning]- Pagefind Works after Build
+> [!warning]- Pagefind Works After Build
 >
 > Pagefind works only after the site is fully built. Test it by running `pnpm build && pnpm preview` after building the Astro site.
 
@@ -136,6 +136,12 @@ If the official integration doesn’t meet your needs, you may consider using [j
 
 Localization support will be added soon. For now, manual changes are required.
 
+### Choosing a Math Rendering Engine  
+
+The theme natively supports rendering math equations with [KaTeX](https://katex.org/) ([`c8c7ac3`](https://github.com/lin-stephanie/astro-antfustyle-theme/commit/c8c7ac3517cd468b0333aa2a1ac45d7568beb1e5)).  
+
+To use [Typst](https://typst.app/) instead of [LaTeX](https://www.latex-project.org/), refer to [PR#19](https://github.com/lin-stephanie/astro-antfustyle-theme/pull/19).
+
 ## Known Issues
 
 Here are some unresolved issues found during theme development. If you have a solution, feel free to [submit a PR](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls) --- much appreciated!
@@ -151,3 +157,9 @@ Thank you for taking the time to explore and use the Astro AntfuStyle Theme.
 If you encounter any issues, find errors, or see opportunities for improvement, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions) or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls).
 
 Let’s keep pushing forward and making great things happen --- your input is always welcome! 🙌
+
+:::details
+::summary[Changelog]
+2025-02-28
+- Add [Choosing a Math Rendering Engine](#choosing-a-math-rendering-engine) section  
+:::

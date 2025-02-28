@@ -8,7 +8,7 @@ share: true
 ogImage: true
 ---
 
-This post introduces some handy tricks for using special syntax in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to enhance your Markdown/Mdx content. These shortcuts let the theme’s built-in integrations or plugins handle the heavy lifting, automatically converting everything into HTML --- _no need to write complex code yourself!_ 🎨
+This post introduces some handy tricks for using special syntax in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to enhance your Markdown/MDX content. These shortcuts let the theme’s built-in integrations or plugins handle the heavy lifting, automatically converting everything into HTML --- _no need to write complex code yourself!_ 🎨
 
 ## Callouts (Alerts / Admonitions)
 
@@ -329,7 +329,7 @@ Build on :link[remark-directive]{id=remark/remark-directive style='github'} with
 
 The custom directive creates a block with an image, figcaption, and optional styling, much like a figure in academic papers.
 
-`:::image-figure[caption]{figcaption attrs}`: The square brackets hold the figcaption (if not set, the alt text from `![]()` will be used as the default), and curly braces are for inline styles or supported attributes.
+`:::image-figure[caption]{<figcaption> attrs}`: The square brackets hold the figcaption (if not set, the alt text from `![]()` will be used as the default), and curly braces are for inline styles or supported attributes.
 
 `![alt](image path)(img attrs)`: Standard Markdown image syntax with optional attributes inside parentheses (powered by :link[remark-imgattr]{#OliverSpeir/remark-imgattr style=github}, allowing customization of attributes for the generated `<img>` elements).
 

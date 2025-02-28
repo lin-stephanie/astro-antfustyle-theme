@@ -2,7 +2,7 @@
 title: Getting Started
 description: How to quickly build your personal website with Astro AntfuStyle Theme
 pubDate: 2024-10-04
-lastModDate: 2024-12-27
+lastModDate: 2025-02-28
 toc: true
 share: true
 ogImage: true
@@ -104,14 +104,14 @@ You can explore the current theme freely. Additionally, the following commands a
 Before configuring, it is advisable to review [**Project Structure**](../project-structure/) for an overview of the project and how it’s organized. Configuration can be done in two steps:
 
 - [**Basic Configuration**](../basic-configuration/): Customize the `src/config.ts` file.
-- [**Advanced Configuration**](../advanced-configuration/): Customize the LOGOs, site icons, styles, fonts and more.
+- [**Advanced Configuration**](../advanced-configuration/): Customize the logo, site icons, styles, fonts and more.
 
 ## Authoring Content
 
 Once configured, ensure the project is running correctly in your browser, then start creating or migrating your content. Jump to the section you're interested in:
 
 - [**Adding New Posts**](../adding-new-posts/): How to create posts with tips and guidelines.
-- [**Recreating Current Pages**](../recreating-current-pages/): Steps to recreate content for the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, and `404` pages, as well as creating and removing pages.
+- [**Recreating Current Pages**](../recreating-current-pages/): Steps to recreate content for the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, `/highlights`, and `404` pages, as well as creating and removing pages.
 - :badge[NEW]{color=#f87171}[**Customizing GitHub Activity Pages**](../customizing-github-activity-pages/): Showcase your project releases or pull requests on GitHub.
 - [**Markdown Syntax Guide**](../markdown-syntax-guide/): Showcase of Markdown rendering in this theme.
 - [**Markdown/MDX Extended Features**](../markdown-mdx-extended-features/): Advanced features like callouts, code blocks, image captions, video embedding, and more.

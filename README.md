@@ -15,25 +15,27 @@ AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme f
 **Optimized Infrastructure**
 
 - Zero UI Framework
-- [SEO-friendly](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#about-seo-and-accessibility)
+- SEO-friendly
 - Auto-generated RSS Feed
-- Support for [Subpath Deployment](https://astro-antfustyle-theme.vercel.app/blog/basic-configuration/#configuring-site)
+- Subpath Deployment Support
 - Optimized Local Image Handling
-- VS Code Snippets for Quick Coding
-- Well-organized [Project Structure](https://astro-antfustyle-theme.vercel.app/blog/project-structure/)
-- Outstanding [Lighthouse Performance](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#lighthouse-scores)
+- VS Code Snippets for Fast Coding
+- Well-Structured Project
+- High Lighthouse Performance
 
 **Content Management**
 
 - Type Safety
 - Markdown & MDX Support
-- KaTeX Math Integration
-- [Dynamic OG Image Generation](https://astro-antfustyle-theme.vercel.app/blog/about-open-graph-images/)
-- [Callouts (Alerts / Admonitions)](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#callouts-alerts--admonitions)
-- [Directive Sugar](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#image-caption--link) for Both Markdown/MDX
-- [Code Syntax Highlighting & Annotations](https://astro-antfustyle-theme.vercel.app/blog/markdown-mdx-extended-features/#fully-featured-code-blocks)
+- Math Equations Rendering
+- Dynamic OG Image Generation
+- Callouts (Alerts / Admonitions)
+- Code Syntax Highlighting & Annotations
+- Ready-To-Use Remark Directives
+- Customizable Layouts & Views
 - Customizable Animated Backgrounds ([Preview](#preview))
-- [Showcase Your GitHub Releases and PRs](https://astro-antfustyle-theme.vercel.app/blog/customizing-github-activity-pages)
+- Showcase Your GitHub Releases and Contributions
+- Highlight Your Creative Work or Curated Posts
 
 **User Experience**
 
@@ -42,10 +44,10 @@ AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme f
 - Light & Dark Modes Toggle
 - Smooth View Transitions
 - Loading Progress Indicator
-- [Image Zoom](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#image-zoom) Preview
-- [Search Functionality](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#search-functionality)
-- [Accessibility Enhancements](https://astro-antfustyle-theme.vercel.app/blog/faqs-and-known-issues/#about-seo-and-accessibility)
-- Social Media Sharing Features
+- Image Zoom Preview
+- Search Functionality
+- Accessibility Enhancements
+- Social Media Sharing
 - Keyboard-Friendly
 
 > Preparing to upgrade to Astro 5 with [more features](https://github.com/users/lin-stephanie/projects/4/views/4)! 🚀

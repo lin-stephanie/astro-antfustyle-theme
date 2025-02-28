@@ -6,24 +6,26 @@ This live demo will guide you through setup and customization, offering helpful 
 
 - Zero UI Framework
 - [SEO-friendly](./blog/faqs-and-known-issues/#about-seo-and-accessibility)
-- Auto-generated RSS Feed
-- Support for [Subpath Deployment](./blog/basic-configuration/#configuring-site)
+- [Auto-generated RSS Feed](./blog/faqs-and-known-issues/#rss-subscription-scope)
+- [Subpath Deployment](./blog/basic-configuration/#configuring-site) Support
 - Optimized Local Image Handling
-- VS Code Snippets for Quick Coding
-- Well-organized [Project Structure](./blog/project-structure/)
-- Outstanding [Lighthouse Performance](./blog/faqs-and-known-issues/#lighthouse-scores)
+- VS Code Snippets for Fast Coding
+- [Well-Structured Project](./blog/project-structure/)
+- High [Lighthouse Performance](./blog/faqs-and-known-issues/#lighthouse-scores)
 
 **Content Management**
 
 - Type Safety
 - Markdown & MDX Support
-- KaTeX Math Integration
+- [Math Equations Rendering](./blog/faqs-and-known-issues/#choosing-a-math-rendering-engine)
 - [Dynamic OG Image Generation](./blog/about-open-graph-images/)
-- [Callouts (Alerts / Admonitions)](./blog/markdown-mdx-extended-features/#callouts-alerts--admonitions)
-- [Directive Sugar](./blog/markdown-mdx-extended-features/#image-caption--link) for Both Markdown/MDX
+- [Callouts](./blog/markdown-mdx-extended-features/#callouts-alerts--admonitions) (Alerts / Admonitions)
 - [Code Syntax Highlighting & Annotations](./blog/markdown-mdx-extended-features/#fully-featured-code-blocks)
+- Ready-To-Use [Remark Directives](./blog/markdown-mdx-extended-features/#image-caption--link)
+- Customizable Layouts & Views
 - Customizable Animated Backgrounds (Take a look around!)
 - [Showcase Your GitHub Releases and PRs](./blog/customizing-github-activity-pages)
+- [Highlight Your Creative Work or Curated Posts](./blog/recreating-current-pages/#highlights-page)
 
 **User Experience**
 
@@ -32,7 +34,7 @@ This live demo will guide you through setup and customization, offering helpful 
 - Light & Dark Modes Toggle
 - Smooth View Transitions
 - Loading Progress Indicator
-- [Image Zoom](./blog/faqs-and-known-issues/#image-zoom) Preview
+- [Image Zoom Preview](./blog/faqs-and-known-issues/#image-zoom)
 - [Search Functionality](./blog/faqs-and-known-issues/#search-functionality)
 - [Accessibility Enhancements](./blog/faqs-and-known-issues/#about-seo-and-accessibility)
 - Social Media Sharing
