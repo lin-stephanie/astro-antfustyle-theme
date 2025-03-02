@@ -23,6 +23,10 @@
   --uno: 'lt-sm:text-sm';
 }
 
+summary::-webkit-details-marker {
+  display: none;
+}
+
 /* /highlights */
 .card-item-prose p {
   margin-bottom: 1.1em;
