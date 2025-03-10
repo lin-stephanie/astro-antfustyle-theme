@@ -215,7 +215,7 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
     #generateHeadingMapToc = (tocLinks: HTMLAnchorElement[]) => {
       for (const link of tocLinks) {
         const { hash } = new URL(link.href)
-        const id = hash.replace(/^#/, '')
+        const id = decodeURIComponent(hash.replace(/^#/, ''))
         const headingEl = document.getElementById(id)
 
         if (headingEl) {
