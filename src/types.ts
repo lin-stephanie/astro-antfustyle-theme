@@ -333,23 +333,28 @@ type NavBarComponentType =
   | 'searchButton'
   | 'themeButton'
   | 'rssLink'
+  | 'hr'
 
 export interface NavBarLayout {
   /**
-   * Defines which components ('internalNavs', 'socialLinks', 'searchButton',
-   * 'themeButton', 'rssLink') are positioned on the left side of the navigation bar.
+   * Defines which components ('internalNavs', 'socialLinks', 'searchButton', themeButton',
+   * 'rssLink', 'hr') are positioned on the left side of the navigation bar. Note:
    *
-   * If you want all components to appear on the right side, leave this array empty.
-   * Components in `left` and `right` arrays must not contain duplicates.
+   * - Leave empty to place all components on the right.
+   * - No duplicates allowed between `left` and `right`.
+   * - The order defines the display sequence.
+   * - Use `'hr'` to insert a divider between components.
    */
   left: NavBarComponentType[]
 
   /**
-   * Defines which components ('internalNavs', 'socialLinks', 'searchButton',
-   * 'themeButton', 'rssLink') are positioned on the right side of the navigation bar.
+   * Defines which components ('internalNavs', 'socialLinks', 'searchButton', 'themeButton',
+   * 'rssLink', 'hr') are positioned on the right side of the navigation bar. Note:
    *
-   * If you want all components to appear on the left side, leave this array empty.
-   * Components in `left` and `right` arrays must not contain duplicates.
+   * - Leave empty to place all components on the right.
+   * - No duplicates allowed between `left` and `right`.
+   * - The order defines the display sequence.
+   * - Use `'hr'` to insert a divider between components.
    */
   right: NavBarComponentType[]
 
@@ -451,7 +456,7 @@ export interface Ui {
   /**
    * Sets internal navigation links in display order.
    *
-   * Used in `src/components/base/NavBar.astro`.
+   * Used in `src/components/nav/NavBar.astro`.
    */
   internalNavs: InternalNav[]
 
@@ -463,7 +468,7 @@ export interface Ui {
   /**
    * Controls the layout of the navigation bar.
    *
-   * Used in `src/components/base/NavBar.astro`.
+   * Used in `src/components/nav/NavBar.astro`.
    */
   navBarLayout: NavBarLayout
 

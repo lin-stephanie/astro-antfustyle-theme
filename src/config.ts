@@ -54,12 +54,20 @@ export const UI: Ui = {
       displayMode: 'alwaysIcon',
       icon: 'i-ri-twitter-x-fill',
     },
+    {
+      link: 'https://bsky.app/profile/astro.build',
+      title: 'Astro on Bluesky',
+      displayMode: 'alwaysIcon',
+      icon: 'i-meteor-icons-bluesky',
+    },
   ],
   navBarLayout: {
     left: [],
     right: [
       'internalNavs',
+      'hr',
       'socialLinks',
+      'hr',
       'searchButton',
       'themeButton',
       'rssLink',

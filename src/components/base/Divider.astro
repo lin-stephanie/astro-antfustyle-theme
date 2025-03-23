@@ -1,0 +1,9 @@
+---
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<hr class={`w-0.25 h-[85%] b-t-0 bg-[#ddd] dark:bg-[#333] ${className}`} />

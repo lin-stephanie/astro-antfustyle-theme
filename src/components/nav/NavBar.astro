@@ -1,0 +1,132 @@
+---
+import LogoButton from '~/components/widgets/LogoButton.astro'
+import Divider from '~/components/base/Divider.astro'
+import SearchSwitch from '~/components/widgets/SearchSwitch.astro'
+import ThemeSwitch from '~/components/widgets/ThemeSwitch.astro'
+import RssLink from '~/components/widgets/RssLink.astro'
+import NavItem from '~/components/nav/NavItem.astro'
+import NavSwitch from '~/components/nav/NavSwitch.astro'
+
+import { UI } from '~/config'
+import { validateNavBarLayout } from '~/utils/common'
+
+const { navBarLayout, internalNavs, socialLinks } = UI
+const { left, right, mergeOnMobile } = navBarLayout
+
+validateNavBarLayout(navBarLayout)
+---
+
+<header
+  class={`flex items-center gap-6 p-8 ${mergeOnMobile ? 'lt-md:px-7' : 'lt-md:(px-6 gap-3)'}`}
+>
+  <LogoButton />
+  <nav
+    class={`flex items-center gap-4.8 w-full lt-md:justify-end
+    ${left.length !== 0 ? (right.length !== 0 ? 'justify-between' : '') : 'justify-end'}`}
+    aria-label="Main menu"
+  >
+    {
+      left.length !== 0 && (
+        <div
+          class={`grid grid-flow-col items-center gap-4.8 print:op-0 ${mergeOnMobile ? '' : 'lt-md:(gap-3)'}`}
+        >
+          {left.map((key) =>
+            key === 'hr' ? (
+              <Divider class={mergeOnMobile ? 'lt-md:hidden' : undefined} />
+            ) : key === 'searchButton' ? (
+              <SearchSwitch />
+            ) : key === 'themeButton' ? (
+              <ThemeSwitch />
+            ) : key === 'rssLink' ? (
+              <RssLink class={mergeOnMobile ? 'lt-md:hidden' : undefined} />
+            ) : key === 'internalNavs' ? (
+              internalNavs.map((item) => (
+                <NavItem type="internal" {item} {mergeOnMobile} />
+              ))
+            ) : (
+              socialLinks.map((item) => (
+                <NavItem type="social" {item} {mergeOnMobile} />
+              ))
+            )
+          )}
+        </div>
+      )
+    }
+    {
+      right.length !== 0 && (
+        <div
+          class={`grid grid-flow-col items-center gap-4.8 print:op-0
+              ${!right.includes('themeButton') && !right.includes('searchButton') && 'lt-md:hidden'}
+              ${mergeOnMobile ? '' : 'lt-md:(gap-3)'}`}
+        >
+          {right.map((key) =>
+            key === 'hr' ? (
+              <Divider class={mergeOnMobile ? 'lt-md:hidden' : undefined} />
+            ) : key === 'searchButton' ? (
+              <SearchSwitch />
+            ) : key === 'themeButton' ? (
+              <ThemeSwitch />
+            ) : key === 'rssLink' ? (
+              <RssLink class={mergeOnMobile ? 'lt-md:hidden' : undefined} />
+            ) : key === 'internalNavs' ? (
+              internalNavs.map((item) => (
+                <NavItem type="internal" {item} {mergeOnMobile} />
+              ))
+            ) : (
+              socialLinks.map((item) => (
+                <NavItem type="social" {item} {mergeOnMobile} />
+              ))
+            )
+          )}
+        </div>
+      )
+    }
+    {
+      mergeOnMobile && (
+        <NavSwitch>
+          <Fragment slot="text">
+            {internalNavs.length !== 0 &&
+              internalNavs.map((item) => (
+                <NavItem
+                  type="internal"
+                  {item}
+                  {mergeOnMobile}
+                  mobileItemType="text"
+                />
+              ))}
+            {socialLinks.length !== 0 &&
+              socialLinks.map((item) => (
+                <NavItem
+                  type="social"
+                  {item}
+                  {mergeOnMobile}
+                  mobileItemType="text"
+                />
+              ))}
+          </Fragment>
+          <Fragment slot="icon">
+            {internalNavs.length !== 0 &&
+              internalNavs.map((item) => (
+                <NavItem
+                  type="internal"
+                  {item}
+                  {mergeOnMobile}
+                  mobileItemType="icon"
+                />
+              ))}
+            {socialLinks.length !== 0 &&
+              socialLinks.map((item) => (
+                <NavItem
+                  type="social"
+                  {item}
+                  {mergeOnMobile}
+                  mobileItemType="icon"
+                />
+              ))}
+            <RssLink />
+          </Fragment>
+        </NavSwitch>
+      )
+    }
+  </nav>
+</header>
