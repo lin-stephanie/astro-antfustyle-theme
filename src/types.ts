@@ -568,7 +568,7 @@ export interface ShareConfig {
   email: boolean
 }
 
-interface TocConfig {
+export interface TocConfig {
   /**
    * Sets the minimum heading level for TOC.
    *
@@ -589,14 +589,17 @@ interface TocConfig {
   displayPosition: 'left' | 'right'
 
   /**
-   * Controls whether the TOC is always visible or only appears when hovering.
+   * Controls how the page TOC is displayed. Allowed values:
+   * - 'always': TOC is always visible.
+   * - 'content': TOC shows when hovering over the content area (element with class 'prose').
+   * - 'hover': TOC shows only when hovering over the TOC itself.
    */
-  displayMode: 'always' | 'hover'
+  displayMode: 'always' | 'content' | 'hover'
 }
 
 interface OgImageConfig {
   /**
-   * Defines your name or brand name that will be displayed on the OG image.
+   * Sets your name or brand name that will be displayed on the OG image.
    */
   authorOrBrand: string
 

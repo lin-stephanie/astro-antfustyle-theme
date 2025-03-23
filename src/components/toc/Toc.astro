@@ -7,14 +7,7 @@ import { generateToc } from '~/utils/toc'
 import { FEATURES } from '~/config'
 
 import type { MarkdownHeading } from 'astro'
-import type { HeadingLevel } from '~/types'
-
-interface TocConfig {
-  minHeadingLevel: HeadingLevel
-  maxHeadingLevel: HeadingLevel
-  displayPosition: 'left' | 'right'
-  displayMode: 'hover' | 'always'
-}
+import type { TocConfig } from '~/types'
 
 interface Props {
   headings?: MarkdownHeading[]
@@ -55,18 +48,13 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
     <nav
       class:list={{
         'toc-desktop': true,
-        'toc-desktop-right': displayPosition === 'right',
         'toc-desktop-on': displayMode === 'always',
+        'toc-desktop-content': displayMode === 'content',
+        'toc-desktop-right': displayPosition === 'right',
       }}
       {style}
     >
-      <div
-        class:list={{
-          'toc-desktop-anchor i-ri-menu-2-fill': true,
-          'op-60': displayMode === 'always',
-        }}
-      >
-      </div>
+      <div class="toc-desktop-anchor i-ri-menu-2-fill"></div>
       <ul>
         {
           !!specHeadings.length &&

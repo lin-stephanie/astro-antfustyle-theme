@@ -129,9 +129,10 @@ html.dark .prose {
   transition: all 700ms;
 }
 
-*:hover > .toc-desktop > .toc-desktop-anchor,
-.toc-desktop-on.toc-desktop > .toc-desktop-anchor {
-  opacity: 1;
+.toc-desktop-on > .toc-desktop-anchor,
+.prose:hover .toc-desktop-content > .toc-desktop-anchor,
+.toc-desktop:hover > .toc-desktop-anchor {
+  opacity: 0.6;
 }
 
 .toc-desktop > ul {
@@ -144,12 +145,10 @@ html.dark .prose {
   transition: all 700ms;
 }
 
-.toc-desktop-on.toc-desktop > ul {
+.toc-desktop-on > ul,
+.prose:hover .toc-desktop-content > ul,
+.toc-desktop:hover > ul {
   opacity: 0.6;
-}
-
-*:hover > .toc-desktop > ul {
-  opacity: 0.75;
 }
 
 .toc-desktop ul > li::before,
