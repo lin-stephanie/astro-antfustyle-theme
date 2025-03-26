@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content'
 
 import Link from '~/components/base/Link.astro'
 import GithubItem from '~/components/views/GithubItem.astro'
+import Warning from '~/components/base/Warning.astro'
 import { UI } from '~/config'
 import { formatDate, isDiffMonth } from '~/utils/datetime'
 import { getUrl } from '~/utils/common'
@@ -29,9 +30,14 @@ export type ExtendedPrData = CollectionEntry<'prs'>['data'] & {
   subLogo: Url | Icon | undefined
 }
 
-const MAX_PER_PKG = 5
 const { collectionType } = Astro.props
 const { monorepos, mainLogoOverrides, subLogoMatches } = UI.githubView
+
+const MAX_PER_PKG = 5
+const WARNING = `No GitHub data available for display.
+  See <a href='../blog/customizing-github-activity-pages/'>
+  Customizing GitHub Activity Pages</a> for details.`
+let isEmpty = false
 
 /* Releases */
 let releases: CollectionEntry<'releases'>[] = []
@@ -39,8 +45,8 @@ let extendedReleases: ExtendedReleaseData[] = []
 
 if (collectionType === 'releases') {
   releases = await getCollection(collectionType)
-  const pkgCountMap: Record<string, number> = {}
 
+  const pkgCountMap: Record<string, number> = {}
   extendedReleases = releases
     .map((item) => {
       const isInMonorepo = monorepos.includes(
@@ -80,6 +86,8 @@ if (collectionType === 'releases') {
     .sort((a, b) => {
       return +new Date(b.publishedAt) - +new Date(a.publishedAt)
     })
+
+  isEmpty = releases.length === 0 || extendedReleases.length === 0
 }
 
 /* PRs */
@@ -111,81 +119,88 @@ if (collectionType === 'prs') {
     .sort((a, b) => {
       return +new Date(b.createdAt) - +new Date(a.createdAt)
     })
+
+  isEmpty = prs.length === 0 || extendedPrs.length === 0
 }
 ---
 
-<div class="flex flex-col gap-8 lt-sm:gap-6 mt-16.8">
-  {
-    collectionType === 'releases' &&
-      extendedReleases.map((item, idx) => (
-        <GithubItem
-          collectionType={collectionType}
-          idx={idx}
-          item={item}
-          isDiffMonth={isDiffMonth(
-            item.publishedAt,
-            extendedReleases[idx - 1]
-              ? extendedReleases[idx - 1].publishedAt
-              : undefined
-          )}
-        />
-      ))
-  }
-  {
-    collectionType === 'prs' &&
-      extendedPrs.map((item, idx) => (
-        <GithubItem
-          collectionType={collectionType}
-          idx={idx}
-          item={item}
-          isDiffMonth={isDiffMonth(
-            item.createdAt,
-            extendedPrs[idx - 1] ? extendedPrs[idx - 1].createdAt : undefined
-          )}
-        />
-      ))
-  }
-</div>
+{
+  isEmpty ? (
+    <Warning html={WARNING} />
+  ) : (
+    <div class="flex flex-col gap-8 lt-sm:gap-6 mt-16.8">
+      {collectionType === 'releases' &&
+        extendedReleases.map((item, idx) => (
+          <GithubItem
+            collectionType={collectionType}
+            idx={idx}
+            item={item}
+            isDiffMonth={isDiffMonth(
+              item.publishedAt,
+              extendedReleases[idx - 1]
+                ? extendedReleases[idx - 1].publishedAt
+                : undefined
+            )}
+          />
+        ))}
+      {collectionType === 'prs' &&
+        extendedPrs.map((item, idx) => (
+          <GithubItem
+            collectionType={collectionType}
+            idx={idx}
+            item={item}
+            isDiffMonth={isDiffMonth(
+              item.createdAt,
+              extendedPrs[idx - 1] ? extendedPrs[idx - 1].createdAt : undefined
+            )}
+          />
+        ))}
 
-<div
-  class="prose flex flex-col items-center mx-a op-50 text-center text-3.75! lt-sm:text-sm!"
->
-  <hr class="mt-3em!" />
-  <p class="flex lt-sm:flex-col items-center my-0! lt-sm:my-1.5!">
-    <span>
-      Last fetched:
-      <time
-        class="inline-block text-[var(--fg-deeper)]"
-        datetime={new Date().toISOString()}
-        title={new Date().toISOString()}
-        >{formatDate(new Date())}
-      </time>
-    </span>
-    <span class="lt-sm:hidden">&nbsp;|&nbsp;</span>
-    <span>
-      Scheduled refresh:
-      <span class="text-[var(--fg-deeper)]">Every Saturday</span>
-    </span>
-  </p>
-  <p class="my-0! lt-sm:my-1.5!">
-    See
-    <Link
-      class="op-100!"
-      href={getUrl('/blog/customizing-github-activity-pages/')}
-    >
-      Customizing GitHub Activity Pages
-    </Link>
-    to configure your own
-  </p>
-  <p class="my-0! lt-sm:my-1.5!">
-    Inspired by
-    <Link
-      class="op-100!"
-      href={collectionType === 'releases'
-        ? 'https://releases.antfu.me/'
-        : 'https://prs.atinux.com/'}
-    >
-      {collectionType === 'releases' ? 'releases.antfu.me' : 'prs.atinux.com'}
-    </Link>
-  </p>
-</div>
+      <div class="prose flex flex-col items-center mx-a op-50 text-center text-3.75! lt-sm:text-sm!">
+        <hr class="mt-3em!" />
+        <p class="flex lt-sm:flex-col items-center my-0! lt-sm:my-1.5!">
+          <span>
+            Last fetched:
+            <time
+              class="inline-block text-[var(--fg-deeper)]"
+              datetime={new Date().toISOString()}
+              title={new Date().toISOString()}
+            >
+              {formatDate(new Date())}
+            </time>
+          </span>
+          <span class="lt-sm:hidden">&nbsp;|&nbsp;</span>
+          <span>
+            Scheduled refresh:
+            <span class="text-[var(--fg-deeper)]">Every Saturday</span>
+          </span>
+        </p>
+        <p class="my-0! lt-sm:my-1.5!">
+          See
+          <Link
+            class="op-100!"
+            href={getUrl('/blog/customizing-github-activity-pages/')}
+          >
+            Customizing GitHub Activity Pages
+          </Link>
+          to configure your own
+        </p>
+        <p class="my-0! lt-sm:my-1.5!">
+          Inspired by
+          <Link
+            class="op-100!"
+            href={
+              collectionType === 'releases'
+                ? 'https://releases.antfu.me/'
+                : 'https://prs.atinux.com/'
+            }
+          >
+            {collectionType === 'releases'
+              ? 'releases.antfu.me'
+              : 'prs.atinux.com'}
+          </Link>
+        </p>
+      </div>
+    </div>
+  )
+}

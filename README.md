@@ -3,7 +3,6 @@
 [![ci][ci-badge]][ci-link]
 [![version][version-badge]][version-link]
 [![live demo][demo-badge]][demo-link]
-[![playground][playground-badge]][playground-link]
 [![chat][chat-badge]][chat-link]
 
 ![cover image](https://raw.githubusercontent.com/lin-stephanie/assets/refs/heads/main/astro-antfustyle-theme/cover_2x.png)
@@ -32,9 +31,9 @@ AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme f
 - Callouts (Alerts / Admonitions)
 - Code Syntax Highlighting & Annotations
 - Ready-To-Use Remark Directives
-- Customizable Layouts & Views
+- Customizable Layouts, Views, and Navigation
 - Customizable Animated Backgrounds ([Preview](#preview))
-- Showcase Your GitHub Releases and Contributions
+- Showcase Your GitHub Releases and PRs
 - Highlight Your Creative Work or Curated Posts
 
 **User Experience**
@@ -104,9 +103,6 @@ If you see any errors or room for improvement, feel free to open an [issue](http
 
 [demo-badge]: https://img.shields.io/badge/Live%20Demo-080f12?style=flat&colorA=080f12&colorB=f87171&logo=vercel&logoSize=10
 [demo-link]:https://astro-antfustyle-theme.vercel.app/
-
-[playground-badge]: https://img.shields.io/badge/Playground-080f12?style=flat&colorA=080f12&colorB=f87171&logo=codesandbox&logoSize=10
-[playground-link]: https://codesandbox.io/s/github/lin-stephanie/astro-antfustyle-theme
 
 [chat-badge]: https://img.shields.io/badge/Discussions-080f12?style=flat&colorA=080f12&colorB=f87171&logo=github
 [chat-link]: https://github.com/lin-stephanie/astro-antfustyle-theme/discussions

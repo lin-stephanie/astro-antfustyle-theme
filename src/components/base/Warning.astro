@@ -7,11 +7,13 @@ const { html } = Astro.props
 ---
 
 <div
-  class="callout"
-  style="--callout-color-light: rgb(234, 179, 8); --callout-color-dark: rgb(234, 179, 8);"
+  class="prose callout"
+  style="max-width: none;"
+  data-callout="warning"
+  data-collapsible="false"
 >
   <div class="callout-title">
-    <div class="callout-icon">
+    <div class="callout-title-icon" aria-hidden="true">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="1em"
@@ -23,14 +25,13 @@ const { html } = Astro.props
         stroke-linecap="round"
         stroke-linejoin="round"
       >
-        <path
-          d="m21.73 18l-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3M12 9v4m0 4h.01"
-        ></path>
+        <g>
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4m0-4h.01"></path>
+        </g>
       </svg>
-    </div>
-    <div class="callout-title-inner">WARNING</div>
-  </div>
-  <div class="callout-content">
+    </div><div class="callout-title-text">WARNING</div>
+  </div><div class="callout-content">
     <p set:html={html} />
   </div>
 </div>

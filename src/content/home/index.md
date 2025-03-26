@@ -22,7 +22,7 @@ This live demo will guide you through setup and customization, offering helpful 
 - [Callouts](./blog/markdown-mdx-extended-features/#callouts-alerts--admonitions) (Alerts / Admonitions)
 - [Code Syntax Highlighting & Annotations](./blog/markdown-mdx-extended-features/#fully-featured-code-blocks)
 - Ready-To-Use [Remark Directives](./blog/markdown-mdx-extended-features/#image-caption--link)
-- Customizable Layouts & Views
+- Customizable Layouts, Views, and Navigation
 - Customizable Animated Backgrounds (Take a look around!)
 - [Showcase Your GitHub Releases and PRs](./blog/customizing-github-activity-pages)
 - [Highlight Your Creative Work or Curated Posts](./blog/recreating-current-pages/#highlights-page)

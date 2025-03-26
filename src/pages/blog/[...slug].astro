@@ -17,7 +17,7 @@ export async function getStaticPaths() {
   }))
 }
 
-const WARNING_HTML = `This is a draft post that will not be published
+const WARNING = `This is a draft post that will not be published
 in production. Set the post's <code>draft</code> property in
 frontmatter to <code>false</code> or remove it to publish the post.`
 
@@ -59,9 +59,9 @@ const minutesRead =
           </p>
         )
       }
-      {frontmatter.draft && <Warning html={WARNING_HTML} />}
     </Fragment>
     <Fragment slot="article">
+      {frontmatter.draft && <Warning html={WARNING} />}
       {Array.isArray(toc) && toc[0] && frontmatter.toc && <Toc {headings} />}
       <Content />
     </Fragment>
