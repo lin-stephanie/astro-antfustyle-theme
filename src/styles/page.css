@@ -32,3 +32,16 @@ summary::-webkit-details-marker {
   margin-bottom: 1.1em;
   margin-top: 1.1em;
 }
+
+.card-masonry > *:first-child {
+  border-radius: 0.5rem;
+
+  --uno: 'hover:(shadow-custom_0_3_20_-5)';
+}
+
+/* /shorts */
+.card-grid > *:first-child {
+  border-radius: 0.75rem;
+
+  --uno: 'hover:(shadow-custom_0_0_15_-3 scale-103 transition-transform)';
+}

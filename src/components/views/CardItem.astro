@@ -70,8 +70,13 @@ const COMPACT = false
 const MAX_DETAILS = 3
 
 const { date, text, html, link, images, video, external, quote, details } = item
+
 const MediaContainer = link ? Link : 'div'
-const CardContent = details ? 'collapsible-content' : 'div'
+const ContentContainer = details
+  ? 'collapsible-content'
+  : link && text && !html
+    ? Link
+    : 'div'
 
 let proccessedImages:
   | ImageData[]
@@ -105,9 +110,9 @@ if (images && images.length > 0) {
 
 <section class={className}>
   <div
-    class="overflow-hidden flex flex-col
-      b b-[#8884] rounded-lg bg-white dark:bg-black
-      shadow-transition-500 hover:(shadow-custom_0_3_20_-5)"
+    class={`overflow-hidden flex flex-col
+      h-full b b-[#8884] rounded-lg bg-white dark:bg-black
+      shadow-transition-500`}
   >
     {
       ((images && images.length > 0) || video) && (
@@ -153,7 +158,9 @@ if (images && images.length > 0) {
     {
       external && (
         <Link
-          class="overflow-hidden flex flex-col b b-[#8884] rounded-lg mt-3 mx-3 op-100! shadow-transition-500 hover:(shadow-custom_0_5_15_-3)"
+          class={`overflow-hidden flex flex-col
+            b b-[#8884] rounded-lg mt-3 mx-3
+            op-100! shadow-transition-500 hover:(shadow-custom_0_5_15_-3)`}
           href={external.uri}
         >
           {!COMPACT && external.img && (
@@ -180,7 +187,11 @@ if (images && images.length > 0) {
     }
     {
       quote && (
-        <div class="overflow-hidden flex flex-col gap-2 b b-[#8884] rounded-lg p-2 mt-3 mx-3 text-sm shadow-transition-500 hover:(shadow-custom_0_5_15_-3)">
+        <div
+          class={`overflow-hidden flex flex-col gap-2
+            b b-[#8884] rounded-lg p-2 mt-3 mx-3
+            text-sm shadow-transition-500 hover:(shadow-custom_0_5_15_-3)`}
+        >
           <div class="flex items-center gap-1">
             <Image
               class="size-1em rounded-full object-cover"
@@ -201,7 +212,10 @@ if (images && images.length > 0) {
         </div>
       )
     }
-    <CardContent class="p-4 pb-3">
+    <ContentContainer
+      class="flex flex-col justify-between h-full p-4 pb-3 op-100!"
+      href={link || undefined}
+    >
       {
         Astro.slots.has('default') && (
           <div class="prose card-item-prose">
@@ -238,7 +252,7 @@ if (images && images.length > 0) {
       {
         date && (
           <div class="flex justify-between items-center pt-3 text-sm">
-            {link ? (
+            {link && html ? (
               <Link class="flex-auto op-transition" href={link}>
                 {formatDate(date)}
               </Link>
@@ -254,7 +268,7 @@ if (images && images.length > 0) {
           </div>
         )
       }
-    </CardContent>
+    </ContentContainer>
   </div>
 </section>
 

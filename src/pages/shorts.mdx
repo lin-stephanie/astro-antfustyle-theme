@@ -1,7 +1,7 @@
 ---
-title: Highlights
-subtitle: Showcase your creative work or curated posts
-description: Showcase your creative work or curated posts
+title: Shorts
+subtitle: Share your short notes or quick thoughts
+description: Share your short notes or quick thoughts
 bgType: false
 toc: false
 ogImage: true
@@ -22,6 +22,6 @@ import CardView from '~/components/views/CardView.astro'
     subtitle={frontmatter.subtitle}
     isCentered={true}
   >
-    <CardView collectionType="highlights" mode="masonry" />
+    <CardView collectionType="shorts" mode="grid" />
   </StandardLayout>
 </BaseLayout>
