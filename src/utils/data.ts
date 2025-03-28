@@ -7,6 +7,8 @@ import {
 } from '@atproto/api'
 import { atUriToPostUri } from 'astro-loader-bluesky-posts'
 
+import { ensureTrailingSlash, getUrl } from './common'
+
 import type { CollectionEntry } from 'astro:content'
 import type { CardItemData } from '~/components/views/CardItem.astro'
 import type { GitHubView } from '~/types'
@@ -198,5 +200,72 @@ export function processBlueskyPosts(data: CollectionEntry<'highlights'>[]) {
 
     cards.push(card)
   }
+
+  return cards
+}
+
+/**
+ * Processes blog posts and converts them into `CardItemData` interface.
+ */
+export async function getShortsFromBlog(data: CollectionEntry<'blog'>[]) {
+  const cards: CardItemData[] = []
+  const basePath = getUrl(ensureTrailingSlash('/blog'))
+  const sortedData = data.sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  )
+
+  for (const item of sortedData) {
+    const slug = item.slug
+    const title = item.data.title
+    const date = item.data.pubDate
+
+    if (slug === 'markdown-syntax-guide') {
+      cards.push({
+        link: `${basePath}/${slug}`,
+        text: title,
+        date: date,
+      })
+    } else {
+      const { headings } = await item.render()
+      const neededHeadingLevel = slug === 'faqs-and-known-issues' ? 3 : 2
+      let processedTitle = title
+      switch (slug) {
+        case 'faqs-and-known-issues':
+          processedTitle = 'FAQs'
+          break
+        case 'adding-new-posts':
+          processedTitle = 'New Posts'
+          break
+        case 'recreating-current-pages':
+          processedTitle = 'Current Pages'
+          break
+        case 'customizing-github-activity-pages':
+          processedTitle = 'GitHub Activity'
+          break
+        case 'markdown-mdx-extended-features':
+          processedTitle = 'Extended Features'
+          break
+        case 'managing-image-assets':
+          processedTitle = 'Asset Management'
+          break
+        case 'about-open-graph-images':
+          processedTitle = 'Open Graph'
+          break
+      }
+
+      const itemCards = headings
+        .filter(
+          (h) => h.depth === neededHeadingLevel && h.text !== 'Wrapping Up'
+        )
+        .map((h) => ({
+          link: `${basePath}${slug}#${h.slug}`,
+          text: `${processedTitle}: ${h.text}`,
+          date: date,
+        }))
+
+      cards.push(...itemCards)
+    }
+  }
+
   return cards
 }

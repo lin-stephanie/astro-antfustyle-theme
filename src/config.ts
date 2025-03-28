@@ -34,6 +34,13 @@ export const UI: Ui = {
       icon: 'i-ri-movie-ai-line',
     },
     {
+      path: '/shorts',
+      title: 'Shorts',
+      displayMode: 'iconToTextOnMobile',
+      text: 'Shorts',
+      icon: 'i-meteor-icons-grid',
+    },
+    {
       path: '/changelog',
       title: 'Changelog',
       displayMode: 'iconToTextOnMobile',

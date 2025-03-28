@@ -2,14 +2,14 @@
 import { getCollection } from 'astro:content'
 
 import CardItem from '~/components/views/CardItem.astro'
-import { processBlueskyPosts } from '~/utils/data'
+import { processBlueskyPosts, getShortsFromBlog } from '~/utils/data'
 
 import type { ContentCollectionKey, DataCollectionKey } from 'astro:content'
 import type { CardItemData } from '~/components/views/CardItem.astro'
 
 interface Props {
   collectionType: ContentCollectionKey | DataCollectionKey
-  mode?: 'masonry'
+  mode: 'masonry' | 'grid'
   gap?: 'number'
   minCardWidth?: number
   maxCardWidth?: number
@@ -17,10 +17,10 @@ interface Props {
 
 const {
   collectionType,
-  mode = 'masonry',
+  mode,
   gap = 16,
-  minCardWidth = 350,
-  maxCardWidth = 1000,
+  minCardWidth,
+  maxCardWidth,
 } = Astro.props
 
 let processedHighlights: CardItemData[] = []
@@ -31,6 +31,12 @@ if (collectionType === 'highlights') {
       ? 0
       : new Date(b.date).valueOf() - new Date(a.date).valueOf()
   )
+}
+
+let processedShorts: CardItemData[] = []
+if (collectionType === ('shorts' as ContentCollectionKey)) {
+  const posts = await getCollection('blog')
+  processedShorts = await getShortsFromBlog(posts)
 }
 ---
 
@@ -48,6 +54,25 @@ if (collectionType === 'highlights') {
     </responsive-masonry>
   )
 }
+{
+  mode === 'grid' && (
+    <div
+      class="grid mx-20 lt-md:mx-1"
+      style={{
+        '--fade-in-duration': '0.6s',
+        'gap': `${gap}px`,
+        'grid-template-columns': `repeat(auto-fill, minmax(${minCardWidth ? `${minCardWidth}px` : '220px'}, ${maxCardWidth ? `${maxCardWidth}px` : '1fr'}))`,
+      }}
+    >
+      {processedShorts.map((item) => (
+        <CardItem
+          class="card-grid fade-in min-h-40 lt-md:min-h-0 "
+          item={item}
+        />
+      ))}
+    </div>
+  )
+}
 
 <script>
   export class ResponsiveMasonry extends HTMLElement {
@@ -55,10 +80,6 @@ if (collectionType === 'highlights') {
     #resizeObserver: ResizeObserver | null = null
     #mutationObserver: MutationObserver | null = null
     #debounceTimeout: number | null = null
-
-    static get observedAttributes() {
-      return ['data-gap', 'data-min-card-width', 'data-max-card-width']
-    }
 
     get #config() {
       return {
