@@ -27,11 +27,18 @@ export const UI: Ui = {
       text: 'Projects',
     },
     {
+      path: '/shorts',
+      title: 'Shorts',
+      displayMode: 'iconToTextOnMobile',
+      text: 'Shorts',
+      icon: 'i-material-symbols-note-stack-outline-sharp',
+    },
+    {
       path: '/highlights',
       title: 'Highlights',
       displayMode: 'iconToTextOnMobile',
       text: 'Highlights',
-      icon: 'i-ri-movie-ai-line',
+      icon: 'i-ri-screenshot-line',
     },
     {
       path: '/changelog',

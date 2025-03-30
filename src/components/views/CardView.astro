@@ -2,14 +2,15 @@
 import { getCollection } from 'astro:content'
 
 import CardItem from '~/components/views/CardItem.astro'
-import { processBlueskyPosts } from '~/utils/data'
+import Warning from '~/components/base/Warning.astro'
+import { processBlueskyPosts, getShortsFromBlog } from '~/utils/data'
 
 import type { ContentCollectionKey, DataCollectionKey } from 'astro:content'
 import type { CardItemData } from '~/components/views/CardItem.astro'
 
 interface Props {
   collectionType: ContentCollectionKey | DataCollectionKey
-  mode?: 'masonry'
+  mode: 'masonry' | 'grid'
   gap?: 'number'
   minCardWidth?: number
   maxCardWidth?: number
@@ -17,35 +18,71 @@ interface Props {
 
 const {
   collectionType,
-  mode = 'masonry',
+  mode,
   gap = 16,
-  minCardWidth = 350,
-  maxCardWidth = 1000,
+  minCardWidth,
+  maxCardWidth,
 } = Astro.props
 
-let processedHighlights: CardItemData[] = []
+const WARNING = `No content available for display.
+  Please review and modify <code>CardView.astro</code> as needed.`
+
+let isEmpty = false
+let dataForMasonry: CardItemData[] = []
+let dataForGrid: CardItemData[] = []
+
 if (collectionType === 'highlights') {
   const highlights = await getCollection(collectionType)
-  processedHighlights = processBlueskyPosts(highlights).sort((a, b) =>
+  dataForMasonry = processBlueskyPosts(highlights).sort((a, b) =>
     !a.date || !b.date
       ? 0
       : new Date(b.date).valueOf() - new Date(a.date).valueOf()
   )
 }
+
+if (collectionType === ('shorts' as ContentCollectionKey)) {
+  const posts = await getCollection('blog')
+  dataForGrid = await getShortsFromBlog(posts)
+}
+
+if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
 ---
 
 {
-  mode === 'masonry' && (
-    <responsive-masonry
-      class="block relative w-full min-h-screen op-0 op-transition-500"
-      data-gap={gap}
-      data-min-card-width={minCardWidth}
-      data-max-card-width={maxCardWidth}
-    >
-      {processedHighlights.map((item) => (
-        <CardItem class="card-masonry absolute top-0 left-0" item={item} />
-      ))}
-    </responsive-masonry>
+  isEmpty ? (
+    <Warning html={WARNING} />
+  ) : (
+    <>
+      {mode === 'masonry' && (
+        <responsive-masonry
+          class="block relative w-full min-h-screen op-0 op-transition-500"
+          data-gap={gap}
+          data-min-card-width={minCardWidth}
+          data-max-card-width={maxCardWidth}
+        >
+          {dataForMasonry.map((item) => (
+            <CardItem class="card-masonry absolute top-0 left-0" item={item} />
+          ))}
+        </responsive-masonry>
+      )}
+      {mode === 'grid' && (
+        <div
+          class="grid mx-20 lt-md:mx-1"
+          style={{
+            '--fade-in-duration': '0.6s',
+            'gap': `${gap}px`,
+            'grid-template-columns': `repeat(auto-fill, minmax(${minCardWidth ? `${minCardWidth}px` : '220px'}, ${maxCardWidth ? `${maxCardWidth}px` : '1fr'}))`,
+          }}
+        >
+          {dataForGrid.map((item) => (
+            <CardItem
+              class="card-grid fade-in min-h-40 lt-md:min-h-0 "
+              item={item}
+            />
+          ))}
+        </div>
+      )}
+    </>
   )
 }
 
@@ -55,10 +92,6 @@ if (collectionType === 'highlights') {
     #resizeObserver: ResizeObserver | null = null
     #mutationObserver: MutationObserver | null = null
     #debounceTimeout: number | null = null
-
-    static get observedAttributes() {
-      return ['data-gap', 'data-min-card-width', 'data-max-card-width']
-    }
 
     get #config() {
       return {

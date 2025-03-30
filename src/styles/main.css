@@ -218,11 +218,11 @@ html {
 }
 
 .fade-in {
-  animation: fade-in 0.3s forwards;
+  animation: fade-in var(--fade-in-duration, 0.3s) forwards;
 }
 
 .fade-out {
-  animation: fade-out 0.3s forwards;
+  animation: fade-out var(--fade-out-duration, 0.3s) forwards;
 }
 
 /* Search */
