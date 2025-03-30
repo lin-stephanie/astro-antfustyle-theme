@@ -27,18 +27,18 @@ export const UI: Ui = {
       text: 'Projects',
     },
     {
-      path: '/highlights',
-      title: 'Highlights',
-      displayMode: 'iconToTextOnMobile',
-      text: 'Highlights',
-      icon: 'i-ri-movie-ai-line',
-    },
-    {
       path: '/shorts',
       title: 'Shorts',
       displayMode: 'iconToTextOnMobile',
       text: 'Shorts',
-      icon: 'i-meteor-icons-grid',
+      icon: 'i-material-symbols-note-stack-outline-sharp',
+    },
+    {
+      path: '/highlights',
+      title: 'Highlights',
+      displayMode: 'iconToTextOnMobile',
+      text: 'Highlights',
+      icon: 'i-ri-screenshot-line',
     },
     {
       path: '/changelog',
