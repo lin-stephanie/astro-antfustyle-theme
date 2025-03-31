@@ -1,18 +1,18 @@
 ---
-title: Markdown / MDX Extended Features
+title: Markdown/MDX Extended Features
 description: The special syntax available in Astro AntfuStyle Theme to extend Markdown/MDX features
 pubDate: 2022-03-02
-lastModDate: ''
+lastModDate: 2025-03-31
 toc: true
 share: true
 ogImage: true
 ---
 
-This post introduces some handy tricks for using special syntax in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to enhance your Markdown/MDX content. These shortcuts let the theme’s built-in integrations or plugins handle the heavy lifting, automatically converting everything into HTML --- _no need to write complex code yourself!_ 🎨
+This post introduces some handy tricks for using special syntax in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to enhance your Markdown/MDX content. These shortcuts let the theme’s built-in integrations or plugins handle the heavy lifting, automatically converting everything into HTML — _no need to write complex code yourself!_ 🎨
 
-## Callouts (Alerts / Admonitions)
+## Callouts (Alerts/Admonitions)
 
-Supported by :link[rehype-callouts]{id=lin-stephanie/rehype-callouts style='github'}, you can modify [the plugin's configuration](https://github.com/lin-stephanie/rehype-callouts?tab=readme-ov-file#options-useroptions) in `plugins/index.ts`. 
+Supported by :link[rehype-callouts]{id=lin-stephanie/rehype-callouts class='github'}, you can modify [the plugin's configuration](https://github.com/lin-stephanie/rehype-callouts?tab=readme-ov-file#useroptions) in `plugins/index.ts`. 
 
 If you change the `theme` configuration (default: `'vitepress'`), you will also need to update the imported CSS file in `src/styles/markdown.css` (`@import 'rehype-callouts/theme/yourconfig'`).
 
@@ -57,9 +57,9 @@ If you change the `theme` configuration (default: `'vitepress'`), you will also 
 
 ## Fully-featured Code Blocks
 
-Supported by :link[astro-expressive-code]{link=https://github.com/expressive-code/expressive-code/tree/main/packages/astro-expressive-code imageUrl='https://avatars.githubusercontent.com/u/124694388'} with [@expressive-code/plugin-collapsible-sections](https://expressive-code.com/plugins/collapsible-sections/) and [@expressive-code/plugin-line-numbers](https://expressive-code.com/plugins/line-numbers/) plugins to add styling and extra functionality for code blocks. 
+Supported by :link[astro-expressive-code]{id=https://github.com/expressive-code/expressive-code/tree/main/packages/astro-expressive-code} with [@expressive-code/plugin-collapsible-sections](https://expressive-code.com/plugins/collapsible-sections/) and [@expressive-code/plugin-line-numbers](https://expressive-code.com/plugins/line-numbers/) plugins to add styling and extra functionality for code blocks. 
 
-To customize code block themes or functionality, modify the `ec.config.mjs` file at the project root after reviewing the [Configuring Expressive Code](https://expressive-code.com/reference/configuration/), such as [change themes](https://expressive-code.com/guides/themes/#using-bundled-themes), [enable word wrap](https://expressive-code.com/key-features/word-wrap/#wrap), or [toggle line numbers](https://expressive-code.com/plugins/line-numbers/#showlinenumbers).
+To customize code block themes or functionality, modify the `ec.config.mjs` file at the project root after reviewing the :link[Configuring Expressive Code]{id=https://expressive-code.com/reference/configuration/}, such as [change themes](https://expressive-code.com/guides/themes/#using-bundled-themes), [enable word wrap](https://expressive-code.com/key-features/word-wrap/#wrap), or [toggle line numbers](https://expressive-code.com/plugins/line-numbers/#showlinenumbers).
 
 Here’s a quick preview of what’s possible. Check the [detailed guide](https://expressive-code.com/key-features/syntax-highlighting/) for more info.
 
@@ -317,21 +317,15 @@ console.log('Greetings from line 5!')
 console.log('I am on line 6')
 ```
 
-## Image Caption & Link 
+## Image Caption & Link (`:::image`)
 
-Build on :link[remark-directive]{id=remark/remark-directive style='github'} with a custom `remark-image-container` plugin (located in `plugins/remark-image-container.ts`) to quickly add image captions，links and more.
-
-> [!tip]
->
-> You can refer to the [Remark Directive Syntax](https://github.com/micromark/micromark-extension-directive?tab=readme-ov-file#syntax) for a quick overview of its basic rules --- it’s easy to understand and remember!
+Use the [`:::image`](https://github.com/lin-stephanie/remark-directive-sugar?tab=readme-ov-file#image-) directive from :link[remark-directive-sugar]{#lin-stephanie/remark-directive-sugar .github} to wrap images in a container for captions, clickable links, and more. Customize via the `image` option in `plugins/index.ts` (`remarkDirectiveSugar`) and style under `/* :::image */` in `src/styles/markdown.css`.
 
 ### `:::image-figure`
 
-The custom directive creates a block with an image, figcaption, and optional styling, much like a figure in academic papers.
+`:::image-figure[caption]{<figcaption> attrs}`: The square brackets define the `<figcaption>` text (defaults to the alt text from `![]()` if omitted), while the curly braces are used for inline styles or supported attributes to the generated `<figcaption>` element.
 
-`:::image-figure[caption]{<figcaption> attrs}`: The square brackets hold the figcaption (if not set, the alt text from `![]()` will be used as the default), and curly braces are for inline styles or supported attributes.
-
-`![alt](image path)(img attrs)`: Standard Markdown image syntax with optional attributes inside parentheses (powered by :link[remark-imgattr]{#OliverSpeir/remark-imgattr style=github}, allowing customization of attributes for the generated `<img>` elements).
+`![alt](image path)(<img> attrs)`: Standard Markdown image with optional attributes in parentheses, enabled by :link[remark-imgattr]{#OliverSpeir/remark-imgattr .github}, for customizing the generated `<img>` element.
 
 ```md title=':::image-figure.md'
 :::image-figure[This Is a **Figcaption** with _`<figure>` Attrs_]{style="text-align:center;color:orange"}
@@ -347,7 +341,7 @@ The custom directive creates a block with an image, figcaption, and optional sty
 ![](~/assets/markdown-mdx-extended-featurs/og-image.png)(class:no-zoom)
 :::
 
-<!-- 💡 If no `[caption]`, use alt text as figcaption. -->
+<!-- 💡 If no `[caption]`, use `[alt]` as figcaption. -->
 :::image-figure
 ![If `[caption]` not set, the alt text from `![]()` will be used as the figcaption.](~/assets/markdown-mdx-extended-featurs/og-image.png)
 :::
@@ -437,102 +431,92 @@ The custom directive wraps an image inside a link, making it clickable.
 
 ## Video Embedding（`::video`）
 
-Similarly, this theme includes predefined directives through a custom `remark-sugar-directive` plugin (located in `plugins/remark-sugar-directive.ts`), enabling quick implementation of features like video embedding, styled GitHub links, badges and details dropdown as described below.
+Use the [`::video`](https://github.com/lin-stephanie/remark-directive-sugar?tab=readme-ov-file#video-) directive from :link[remark-directive-sugar]{id=lin-stephanie/remark-directive-sugar .github} for consistent video embedding across different platforms. Customize via the `video` option in `plugins/index.ts` and style under `/* ::video */` in `src/styles/markdown.css`.
 
-The custom `::video` directive allows for consistent video embedding across different platforms, with flexible options for configuration.
+Say `example.md` contains:
 
-`::video{<youtubeId|bilibiliId|vimeoId> <noScale> <iframeSrc>}`: Curly braces contain the platform-specific video ID, along with optional parameters.
+```md title='example.md'
+<!-- Embed a YouTube video -->
+::video-youtube{#gxBkghlglTg}
 
-```md title='::video.md'
-::video{youtubeId=gxBkghlglTg}
+<!-- Embed a Bilibili video with a custom `title` attr -->
+::video-bilibili[custom title]{id=BV1MC4y1c7Kv}
 
-::video{bilibiliId=BV1MC4y1c7Kv}
+<!-- Embed a Vimeo video with class `no-scale` to disable scaling -->
+::video-vimeo{id=912831806 class='no-scale'}
+<!-- ::video-vimeo{id=912831806 .no-scale} -->
 
-<!-- Setting `noScale=true` disables video scaling -->
-::video{vimeoId=912831806 noScale=true}
-
-<!-- You can directly provide the iframe URL for embedding a video via `iframeSrc` -->
-::video{iframeSrc='https://www.youtube-nocookie.com/embed/gxBkghlglTg'}
+<!-- Embed a custom video URL (must use `id`, not `#`) -->
+::video{id=https://www.youtube-nocookie.com/embed/gxBkghlglTg}
 ```
 
-::video{youtubeId=gxBkghlglTg}
+Then `example.mdx` renders as:
 
-::video{bilibiliId=BV1MC4y1c7Kv}
+::video-youtube{#gxBkghlglTg}
 
-<!-- Setting `noScale=true` disables video scaling -->
-::video{youtubeId=gxBkghlglTg noScale=true}
+::video-bilibili[custom title]{id=BV1MC4y1c7Kv}
 
-<!-- You can directly provide the iframe URL for embedding a video via `iframeSrc` -->
-::video{iframeSrc='https://www.youtube-nocookie.com/embed/gxBkghlglTg'}
+::video-vimeo{id=912831806 class='no-scale'}
 
-## Styled GitHub Link（`:link`）
+::video{id=https://www.youtube-nocookie.com/embed/gxBkghlglTg}
 
-The custom `:link` directive simplifies the process of creating styled links to GitHub repositories, users/organizations, or any external URLs with streamlined syntax.
+## Styled Link（`:link`）
 
-**Basic Syntax**
+Use the [`:link`](https://github.com/lin-stephanie/remark-directive-sugar?tab=readme-ov-file#link) directive from :link[remark-directive-sugar]{id=lin-stephanie/remark-directive-sugar .github} to add links with avatars or favicons for GitHub, npm, or custom URLs. Customize via the `link` option in `plugins/index.ts` and style under `/* :link */` in `src/styles/markdown.css`.
 
-Use `:link` with display text in square brackets and `id` parameter (or shorthand with a `#` prefix) in curly braces.  
+**Link to a GitHub user or organization (prepend `id` with `@`)**
 
-**Example 1**: `:link[Astro]{#withastro/astro}` or `:link[Astro]{id=withastro/astro}` creates a link to :link[Astro]{#withastro/astro} repo.
+**Example 1**: `:link[Stephanie Lin]{#@lin-stephanie}` links to the GitHub profile of the project maintainer, :link[Stephanie Lin]{#@lin-stephanie}.
 
-**Example 2**: `:link[Stephanie Lin]{#@lin-stephanie}` links to the GitHub profile of the project maintainer, :link[Stephanie Lin]{#@lin-stephanie}.
+**Example 2**: `:link[Vite]{id=@vitejs}` links to the GitHub profile of the :link[Vite]{id=@vitejs} organization.
 
-**Example 3**: `:link[Vite]{id=@vitejs}` links to the GitHub profile of the :link[Vite]{id=@vitejs} organization.
+**Example 3**: `:link{#@lin-stephanie tab=repositories}` links directly to the repositories tab of the GitHub user, like :link{#@lin-stephanie tab=repositories}. For GitHub users, valid `tab` options: `'repositories','projects', 'packages', 'stars', 'sponsoring', 'sponsors'`.
 
-> [!important]
-> When linking to a GitHub user or organization, you must prepend the `id` with `@`.
-> 
-> If the `[]` part is omitted, the link will display the text of the `id` parameter by default.
+**Example 4**: `:link{#@vitejs tab=org-people}` links directly to the people section of a GitHub organization, like :link{#@vitejs tab=org-people}. For GitHub organizations, valid `tab` options: `'org-repositories', 'org-projects', 'org-packages', 'org-sponsoring', and 'org-people'`.
 
-**Specific Subsections**
+**Link to a GitHub repository**
 
-The `:link` directive also supports linking to specific sections within a GitHub user or organization using the `tab` parameter.
+**Example 5**: `:link[Astro]{#withastro/astro}` or `:link[Astro]{id=withastro/astro}` creates a link to :link[Astro]{#withastro/astro} repo.
 
-**Example 4**: `:link{#@lin-stephanie tab=repositories}` links directly to the repositories tab of the GitHub user, like :link{#@lin-stephanie tab=repositories}. For GitHub users, valid `tab` options: `'repositories','projects', 'packages', 'stars', 'sponsoring', 'sponsors'`.
+**Link to an npm package**
 
-**Example 5**: `:link{#@vitejs tab=org-people}` links directly to the people section of a GitHub organization, like :link{#@vitejs tab=org-people} For GitHub organizations, valid `tab` options: `'org-repositories', 'org-projects', 'org-packages', 'org-sponsoring', and 'org-people'`.
+**Example 6**: `:link{#remark-directive-sugar}` links to the npm homepage of the :link{#remark-directive-sugar}.
 
-**External URLs**
+**Example 7**: `:link{id=remark-directive-sugar tab=dependencies}` links to the dependencies section of the :link{id=remark-directive-sugar tab=dependencies} on npm. For npm package, valid `tab` options: `'readme', 'code', 'dependencies', 'dependents', and 'versions'`.
 
-When you want to link to something other than a GitHub resource, use the `link` parameter to customize external links. This parameter is required if no `id` is specified.
+**Link to a custom URL (must use `id`, not `#`)**
 
-**Example 6**: `:link[Google]{link=https://www.google.com/}` creates an external link to the :link[Google]{link=https://www.google.com/}.
+**Example 8**: `:link{id=https://developer.mozilla.org/en-US/docs/Web/JavaScript}` creates an external link to the :link{id=https://developer.mozilla.org/en-US/docs/Web/JavaScript}.
 
-**Icon and Style Customization**
+**Example 9**: `:link[Google]{id=https://www.google.com/}` creates an external link to the :link[Google]{id=https://www.google.com/}.
 
-You can customize icons with the `imageUrl` parameter or adjust button styles using the `style`parameter (optional values: `'square', 'rounded', 'github'`).
+**Customization**
 
-**Example 7**: `:link[Astro]{#withastro/astro style=rounded}` creates a rounded button like :link[Astro]{#withastro/astro style='rounded'}.
+**Example 10**: `:link[Vite]{id=@vitejs url=https://vite.dev/}` creates a :link[Vite]{id=@vitejs url=https://vite.dev/} to `https://vite.dev/` instead of `https://github.com/vitejs` by using the `url`.
 
-**Example 8**: `:link[Vite]{id=@vitejs style=square}` creates a square button like :link[Vite]{id=@vitejs style=square}.
+**Example 11**: `:link[Vite]{id=@vitejs img=https://vitejs.dev/logo.svg}` creates a :link[Vite]{id=@vitejs img=https://vitejs.dev/logo.svg} that displays a custom logo by using the `img`.
 
-**Example 9**: `:link{#lin-stephanie/astro-antfustyle-theme style=github}` creates a GitHub-styled link like:
+**Example 12**: `:link{id=lin-stephanie/astro-antfustyle-theme class=github}` creates a :link{id=lin-stephanie/astro-antfustyle-theme class=github} with `class=github` (or `.github`) to override the default style of a GitHub repository.
 
-:link{#lin-stephanie/astro-antfustyle-theme style=github}
+**Example 13**: `:link[Google]{id=https://www.google.com/ class=rounded}` creates a :link[Google]{id=https://www.google.com/ class=rounded} with `class=rounded` (or `.rounded`) to override the default style of a custom URL.
 
-**Example 10**: `:link[send a little encouragement my way ❤️]{link=https://github.com/sponsors/lin-stephanie imageUrl=https://github.githubassets.com/assets/mona-e50f14d05e4b.png}` fully customizes a link.
+**Example 14**: `:link[Google]{id=https://www.google.com/ class=square}` creates a :link[Google]{id=https://www.google.com/ class=square} with `class=square` (or `.square`) to override the default style of a custom URL.
 
-Thanks for making it this far! Writing is no easy task --- maybe you'd like to  :link[send a little encouragement my way ❤️]{link=https://github.com/sponsors/lin-stephanie imageUrl=https://github.githubassets.com/assets/mona-e50f14d05e4b.png}.
+**Example 15**: `:link[send a little encouragement my way]{id=https://github.com/sponsors/lin-stephanie img=https://github.githubassets.com/assets/mona-e50f14d05e4b.png}` fully customizes a link.
 
+Thanks for making it this far! Writing is no easy task — maybe you'd like to  :link[send a little encouragement my way]{id=https://github.com/sponsors/lin-stephanie img=https://github.githubassets.com/assets/mona-e50f14d05e4b.png}.
 
 ## Badges（`:badge`）
 
-The `:badge` directive allows you to add customizable markers to improve document visuals.
+Use the [`:badge`](https://github.com/lin-stephanie/remark-directive-sugar?tab=readme-ov-file#badge-) directive from :link[remark-directive-sugar]{id=lin-stephanie/remark-directive-sugar .github} to display small pieces of information, such as status or category.
 
-There are built-in markers that automatically apply predefined labels and colors based on the configuration:
+The theme provides the following three predefined badges. You can customize them via the `badge` option in `plugins/index.ts` and style them under `/* :badge */` in `src/styles/markdown.css`.
 
+- `badge-n`: :badge-n
 - `badge-a`: :badge-a
 - `badge-v`: :badge-v
-- `badge-o`: :badge-o
-- `badge-f`: :badge-f
-- `badge-t`: :badge-t
-- `badge-w`: :badge-w
-- `badge-g`: :badge-g
 
-You can find and redefine these configurations in `plugins/remark-sugar-directive.ts`.
-
-Additionally, you can use `:badge[Text]{<color>}` for easy visual customization of badges. For example: `:badge[ISSUE]{color=#aaf233}` will display as :badge[ISSUE]{color=#aaf233}. If no color is specified, the default appearance will look like :badge[This].
-
+Additionally, you can direct use `:badge[text]{attrs}` for easy visual customization of badges. For example: `:badge[ISSUE]{style="background-color: #bef264"}` will display as :badge[ISSUE]{style="background-color: #bef264"}. If no color is specified, the default appearance will look like :badge[This].
 
 ## Details Dropdown
 
@@ -560,6 +544,12 @@ Additionally, it also supports usage similar to the [examples in remark-directiv
 
 With the features above, the theme streamlines your Markdown/MDX content creation without requiring you to dive into complex HTML or CSS. Just focus on your ideas and let the theme handle the rest!
 
-If you're feeling adventurous, consider defining your own custom "directive syntax sugar" to tailor the experience even further! Contributions are always welcome --- feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions) or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls).
+If you're feeling adventurous, consider defining your own custom "directive syntax sugar" to tailor the experience even further! Contributions are always welcome — feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions) or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls).
 
 Thanks for checking out the theme. Have fun and enjoy creating! ⚡️
+
+:::details
+::summary[Changelog]
+2025-03-31
+- Update: Image Caption & Link, Video Embedding, Styled Link and Badges
+:::

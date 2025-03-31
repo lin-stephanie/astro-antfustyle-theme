@@ -3,7 +3,7 @@ title: Customizing GitHub Activity Pages
 subtitle: ''
 description: How to showcase your own GitHub releases or pull requests in Astro AntfuStyle Theme
 pubDate: 2023-12-01
-lastModDate: 2024-12-27
+lastModDate: 2025-03-31
 toc: true
 share: true
 ogImage: true
@@ -40,13 +40,20 @@ export const collections = {
 }
 ```
 
+> [!warning]- A GitHub PAT Is Needed for PRs and for Releases in `mode: 'repoList'`
+>
+> - Create a [GitHub PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) with at least `repo` scope permissions to authenticate requests.
+> - In the project root, create a `.env` file and set the `GITHUB_TOKEN` environment variable to your PAT.
+> - Make sure `.env` is ignored by Git (it's included in `.gitignore` by default).
+> - Additional reference: [Setting Environment Variables](https://docs.astro.build/en/guides/environment-variables/#setting-environment-variables)
+
 > [!tip]- Utilizing Astro Loaders for GitHub Data Integration
 > 
 > `githubReleasesLoader` and `githubPrsLoader` are [Astro loaders](https://docs.astro.build/en/reference/content-loader-reference/#what-is-a-loader) built with the Content Loader API, enabling data fetching from various sources as content collections. This API, introduced in [Astro 4.14](https://astro.build/blog/astro-4140/#experimental-content-layer-api), became stable in [Astro 5](https://astro.build/blog/astro-5/#content-layer).
 
 ## Update Page Content
 
-Depending on your loader configuration, you can modify the settings in `src/config.ts` that affect the UI of these two pages. Refer to the ==[`UI.githubView` configuration](../basic-configuration/#githubview) for specific details.
+Depending on your loader configuration, you can modify the settings in `src/config.ts` that affect the UI of these two pages. Refer to the [`UI.githubView` configuration](./basic-configuration/#githubview) for specific details.
 
 In `src/pages/releases.mdx` and `src/pages/prs.mdx`, you can update the frontmatter and directly modify the titles and subtitles rendered on the pages.
 
@@ -95,3 +102,9 @@ Additionally, to remove a page, uninstall the loader, delete its collection from
 The theme uses [SSG (Static Site Generation)](https://developer.mozilla.org/en-US/docs/Glossary/SSG), so `/releases` and `/prs` updates rely on periodic rebuilds, which may cause slight delays (acceptable for GitHub data). For real-time updates, keep the current UI but switch to [SSR (Server-side Rendering)](https://docs.astro.build/en/guides/on-demand-rendering/). Check the official docs for details. 
 
 Looking forward, the theme will continue leveraging Astro loaders to enable showcasing diverse external personal data. 🧩
+
+:::details
+::summary[Changelog]
+2025-03-31
+- Add: A GitHub PAT Is Needed for PRs and for Releases in `mode: 'repoList'`
+:::

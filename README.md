@@ -28,13 +28,14 @@ AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme f
 - Markdown & MDX Support
 - Math Equations Rendering
 - Dynamic OG Image Generation
-- Callouts (Alerts / Admonitions)
+- Callouts (Alerts/Admonitions)
 - Code Syntax Highlighting & Annotations
 - Ready-To-Use Remark Directives
 - Customizable Layouts, Views, and Navigation
-- Customizable Animated Backgrounds ([Preview](#preview))
+- Configurable Animated Backgrounds ([Preview](#preview))
 - Showcase Your GitHub Releases and PRs
 - Highlight Your Creative Work or Curated Posts
+- Share Your Short Notes or Quick Thoughts
 
 **User Experience**
 

@@ -1,7 +1,6 @@
 import { visit } from 'unist-util-visit'
 import remarkDirective from 'remark-directive'
-import remarkDirectiveSugar from './remark-directive-sugar'
-import remarkImageContainer from './remark-image-container'
+import remarkDirectiveSugar from 'remark-directive-sugar'
 import remarkImgattr from 'remark-imgattr'
 import remarkMath from 'remark-math'
 import remarkReadingTime from './remark-reading-time'
@@ -16,13 +15,42 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { UI, FEATURES } from '../src/config'
 
 import type { RemarkPlugins, RehypePlugins } from 'astro'
+import type { PropertiesFromTextDirective } from 'remark-directive-sugar'
 import type { CreateProperties } from 'rehype-external-links'
 
 export const remarkPlugins: RemarkPlugins = [
   // https://github.com/remarkjs/remark-directive
   remarkDirective,
-  remarkDirectiveSugar,
-  remarkImageContainer,
+  // https://github.com/lin-stephanie/remark-directive-sugar
+  [
+    remarkDirectiveSugar,
+    {
+      badge: {
+        presets: {
+          n: { text: 'NEW' },
+          a: { text: 'ARTICLE' },
+          v: { text: 'VIDEO' },
+        },
+      },
+      link: {
+        faviconSourceUrl:
+          'https://www.google.com/s2/favicons?domain={domain}&sz=128',
+        imgProps: (node: Parameters<PropertiesFromTextDirective>[0]) => {
+          const props: ReturnType<PropertiesFromTextDirective> = {
+            'aria-hidden': 'true',
+          }
+          if (node.attributes?.class?.includes('github'))
+            props.src =
+              'https://www.google.com/s2/favicons?domain=github.com&sz=128'
+
+          return props
+        },
+      },
+      image: {
+        stripParagraph: false,
+      },
+    },
+  ],
   // https://github.com/OliverSpeir/remark-imgattr
   remarkImgattr,
   // https://github.com/remarkjs/remark-math/tree/main/packages/remark-math

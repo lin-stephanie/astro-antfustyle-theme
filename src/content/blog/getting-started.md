@@ -2,7 +2,7 @@
 title: Getting Started
 description: How to quickly build your personal website with Astro AntfuStyle Theme
 pubDate: 2024-10-04
-lastModDate: 2025-02-28
+lastModDate: 2025-03-31
 toc: true
 share: true
 ogImage: true
@@ -111,8 +111,8 @@ Before configuring, it is advisable to review [**Project Structure**](../project
 Once configured, ensure the project is running correctly in your browser, then start creating or migrating your content. Jump to the section you're interested in:
 
 - [**Adding New Posts**](../adding-new-posts/): How to create posts with tips and guidelines.
-- [**Recreating Current Pages**](../recreating-current-pages/): Steps to recreate content for the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, `/highlights`, and `404` pages, as well as creating and removing pages.
-- :badge[NEW]{color=#f87171}[**Customizing GitHub Activity Pages**](../customizing-github-activity-pages/): Showcase your project releases or pull requests on GitHub.
+- [**Recreating Current Pages**](../recreating-current-pages/): Steps to recreate content for the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, `/highlights`, `/shorts`, and `404` pages, as well as creating and removing pages.
+- :badge-n<a href='../customizing-github-activity-pages/'><strong>Customizing GitHub Activity Pages</strong></a>: Showcase your project releases or pull requests on GitHub.
 - [**Markdown Syntax Guide**](../markdown-syntax-guide/): Showcase of Markdown rendering in this theme.
 - [**Markdown/MDX Extended Features**](../markdown-mdx-extended-features/): Advanced features like callouts, code blocks, image captions, video embedding, and more.
 
@@ -126,9 +126,9 @@ Refer to [Astro’s Deployment Guide](https://docs.astro.build/en/guides/deploy/
 
 ## Sync Updates
 
-Just like other open-source projects, this theme gets regular bug fixes and feature updates. To keep your customized project up to date, be sure to sync the latest changes. For more details, check out the [sync updates guide](../sync-updates/).
+This theme gets ongoing improvements, with a new version usually released at the end of each month. To stay current, sync the latest changes (see the [**Sync Updates**](../sync-updates/)).
 
-To stay informed about the latest changes, visit the [changelog](../../changelog/) or [releases](https://github.com/lin-stephanie/astro-antfustyle-theme/releases) pages. You can also [subscribe to the theme's RSS feed](../../rss.xml) for updates.
+For update details, visit the [changelog](../../changelog/) or [releases](https://github.com/lin-stephanie/astro-antfustyle-theme/releases) (both contain the same info). To get notified, subscribe to the [theme’s GitHub releases](https://github.com/lin-stephanie/astro-antfustyle-theme/releases.atom).
 
 ## Next Steps
 

@@ -2,7 +2,7 @@
 title: Recreating Current Pages
 description: How to edit existing pages in Astro AntfuStyle Theme
 pubDate: 2023-12-03
-lastModDate: 2025-02-28
+lastModDate: 2025-03-31
 toc: true
 share: true
 ogImage: true
@@ -120,7 +120,7 @@ Finally, update the frontmatter in `src/pages/streams.mdx`.
 
 ### [`/feeds`](../../feeds) Page
 
-The `/feeds` page displays content retrieved via [@ascorbic/feed-loader](https://www.npmjs.com/package/@ascorbic/feed-loader). You can define an external data source (like RSS, RDF, or Atom feeds) for the `feeds` collection using the following:
+The `/feeds` page displays content retrieved via :link[@ascorbic/feed-loader]{id=https://www.npmjs.com/package/@ascorbic/feed-loader}. You can define an external data source (like RSS, RDF, or Atom feeds) for the `feeds` collection using the following:
 
 ```ts title='src/content/config.ts' {5}
 import { feedLoader } from '@ascorbic/feed-loader'
@@ -138,9 +138,9 @@ const feeds = defineCollection({
 
 ### [`/highlights`](../../highlights) Page
 
-Similar to the `/feeds` page, the `/highlights` page displays content retrieved via [astro-loader-bluesky-posts](https://www.npmjs.com/package/astro-loader-bluesky-posts). You can reconfigure it in `src/content/config.ts` by referring to the loader's README, specifying the Bluesky posts to fetch:
+Similar to the `/feeds` page, the `/highlights` page displays content retrieved via :link[astro-loader-bluesky-posts]{id=https://www.npmjs.com/package/astro-loader-bluesky-posts}. You can reconfigure it in `src/content/config.ts` by referring to the loader's README, specifying the Bluesky posts to fetch:
 
-```ts title='src/content/config.ts' {5-15}
+```ts title='src/content/config.ts' {5-14}
 import { blueskyPostsLoader } from 'astro-loader-bluesky-posts'
 
 const highlights = defineCollection({
@@ -223,19 +223,18 @@ const highlights = defineCollection({
 })
 ```
 
-**Step 3: Update the `CardView` component's data logic**
+**Step 3: Update `CardView` logic**
 
-```astro title='src/components/views/CardView.astro' del={5-9,24-26} ins={10-12,27-34}
+```astro title='src/components/views/CardView.astro' del={4-8,23-25} ins={9-11,26-33}
 ---
-let processedHighlights: CardItemData[] = []
 if (collectionType === 'highlights') {
   const highlights = await getCollection(collectionType)
-  processedHighlights = processBlueskyPosts(highlights).sort((a, b) =>
+  dataForMasonry = processBlueskyPosts(highlights).sort((a, b) =>
     !a.date || !b.date
       ? 0
       : new Date(b.date).valueOf() - new Date(a.date).valueOf()
   )
-  processedHighlights = highlights.sort(
+  dataForMasonry = highlights.sort(
     (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
   )
 }
@@ -249,10 +248,10 @@ if (collectionType === 'highlights') {
       data-min-card-width={minCardWidth}
       data-max-card-width={maxCardWidth}
     >
-      {processedHighlights.map((item) => (
+      {dataForMasonry.map((item) => (
         <CardItem class="card-masonry absolute top-0 left-0" item={item} />
       ))}
-      {processedHighlights.map(async (item) => {
+      {dataForMasonry.map(async (item) => {
         const { Content } = await render(item)
         return (
           <CardItem class="card-masonry absolute top-0 left-0" item={item.data}>
@@ -263,13 +262,9 @@ if (collectionType === 'highlights') {
     </responsive-masonry>
   )
 }
-
-<script>
-...
-</script>
 ```
 
-**Step 4: Create the `content/highlights/` directory to store content**
+**Step 4: Create the `content/highlights/` to store content**
 
 ```md title='src/content/highlights/2025-03-01.md'
 ---
@@ -307,7 +302,59 @@ This is a sample highlight entry for the `/highlights` page.
 > - When passing local file paths to `images[n].src` and `video.src`, the files must be stored within the `src/assets/` (at any depth). Additionally, the path format must follow `"src/assets/**/*"` for it to work properly.
 > - To use assets from other local paths, modify the relevant logic in `src/components/views/CardItem.astro`.
 > - To store `highlights` outside the `content` directory, consider using [`import.meta.glob()`](https://docs.astro.build/en/guides/imports/#importmetaglob) instead of [`getCollection()`](https://docs.astro.build/en/reference/modules/astro-content/#getcollection), eliminating the need for a Zod schema or collection definition.
-> - Additional references: [Images in `.astro` files](https://docs.astro.build/en/guides/images/#images-in-astro-files), [Dynamically import images](https://docs.astro.build/en/recipes/dynamically-importing-images/).
+> - Additional references: [Images in `.astro` Files](https://docs.astro.build/en/guides/images/#images-in-astro-files), [Dynamically Import Images](https://docs.astro.build/en/recipes/dynamically-importing-images/).
+
+### [`/shorts`](../../shorts) Page
+
+The current `/shorts` page uses data from the `blog` collection. To create a standalone `shorts` content collection, follow these steps:
+
+**Step 1: Define the `shorts` content collection**
+
+```ts title='src/content/config.ts' ins={1-4,8}
+const shorts = defineCollection({
+  type: 'content',
+  schema: postSchema,
+})
+
+export const collections = {
+  ...
+  shorts,
+}
+```
+
+**Step 2: Update `CardView`  to query `shorts` instead of `blog`**
+
+```astro title='src/components/views/CardView.astro' del={4-7} ins={1-2,8-16}
+import { getFilteredPosts, getSortedPosts } from '~/utils/post'
+import { getUrl, ensureTrailingSlash } from '~/utils/common'
+
+if (collectionType === ('shorts' as ContentCollectionKey)) {
+  const posts = await getCollection('blog')
+  dataForGrid = await getShortsFromBlog(posts)
+}
+if (collectionType === 'shorts') {
+  const shorts = await getFilteredPosts(collectionType)
+  const sortedShorts = getSortedPosts(shorts)
+  dataForGrid = sortedShorts.map((item)=>({
+    link: getUrl(ensureTrailingSlash(collectionType)) + item.slug,
+    text: item.data.title,
+    date: item.data.pubDate,
+  }))
+}
+```
+
+**Step 3: Create the `pages/shorts/` to generate pages**
+
+- Copy `src/pages/shorts/[...slug].astro` into the `pages/shorts/` directory, and update `'blog'` to `'shorts'` inside the file.
+- Move `src/pages/shorts.mdx` into the `pages/shorts/` directory and rename it to `index.mdx`.
+
+**Step 4: Create the `content/shorts/` to store content**
+
+> [!tip]- Switch Between `'masonry'` and `'grid'` with `CardView`
+> 
+> The `CardView` component supports both `'masonry'` and `'grid'` layouts via the `mode` prop. 
+> 
+> For example, `/highlights` (`src/pages/highlights.mdx`) uses `'masonry'`, while `shorts` (`src/pages/shorts.mdx`) uses `'grid'`.  You can customize `CardView` based on your data and layout needs.
 
 ### [`404`](../../404) Page
 
@@ -372,6 +419,7 @@ If you encounter any issues, find errors, or see opportunities for improvement, 
 :::details
 ::summary[Changelog]
 2025-02-28
-- Add [`/highlights` Page](#highlights-page) section
-- Add navigation links to each page
+- Add: [`/highlights` Page](#highlights-page)
+2025-03-31
+- Add: [`/shorts` Page](#shorts-page)
 :::

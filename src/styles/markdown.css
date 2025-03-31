@@ -308,20 +308,7 @@ h6:focus .header-anchor {
   padding-right: 2px;
 }
 
-/* :::iamge-* */
-.prose img {
-  margin-inline: auto;
-}
-
-.prose figure img,
-.prose figure p {
-  margin-block: 0;
-}
-
-.prose p > img {
-  border-radius: 0.5rem;
-}
-
+/* :::iamge */
 .dark .img-light {
   display: none;
 }
@@ -331,48 +318,28 @@ html:not(.dark) .img-dark {
 }
 
 /* ::vedio */
-.prose .sugar-video {
+.rds-video {
   z-index: 150;
   position: relative;
-  margin: 1rem 0;
-  border-radius: 0.5rem;
-  aspect-ratio: 16 / 9;
-}
 
-.prose .sugar-video iframe {
   width: 100%;
-  border-radius: 0.5rem;
   aspect-ratio: 16 / 9;
+  border-radius: 0.5rem;
+  margin: 5rem 0;
+
+  transform: scale(1.2, 1.2) !important;
+
+  --uno: 'lt-lg:(mx-4 scale-0)';
 }
 
-@media (min-width: 1024px) {
-  .prose .sugar-video {
-    margin: 5rem 0;
-  }
-
-  .prose .sugar-video iframe {
-    transform: scaleX(1.2) scaleY(1.2);
-  }
+.rds-video.no-scale {
+  margin: 1rem 0;
+  transform: scale(1, 1) !important;
 }
 
 /* :link */
-.sugar-link-square {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.375rem;
-  border-radius: 0.25rem;
-  border-width: 0px !important;
-
-  --uno: 'font-condensed';
-  color: var(--fg-light) !important;
-  line-height: 100%;
-
-  background: #8882;
-  transform: translateY(3px);
-  transition: all 300ms ease-in-out !important;
-}
-
-.sugar-link-rounded {
+[data-link='github-acct'],
+[data-link='custom-url'].rounded {
   display: inline-flex;
   align-items: center;
   padding-right: 0.5rem;
@@ -389,38 +356,71 @@ html:not(.dark) .img-dark {
   transition: all 300ms ease-in-out !important;
 }
 
-.sugar-link-square:hover,
-.sugar-link-rounded:hover {
-  background: #8883;
-  color: var(--fg) !important;
+[data-link='github-acct'] > img,
+[data-link='custom-url'].rounded > img {
+  display: inline-block;
+  height: 1.6em;
+  width: 1.6em;
+  border-radius: 50%;
+  margin: 0 0.25rem 0 0;
+
+  object-fit: cover;
 }
 
-.sugar-link-image {
+[data-link='github-repo']:not(.github),
+[data-link='custom-url'].square {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.375rem;
+  border-radius: 0.25rem;
+  border-width: 0px !important;
+
+  --uno: 'font-condensed';
+  color: var(--fg-light) !important;
+  line-height: 100%;
+
+  background: #8882;
+  transform: translateY(3px);
+  transition: all 300ms ease-in-out !important;
+}
+
+[data-link='github-repo']:not(.github) > img,
+[data-link='custom-url'].square > img {
   display: inline-block;
   height: 1.1em;
   width: 1.1em;
   border-radius: 2px;
-  margin-right: 0.25rem;
+  margin: 0 0.25rem 0 0;
 
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  object-fit: cover;
 }
 
-.sugar-link-rounded .sugar-link-image {
-  height: 1.6em;
-  width: 1.6em;
-  border-radius: 50%;
+[data-link='github-acct']:hover,
+[data-link='github-repo']:not(.github):hover,
+[data-link='custom-url'].rounded:hover,
+[data-link='custom-url'].square:hover {
+  color: var(--fg) !important;
+
+  background: #8883;
 }
 
-.sugar-link-github {
-  margin-left: 0.25rem;
+[data-link='github-repo'].github,
+[data-link='npm-pkg'] {
   --uno: 'font-mono';
-  opacity: 0.7;
+}
+
+[data-link='custom-url'] > img,
+[data-link='github-repo'].github > img,
+[data-link='npm-pkg'] > img {
+  display: inline-block;
+  width: 1.05em;
+  height: 1.05em;
+  border-radius: 0;
+  margin: 0 0.25rem 0.2rem 0.1rem;
 }
 
 /* :badge */
-.sugar-badge {
+.rds-badge {
   display: inline-block;
 
   padding: 0.125rem 0.375rem;
@@ -428,16 +428,31 @@ html:not(.dark) .img-dark {
   margin-right: 0.5rem;
 
   color: white;
-  --uno: 'dark:color-black';
   font-size: 0.75rem;
   line-height: 1rem;
   text-transform: uppercase;
 
-  background-color: var(--badge-color-light);
+  background-color: var(--badge-color-light, #a8a29e);
 }
 
-.dark .sugar-badge {
-  background-color: var(--badge-color-dark);
+.dark .rds-badge {
+  color: black;
+  background-color: var(--badge-color-dark, #a8a29e);
+}
+
+[data-badge='n'] {
+  --badge-color-light: #f87171;
+  --badge-color-dark: #fecaca;
+}
+
+[data-badge='a'] {
+  --badge-color-light: #fb923c;
+  --badge-color-dark: #fed7aa;
+}
+
+[data-badge='v'] {
+  --badge-color-light: #facc15;
+  --badge-color-dark: #fef08a;
 }
 
 /* rehype-external-links */

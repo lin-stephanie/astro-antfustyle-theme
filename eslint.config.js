@@ -2,7 +2,7 @@ import globals from 'globals'
 import js from '@eslint/js'
 import ts from 'typescript-eslint'
 import astro from 'eslint-plugin-astro'
-import prettier from 'eslint-config-prettier'
+import prettier from 'eslint-config-prettier/flat'
 
 export default ts.config(
   {
@@ -20,8 +20,8 @@ export default ts.config(
       },
     },
   },
-  // https://eslint.org/docs/latest/use/configure/configuration-files#using-predefined-configurations
   js.configs.recommended,
+  ts.configs.eslintRecommended,
   ts.configs.recommended,
   ts.configs.stylistic,
   astro.configs.recommended,

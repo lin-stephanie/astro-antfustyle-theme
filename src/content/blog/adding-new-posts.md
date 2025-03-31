@@ -92,7 +92,7 @@ Additionally, the title (set by the `title` property in the YAML frontmatter) is
 
 > [!important]- TOC Excludes `title` Property Defined in Frontmatter
 > 
-> Note that even if you configure `FEATURES.toc[1].minHeadingLevel` in `src/config.ts` to include `1`, the title set by the `title` property in frontmatter won't be included in the auto-generated TOC --- it only includes h1 headings written in the Markdown/MDX content.
+> Note that even if you configure `FEATURES.toc[1].minHeadingLevel` in `src/config.ts` to include `1`, the title set by the `title` property in frontmatter won't be included in the auto-generated TOC — it only includes h1 headings written in the Markdown/MDX content.
 
 ## Wrapping Up
 

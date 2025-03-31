@@ -58,7 +58,7 @@ ogImage: true
 
 ## Template for Auto-Generated OG Images
 
-The template (located in `plugins/og-template/markup.ts`) for auto-generated OG images is built with HTML + UnoCSS and processed by  :link{id=natemoo-re/satori-html style=github}. It takes three parameters:
+The template (located in `plugins/og-template/markup.ts`) for auto-generated OG images is built with HTML + UnoCSS and processed by :link[satori-html]{id=natemoo-re/satori-html .github}. It takes three parameters:
 
 - `authorOrBrand`: Defined by `FEATURE.image[1].authorOrBrand` (also for fallback image) and displayed above the `title`.
 - `title`: Determined by the `title` field in the Markdown/MDX frontmatter; for fallback images, `FEATURE.image[1].fallbackTitle` is used.
@@ -86,7 +86,7 @@ This theme uses a custom remark plugin (located in [`plugins/remark-generate-og-
 
 ## Extra Tips
 
-Auto-generated OG images are compressed with :link{id=lovell/sharp style=github}. For custom images, consider [manual compression](../managing-image-assets/#image-compression). 
+Auto-generated OG images are compressed with :link[sharp]{id=lovell/sharp .github}. For custom images, consider [manual compression](../managing-image-assets/#image-compression). 
 
 If an image with the same name as the Markdown/MDX file (or the directory for `index.md/index.mdx`) already exists in `/public/og-images/`, it won’t be regenerated. To regenerate it, manually delete the corresponding image from the `/public/og-images/` directory.
 

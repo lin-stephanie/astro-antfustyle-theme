@@ -45,19 +45,59 @@
         "icon": "i-catppuccin-robots"
       },
       {
-        "name": "@ascorbic/feed-loader",
-        "link": "https://www.npmjs.com/package/@ascorbic/feed-loader",
-        "desc": "Load feeds into your Astro project",
-        "icon": "i-flat-color-icons-feed-in"
-      },
-      {
         "name": "prettier-plugin-astro",
         "link": "https://github.com/withastro/prettier-plugin-astro",
         "desc": "Prettier plugin for Astro files",
         "icon": "i-logos-prettier"
       }
     ],
-    "Markdown Handling": [
+    "Astro Content Loaders": [
+      {
+        "name": "@ascorbic/feed-loader",
+        "link": "https://www.npmjs.com/package/@ascorbic/feed-loader",
+        "desc": "Load feeds into your Astro project",
+        "icon": "i-flat-color-icons-feed-in"
+      },
+      {
+        "name": "astro-loader-github-releases",
+        "link": "https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-releases",
+        "desc": "Loads GitHub releases from commits or repositories",
+        "icon": "i-bx-rocket"
+      },
+      {
+        "name": "astro-loader-github-prs",
+        "link": "https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-prs",
+        "desc": "Loads GitHub pull requests with a search query",
+        "icon": "i-ri-git-pull-request-line"
+      },
+      {
+        "name": "@ascorbic/feed-loader",
+        "link": "https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-bluesky-posts",
+        "desc": "Loads Bluesky posts and threads using post URLs or AT-URIs",
+        "icon": "i-logos-bluesky"
+      }
+    ],
+    "CSS & Icons": [
+      {
+        "name": "unocss",
+        "link": "https://github.com/unocss/unocss",
+        "desc": "The instant on-demand atomic CSS engine",
+        "icon": "i-logos-unocss"
+      },
+      {
+        "name": "@unocss/reset",
+        "link": "https://www.npmjs.com/package/@unocss/reset",
+        "desc": "UnoCSS reset styles",
+        "icon": "i-ri-reset-right-fill"
+      },
+      {
+        "name": "@iconify/json",
+        "link": "https://github.com/iconify/iconify",
+        "desc": "Iconify JSON icon data",
+        "icon": "i-simple-icons-iconify"
+      }
+    ],
+    "Markdown/HTML Handling": [
       {
         "name": "remark-directive",
         "link": "https://github.com/remarkjs/remark-directive",
@@ -65,13 +105,19 @@
         "icon": "i-mdi-magic"
       },
       {
+        "name": "remark-directive-sugar",
+        "link": "https://github.com/lin-stephanie/remark-directive-sugar",
+        "desc": "Remark plugin to provide predefined directives",
+        "icon": "i-ep-sugar"
+      },
+      {
         "name": "remark-imgattr",
         "link": "https://github.com/OliverSpeir/remark-imgattr",
-        "desc": "Remark plugin for adding attributes to images",
+        "desc": "Remark plugin to add attributes to markdown and mdx images",
         "icon": "i-bi-images"
       },
       {
-        "name": "rehype-math",
+        "name": "remark-math",
         "link": "https://github.com/remarkjs/remark-math/tree/main/packages/remark-math",
         "desc": "Remark plugin to support math (`$C_L$`)",
         "icon": "i-mynaui-math-square"
@@ -85,7 +131,7 @@
       {
         "name": "rehype-callouts",
         "link": "https://github.com/lin-stephanie/rehype-callouts",
-        "desc": "Rehype plugin for callouts",
+        "desc": "Rehype plugin for rendering blockquote-based callouts",
         "icon": "i-fluent-mdl2-text-callout"
       },
       {
@@ -127,61 +173,33 @@
         "icon": "i-icon-park-zoom-in"
       }
     ],
-    "CSS & Icons": [
-      {
-        "name": "unocss",
-        "link": "https://github.com/unocss/unocss",
-        "desc": "The instant on-demand atomic CSS engine",
-        "icon": "i-logos-unocss"
-      },
-      {
-        "name": "@unocss/reset",
-        "link": "https://www.npmjs.com/package/@unocss/reset",
-        "desc": "UnoCSS reset styles",
-        "icon": "i-ri-reset-right-fill"
-      },
-      {
-        "name": "@iconify/json",
-        "link": "https://github.com/iconify/iconify",
-        "desc": "Iconify JSON icon data",
-        "icon": "i-simple-icons-iconify"
-      }
-    ],
-    "Background Animation": [
-      {
-        "name": "p5",
-        "link": "https://github.com/processing/p5.js",
-        "desc": "p5.js is a library for creative coding",
-        "icon": "i-devicon-p5js"
-      },
-      {
-        "name": "@types/p5",
-        "link": "https://www.npmjs.com/package/@types/p5",
-        "desc": "TypeScript definitions for p5.js",
-        "icon": "i-devicon-p5js"
-      }
-    ],
     "Code Block Handling": [
       {
         "name": "astro-expressive-code",
         "link": "https://www.npmjs.com/package/astro-expressive-code",
         "desc": "Code highlighting plugin for Astro",
-        "icon": "i-line-md-document-code"
+        "icon": "i-fluent-color-code-20"
       },
       {
         "name": "@expressive-code/plugin-collapsible-sections",
         "link": "https://www.npmjs.com/package/@expressive-code/plugin-collapsible-sections",
         "desc": "Plugin for collapsible sections in code blocks",
-        "icon": "i-line-md-document-code"
+        "icon": "i-fluent-color-code-20"
       },
       {
         "name": "@expressive-code/plugin-line-numbers",
         "link": "https://www.npmjs.com/package/@expressive-code/plugin-line-numbers",
         "desc": "Plugin for line numbers in code blocks",
-        "icon": "i-line-md-document-code"
+        "icon": "i-fluent-color-code-20"
       }
     ],
     "Utilities": [
+      {
+        "name": "p5",
+        "link": "https://github.com/processing/p5.js",
+        "desc": "A JavaScript library for accessible creative coding",
+        "icon": "i-devicon-p5js"
+      },
       {
         "name": "pagefind",
         "link": "https://github.com/CloudCannon/pagefind",
@@ -195,10 +213,16 @@
         "icon": "i-svg-spinners-3-dots-fade"
       },
       {
-        "name": "dayjs",
-        "link": "https://github.com/iamkun/dayjs",
-        "desc": "A fast 2kB alternative to Moment.js",
-        "icon": "i-fluent-mdl2-date-time"
+        "name": "swiper",
+        "link": "https://github.com/nolimits4web/swiper",
+        "desc": "Most modern mobile touch slider",
+        "icon": "i-ion-images-sharp"
+      },
+      {
+        "name": "@atproto/api",
+        "link": "https://github.com/bluesky-social/atproto/tree/main/packages/api",
+        "desc": "APIs for ATProto and Bluesky",
+        "icon": "i-logos-bluesky"
       },
       {
         "name": "reading-time",
@@ -248,7 +272,7 @@
       },
       {
         "name": "eslint-plugin-astro",
-        "link": "https://github.com/withastro/eslint-plugin-astro",
+        "link": "https://github.com/ota-meshi/eslint-plugin-astro",
         "desc": "ESLint plugin for Astro",
         "icon": "i-logos-eslint"
       },
@@ -311,28 +335,10 @@
         "icon": "i-gravity-ui-nodes-down"
       },
       {
-        "name": "@types/mdast",
-        "link": "https://www.npmjs.com/package/@types/mdast",
-        "desc": "TypeScript definitions for the MDAST abstract syntax tree",
-        "icon": "i-vscode-icons-file-type-light-remark"
-      },
-      {
-        "name": "mdast-util-directive",
-        "link": "https://github.com/syntax-tree/mdast-util-directive",
-        "desc": "Utility for handling directives in MDAST",
-        "icon": "i-vscode-icons-file-type-light-remark"
-      },
-      {
         "name": "mdast-util-to-string",
         "link": "https://github.com/syntax-tree/mdast-util-to-string",
         "desc": "Utility to get the text content of an MDAST node",
         "icon": "i-vscode-icons-file-type-light-remark"
-      },
-      {
-        "name": "hastscript",
-        "link": "https://github.com/syntax-tree/hastscript",
-        "desc": "Hyperscript for HAST, creating HAST nodes",
-        "icon": "i-vscode-icons-file-type-light-rehype"
       }
     ],
     "Credits": [

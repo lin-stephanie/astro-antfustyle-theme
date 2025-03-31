@@ -13,7 +13,7 @@ This post provides a brief guide on how to organize and use images in the [Astro
 
 ## Supported Cases for Image Processing
 
-Astro supports processing images during the build phase via the [Image Service API](https://docs.astro.build/en/reference/image-service-reference/) (:link{id=lovell/sharp style=github} is the [default service](https://docs.astro.build/en/guides/images/#default-image-service)), allowing actions like converting to webp, compressing, adding attributes, inferring dimensions to prevent CLS, lazy loading, and async decoding. However, this only applies in the following cases:
+Astro supports processing images during the build phase via the [Image Service API](https://docs.astro.build/en/reference/image-service-reference/) (:link[sharp]{id=lovell/sharp .github} is the [default service](https://docs.astro.build/en/guides/images/#default-image-service)), allowing actions like converting to webp, compressing, adding attributes, inferring dimensions to prevent CLS, lazy loading, and async decoding. However, this only applies in the following cases:
 
 - [Images stored in `src/`](https://docs.astro.build/en/guides/images/#where-to-store-images) (Images in the `public/` folder won’t be processed)
 - [Authorized remote images](https://docs.astro.build/en/guides/images/#authorizing-remote-images) (Note: external images referenced in Markdown using `![]()` will not be processed)
@@ -60,7 +60,7 @@ It is recommended to store the local images used in the post under the `src/asse
 
 > [!tip]- Adjusting Image Attributes in Markdown/MDX
 >
-> To modify attributes of an `img` element (like size) in Markdown/MDX, use the :link[remark-imgattr]{id=OliverSpeir/remark-imgattr style=github} syntax.
+> To modify attributes of an `img` element (like size) in Markdown/MDX, use the :link[remark-imgattr]{id=OliverSpeir/remark-imgattr .github} syntax.
 > 
 > **Note**: Styles must be written directly in the `style` attribute or by applying a `class`. UnoCSS utility classes won't apply.
 
@@ -100,7 +100,7 @@ import rocket from '../assets/rocket.png';
 
 ## Image Compression
 
-As mentioned, Astro can compress images from the `src/` folder. However, for images in blog posts, especially those in `public`, it’s recommended to manually compress them to avoid performance issues. Useful tools include [Tinify](https://tinify.com/web), [Squoosh](https://squoosh.app/), and [SVGO](https://svgo.dev/).
+As mentioned, Astro can compress images from the `src/` folder. However, for images in blog posts, especially those in `public`, it’s recommended to manually compress them to avoid performance issues. Useful tools include :link[Tinify]{id=https://tinify.com/web}, :link[Squoosh]{id=https://squoosh.app/}, and :link[SVGO]{id=https://svgo.dev/}.
 
 ## Wrapping Up
 

@@ -2,12 +2,11 @@
 title: Project Structure
 description: Introduces the structure of the Astro AntfuStyle Theme
 pubDate: 2024-10-03
-lastModDate: 2024-02-28
+lastModDate: 2025-03-31
 toc: true
 share: true
 ogImage: true
 ---
-
 
 This post will quickly familiarize you with the entire structure of the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) project.
 
@@ -32,14 +31,12 @@ astro-antfustyle-theme
 |-eslint.config.js                          // ESLint configuration for maintaining code quality.
 |-package.json                              // Project metadata and dependencies.
 |-plugins                                   // Custom plugins for extending Astro project.
-| |-index.ts                                // Entry point for plugin registration.
+| |-index.ts                                // Entry point for remark/rehype plugin registration.
 | |-og-template                             // Files related to generating Open Graph images.
 | | |-Inter-Regular-24pt.ttf                // Font file used in Open Graph image generation.
 | | |-base64.ts                             // Base64-encoded backgrounds for OG image generation.
 | | |-markup.ts                             // Template for OG image generation.
-| |-remark-directive-sugar.ts               // Plugin for implementing predefined directives.
 | |-remark-generate-og-image.ts             // Plugin for automatically generating OG images.
-| |-remark-image-container.ts               // Plugin for wrapping images in custom containers.
 | |-remark-reading-time.ts                  // Plugin for calculating eading times.
 |-pnpm-lock.yaml                            // Lock file ensuring consistent installation of dependencies.
 |-public                                    // Publicly accessible static assets.
@@ -57,6 +54,7 @@ astro-antfustyle-theme
 | |-components                              // Astro components used throughout the project.
 | | |-backgrounds                           // Background design components.
 | | |-base                                  // Base components used across the site.
+| | |-nav                                   // Navigation-related components.
 | | |-toc                                   // Table of contents components.
 | | |-views                                 // View components for different content display layouts.
 | | |-widgets                               // Widget components for interactive features.
@@ -86,13 +84,14 @@ astro-antfustyle-theme
 | | | |-[slug].astro                        // Dynamic routing for individual changlog posts.
 | | | |-index.mdx                           // Changlog index page.
 | | |-feeds.mdx                             // Example: fetching Astro Blog using @ascorbic/feed-loader.
-| | |-highlights.mdx                        // Showcase your creative work or curated posts.
-| | |-index.mdx                             // Homepage in Markdown.
+| | |-highlights.mdx                        // Display creative work or curated posts.
+| | |-index.mdx                             // Homepage.
 | | |-manifest.webmanifest.js               // Web app manifest file for mobile and PWA support.
-| | |-projects.mdx                          // Showcase your projects.
-| | |-prs.mdx                               // Render your GitHub pull requests.
-| | |-releases.mdx                          // Render your GitHub releases.
+| | |-projects.mdx                          // Display projects.
+| | |-prs.mdx                               // Display GitHub pull requests.
+| | |-releases.mdx                          // Display GitHub releases.
 | | |-rss.xml.js                            // RSS feed generator.
+| | |-shorts.mdx                            // Display short notes or quick thoughts.
 | | |-streams.mdx                           // Example: displaying Astro Streams with local JSON data.
 | |-styles                                  // Stylesheets for the project.
 | | |-main.css                              // Main styles for the project.
@@ -101,12 +100,12 @@ astro-antfustyle-theme
 | | |-prose.css                             // Prose styles for text content.
 | |-types.ts                                // TypeScript types used across the project.
 | |-utils                                   // Utility functions and helpers.
-| | |-animation.ts                          // Utility functions for Animation.
-| | |-common.ts                             // General utility functions.
-| | |-data.ts                               // Utility functions for handling GitHub/Bluesky data.
-| | |-datetime.ts                           // Utility functions for date and time.
-| | |-post.ts                               // Utility functions for working with posts.
-| | |-toc.ts                                // Utility functions for generating tables of contents.
+| | |-animation.ts                          // For Animation.
+| | |-common.ts                             // For General-purpose.
+| | |-data.ts                               // For handling GitHub/Bluesky data.
+| | |-datetime.ts                           // For date and time.
+| | |-post.ts                               // For working with posts.
+| | |-toc.ts                                // For generating tables of contents.
 |-tsconfig.json                             // TypeScript configuration file.
 |-unocss.config.ts                          // UnoCSS configuration for utility-first CSS.
 ```
@@ -140,6 +139,7 @@ Here’s how the theme’s pages correlate to collections and utilize zod schema
 | `/releases`                                           | `src/pages/releases.mdx`           | [Via Astro loader](../customizing-github-activity-pages/)        | Default by Astro loader   |
 | `/prs`                                                | `src/pages/prs.mdx`                | [Via Astro loader](../customizing-github-activity-pages/)        | Default by Astro loader   |
 | `/highlughts`                                         | `src/pages/highlights.mdx`         | [Via Astro loader](../recreating-current-pages/#highlights-page) | Default by Astro loader   |
+| `/shorts`                                             | `src/pages/shorts.mdx`             | `src/content/blog/` (processed for demo)                         | `postSchema`              |
 
 </div>
 

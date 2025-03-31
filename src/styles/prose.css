@@ -221,8 +221,12 @@
   margin-bottom: 1.25em;
 }
 .prose img {
-  margin-top: 2em;
-  margin-bottom: 2em;
+  border-radius: 0.5rem;
+  margin-block: 2em;
+  margin-inline: auto;
+}
+.prose figure img {
+  margin-block: 0;
 }
 .prose video {
   margin-top: 2em;

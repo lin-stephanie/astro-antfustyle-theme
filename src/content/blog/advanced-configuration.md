@@ -43,7 +43,7 @@ The existing grow keyframe animation, applied to the `draw` class, can be modifi
 
 Open the `plugins/og-template/markup.ts` file and replace the SVG section entirely.
 
-You may need to adjust the SVG element's `width`, `height`, and `viewBox` attributes to fit properly. It's recommended to paste the code below into the [Satori - OG Image Playground](https://og-playground.vercel.app/) under the Tailwind (experimental) tab for testing.
+You may need to adjust the SVG element's `width`, `height`, and `viewBox` attributes to fit properly. It's recommended to paste the code below into the :link[Satori: OG Image Playground]{id=https://og-playground.vercel.app/} under the Tailwind (experimental) tab for testing.
 
 ```xml
 <div
@@ -73,7 +73,7 @@ You may need to adjust the SVG element's `width`, `height`, and `viewBox` attrib
 
 ## Replacing the Website Icon
 
-Once you've [customized the logo](#customizing-logo) and have the SVG file, it's time to generate the necessary icons to replace the website's favicon. You'll need to generate the following [Ultimate Favicon Setup](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs#the-ultimate-favicon-setup):
+Once you've [customized the logo](#customizing-logo) and have the SVG file, it's time to generate the necessary icons to replace the website's favicon. You'll need to generate the following :link[Ultimate Favicon Setup]{id=https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs#the-ultimate-favicon-setup}:
 
 - **`favicon.ico`**: For legacy browsers.
 - **`favicon.svg`**: A single SVG icon with light/dark modes for modern browsers.
@@ -100,7 +100,7 @@ First, open the `favicon.svg` file in a text editor. Locate a `<path>` element w
 </svg>
 ```
 
-Next, use the steps in [How to Favicon in 2024](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs#step-2-create-an-ico-file) or [Real Favicon Generator](https://realfavicongenerator.net/) to generate the icons. Rename the files as mentioned above and copy them to the `public` directory to replace the existing ones.
+Next, use the steps in :link[How to Favicon in 2024]{id=https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs#step-2-create-an-ico-file} or :link[Real Favicon Generator]{id=https://realfavicongenerator.net/} to generate the icons. Rename the files as mentioned above and copy them to the `public` directory to replace the existing ones.
 
 Lastly, update `src/pages/manifest.webmanifest.js` with the following:
 
@@ -153,7 +153,7 @@ While the theme offers some quick [UI configuration options](../basic-configurat
 **Styling approaches**
 
 - Native CSS (in CSS files and component `<style>` tags)
-- :link[UnoCSS]{id=@unocss/unocss} utility classes (configured with :link{id=@unocss/preset-uno style=github}, compatible with :link[Tailwind CSS]{id=tailwindlabs/tailwindcss} and :link[Windi CSS]{id=windicss/windicss})
+- :link[UnoCSS]{id=unocss/unocss} utility classes (compatible with :link[Tailwind CSS]{id=tailwindlabs/tailwindcss} and :link[Windi CSS]{id=windicss/windicss})
 - Custom CSS utility classes (in `unocss.config.ts` under `rules` and `shortcuts`)
 
 **Where styles are defined**
@@ -245,7 +245,7 @@ For example, changing the font of group titles on the `/projects` page:
 
 ## Customizing Fonts
 
-The theme has configured :link{id=@unocss/preset-web-fonts style=github}. Simply choose a font from [Google Fonts](https://fonts.google.com/) and modify the `fonts` configuration in `unocss.config.ts`:
+The theme has configured :link{id=@unocss/preset-web-fonts}. Simply choose a font from [Google Fonts](https://fonts.google.com/) and modify the `fonts` configuration in `unocss.config.ts`:
 
 ```ts title='unocss.config.ts' ins={10}
 export default defineConfig({
@@ -318,7 +318,7 @@ Of course, it would greatly appreciated if you could also keep the `Powered by A
 
 Finally, you may want to:
 
-- Delete the `.github` directory Remove the `.github` directory (mainly for workflows and templates, but the `scheduled-vercel-deploy.yml` file may be useful for [Customizing GitHub Activity Pages](../customizing-github-activity-pages/#automate-data-refreshing)).
+- Remove the `.github` directory (mainly for workflows and templates, but the `scheduled-vercel-deploy.yml` file may be useful for [Customizing GitHub Activity Pages](../customizing-github-activity-pages/#automate-data-refreshing)).
 - Clean up `public/og-images/`, `src/content/` and `src/assets/` directories。
 - Check `.vscode/settings.json` for adjustments.  
 - Rewrite `README.md`.

@@ -8,8 +8,7 @@ share: true
 ogImage: true
 ---
 
-The post shows how basic Markdown syntax is displayed in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) (modified from :link[rt2zz/markdown-sample.md]{link=https://gist.github.com/rt2zz/e0a1d6ab2682d2c47746950b84c0b6ee style=github}). You can refer to the [original Markdown file](https://github.com/lin-stephanie/astro-antfustyle-theme/blob/main/src/content/blog/markdown-syntax-guide.md) for comparison. If you want to learn MDX, visit the [MDX Docs](https://mdxjs.com/docs/).
-
+The post shows how basic Markdown syntax is displayed in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) (modified from :link[rt2zz/markdown-sample.md]{id=https://gist.github.com/rt2zz/e0a1d6ab2682d2c47746950b84c0b6ee .github}). You can refer to the [original Markdown file](https://github.com/lin-stephanie/astro-antfustyle-theme/blob/main/src/content/blog/markdown-syntax-guide.md) for comparison. If you want to learn MDX, visit the [MDX Docs](https://mdxjs.com/docs/).
 
 ## An h1 header
 
@@ -21,7 +20,7 @@ Paragraphs are separated by a blank line.
 - that one
 - the other one
 
-Note that --- not considering the asterisk --- the actual text content starts at 4-columns in.
+Note that — not considering the asterisk — the actual text content starts at 4-columns in.
 
 > Block quotes are written like so.
 >

@@ -2,7 +2,7 @@
 title: Basic Configuration
 description: How to configure Astro AntfuStyle Theme
 pubDate: 2024-10-02
-lastModDate: 2025-01-25
+lastModDate: 2025-03-31
 toc: true
 share: true
 ogImage: true
@@ -66,11 +66,11 @@ The `UI` object allows you to configure navigation, social links, page views, an
 
 ### `navBarLayout`
 
-| Option        | Type                    | Description                                                                                                                                                | Example                                                                                                                                          |
-| --------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `left`          | `NavBarComponentType[]` | Defines which components ('internalNavs', 'socialLinks', 'searchButton', 'themeButton', 'rssLink') are positioned on the left side of the navigation bar.  | `[]` (If you want all components to appear on the right side, leave this array empty)                                                            |
-| `right`         | `NavBarComponentType[]` | Defines which components ('internalNavs', 'socialLinks', 'searchButton', 'themeButton', 'rssLink') are positioned on the right side of the navigation bar. | `['internalNavs', 'socialLinks', 'searchButton', themeButton', 'rssLink']` (Components in `left` and `right` arrays must not contain duplicates) |
-| `mergeOnMobile` | `boolean`               | Controls whether the 'internalNavs' and 'socialLinks' section are combined into a single navigation menu on mobile, managed through a hamburger icon.      | `true`                                                                                                                                           |
+| Option          | Type                    | Description                                                                                                                                                      | Example                                                                                                                                                                                      |
+| --------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `left`          | `NavBarComponentType[]` | Defines which components ('internalNavs', 'socialLinks', 'searchButton', 'themeButton', 'rssLink', 'hr') are positioned on the left side of the navigation bar.  | `[]` (Leave empty to place all components on the right)                                                                                                                                      |
+| `right`         | `NavBarComponentType[]` | Defines which components ('internalNavs', 'socialLinks', 'searchButton', 'themeButton', 'rssLink', 'hr') are positioned on the right side of the navigation bar. | `['internalNavs', 'hr', 'socialLinks', 'hr', 'searchButton', themeButton', 'rssLink']` (No duplicates allowed between `left` and `right`; use `'hr'` to insert a divider between components) |
+| `mergeOnMobile` | `boolean`               | Controls whether the 'internalNavs' and 'socialLinks' section are combined into a single navigation menu on mobile, managed through a hamburger icon.            | `true`                                                                                                                                                                                       |
 
 ### `groupView`
 
@@ -124,12 +124,12 @@ The `FEATURES` object globally controls the activation and configuration of spec
 
 ### `toc`
 
-| Option           | Type                         | Description                                                                         | Example   |
-| ----------------- | ---------------------------- | ----------------------------------------------------------------------------------- | --------- |
-| `minHeadingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | Sets the minimum heading level. Must be less than or equal to `maxHeadingLevel`.    | `2`       |
-| `maxHeadingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | Sets the maximum heading level. Must be greater than or equal to `minHeadingLevel`. | `4`       |
-| `displayPosition` | `'left' \| 'right'`          | Sets the position of TOC on the page (either on the left or right).                 | `'left'`  |
-| `displayMode`     | `'always' \| 'hover'`        | Controls whether the TOC is always visible or only appears when hovering.           | `'hover'` |
+| Option            | Type                                 | Description                                                                                                                                                                                                          | Example     |
+| ----------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `minHeadingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6`         | Sets the minimum heading level. Must be less than or equal to `maxHeadingLevel`.                                                                                                                                     | `2`         |
+| `maxHeadingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6`         | Sets the maximum heading level. Must be greater than or equal to `minHeadingLevel`.                                                                                                                                  | `4`         |
+| `displayPosition` | `'left' \| 'right'`                  | Sets the position of TOC on the page (either on the left or right).                                                                                                                                                  | `'left'`    |
+| `displayMode`     | `'always' \| 'content'` \| `'hover'` | Controls how the page TOC is displayed. Allowed values:<br>`'always'`: always visible.<br>`'content'`: when hovering over the content area (element with class 'prose').<br>`'hover'`: only when hovering over the TOC itself. | `'content'` |
 
 ### `ogImage`
 
@@ -147,3 +147,8 @@ The `FEATURES` object globally controls the activation and configuration of spec
 
 After making these changes, ensure the project runs smoothly in the browser before moving on to [Advanced Configuration](../advanced-configuration/). 🧗‍♂️
  
+:::details
+::summary[Changelog]
+2025-03-31
+- Update: `navBarLayout.left`, `navBarLayout.right` and `toc.displayMode`
+:::

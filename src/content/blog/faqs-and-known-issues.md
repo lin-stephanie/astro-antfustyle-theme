@@ -19,13 +19,13 @@ ogImage: true
 
 The accessibility score is not perfect due to "Background and foreground colors do not have a sufficient contrast ratio", which is a result of the theme's styling. If you don’t mind this, the theme performs very well in Lighthouse. A high-contrast version is planned.
 
-You can also check the live demo’s performance on PageSpeed Insights: [https://pagespeed.web.dev/](https://pagespeed.web.dev/)
+You can also check the live demo’s performance on :link[PageSpeed Insights]{id=https://pagespeed.web.dev/}
 
 ### About SEO and Accessibility
 
-The SEO functionality of the theme is enhanced by integrating the official [@astrojs/sitemap](https://www.npmjs.com/package/@astrojs/sitemap) and the third-party [astro-robots-txt](https://github.com/alextim/astro-lib/tree/main/packages/astro-robots-txt), which automatically generate `sitemap.xml` and `robots.txt` files, respectively. Additionally,  the theme can generate and configure [Google JSON-LD Structured Data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data) in the page headers for different types of content, helping search engines better understand and display your site's information accurately.
+The SEO functionality of the theme is enhanced by integrating the official :link{id=@astrojs/sitemap} and the third-party :link[astro-robots-txt]{id=https://github.com/alextim/astro-lib/tree/main/packages/astro-robots-txt .github}, which automatically generate `sitemap.xml` and `robots.txt` files, respectively. Additionally,  the theme can generate and configure [Google JSON-LD Structured Data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data) in the page headers for different types of content, helping search engines better understand and display your site's information accurately.
 
-As for accessibility, the theme is tested using the [Sa11y](https://sa11y.netlify.app/) tool, making it easy for you to check your content --- _a simple yet effective assistant_.
+As for accessibility, the theme is tested using the :link[Sa11y]{id=ryersondmp/sa11y} tool, making it easy for you to check your content — _a simple yet effective assistant_.
 
 ### Revert from `pnpm` to `npm` or `yarn`
 
@@ -65,16 +65,16 @@ export default MyComponent;
 
 ### Icon Usage
 
-This theme has [@unocss/preset-icons](https://www.npmjs.com/package/@unocss/preset-icons) and [@iconify-json](https://www.npmjs.com/package/@iconify/json) pre-installed and configured, allowing the use of icons wherever needed. According to UnoCSS specs, icons must follow the format `i-<collection>-<icon>` or `i-<collection>:<icon>`. Examples include:
+This theme has :link{id=@unocss/preset-icons} and :link{id=@iconify/json} pre-installed and configured, allowing the use of icons wherever needed. According to UnoCSS specs, icons must follow the format `i-<collection>-<icon>` or `i-<collection>:<icon>`. Examples include:
 
 - `"i-ri:twitter-x-fill"`
 - `"i-ri-twitter-x-fill"`
 - `"i-mdi:github"`
 - `"i-mdi-github"`
 
-You can explore more available icon sets on [icon-sets.iconify.design](https://icon-sets.iconify.design/). Once you've found the desired icon, select it, then copy the UnoCSS icon name from the "Icon" dropdown.
+You can explore more available icon sets on :link{id=https://icon-sets.iconify.design/}. Once you've found the desired icon, select it, then copy the UnoCSS icon name from the "Icon" dropdown.
 
-For more details on usage, please refer to the [UnoCSS - Icons preset](https://unocss.dev/presets/icons#icons-preset). 
+For more details on usage, please refer to the :link[UnoCSS: Icons Preset]{id=https://unocss.dev/presets/icons#icons-preset}. 
 
 ### Post Date Format
 
@@ -120,7 +120,7 @@ Search for `data-pagefind-` in the editor to see the current setup.
 
 ### Image Zoom
 
-The theme uses :link[medium-zoom]{id=francoischalifour/medium-zoom} to zoom images that match the `.prose img:not(.no-zoom)` selector. To disable zoom for a specific image, add the `no-zoom` class. 
+The theme uses :link[medium-zoom]{id=francoischalifour/medium-zoom .github} to zoom images that match the `.prose img:not(.no-zoom)` selector. To disable zoom for a specific image, add the `no-zoom` class. 
 
 Configuration can be done in `src/layouts/BaseLayout.astro`.
 
@@ -128,9 +128,9 @@ Configuration can be done in `src/layouts/BaseLayout.astro`.
 
 Currently, the theme's RSS configuration (see `src/pages/rss.xml.js`) only allows visitors to subscribe to posts under `src/content/blog/`.
 
-If you want to further customize which content on the site can be subscribed to, refer to the theme’s integrated [@astrojs/rss](https://www.npmjs.com/package/@astrojs/rss) documentation and [Astro's official guide](https://docs.astro.build/en/guides/rss/).
+If you want to further customize which content on the site can be subscribed to, refer to the theme’s integrated :link{id=@astrojs/rss} documentation and [Astro's official guide](https://docs.astro.build/en/guides/rss/).
 
-If the official integration doesn’t meet your needs, you may consider using [jpmonette/feed](https://github.com/jpmonette/feed). Additionally, community-provided [RSS Recipes](https://docs.astro.build/en/community-resources/content/#rss) are also worth checking out.
+If the official integration doesn’t meet your needs, you may consider using :link[feed]{id=jpmonette/feed .github}. Additionally, community-provided [RSS Recipes](https://docs.astro.build/en/community-resources/content/#rss) are also worth checking out.
 
 ### Language-specific Build
 
@@ -142,9 +142,30 @@ The theme natively supports rendering math equations with [KaTeX](https://katex.
 
 To use [Typst](https://typst.app/) instead of [LaTeX](https://www.latex-project.org/), refer to [PR#19](https://github.com/lin-stephanie/astro-antfustyle-theme/pull/19).
 
+### About Footnotes in Markdown
+
+By default, Astro adds an `h2` heading called "Footnotes" when you use footnotes in Markdown/MDX. To remove it, you can update the `generateToc` like this:
+
+```ts title='src/utils/toc.ts' del={8} ins={9}
+export function generateToc(
+  headings: readonly MarkdownHeading[],
+  minHeadingLevel: HeadingLevel,
+  maxHeadingLevel: HeadingLevel
+) {
+  ...
+  const bodyHeadings = headings.filter(
+    ({ depth }) => depth >= minHeadingLevel && depth <= maxHeadingLevel
+    ({ depth , text}) => depth >= minHeadingLevel && depth <= maxHeadingLevel && text !== 'Footnotes'
+  )
+  ...
+}
+```
+
+Or modify it to suit your needs.
+
 ## Known Issues
 
-Here are some unresolved issues found during theme development. If you have a solution, feel free to [submit a PR](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls) --- much appreciated!
+Here are some unresolved issues found during theme development. If you have a solution, feel free to [submit a PR](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls) — much appreciated!
 
 1. No hints or error warnings when passing props in MDX components.
 
@@ -156,7 +177,7 @@ Thank you for taking the time to explore and use the Astro AntfuStyle Theme.
 
 If you encounter any issues, find errors, or see opportunities for improvement, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions) or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls).
 
-Let’s keep pushing forward and making great things happen --- your input is always welcome! 🙌
+Let’s keep pushing forward and making great things happen — your input is always welcome! 🙌
 
 :::details
 ::summary[Changelog]
