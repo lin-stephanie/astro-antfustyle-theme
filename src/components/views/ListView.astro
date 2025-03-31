@@ -23,6 +23,7 @@ interface Props {
 }
 
 const { collectionType, pageToc } = Astro.props
+
 const VALID_COLLECTION_TYPE = ['blog', 'changelog', 'streams', 'feeds']
 const WARNING = `The '${collectionType}' collection type is not built-in.
   Modify <code>ListView.astro</code> to render it.`

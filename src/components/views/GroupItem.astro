@@ -13,7 +13,7 @@ const { maxGroupColumns, showGroupItemColorOnHover } = UI.groupView
 ---
 
 <div
-  class={`grid gap-3 cols-[repeat(auto-fill,minmax(350px,1fr))]
+  class={`grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-3
     py-8 mx-auto lt-lgp:max-w-[712px]! lt-md:max-w-[350px]!`}
   style={`max-width: calc(350px * ${maxGroupColumns} + ${maxGroupColumns - 1} * 0.75rem);`}
 >

@@ -12,10 +12,6 @@ import { matchLogo, extractPackageName, processVersion } from '~/utils/data'
 import type { RepoWithOwner, Url, Icon } from '~/types'
 import type { CollectionEntry } from 'astro:content'
 
-interface Props {
-  collectionType: 'releases' | 'prs'
-}
-
 export type ExtendedReleaseData = CollectionEntry<'releases'>['data'] & {
   isInMonorepo: boolean
   pkgName: string
@@ -30,13 +26,18 @@ export type ExtendedPrData = CollectionEntry<'prs'>['data'] & {
   subLogo: Url | Icon | undefined
 }
 
+interface Props {
+  collectionType: 'releases' | 'prs'
+}
+
 const { collectionType } = Astro.props
 const { monorepos, mainLogoOverrides, subLogoMatches } = UI.githubView
 
 const MAX_PER_PKG = 5
 const WARNING = `No GitHub data available for display.
-  See <a href='../blog/customizing-github-activity-pages/'>
+  See <a href='https://astro-antfustyle-theme.vercel.app/blog/customizing-github-activity-pages/'>
   Customizing GitHub Activity Pages</a> for details.`
+
 let isEmpty = false
 
 /* Releases */
