@@ -23,10 +23,10 @@
   "devDependencies": {
     "@ascorbic/feed-loader": "^1.0.4",
     "@astrojs/check": "^0.9.4",
-    "@astrojs/markdown-remark": "^5.3.0",
-    "@astrojs/mdx": "^3.1.9",
+    "@astrojs/markdown-remark": "^6.3.1",
+    "@astrojs/mdx": "^4.2.5",
     "@astrojs/rss": "^4.0.11",
-    "@astrojs/sitemap": "^3.3.0",
+    "@astrojs/sitemap": "^3.3.1",
     "@atproto/api": "^0.14.16",
     "@eslint/js": "^9.23.0",
     "@expressive-code/plugin-collapsible-sections": "^0.40.2",
@@ -36,8 +36,8 @@
     "@types/nprogress": "^0.2.3",
     "@types/p5": "^1.7.6",
     "@typescript-eslint/parser": "^8.28.0",
-    "@unocss/reset": "^65.4.3",
-    "astro": "^4.16.18",
+    "@unocss/reset": "66.1.0-beta.12",
+    "astro": "^5.7.5",
     "astro-expressive-code": "^0.40.2",
     "astro-loader-bluesky-posts": "^1.2.0",
     "astro-loader-github-prs": "^1.2.1",
@@ -76,7 +76,7 @@
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.28.0",
     "unist-util-visit": "^5.0.0",
-    "unocss": "^65.4.3"
+    "unocss": "66.1.0-beta.12"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
@@ -88,10 +88,12 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
       "simple-git-hooks"
     ]
   },
   "engines": {
-    "node": "^18.0.0 || >=20.0.0"
+    "node": "^18.17.1 || ^20.3.0 || ^22.0.0"
   }
 }
