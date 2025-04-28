@@ -1,30 +1,45 @@
 ---
 import Link from '~/components/base/Link.astro'
+import { slug } from '~/utils/toc'
+
 import type { TocHeading } from '~/utils/toc'
 
-interface Props {
-  heading: TocHeading
-}
+type Props =
+  | { heading: TocHeading; anchors?: never }
+  | { anchors: string[]; heading?: never }
 
-const { heading } = Astro.props
-const { slug, children, text } = heading
+const { heading, anchors } = Astro.props
 ---
 
-<li>
-  {
-    slug && (
-      <Link href={`#${slug}`} aria-label={`Scroll to ${text}`}>
-        {text}
-      </Link>
-    )
-  }
-  {
-    !!children.length && (
-      <ul>
-        {children.map((subheading) => (
-          <Astro.self heading={subheading} />
+{
+  heading ? (
+    <li>
+      {heading.slug && (
+        <Link
+          href={`#${heading.slug}`}
+          aria-label={`Scroll to ${heading.text}`}
+        >
+          {heading.text}
+        </Link>
+      )}
+      {!!heading.children.length && (
+        <ul>
+          {heading.children.map((subheading) => (
+            <Astro.self heading={subheading} />
+          ))}
+        </ul>
+      )}
+    </li>
+  ) : (
+    <>
+      {!!anchors.length &&
+        anchors.map((item) => (
+          <li>
+            <Link href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
+              {item}
+            </Link>
+          </li>
         ))}
-      </ul>
-    )
-  }
-</li>
+    </>
+  )
+}

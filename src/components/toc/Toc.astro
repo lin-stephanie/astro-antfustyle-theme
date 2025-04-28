@@ -1,22 +1,25 @@
 ---
-import Link from '~/components/base/Link.astro'
 import TocButton from '~/components/toc/TocButton.astro'
 import TocItem from '~/components/toc/TocItem.astro'
-import { slug } from '~/utils/common'
 import { generateToc } from '~/utils/toc'
 import { FEATURES } from '~/config'
 
 import type { MarkdownHeading } from 'astro'
 import type { TocConfig } from '~/types'
 
-interface Props {
-  headings?: MarkdownHeading[]
-  category?: string[]
-  years?: string[]
-  style?: string
-}
+type Props =
+  | {
+      headings: MarkdownHeading[]
+      anchors?: never
+      style?: string
+    }
+  | {
+      anchors: string[]
+      headings?: never
+      style?: string
+    }
 
-const { headings = [], category = [], years = [], style } = Astro.props
+const { headings = [], anchors = [], style } = Astro.props
 
 const getTocConfig = () => {
   const defaultConfig: TocConfig = {
@@ -60,26 +63,7 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
           !!specHeadings.length &&
             specHeadings.map((heading) => <TocItem {heading} />)
         }
-        {
-          !!category.length &&
-            category.map((item) => (
-              <li>
-                <Link href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
-                  {item}
-                </Link>
-              </li>
-            ))
-        }
-        {
-          !!years.length &&
-            years.map((item) => (
-              <li>
-                <Link href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
-                  {item}
-                </Link>
-              </li>
-            ))
-        }
+        {!!anchors.length && <TocItem {anchors} />}
       </ul>
     </nav>
     <!-- less than 1128px -->
@@ -88,26 +72,7 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
         !!specHeadings.length &&
           specHeadings.map((heading) => <TocItem {heading} />)
       }
-      {
-        !!category.length &&
-          category.map((item) => (
-            <li>
-              <Link href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
-                {item}
-              </Link>
-            </li>
-          ))
-      }
-      {
-        !!years.length &&
-          years.map((item) => (
-            <li>
-              <Link href={`#${slug(item)}`} aria-label={`Scroll to ${item}`}>
-                {item}
-              </Link>
-            </li>
-          ))
-      }
+      {!!anchors.length && <TocItem {anchors} />}
     </TocButton>
   </table-of-contents>
 </aside>

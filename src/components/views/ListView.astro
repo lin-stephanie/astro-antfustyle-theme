@@ -96,7 +96,7 @@ if (collectionType === 'feeds') {
 }
 ---
 
-{tocEnabled && <Toc {years} />}
+{tocEnabled && <Toc anchors={years} />}
 
 {
   (collectionType === 'blog' || collectionType === 'changelog') && (

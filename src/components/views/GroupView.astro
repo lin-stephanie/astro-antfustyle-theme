@@ -48,7 +48,7 @@ const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
     <>
       {tocEnabled && (
         <Toc
-          category={Object.keys(data)}
+          anchors={Object.keys(data)}
           style={
             toc[1].displayPosition === 'right' ? 'right: -5rem' : undefined
           }
