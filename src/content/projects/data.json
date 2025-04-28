@@ -1,371 +1,401 @@
-{
-  "$schema": "../../../.astro/collections/projects.schema.json",
-  "projects": {
-    "Astro Ecosystem": [
-      {
-        "name": "astro",
-        "link": "https://github.com/withastro/astro",
-        "desc": "The web framework for content-driven websites",
-        "icon": "i-devicon-astro"
-      },
-      {
-        "name": "@astrojs/check",
-        "link": "https://www.npmjs.com/package/@astrojs/check",
-        "desc": "Astro's official check tool",
-        "icon": "i-carbon-settings-check"
-      },
-      {
-        "name": "@astrojs/markdown-remark",
-        "link": "https://www.npmjs.com/package/@astrojs/markdown-remark",
-        "desc": "Astro's integration with markdown using Remark",
-        "icon": "i-la-markdown"
-      },
-      {
-        "name": "@astrojs/mdx",
-        "link": "https://www.npmjs.com/package/@astrojs/mdx",
-        "desc": "Astro's MDX support",
-        "icon": "i-logos-mdx"
-      },
-      {
-        "name": "@astrojs/rss",
-        "link": "https://www.npmjs.com/package/@astrojs/rss",
-        "desc": "Astro RSS feed generation support",
-        "icon": "i-cil-rss"
-      },
-      {
-        "name": "@astrojs/sitemap",
-        "link": "https://www.npmjs.com/package/@astrojs/sitemap",
-        "desc": "Astro Sitemap generation",
-        "icon": "i-uil-sitemap"
-      },
-      {
-        "name": "astro-robots-txt",
-        "link": "https://www.npmjs.com/package/astro-robots-txt",
-        "desc": "Robots.txt generator for Astro",
-        "icon": "i-catppuccin-robots"
-      },
-      {
-        "name": "prettier-plugin-astro",
-        "link": "https://github.com/withastro/prettier-plugin-astro",
-        "desc": "Prettier plugin for Astro files",
-        "icon": "i-logos-prettier"
-      }
-    ],
-    "Astro Content Loaders": [
-      {
-        "name": "@ascorbic/feed-loader",
-        "link": "https://www.npmjs.com/package/@ascorbic/feed-loader",
-        "desc": "Load feeds into your Astro project",
-        "icon": "i-flat-color-icons-feed-in"
-      },
-      {
-        "name": "astro-loader-github-releases",
-        "link": "https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-releases",
-        "desc": "Loads GitHub releases from commits or repositories",
-        "icon": "i-bx-rocket"
-      },
-      {
-        "name": "astro-loader-github-prs",
-        "link": "https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-prs",
-        "desc": "Loads GitHub pull requests with a search query",
-        "icon": "i-ri-git-pull-request-line"
-      },
-      {
-        "name": "@ascorbic/feed-loader",
-        "link": "https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-bluesky-posts",
-        "desc": "Loads Bluesky posts and threads using post URLs or AT-URIs",
-        "icon": "i-logos-bluesky"
-      }
-    ],
-    "CSS & Icons": [
-      {
-        "name": "unocss",
-        "link": "https://github.com/unocss/unocss",
-        "desc": "The instant on-demand atomic CSS engine",
-        "icon": "i-logos-unocss"
-      },
-      {
-        "name": "@unocss/reset",
-        "link": "https://www.npmjs.com/package/@unocss/reset",
-        "desc": "UnoCSS reset styles",
-        "icon": "i-ri-reset-right-fill"
-      },
-      {
-        "name": "@iconify/json",
-        "link": "https://github.com/iconify/iconify",
-        "desc": "Iconify JSON icon data",
-        "icon": "i-simple-icons-iconify"
-      }
-    ],
-    "Markdown/HTML Handling": [
-      {
-        "name": "remark-directive",
-        "link": "https://github.com/remarkjs/remark-directive",
-        "desc": "Remark plugin for custom Markdown directives",
-        "icon": "i-mdi-magic"
-      },
-      {
-        "name": "remark-directive-sugar",
-        "link": "https://github.com/lin-stephanie/remark-directive-sugar",
-        "desc": "Remark plugin to provide predefined directives",
-        "icon": "i-ep-sugar"
-      },
-      {
-        "name": "remark-imgattr",
-        "link": "https://github.com/OliverSpeir/remark-imgattr",
-        "desc": "Remark plugin to add attributes to markdown and mdx images",
-        "icon": "i-bi-images"
-      },
-      {
-        "name": "remark-math",
-        "link": "https://github.com/remarkjs/remark-math/tree/main/packages/remark-math",
-        "desc": "Remark plugin to support math (`$C_L$`)",
-        "icon": "i-mynaui-math-square"
-      },
-      {
-        "name": "rehype-autolink-headings",
-        "link": "https://github.com/rehypejs/rehype-autolink-headings",
-        "desc": "Rehype plugin for automatically linking headings",
-        "icon": "i-lucide-lab-heading-square"
-      },
-      {
-        "name": "rehype-callouts",
-        "link": "https://github.com/lin-stephanie/rehype-callouts",
-        "desc": "Rehype plugin for rendering blockquote-based callouts",
-        "icon": "i-fluent-mdl2-text-callout"
-      },
-      {
-        "name": "rehype-external-links",
-        "link": "https://github.com/rehypejs/rehype-external-links",
-        "desc": "Rehype plugin for handling external links",
-        "icon": "i-line-md-external-link"
-      },
-      {
-        "name": "rehype-katex",
-        "link": "https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex",
-        "desc": "Rehype plugin to render elements with a `language-math` class with KaTeX",
-        "icon": "i-tabler-math"
-      }
-    ],
-    "Image Handling": [
-      {
-        "name": "sharp",
-        "link": "https://github.com/lovell/sharp",
-        "desc": "High performance Node.js image processing",
-        "icon": "i-icon-park-performance"
-      },
-      {
-        "name": "satori-html",
-        "link": "https://github.com/natemoo-re/satori-html",
-        "desc": "HTML rendering engine built for Satori",
-        "icon": "i-ic-twotone-imagesearch-roller"
-      },
-      {
-        "name": "satori",
-        "link": "https://github.com/vercel/satori",
-        "desc": "Satori is a library for rendering HTML to SVG",
-        "icon": "i-catppuccin-svg"
-      },
-      {
-        "name": "medium-zoom",
-        "link": "https://github.com/francoischalifour/medium-zoom",
-        "desc": "Medium-inspired zoom for images",
-        "icon": "i-icon-park-zoom-in"
-      }
-    ],
-    "Code Block Handling": [
-      {
-        "name": "astro-expressive-code",
-        "link": "https://www.npmjs.com/package/astro-expressive-code",
-        "desc": "Code highlighting plugin for Astro",
-        "icon": "i-fluent-color-code-20"
-      },
-      {
-        "name": "@expressive-code/plugin-collapsible-sections",
-        "link": "https://www.npmjs.com/package/@expressive-code/plugin-collapsible-sections",
-        "desc": "Plugin for collapsible sections in code blocks",
-        "icon": "i-fluent-color-code-20"
-      },
-      {
-        "name": "@expressive-code/plugin-line-numbers",
-        "link": "https://www.npmjs.com/package/@expressive-code/plugin-line-numbers",
-        "desc": "Plugin for line numbers in code blocks",
-        "icon": "i-fluent-color-code-20"
-      }
-    ],
-    "Utilities": [
-      {
-        "name": "p5",
-        "link": "https://github.com/processing/p5.js",
-        "desc": "A JavaScript library for accessible creative coding",
-        "icon": "i-devicon-p5js"
-      },
-      {
-        "name": "pagefind",
-        "link": "https://github.com/CloudCannon/pagefind",
-        "desc": "A static search tool",
-        "icon": "i-icon-park-search"
-      },
-      {
-        "name": "nprogress",
-        "link": "https://github.com/rstacruz/nprogress",
-        "desc": "Slim progress bars for Ajax applications",
-        "icon": "i-svg-spinners-3-dots-fade"
-      },
-      {
-        "name": "swiper",
-        "link": "https://github.com/nolimits4web/swiper",
-        "desc": "Most modern mobile touch slider",
-        "icon": "i-ion-images-sharp"
-      },
-      {
-        "name": "@atproto/api",
-        "link": "https://github.com/bluesky-social/atproto/tree/main/packages/api",
-        "desc": "APIs for ATProto and Bluesky",
-        "icon": "i-logos-bluesky"
-      },
-      {
-        "name": "reading-time",
-        "link": "https://github.com/ngryman/reading-time",
-        "desc": "Estimate reading time for text",
-        "icon": "i-ep-reading"
-      },
-      {
-        "name": "html-entities",
-        "link": "https://github.com/mdevils/html-entities",
-        "desc": "Encode/decode HTML entities",
-        "icon": "i-icon-park-transform"
-      }
-    ],
-    "TypeScript": [
-      {
-        "name": "typescript",
-        "link": "https://github.com/microsoft/TypeScript",
-        "desc": "TypeScript is a superset of JavaScript",
-        "icon": "i-vscode-icons-file-type-typescript-official"
-      },
-      {
-        "name": "typescript-eslint",
-        "link": "https://github.com/typescript-eslint/typescript-eslint",
-        "desc": "TypeScript plugin for ESLint",
-        "icon": "i-vscode-icons-file-type-typescript-official"
-      },
-      {
-        "name": "@typescript-eslint/parser",
-        "link": "https://www.npmjs.com/package/@typescript-eslint/parser",
-        "desc": "TypeScript ESLint parser",
-        "icon": "i-vscode-icons-file-type-typescript-official"
-      }
-    ],
-    "Linting & Formatting": [
-      {
-        "name": "eslint",
-        "link": "https://github.com/eslint/eslint",
-        "desc": "The pluggable linting utility for JavaScript",
-        "icon": "i-logos-eslint"
-      },
-      {
-        "name": "@eslint/js",
-        "link": "https://www.npmjs.com/package/@eslint/js",
-        "desc": "ESLint core JS rules",
-        "icon": "i-logos-eslint"
-      },
-      {
-        "name": "eslint-plugin-astro",
-        "link": "https://github.com/ota-meshi/eslint-plugin-astro",
-        "desc": "ESLint plugin for Astro",
-        "icon": "i-logos-eslint"
-      },
-      {
-        "name": "eslint-plugin-jsx-a11y",
-        "link": "https://github.com/jsx-eslint/eslint-plugin-jsx-a11y",
-        "desc": "Static AST checker for accessibility rules",
-        "icon": "i-logos-eslint"
-      },
-      {
-        "name": "eslint-config-prettier",
-        "link": "https://github.com/prettier/eslint-config-prettier",
-        "desc": "Disables ESLint rules that conflict with Prettier",
-        "icon": "i-logos-eslint"
-      },
-      {
-        "name": "globals",
-        "link": "https://github.com/sindresorhus/globals",
-        "desc": "Global variables for various environments",
-        "icon": "i-solar-global-broken"
-      },
-      {
-        "name": "prettier",
-        "link": "https://github.com/prettier/prettier",
-        "desc": "An opinionated code formatter",
-        "icon": "i-logos-prettier"
-      },
-      {
-        "name": "simple-git-hooks",
-        "link": "https://github.com/toplenboren/simple-git-hooks",
-        "desc": "Easily manage Git hooks",
-        "icon": "i-devicon-git"
-      },
-      {
-        "name": "lint-staged",
-        "link": "https://github.com/okonet/lint-staged",
-        "desc": "Run linters on staged git files",
-        "icon": "i-devicon-git"
-      }
-    ],
-    "CLI & Terminal": [
-      {
-        "name": "chalk",
-        "link": "https://github.com/chalk/chalk",
-        "desc": "Terminal string styling done right",
-        "icon": "i-logos-chalk"
-      },
-      {
-        "name": "del-cli",
-        "link": "https://github.com/sindresorhus/del-cli",
-        "desc": "Delete files/folders using globs",
-        "icon": "i-icon-park-delete"
-      }
-    ],
-    "Remark Utilities": [
-      {
-        "name": "unist-util-visit",
-        "link": "https://github.com/syntax-tree/unist-util-visit",
-        "desc": "Utility to recursively walk through unist nodes",
-        "icon": "i-gravity-ui-nodes-down"
-      },
-      {
-        "name": "mdast-util-to-string",
-        "link": "https://github.com/syntax-tree/mdast-util-to-string",
-        "desc": "Utility to get the text content of an MDAST node",
-        "icon": "i-vscode-icons-file-type-light-remark"
-      }
-    ],
-    "Credits": [
-      {
-        "name": "antfu/antfu.me",
-        "link": "https://github.com/antfu/antfu.me",
-        "desc": "Anthony Fu's personal website",
-        "icon": "i-mynaui-letter-a-waves"
-      },
-      {
-        "name": "satnaing/astro-paper",
-        "link": "https://github.com/satnaing/astro-paper",
-        "desc": "A minimal, accessible and SEO-friendly Astro blog theme",
-        "icon": "i-quill-paper"
-      },
-      {
-        "name": "chrismwilliams/astro-theme-cactus",
-        "link": "https://github.com/chrismwilliams/astro-theme-cactus",
-        "desc": "A simple Astro theme. Use it to create your blog or website",
-        "icon": "i-noto-v1-cactus"
-      },
-      {
-        "name": "saicaca/fuwari",
-        "link": "https://github.com/saicaca/fuwari",
-        "desc": "A static blog template built with Astro",
-        "icon": "i-gridicons-themes"
-      }
-    ]
+[
+  {
+    "id": "astro",
+    "link": "https://github.com/withastro/astro",
+    "desc": "The web framework for content-driven websites",
+    "icon": "i-devicon-astro",
+    "category": "Astro Ecosystem"
+  },
+  {
+    "id": "@astrojs/check",
+    "link": "https://www.npmjs.com/package/@astrojs/check",
+    "desc": "Astro's official check tool",
+    "icon": "i-carbon-settings-check",
+    "category": "Astro Ecosystem"
+  },
+  {
+    "id": "@astrojs/markdown-remark",
+    "link": "https://www.npmjs.com/package/@astrojs/markdown-remark",
+    "desc": "Astro's integration with markdown using Remark",
+    "icon": "i-la-markdown",
+    "category": "Astro Ecosystem"
+  },
+  {
+    "id": "@astrojs/mdx",
+    "link": "https://www.npmjs.com/package/@astrojs/mdx",
+    "desc": "Astro's MDX support",
+    "icon": "i-logos-mdx",
+    "category": "Astro Ecosystem"
+  },
+  {
+    "id": "@astrojs/rss",
+    "link": "https://www.npmjs.com/package/@astrojs/rss",
+    "desc": "Astro RSS feed generation support",
+    "icon": "i-cil-rss",
+    "category": "Astro Ecosystem"
+  },
+  {
+    "id": "@astrojs/sitemap",
+    "link": "https://www.npmjs.com/package/@astrojs/sitemap",
+    "desc": "Astro Sitemap generation",
+    "icon": "i-uil-sitemap",
+    "category": "Astro Ecosystem"
+  },
+  {
+    "id": "astro-robots-txt",
+    "link": "https://www.npmjs.com/package/astro-robots-txt",
+    "desc": "Robots.txt generator for Astro",
+    "icon": "i-catppuccin-robots",
+    "category": "Astro Ecosystem"
+  },
+  {
+    "id": "prettier-plugin-astro",
+    "link": "https://github.com/withastro/prettier-plugin-astro",
+    "desc": "Prettier plugin for Astro files",
+    "icon": "i-logos-prettier",
+    "category": "Astro Ecosystem"
+  },
+  {
+    "id": "@ascorbic/feed-loader",
+    "link": "https://www.npmjs.com/package/@ascorbic/feed-loader",
+    "desc": "Load feeds into your Astro project",
+    "icon": "i-flat-color-icons-feed-in",
+    "category": "Astro Content Loaders"
+  },
+  {
+    "id": "astro-loader-github-releases",
+    "link": "https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-releases",
+    "desc": "Loads GitHub releases from commits or repositories",
+    "icon": "i-bx-rocket",
+    "category": "Astro Content Loaders"
+  },
+  {
+    "id": "astro-loader-github-prs",
+    "link": "https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-prs",
+    "desc": "Loads GitHub pull requests with a search query",
+    "icon": "i-ri-git-pull-request-line",
+    "category": "Astro Content Loaders"
+  },
+  {
+    "id": "astro-loader-bluesky-posts",
+    "link": "https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-bluesky-posts",
+    "desc": "Loads Bluesky posts and threads using post URLs or AT-URIs",
+    "icon": "i-logos-bluesky",
+    "category": "Astro Content Loaders"
+  },
+  {
+    "id": "unocss",
+    "link": "https://github.com/unocss/unocss",
+    "desc": "The instant on-demand atomic CSS engine",
+    "icon": "i-logos-unocss",
+    "category": "CSS & Icons"
+  },
+  {
+    "id": "@unocss/reset",
+    "link": "https://www.npmjs.com/package/@unocss/reset",
+    "desc": "UnoCSS reset styles",
+    "icon": "i-ri-reset-right-fill",
+    "category": "CSS & Icons"
+  },
+  {
+    "id": "@iconify/json",
+    "link": "https://github.com/iconify/iconify",
+    "desc": "Iconify JSON icon data",
+    "icon": "i-simple-icons-iconify",
+    "category": "CSS & Icons"
+  },
+  {
+    "id": "remark-directive",
+    "link": "https://github.com/remarkjs/remark-directive",
+    "desc": "Remark plugin for custom Markdown directives",
+    "icon": "i-mdi-magic",
+    "category": "Markdown/HTML Handling"
+  },
+  {
+    "id": "remark-directive-sugar",
+    "link": "https://github.com/lin-stephanie/remark-directive-sugar",
+    "desc": "Remark plugin to provide predefined directives",
+    "icon": "i-ep-sugar",
+    "category": "Markdown/HTML Handling"
+  },
+  {
+    "id": "remark-imgattr",
+    "link": "https://github.com/OliverSpeir/remark-imgattr",
+    "desc": "Remark plugin to add attributes to markdown and mdx images",
+    "icon": "i-bi-images",
+    "category": "Markdown/HTML Handling"
+  },
+  {
+    "id": "remark-math",
+    "link": "https://github.com/remarkjs/remark-math/tree/main/packages/remark-math",
+    "desc": "Remark plugin to support math (`$C_L$`)",
+    "icon": "i-mynaui-math-square",
+    "category": "Markdown/HTML Handling"
+  },
+  {
+    "id": "rehype-autolink-headings",
+    "link": "https://github.com/rehypejs/rehype-autolink-headings",
+    "desc": "Rehype plugin for automatically linking headings",
+    "icon": "i-lucide-lab-heading-square",
+    "category": "Markdown/HTML Handling"
+  },
+  {
+    "id": "rehype-callouts",
+    "link": "https://github.com/lin-stephanie/rehype-callouts",
+    "desc": "Rehype plugin for rendering blockquote-based callouts",
+    "icon": "i-fluent-mdl2-text-callout",
+    "category": "Markdown/HTML Handling"
+  },
+  {
+    "id": "rehype-external-links",
+    "link": "https://github.com/rehypejs/rehype-external-links",
+    "desc": "Rehype plugin for handling external links",
+    "icon": "i-line-md-external-link",
+    "category": "Markdown/HTML Handling"
+  },
+  {
+    "id": "rehype-katex",
+    "link": "https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex",
+    "desc": "Rehype plugin to render elements with a `language-math` class with KaTeX",
+    "icon": "i-tabler-math",
+    "category": "Markdown/HTML Handling"
+  },
+  {
+    "id": "sharp",
+    "link": "https://github.com/lovell/sharp",
+    "desc": "High performance Node.js image processing",
+    "icon": "i-icon-park-performance",
+    "category": "Image Handling"
+  },
+  {
+    "id": "satori-html",
+    "link": "https://github.com/natemoo-re/satori-html",
+    "desc": "HTML rendering engine built for Satori",
+    "icon": "i-ic-twotone-imagesearch-roller",
+    "category": "Image Handling"
+  },
+  {
+    "id": "satori",
+    "link": "https://github.com/vercel/satori",
+    "desc": "Satori is a library for rendering HTML to SVG",
+    "icon": "i-catppuccin-svg",
+    "category": "Image Handling"
+  },
+  {
+    "id": "medium-zoom",
+    "link": "https://github.com/francoischalifour/medium-zoom",
+    "desc": "Medium-inspired zoom for images",
+    "icon": "i-icon-park-zoom-in",
+    "category": "Image Handling"
+  },
+  {
+    "id": "astro-expressive-code",
+    "link": "https://www.npmjs.com/package/astro-expressive-code",
+    "desc": "Code highlighting plugin for Astro",
+    "icon": "i-fluent-color-code-20",
+    "category": "Code Block Handling"
+  },
+  {
+    "id": "@expressive-code/plugin-collapsible-sections",
+    "link": "https://www.npmjs.com/package/@expressive-code/plugin-collapsible-sections",
+    "desc": "Plugin for collapsible sections in code blocks",
+    "icon": "i-fluent-color-code-20",
+    "category": "Code Block Handling"
+  },
+  {
+    "id": "@expressive-code/plugin-line-numbers",
+    "link": "https://www.npmjs.com/package/@expressive-code/plugin-line-numbers",
+    "desc": "Plugin for line numbers in code blocks",
+    "icon": "i-fluent-color-code-20",
+    "category": "Code Block Handling"
+  },
+  {
+    "id": "p5",
+    "link": "https://github.com/processing/p5.js",
+    "desc": "A JavaScript library for accessible creative coding",
+    "icon": "i-devicon-p5js",
+    "category": "Utilities"
+  },
+  {
+    "id": "pagefind",
+    "link": "https://github.com/CloudCannon/pagefind",
+    "desc": "A static search tool",
+    "icon": "i-icon-park-search",
+    "category": "Utilities"
+  },
+  {
+    "id": "nprogress",
+    "link": "https://github.com/rstacruz/nprogress",
+    "desc": "Slim progress bars for Ajax applications",
+    "icon": "i-svg-spinners-3-dots-fade",
+    "category": "Utilities"
+  },
+  {
+    "id": "swiper",
+    "link": "https://github.com/nolimits4web/swiper",
+    "desc": "Most modern mobile touch slider",
+    "icon": "i-ion-images-sharp",
+    "category": "Utilities"
+  },
+  {
+    "id": "@atproto/api",
+    "link": "https://github.com/bluesky-social/atproto/tree/main/packages/api",
+    "desc": "APIs for ATProto and Bluesky",
+    "icon": "i-logos-bluesky",
+    "category": "Utilities"
+  },
+  {
+    "id": "reading-time",
+    "link": "https://github.com/ngryman/reading-time",
+    "desc": "Estimate reading time for text",
+    "icon": "i-ep-reading",
+    "category": "Utilities"
+  },
+  {
+    "id": "html-entities",
+    "link": "https://github.com/mdevils/html-entities",
+    "desc": "Encode/decode HTML entities",
+    "icon": "i-icon-park-transform",
+    "category": "Utilities"
+  },
+  {
+    "id": "typescript",
+    "link": "https://github.com/microsoft/TypeScript",
+    "desc": "TypeScript is a superset of JavaScript",
+    "icon": "i-vscode-icons-file-type-typescript-official",
+    "category": "TypeScript Related"
+  },
+  {
+    "id": "typescript-eslint",
+    "link": "https://github.com/typescript-eslint/typescript-eslint",
+    "desc": "TypeScript plugin for ESLint",
+    "icon": "i-vscode-icons-file-type-typescript-official",
+    "category": "TypeScript Related"
+  },
+  {
+    "id": "@typescript-eslint/parser",
+    "link": "https://www.npmjs.com/package/@typescript-eslint/parser",
+    "desc": "TypeScript ESLint parser",
+    "icon": "i-vscode-icons-file-type-typescript-official",
+    "category": "TypeScript Related"
+  },
+  {
+    "id": "eslint",
+    "link": "https://github.com/eslint/eslint",
+    "desc": "The pluggable linting utility for JavaScript",
+    "icon": "i-logos-eslint",
+    "category": "Linting & Formatting"
+  },
+  {
+    "id": "@eslint/js",
+    "link": "https://www.npmjs.com/package/@eslint/js",
+    "desc": "ESLint core JS rules",
+    "icon": "i-logos-eslint",
+    "category": "Linting & Formatting"
+  },
+  {
+    "id": "eslint-plugin-astro",
+    "link": "https://github.com/ota-meshi/eslint-plugin-astro",
+    "desc": "ESLint plugin for Astro",
+    "icon": "i-logos-eslint",
+    "category": "Linting & Formatting"
+  },
+  {
+    "id": "eslint-plugin-jsx-a11y",
+    "link": "https://github.com/jsx-eslint/eslint-plugin-jsx-a11y",
+    "desc": "Static AST checker for accessibility rules",
+    "icon": "i-logos-eslint",
+    "category": "Linting & Formatting"
+  },
+  {
+    "id": "eslint-config-prettier",
+    "link": "https://github.com/prettier/eslint-config-prettier",
+    "desc": "Disables ESLint rules that conflict with Prettier",
+    "icon": "i-logos-eslint",
+    "category": "Linting & Formatting"
+  },
+  {
+    "id": "globals",
+    "link": "https://github.com/sindresorhus/globals",
+    "desc": "Global variables for various environments",
+    "icon": "i-solar-global-broken",
+    "category": "Linting & Formatting"
+  },
+  {
+    "id": "prettier",
+    "link": "https://github.com/prettier/prettier",
+    "desc": "An opinionated code formatter",
+    "icon": "i-logos-prettier",
+    "category": "Linting & Formatting"
+  },
+  {
+    "id": "simple-git-hooks",
+    "link": "https://github.com/toplenboren/simple-git-hooks",
+    "desc": "Easily manage Git hooks",
+    "icon": "i-devicon-git",
+    "category": "Linting & Formatting"
+  },
+  {
+    "id": "lint-staged",
+    "link": "https://github.com/okonet/lint-staged",
+    "desc": "Run linters on staged git files",
+    "icon": "i-devicon-git",
+    "category": "Linting & Formatting"
+  },
+  {
+    "id": "chalk",
+    "link": "https://github.com/chalk/chalk",
+    "desc": "Terminal string styling done right",
+    "icon": "i-logos-chalk",
+    "category": "CLI & Terminal"
+  },
+  {
+    "id": "del-cli",
+    "link": "https://github.com/sindresorhus/del-cli",
+    "desc": "Delete files/folders using globs",
+    "icon": "i-icon-park-delete",
+    "category": "CLI & Terminal"
+  },
+  {
+    "id": "unist-util-visit",
+    "link": "https://github.com/syntax-tree/unist-util-visit",
+    "desc": "Utility to recursively walk through unist nodes",
+    "icon": "i-gravity-ui-nodes-down",
+    "category": "Remark Utilities"
+  },
+  {
+    "id": "mdast-util-to-string",
+    "link": "https://github.com/syntax-tree/mdast-util-to-string",
+    "desc": "Utility to get the text content of an MDAST node",
+    "icon": "i-vscode-icons-file-type-light-remark",
+    "category": "Remark Utilities"
+  },
+  {
+    "id": "antfu/antfu.me",
+    "link": "https://github.com/antfu/antfu.me",
+    "desc": "Anthony Fu's personal website",
+    "icon": "i-mynaui-letter-a-waves",
+    "category": "Credits"
+  },
+  {
+    "id": "satnaing/astro-paper",
+    "link": "https://github.com/satnaing/astro-paper",
+    "desc": "A minimal, accessible and SEO-friendly Astro blog theme",
+    "icon": "i-quill-paper",
+    "category": "Credits"
+  },
+  {
+    "id": "chrismwilliams/astro-theme-cactus",
+    "link": "https://github.com/chrismwilliams/astro-theme-cactus",
+    "desc": "A simple Astro theme. Use it to create your blog or website",
+    "icon": "i-noto-v1-cactus",
+    "category": "Credits"
+  },
+  {
+    "id": "saicaca/fuwari",
+    "link": "https://github.com/saicaca/fuwari",
+    "desc": "A static blog template built with Astro",
+    "icon": "i-gridicons-themes",
+    "category": "Credits"
   }
-}
+]

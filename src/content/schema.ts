@@ -131,10 +131,8 @@ export const postSchema = z.object({
 export type PostSchema = z.infer<typeof postSchema>
 
 /* Projects */
-const projectSchema = z.object({
-  name: z
-    .string()
-    .describe('**Required**. Name of the project to be displayed.'),
+export const projectSchema = z.object({
+  id: z.string().describe('**Required**. Name of the project to be displayed.'),
   link: z
     .string()
     .url('Invalid url.')
@@ -151,21 +149,14 @@ const projectSchema = z.object({
     .describe(
       '**Required**. Icon representing the project. It must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [UnoCSS](https://unocss.dev/presets/icons) specs. [Check all available icons here](https://icones.js.org/).'
     ),
-})
-
-const projectGroupsSchema = z.record(z.array(projectSchema))
-
-export const projectsSchema = z.object({
-  projects: projectGroupsSchema,
+  category: z.string().describe('**Required**. Category of the project.'),
 })
 
 export type ProjectSchema = z.infer<typeof projectSchema>
-export type ProjectGroupsSchema = z.infer<typeof projectGroupsSchema>
-export type ProjectsSchema = z.infer<typeof projectsSchema>
 
 /* Stremas */
-const streamSchema = z.object({
-  title: z.string().describe('**Required**. Sets the stream title.'),
+export const streamSchema = z.object({
+  id: z.string().describe('**Required**. Sets the stream title.'),
   pubDate: z.coerce
     .date()
     .describe(
@@ -193,11 +184,4 @@ const streamSchema = z.object({
     .describe('Specifies the platform where the stream is published.'),
 })
 
-const streamGroupsSchema = z.array(streamSchema)
-
-export const streamsSchema = z.object({
-  streams: streamGroupsSchema,
-})
-
-export type StreamGroupsSchema = z.infer<typeof streamGroupsSchema>
-export type StreamsSchema = z.infer<typeof streamsSchema>
+export type StreamSchema = z.infer<typeof streamSchema>
