@@ -56,7 +56,7 @@ if (hasCustomCursor) style['--external-link-cursor'] = cursorType
     class="relative flex flex-col min-h-screen
       font-sans text-gray-700 dark:text-gray-200"
     style={Object.keys(style).length !== 0 ? style : undefined}
-    data-no-sliding={!enableSlideEnterAnim ? true : undefined}
+    data-no-sliding={enableSlideEnterAnim ? undefined : ''}
   >
     <!-- Background -->
     {bgType && <Background type={bgType} />}
