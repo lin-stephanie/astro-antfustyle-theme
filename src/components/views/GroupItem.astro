@@ -2,10 +2,15 @@
 import Link from '~/components/base/Link.astro'
 import { UI } from '~/config'
 
-import type { ProjectSchema } from '~/content/schema'
+export interface GroupItemData {
+    id: string;
+    link: string;
+    desc: string;
+    icon: string;
+}
 
 interface Props {
-  items: ProjectSchema[]
+  items: GroupItemData[]
 }
 
 const { items } = Astro.props
@@ -34,7 +39,7 @@ const { maxGroupColumns, showGroupItemColorOnHover } = UI.groupView
           />
         </div>
         <div class="flex-auto">
-          <div>{item.name}</div>
+          <div>{item.id}</div>
           <div class="op-50 text-sm font-normal">{item.desc}</div>
         </div>
       </Link>

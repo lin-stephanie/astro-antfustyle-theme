@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntry } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 
 import Categorizer from '~/components/base/Categorizer.astro'
 import ListItem from '~/components/views/ListItem.astro'
@@ -10,15 +10,11 @@ import { FEATURES } from '~/config'
 import { isSameYear, getYear } from '~/utils/datetime'
 import { getFilteredPosts, getSortedPosts } from '~/utils/post'
 
-import type {
-  CollectionEntry,
-  ContentCollectionKey,
-  DataCollectionKey,
-} from 'astro:content'
-import type { StreamGroupsSchema } from '~/content/schema'
+import type { CollectionEntry, CollectionKey } from 'astro:content'
+import type { StreamSchema } from '~/content/schema'
 
 interface Props {
-  collectionType: ContentCollectionKey | DataCollectionKey
+  collectionType: CollectionKey
   pageToc: boolean
 }
 
@@ -34,11 +30,9 @@ const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
 let years: string[] = []
 
 /* Posts */
-let blogItems: CollectionEntry<ContentCollectionKey>[]
-let sortedBlogItems: CollectionEntry<ContentCollectionKey>[] = []
-
+let sortedBlogItems: CollectionEntry<'blog' | 'changelog'>[] = []
 if (collectionType === 'blog' || collectionType === 'changelog') {
-  blogItems = await getFilteredPosts(collectionType)
+  const blogItems = await getFilteredPosts(collectionType)
   sortedBlogItems = getSortedPosts(blogItems)
 
   if (tocEnabled) {
@@ -55,16 +49,13 @@ if (collectionType === 'blog' || collectionType === 'changelog') {
 }
 
 /* Streams */
-let streamItems: StreamGroupsSchema
-let sortedStreamItems: StreamGroupsSchema = []
-
+let sortedStreamItems: StreamSchema[] = []
 if (collectionType === 'streams') {
-  const streamData = await getEntry(collectionType, 'data')
-  streamItems = streamData.data.streams
+  const streamItems = await getCollection(collectionType)
 
-  sortedStreamItems = streamItems.sort(
-    (a, b) => b.pubDate.valueOf() - a.pubDate.valueOf()
-  )
+  sortedStreamItems = streamItems
+    .map((item) => item.data)
+    .sort((a, b) => b.pubDate.valueOf() - a.pubDate.valueOf())
 
   if (tocEnabled) {
     const yearsSet = new Set<number>()
@@ -80,11 +71,9 @@ if (collectionType === 'streams') {
 }
 
 /* Feeds */
-let feedItems: CollectionEntry<'feeds'>[]
 let sortedFeedItems: CollectionEntry<'feeds'>[] = []
-
 if (collectionType === 'feeds') {
-  feedItems = await getCollection(collectionType)
+  const feedItems = await getCollection(collectionType)
 
   sortedFeedItems = feedItems.sort((a, b) => {
     if (!a.data.pubdate || !b.data.pubdate)
@@ -116,8 +105,8 @@ if (collectionType === 'feeds') {
         <div class="py-2 op-50">nothing here yet</div>
       ) : (
         sortedBlogItems.map(async (item, idx) => {
-          const { data, slug } = item
-          const { remarkPluginFrontmatter } = await item.render()
+          const { data, id } = item
+          const { remarkPluginFrontmatter } = await render(item)
           const minutesRead =
             data.minutesRead || remarkPluginFrontmatter.minutesRead
 
@@ -137,7 +126,7 @@ if (collectionType === 'feeds') {
                 {idx}
                 {collectionType}
                 redirect={data.redirect}
-                postSlug={slug}
+                postSlug={id}
                 title={data.title}
                 video={data.video}
                 radio={data.radio}
@@ -176,7 +165,7 @@ if (collectionType === 'feeds') {
                 {idx}
                 {collectionType}
                 redirect={item.link}
-                title={item.title}
+                title={item.id}
                 video={item.video}
                 radio={item.radio}
                 date={item.pubDate}

@@ -1,3 +1,4 @@
+import { render } from 'astro:content'
 import {
   AppBskyEmbedImages,
   AppBskyEmbedVideo,
@@ -215,7 +216,7 @@ export async function getShortsFromBlog(data: CollectionEntry<'blog'>[]) {
   )
 
   for (const item of sortedData) {
-    const slug = item.slug
+    const slug = item.id
     const title = item.data.title
     const date = item.data.pubDate
 
@@ -226,7 +227,7 @@ export async function getShortsFromBlog(data: CollectionEntry<'blog'>[]) {
         date: date,
       })
     } else {
-      const { headings } = await item.render()
+      const { headings } = await render(item)
       const neededHeadingLevel = slug === 'faqs-and-known-issues' ? 3 : 2
       let processedTitle = title
       switch (slug) {
