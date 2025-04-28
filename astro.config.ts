@@ -25,9 +25,7 @@ export default defineConfig({
     rehypePlugins,
   },
   experimental: {
-    contentLayer: true,
     contentIntellisense: true,
-    directRenderScript: true,
   },
   vite: {
     build: { chunkSizeWarningLimit: 1200 },
