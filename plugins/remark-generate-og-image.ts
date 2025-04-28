@@ -1,15 +1,18 @@
-import chalk from 'chalk'
+import { join, basename, dirname } from 'node:path'
+import { readFileSync, existsSync, writeFileSync } from 'node:fs'
+import { mkdir } from 'node:fs/promises'
+
+import { decode } from 'html-entities'
 import satori from 'satori'
 import sharp from 'sharp'
-import { basename, dirname } from 'node:path'
-import { readFileSync, writeFileSync } from 'node:fs'
-import { mkdir } from 'node:fs/promises'
-import { unescapeHTML, checkFileExistsInDir } from '../src/utils/common'
+import chalk from 'chalk'
+
 import { getCurrentFormattedTime } from '../src/utils/datetime'
 import { ogImageMarkup } from './og-template/markup'
 import { FEATURES } from '../src/config'
 
 import type { SatoriOptions } from 'satori'
+import type { html } from 'satori-html'
 import type { BgType } from '../src/types'
 
 const Inter = readFileSync('plugins/og-template/Inter-Regular-24pt.ttf')
@@ -28,6 +31,41 @@ const satoriOptions: SatoriOptions = {
   ],
 }
 
+/**
+ * Checks if a file exists in a specified directory.
+ * This path is relative to the current working directory.
+ * (`public/og-images` is equivalent to `./public/og-images` and relative to the cwd)
+ */
+export function checkFileExistsInDir(path: string, filename: string) {
+  const fullPath = join(process.cwd(), path, filename)
+
+  return existsSync(fullPath)
+}
+
+/**
+ * Recursively unescapes HTML entities in a given virtual DOM node's children.
+ *
+ * Fix accidental HTML entity escaping in 'satori-html'.
+ * @see https://github.com/natemoo-re/satori-html/issues/20#issuecomment-1999332693
+ */
+function unescapeHTML(node: ReturnType<typeof html>) {
+  const children = node?.props?.children
+  if (!children) {
+    return
+  } else if (Array.isArray(children)) {
+    for (const n of children) {
+      unescapeHTML(n)
+    }
+  } else if (typeof children === 'object') {
+    unescapeHTML(children)
+  } else if (typeof children === 'string') {
+    node.props.children = decode(children)
+  }
+}
+
+/**
+ * Generates an Open Graph image and writes it to the specified output file.
+ */
 async function generateOgImage(
   authorOrBrand: string,
   title: string,
@@ -56,7 +94,7 @@ async function generateOgImage(
     writeFileSync(output, compressedPngBuffer)
   } catch (e) {
     console.error(
-      `${chalk.black(getCurrentFormattedTime())} ${chalk.red(`[ERROR] Failed to generate og image for '${basename(output)}.'`)}`
+      `${chalk.black(getCurrentFormattedTime())} ${chalk.red(`[ERROR] Failed to generate og image for '${basename(output)}'.`)}`
     )
     console.error(e)
   }

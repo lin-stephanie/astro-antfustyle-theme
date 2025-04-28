@@ -1,6 +1,6 @@
 ---
 import Link from '~/components/base/Link.astro'
-import { getUrl } from '~/utils/common'
+import { withBasePath } from '~/utils/path'
 import { SITE } from '~/config'
 
 const title = `${SITE.author} @ ${new URL(SITE.website).hostname}`
@@ -8,9 +8,9 @@ const title = `${SITE.author} @ ${new URL(SITE.website).hostname}`
 
 <Link
   class="link op-transition"
-  href={getUrl('/')}
+  href={withBasePath('/')}
   {title}
-  aria-current={Astro.url.pathname === `${getUrl('/')}` ? 'page' : false}
+  aria-current={Astro.url.pathname === `${withBasePath('/')}` ? 'page' : false}
 >
   <div class="logo-container">
     <!-- ICON SVG -->

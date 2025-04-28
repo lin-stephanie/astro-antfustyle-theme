@@ -1,6 +1,6 @@
 ---
 import Link from '~/components/base/Link.astro'
-import { ensureTrailingSlash } from '~/utils/common'
+import { ensureTrailingSlash } from '~/utils/path'
 
 const pathSegments = ensureTrailingSlash(Astro.url.pathname)
   .split('/')

@@ -1,4 +1,4 @@
-import { render } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 import {
   AppBskyEmbedImages,
   AppBskyEmbedVideo,
@@ -8,17 +8,34 @@ import {
 } from '@atproto/api'
 import { atUriToPostUri } from 'astro-loader-bluesky-posts'
 
-import { ensureTrailingSlash, getUrl } from './common'
+import { resolvePath } from './path'
 
-import type { CollectionEntry } from 'astro:content'
+import type { CollectionEntry, CollectionKey } from 'astro:content'
 import type { CardItemData } from '~/components/views/CardItem.astro'
 import type { GitHubView } from '~/types'
 
-export const VERSION_COLOR = {
-  major: 'bg-rose:15 text-rose-7 dark:text-rose-3',
-  minor: 'bg-purple:15 text-purple-7 dark:text-purple-3',
-  patch: 'bg-green:15 text-green-7 dark:text-green-3',
-  pre: 'bg-teal:15 text-teal-7 dark:text-teal-3',
+type CollectionEntryList<K extends CollectionKey = CollectionKey> =
+  CollectionEntry<K>[]
+
+/**
+ * Retrieves filtered posts from the specified content collection.
+ * In production, it filters out draft posts.
+ */
+export async function getFilteredPosts(collection: 'blog' | 'changelog') {
+  return await getCollection(collection, ({ data }) => {
+    return import.meta.env.PROD ? !data.draft : true
+  })
+}
+
+/**
+ * Sorts an array of posts by their publication date in descending order.
+ */
+export function getSortedPosts(
+  posts: CollectionEntryList<'blog' | 'changelog'>
+) {
+  return posts.sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  )
 }
 
 /**
@@ -100,7 +117,7 @@ export function processVersion(
 /**
  * Processes Bluesky posts and converts them into `CardItemData` interface.
  */
-export function processBlueskyPosts(data: CollectionEntry<'highlights'>[]) {
+export function processBlueskyPosts(data: CollectionEntryList<'highlights'>) {
   const cards: CardItemData[] = []
 
   for (const item of data) {
@@ -117,7 +134,7 @@ export function processBlueskyPosts(data: CollectionEntry<'highlights'>[]) {
       if (AppBskyEmbedImages.isView(embed))
         card.images = embed.images.map((img) => ({
           src: img.thumb,
-          alt: img.alt,
+          alt: img.alt ?? '',
         }))
 
       if (AppBskyEmbedVideo.isView(embed))
@@ -130,25 +147,23 @@ export function processBlueskyPosts(data: CollectionEntry<'highlights'>[]) {
       if (AppBskyEmbedExternal.isView(embed))
         card.external = {
           uri: embed.external.uri,
-          title: embed.external.title,
-          description: embed.external.description,
+          title: embed.external.title ?? '',
+          description: embed.external.description ?? '',
           img: embed.external.thumb ?? '',
         }
 
       if (AppBskyEmbedRecord.isView(embed)) {
-        if (AppBskyEmbedRecord.isViewRecord(embed.record)) {
-          const { uri, value, author } = embed.record
+        const { uri, value, author } = embed.record
 
-          card.quote = {
-            uri: atUriToPostUri(uri),
-            text: value.text as string,
-            author: {
-              link: `https://bsky.app/profile/${author.handle}`,
-              avatar: author.avatar ?? '',
-              name: author.displayName ?? '',
-              handle: author.handle,
-            },
-          }
+        card.quote = {
+          uri: atUriToPostUri(uri),
+          text: value.text as string,
+          author: {
+            link: `https://bsky.app/profile/${author.handle}`,
+            avatar: author.avatar ?? '',
+            name: author.displayName ?? '',
+            handle: author.handle,
+          },
         }
       }
 
@@ -158,27 +173,32 @@ export function processBlueskyPosts(data: CollectionEntry<'highlights'>[]) {
         if (media) {
           if (AppBskyEmbedImages.isView(media))
             card.images = media.images.map((img) => ({
-              src: img.thumb,
-              alt: img.alt,
+              src: img.thumb ?? '',
+              alt: img.alt ?? '',
             }))
 
           if (AppBskyEmbedVideo.isView(media))
             card.video = {
+              // @ts-expect-error (ignore)
               src: `https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${author.did}&cid=${media.cid}`,
-              alt: media.alt ?? '',
+              // @ts-expect-error (ignore)
+              alt: media.alt,
+              // @ts-expect-error (ignore)
               poster: media.thumbnail ?? '',
             }
 
           if (AppBskyEmbedExternal.isView(media))
             card.external = {
               uri: media.external.uri,
-              title: media.external.title,
-              description: media.external.description,
+              title: media.external.title ?? '',
+              description: media.external.description ?? '',
               img: media.external.thumb ?? '',
             }
         }
 
+        // @ts-expect-error (ignore)
         if (AppBskyEmbedRecord.isViewRecord(record.record)) {
+          // @ts-expect-error (ignore)
           const { uri, value, author } = record.record
 
           card.quote = {
@@ -208,9 +228,9 @@ export function processBlueskyPosts(data: CollectionEntry<'highlights'>[]) {
 /**
  * Processes blog posts and converts them into `CardItemData` interface.
  */
-export async function getShortsFromBlog(data: CollectionEntry<'blog'>[]) {
+export async function getShortsFromBlog(data: CollectionEntryList<'blog'>) {
   const cards: CardItemData[] = []
-  const basePath = getUrl(ensureTrailingSlash('/blog'))
+  const basePath = resolvePath('/blog')
   const sortedData = data.sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   )

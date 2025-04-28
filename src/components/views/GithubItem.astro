@@ -1,7 +1,6 @@
 ---
 import Link from '~/components/base/Link.astro'
 import { formatDate } from '~/utils/datetime'
-import { VERSION_COLOR } from '~/utils/data'
 
 import type { ExtendedReleaseData, ExtendedPrData } from './GithubView.astro'
 
@@ -117,7 +116,7 @@ const content =
           {
             collectionType === 'releases' && (
               <span>
-                v{item.versionParts[0]}<span class={`rounded ${VERSION_COLOR[item.versionType]}`}>{item.versionParts[1]}</span>
+                v{item.versionParts[0]}<span class={`github-${item.versionType}`}>{item.versionParts[1]}</span>
               </span>
             )
           }

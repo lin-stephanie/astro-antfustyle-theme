@@ -1,6 +1,6 @@
 ---
 import Link from '~/components/base/Link.astro'
-import { ensureTrailingSlash, getUrl } from '~/utils/common'
+import { resolvePath } from '~/utils/path'
 
 import type { InternalNav, SocialLink } from '~/types'
 
@@ -20,13 +20,12 @@ type Props =
 
 const { type, item, mergeOnMobile, mobileItemType } = Astro.props
 
-const href =
-  type == 'internal' ? getUrl(ensureTrailingSlash(item.path)) : item.link
+const href = type == 'internal' ? resolvePath(item.path) : item.link
 const rel = type === 'internal' ? undefined : 'me'
 const external = type === 'internal' ? false : true
 const ariaCurrent =
   type === 'internal'
-    ? Astro.url.pathname === getUrl(ensureTrailingSlash(item.path))
+    ? Astro.url.pathname === resolvePath(item.path)
       ? 'page'
       : false
     : undefined

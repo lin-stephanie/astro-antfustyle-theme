@@ -1,7 +1,7 @@
 ---
 import Link from '~/components/base/Link.astro'
 
-import { getUrl } from '~/utils/common'
+import { withBasePath } from '~/utils/path'
 import { formatDate } from '~/utils/datetime'
 
 interface Props {
@@ -35,7 +35,7 @@ const {
   <Link
     u-flex="~ items-center lt-md:(col items-start) gap-2"
     class="border-b-none! mb-6 mt-2 op-transition!"
-    href={redirect ?? getUrl(`/${collectionType}/${postSlug}/`)}
+    href={redirect ?? withBasePath(`/${collectionType}/${postSlug}/`)}
     external={redirect ? true : false}
     enableNewTabWarning={redirect ? true : false}
   >

@@ -6,6 +6,13 @@ export interface TocHeading extends MarkdownHeading {
 }
 
 /**
+ * Converts a given text into a URL-friendly slug.
+ */
+export function slug(text: string) {
+  return text.toLowerCase().replace(/[\s\\/]+/g, '-')
+}
+
+/**
  * Injects a Table of Contents (ToC) entry into the correct position
  * within the tree structure based on its `depth` property.
  */

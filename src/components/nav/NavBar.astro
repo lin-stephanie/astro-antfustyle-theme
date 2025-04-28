@@ -8,12 +8,17 @@ import NavItem from '~/components/nav/NavItem.astro'
 import NavSwitch from '~/components/nav/NavSwitch.astro'
 
 import { UI } from '~/config'
-import { validateNavBarLayout } from '~/utils/common'
 
 const { navBarLayout, internalNavs, socialLinks } = UI
 const { left, right, mergeOnMobile } = navBarLayout
 
-validateNavBarLayout(navBarLayout)
+for (const item of new Set(left)) {
+  if (new Set(right).has(item)) {
+    throw new Error(
+      `Duplicate '${item}' found in both 'UI.navBarLayout.left' and 'UI.navBarLayout.right'.`
+    )
+  }
+}
 ---
 
 <header

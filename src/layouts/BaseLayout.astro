@@ -15,7 +15,7 @@ import ToTopButton from '~/components/widgets/ToTopButton.astro'
 import Backdrop from '~/components/base/Backdrop.astro'
 
 import { SITE, UI, FEATURES } from '~/config'
-import { getUrl } from '~/utils/common'
+import { withBasePath } from '~/utils/path'
 
 import type { BgType } from '~/types'
 
@@ -72,7 +72,7 @@ if (hasCustomCursor) style['--external-link-cursor'] = cursorType
     <main id="main" class="px-7 py-10">
       <slot />
       {
-        Astro.url.pathname !== getUrl('/') && (
+        Astro.url.pathname !== withBasePath('/') && (
           <footer class="slide-enter animate-delay-1000! prose mx-auto mt-8 print:hidden">
             <slot name="share" />
             <br />
