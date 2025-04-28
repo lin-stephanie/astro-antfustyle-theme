@@ -1,23 +1,69 @@
 ---
-import { getEntry } from 'astro:content'
+import { render } from 'astro:content'
 
+import BaseLayout from '~/layouts/BaseLayout.astro'
+import StandardLayout from '~/layouts/StandardLayout.astro'
 import Toc from '~/components/toc/Toc.astro'
+import ShareLink from '~/components/widgets/ShareLink.astro'
+import Warning from '~/components/base/Warning.astro'
+import { formatDate } from '~/utils/datetime'
 import { FEATURES } from '~/config'
 
-import type { ContentCollectionKey, ValidContentEntrySlug } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
 
 interface Props {
-  collectionType: ContentCollectionKey
-  slug: ValidContentEntrySlug<ContentCollectionKey>
-  pageToc: boolean
+  post: CollectionEntry<'blog' | 'changelog'>
+  isSearchable?: boolean
 }
 
-const { collectionType, slug, pageToc } = Astro.props
+const { post, isSearchable = false } = Astro.props
+const { share, toc } = FEATURES
 
-const post = await getEntry(collectionType, slug)
-const { Content, headings } = await post.render()
-const { toc } = FEATURES
+const { data: frontmatter } = post
+const { Content, headings, remarkPluginFrontmatter } = await render(post)
+
+const title = frontmatter.title
+const description = frontmatter.description
+const ogImage = frontmatter.ogImage
+const pubDate = frontmatter.pubDate.toISOString()
+const lastModDate =
+  frontmatter.lastModDate && frontmatter.lastModDate.toISOString()
+const subtitle = frontmatter.subtitle
+const minutesRead =
+  frontmatter.minutesRead || remarkPluginFrontmatter.minutesRead
+const isDraft = frontmatter.draft
+const tocEnabled = Array.isArray(toc) && toc[0] && frontmatter.toc
+const shareEnabled = Array.isArray(share) && share[0] && frontmatter.share
+
+const WARNING = `This is a draft post that will not be published
+in production. Set the post's <code>draft</code> property in
+frontmatter to <code>false</code> or remove it to publish the post.`
 ---
 
-{Array.isArray(toc) && toc[0] && pageToc && <Toc {headings} />}
-<Content />
+<BaseLayout {title} {description} {ogImage} {pubDate} {lastModDate}>
+  <StandardLayout {title} {subtitle} {isSearchable}>
+    <Fragment slot="head">
+      {
+        pubDate && (
+          <p class="mt--6! op-50">
+            <time datetime={pubDate}>{formatDate(pubDate)}</time>
+            {minutesRead !== 0 && <span>· {minutesRead} min</span>}
+            {lastModDate && (
+              <time datetime={lastModDate}>
+                | Updated: {formatDate(lastModDate)}
+              </time>
+            )}
+          </p>
+        )
+      }
+    </Fragment>
+    <Fragment slot="article">
+      {isDraft && <Warning html={WARNING} />}
+      {tocEnabled && <Toc {headings} />}
+      <Content />
+    </Fragment>
+  </StandardLayout>
+  <Fragment slot="share">
+    {shareEnabled && <ShareLink config={share[1]} />}
+  </Fragment>
+</BaseLayout>

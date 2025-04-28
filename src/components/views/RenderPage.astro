@@ -1,0 +1,28 @@
+---
+import { getEntry, render } from 'astro:content'
+
+import Toc from '~/components/toc/Toc.astro'
+import { FEATURES } from '~/config'
+
+import type { CollectionKey } from 'astro:content'
+
+interface Props {
+  collectionType: CollectionKey
+  id: string
+  pageToc?: boolean
+}
+
+const { collectionType, id, pageToc = false } = Astro.props
+
+/* Post */
+const post = await getEntry(collectionType, id)
+if (!post) throw new Error(`Entry not found: ${collectionType}/${id}`)
+const { Content, headings } = await render(post)
+
+/* Toc */
+const { toc } = FEATURES
+const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
+---
+
+{tocEnabled && <Toc {headings} />}
+<Content />
