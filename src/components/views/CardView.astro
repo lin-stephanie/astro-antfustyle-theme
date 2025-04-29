@@ -5,11 +5,11 @@ import CardItem from '~/components/views/CardItem.astro'
 import Warning from '~/components/base/Warning.astro'
 import { processBlueskyPosts, getShortsFromBlog } from '~/utils/data'
 
-import type { ContentCollectionKey, DataCollectionKey } from 'astro:content'
+import type { CollectionKey } from 'astro:content'
 import type { CardItemData } from '~/components/views/CardItem.astro'
 
 interface Props {
-  collectionType: ContentCollectionKey | DataCollectionKey
+  collectionType: CollectionKey
   mode: 'masonry' | 'grid'
   gap?: 'number'
   minCardWidth?: number
@@ -40,7 +40,7 @@ if (collectionType === 'highlights') {
   )
 }
 
-if (collectionType === ('shorts' as ContentCollectionKey)) {
+if (collectionType === ('shorts' as CollectionKey)) {
   const posts = await getCollection('blog')
   dataForGrid = await getShortsFromBlog(posts)
 }
@@ -67,7 +67,7 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
       )}
       {mode === 'grid' && (
         <div
-          class="grid mx-20 lt-md:mx-1"
+          class="grid mx-20 lt-md:mx-1 fade-in"
           style={{
             '--fade-in-duration': '0.6s',
             'gap': `${gap}px`,
@@ -75,10 +75,7 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
           }}
         >
           {dataForGrid.map((item) => (
-            <CardItem
-              class="card-grid fade-in min-h-40 lt-md:min-h-0 "
-              item={item}
-            />
+            <CardItem class="card-grid min-h-40 lt-md:min-h-0" item={item} />
           ))}
         </div>
       )}

@@ -99,12 +99,7 @@ const links = Object.entries(config)
 {
   links.map((link, idx) => (
     <>
-      <Link
-        class="op-50! hover:op-75! op-transition"
-        href={link.url}
-        title={link.title}
-        external={true}
-      >
+      <Link class="op-50!" href={link.url} title={link.title} external={true}>
         {link.label}
       </Link>
       {idx < links.length - 1 && <span class="op-25">/</span>}

@@ -60,7 +60,7 @@ const releases = defineCollection({
       'lin-stephanie/astro-loaders',
       'lin-stephanie/astro-antfustyle-theme',
     ],
-    monthsBack: 3,
+    monthsBack: 2,
     entryReturnType: 'byRelease',
     clearStore: true,
   }),
@@ -70,7 +70,7 @@ const prs = defineCollection({
   loader: githubPrsLoader({
     search:
       'repo:withastro/astro repo:withastro/starlight repo:lin-stephanie/astro-antfustyle-theme',
-    monthsBack: 2,
+    monthsBack: 1,
     clearStore: true,
   }),
 })

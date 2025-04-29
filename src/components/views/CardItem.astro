@@ -51,20 +51,15 @@ export interface CardItemData {
 }
 
 interface Props {
-  // idx?: number
   item: CardItemData
-  imageProps?: LocalImageProps | RemoteImageProps
+  imageProps?:
+    | ({ src: ImageMetadata } & LocalImageProps)
+    | ({ src: string; inferSize?: true } & RemoteImageProps)
   videoProps?: HTMLAttributes<'video'>
   class?: string
 }
 
-const {
-  // idx,
-  item,
-  imageProps,
-  videoProps,
-  class: className,
-} = Astro.props
+const { item, imageProps, videoProps, class: className } = Astro.props
 
 const COMPACT = false
 const MAX_DETAILS = 3
@@ -78,9 +73,7 @@ const ContentContainer = details
     ? Link
     : 'div'
 
-let proccessedImages:
-  | ImageData[]
-  | { src: string | ImageMetadata; alt: string }[] = []
+let proccessedImages: { src: string | ImageMetadata; alt: string }[] = []
 if (images && images.length > 0) {
   if (images.some((image) => !image.src.startsWith('http'))) {
     const localImages = import.meta.glob<{ default: ImageMetadata }>(
@@ -236,7 +229,11 @@ if (images && images.length > 0) {
             <ol class="relative border-s border-gray-200 dark:border-gray-700">
               {details.slice(0, MAX_DETAILS + 1).map((detail, idx) => (
                 <li class="ms-4 mb-6 last:mb-0">
-                  <div class="absolute start--1.6 w-3 h-3 border rounded-full border-white dark:border-gray-900 mt-1.5 bg-gray-200 dark:bg-gray-700" />
+                  <div
+                    class="absolute start--1.6 w-3 h-3
+                      border rounded-full border-white dark:border-gray-900 mt-1.5
+                      bg-gray-200 dark:bg-gray-700"
+                  />
                   {idx < MAX_DETAILS && (
                     <div class="prose card-item-prose" set:html={detail} />
                   )}
