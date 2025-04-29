@@ -63,7 +63,7 @@ export const remarkPlugins: RemarkPlugins = [
 
 export const rehypePlugins: RehypePlugins = [
   // https://docs.astro.build/en/guides/markdown-content/#heading-ids-and-plugins
-  rehypeHeadingIds,
+  [rehypeHeadingIds, { headingIdCompat: true }],
   // https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex
   rehypeKatex,
   // https://github.com/lin-stephanie/rehype-callouts
