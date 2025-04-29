@@ -16,6 +16,8 @@ interface Props {
 
 const { title, description, ogImage, pubDate, lastModDate } = Astro.props
 
+const siteName = new URL(SITE.website).hostname
+
 const pageTitle =
   title && title !== SITE.title ? `${title} - ${SITE.title}` : SITE.title
 
@@ -96,7 +98,7 @@ const webPageData = {
 <meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={pageDescription} />
 <meta property="og:image" content={ogImageURL} />
-<meta property="og:site_name" content={SITE.title} />
+<meta property="og:site_name" content={siteName} />
 <meta property="og:locale" content={SITE.ogLocale} />
 {
   pubDate && (
