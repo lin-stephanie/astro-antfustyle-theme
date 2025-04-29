@@ -26,6 +26,7 @@ export default defineConfig({
     rehypePlugins,
   },
   image: {
+    domains: SITE.imageDomains,
     // Used for all local (except `/public`) and remote images using `![]()` syntax; not configurable per-image
     // Used for all `<Image />` and `<Picture />` components unless overridden with `layout` prop
     experimentalLayout: 'constrained',
