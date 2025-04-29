@@ -1,8 +1,8 @@
 import {
   defineConfig,
+  presetWind3,
   presetAttributify,
   presetIcons,
-  presetUno,
   presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
@@ -48,6 +48,11 @@ const githubVersionClass = Object.keys(githubVersionColor).map(
 const githubSubLogos = githubView.subLogoMatches.map((item) => item[1])
 
 export default defineConfig({
+  // Astro 5 no longer pipes `src/content/**/*.{md,mdx}` through Vite
+  content: {
+    filesystem: ['./src/{content,pages}/**/*.{md,mdx}'],
+  },
+
   // will be deep-merged to the default theme
   extendTheme: (theme) => {
     return {
@@ -96,7 +101,7 @@ export default defineConfig({
 
   // presets are partial configurations
   presets: [
-    presetUno(),
+    presetWind3(),
     presetAttributify({
       strict: true,
       prefix: 'u-',
