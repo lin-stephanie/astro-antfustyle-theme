@@ -1,5 +1,6 @@
 import { html } from 'satori-html'
 import backgroundBase64 from './base64'
+
 import type { BgType } from '../../src/types'
 
 export const ogImageMarkup = (
@@ -18,7 +19,7 @@ export const ogImageMarkup = (
   >
     <img
       tw="absolute inset-0 w-full h-full"
-      src=${backgroundBase64[bgType]}
+      src="${backgroundBase64[bgType]}"
       alt="open graph"
     />
 
