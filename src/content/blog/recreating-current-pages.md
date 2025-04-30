@@ -252,7 +252,7 @@ if (collectionType === 'highlights') {
         <CardItem class="card-masonry absolute top-0 left-0" item={item} />
       ))}
       {dataForMasonry.map(async (item) => {
-        const { Content } = await render(item)
+        const { Content } = await item.render()
         return (
           <CardItem class="card-masonry absolute top-0 left-0" item={item.data}>
             <Content />
