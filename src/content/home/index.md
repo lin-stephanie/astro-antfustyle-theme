@@ -8,7 +8,7 @@ This live demo will guide you through setup and customization, offering helpful 
 - [SEO-friendly](./blog/faqs-and-known-issues/#about-seo-and-accessibility)
 - [Auto-generated RSS Feed](./blog/faqs-and-known-issues/#rss-subscription-scope)
 - [Subpath Deployment](./blog/basic-configuration/#configuring-site) Support
-- Optimized Local Image Handling
+- Optimized and Responsive Images
 - VS Code Snippets for Fast Coding
 - [Well-Structured Project](./blog/project-structure/)
 - High [Lighthouse Performance](./blog/faqs-and-known-issues/#lighthouse-scores)
@@ -19,7 +19,7 @@ This live demo will guide you through setup and customization, offering helpful 
 - Markdown & MDX Support
 - [Math Equations Rendering](./blog/faqs-and-known-issues/#choosing-a-math-rendering-engine)
 - [Dynamic OG Image Generation](./blog/about-open-graph-images/)
-- [Callouts (Alerts/Admonitions)](./blog/markdown-mdx-extended-features/#callouts-alerts--admonitions) 
+- [Callouts (Alerts/Admonitions)](./blog/markdown-mdx-extended-features/#callouts-alerts--admonitions)
 - [Code Syntax Highlighting & Annotations](./blog/markdown-mdx-extended-features/#fully-featured-code-blocks)
 - Ready-To-Use [Remark Directives](./blog/markdown-mdx-extended-features/#image-caption--link-image)
 - Customizable Layouts, Views, and Navigation
@@ -41,14 +41,14 @@ This live demo will guide you through setup and customization, offering helpful 
 - Social Media Sharing
 - Keyboard-Friendly
 
-> Preparing to upgrade to Astro 5 with [more features](https://github.com/users/lin-stephanie/projects/4)! 🚀
+> [More features](https://github.com/users/lin-stephanie/projects/4) are continuously being added! 🚀
 
 ---
 
 <p>
   Visit the theme's
   <a
-    class="inline-block ml-1.5 op-75 hover:op-100"
+    class="inline-block ml-1.5 op-75"
     href="https://github.com/lin-stephanie/astro-antfustyle-theme"
   >
   <span i-simple-icons-github></span> GitHub repo</a>
@@ -56,7 +56,7 @@ This live demo will guide you through setup and customization, offering helpful 
 
 <p>
   <span class="inline-block mr-1.5 mb-2">Find me on</span>
-  <span class="inline-flex flex-wrap gap-2 op-75 hover:op-100">
+  <span class="inline-flex flex-wrap gap-2 op-75">
     <a href="https://github.com/lin-stephanie/astro-antfustyle-theme">
       <span i-simple-icons-github></span> GitHub</a>
     <a href="https://github.com/lin-stephanie/astro-antfustyle-theme">

@@ -105,7 +105,7 @@ This pushes updates to your remote repository. Your project is now synced with t
 
 In addition to syncing updates via Git, it's also recommended to use :link[actions-template-sync]{id=AndreasAugustin/actions-template-sync .github}. This tool automates keeping your project up-to-date with the theme's latest version by sending pull requests when changes are available.
 
-> [!warning]- Backup Before Syncing
+> [!warning]- Backup before syncing
 >
 > Ensure your local changes are committed, or merge on a new branch to avoid data loss.
 >
@@ -114,7 +114,7 @@ In addition to syncing updates via Git, it's also recommended to use :link[actio
 > ```bash
 >   git log HEAD..upstream/main
 >   git diff HEAD..upstream/main
->   ```
+> ```
 
 ## Updating Project Dependencies
 

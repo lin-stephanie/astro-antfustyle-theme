@@ -12,7 +12,7 @@ This post explains how to create new posts in the [Astro AntfuStyle Theme](https
 
 ## Creating a New Post
 
-To create a new post, add a new `.md` or `.mdx` file in `src/content/blog/` ([see when to use MDX](https://docs.astro.build/en/guides/integrations-guide/mdx/#why-mdx) for enhanced Markdown features). Use a consistent naming scheme (lower-case, dashes instead of spaces), as the filename will be used as the path ([slug](https://docs.astro.build/en/guides/content-collections/#defining-custom-slugs)).
+To create a new post, add a new `.md` or `.mdx` file in `src/content/blog/` ([see when to use MDX](https://docs.astro.build/en/guides/integrations-guide/mdx/#why-mdx) for enhanced Markdown features). Use a consistent naming scheme (lower-case, dashes instead of spaces), as the filename will be used as the [path](https://docs.astro.build/en/guides/content-collections/#defining-custom-ids).
 
 You can organize posts directly under `src/content/blog/` or in nested subdirectories (see [Astro Routing Docs](https://docs.astro.build/en/guides/routing/#rest-parameters) for more):
 
@@ -45,7 +45,7 @@ Use MDX if:
 
 ## Editing Frontmatter
 
-All `.md` and `.mdx` files in the `src/content/blog/` belong to the `blog` content collection.
+All `.md` and `.mdx` files in the `src/content/blog/` belong to the `blog` collection.
 
 Each post requires [YAML frontmatter](https://jekyllrb.com/docs/front-matter/) , which adds metadata at the top of Markdown/MDX files. The frontmatter fields for `blog` posts are defined by `schema: postSchema`in `src/content/schema.ts` as follows:
 
@@ -67,14 +67,13 @@ Each post requires [YAML frontmatter](https://jekyllrb.com/docs/front-matter/) ,
 | `redirect`                  | `string`                                          | Defines a URL to redirect the post.                                                                                                                                                                                                                            |
 | `draft`                     | `boolean` (`false`)                               | Marks the post as a draft. If `true`, it is only visible in development and excluded from production builds.                                                                                                                                                   |
 
-
 The theme includes a VS Code snippet for auto-generating this frontmatter (located in `.vscode/astro-antfustyle-theme.code-snippets`). Type `postFrontmatter` and press `tab` to insert it (tab completion is enabled in `.vscode/settings.json`).
 
-> [!tip]- The Theme Supports Astro's [Intellisense in Content Files](https://astro.build/blog/astro-4140/#experimental-intellisense-inside-content-files)
+> [!tip]- The theme supports [experimental intellisense for content collections](https://docs.astro.build/en/reference/experimental-flags/content-intellisense/)
 > 
 > Hovering over a property shows descriptions, and mismatches in types prompt warnings.
 
-> [!note]- Formatting Post Titles
+> [!note]- Formatting post titles
 > 
 > Auto-generated titles capitalize the first letter of each word.  If you've tried editing the auto-generated frontmatter snippet, you'll notice that the cursor reaches the title field last after tabbing through all others.
 > 
@@ -86,11 +85,11 @@ Once frontmatter is set, start writing your post!
 
 To see how basic Markdown renders, refer to the [Markdown Syntax Guide](../markdown-syntax-guide/). To explore how to use MDX to enhance your flexibility in writing posts, check the [MDX Docs](https://mdxjs.com/docs/) and [MDX in Astro](https://docs.astro.build/en/guides/integrations-guide/mdx/#mdx-in-astro).
 
-Regardless of whether you're using Markdown or MDX, _don't miss out on the [Markdown/MDX extended features](../markdown-mdx-extended-features/) supported by this theme_, including callouts (admonitions/alerts), fully-featured code blocks, image captions and links, video embeddings, styled GitHub links, and more.
+Regardless of whether you're using Markdown or MDX, _don't miss out on the [Markdown/MDX extended features](../markdown-mdx-extended-features/) supported by this theme_, including callouts (admonitions/alerts), fully-featured code blocks, image captions and links, video embeddings, styled links, and more.
 
 Additionally, the title (set by the `title` property in the YAML frontmatter) is automatically rendered as an h1. You don’t need to include the title again in the post, and it’s recommended to start with h2 headings. 
 
-> [!important]- TOC Excludes `title` Property Defined in Frontmatter
+> [!important]- TOC excludes `title` property defined in frontmatter
 > 
 > Note that even if you configure `FEATURES.toc[1].minHeadingLevel` in `src/config.ts` to include `1`, the title set by the `title` property in frontmatter won't be included in the auto-generated TOC — it only includes h1 headings written in the Markdown/MDX content.
 

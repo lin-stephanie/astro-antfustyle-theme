@@ -3,19 +3,19 @@ title: Customizing GitHub Activity Pages
 subtitle: ''
 description: How to showcase your own GitHub releases or pull requests in Astro AntfuStyle Theme
 pubDate: 2023-12-01
-lastModDate: 2025-03-31
+lastModDate: 2025-04-30
 toc: true
 share: true
 ogImage: true
 ---
 
-This post guides you on recreating the [`/releases`](../../releases) and [`/prs`](../../prs) pages in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to showcase your GitHub releases and pull requests.
+This post guides you on recreating the [`/releases`](../../releases/) and [`/prs`](../../prs/) pages in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to showcase your GitHub releases and pull requests.
 
 ## Configure the Loaders
 
-The `/releases` and `/prs` pages use [astro-loader-github-releases](https://www.npmjs.com/package/astro-loader-github-releases) and [astro-loader-github-prs](https://www.npmjs.com/package/astro-loader-github-prs) to fetch data for `releases` and `prs` content collections. In `src/content/config.ts`, configure these loaders to fetch your GitHub activity data as described in their README:
+The `/releases` and `/prs` pages use [astro-loader-github-releases](https://www.npmjs.com/package/astro-loader-github-releases) and [astro-loader-github-prs](https://www.npmjs.com/package/astro-loader-github-prs) to fetch data for `releases` and `prs` content collections. In `src/content.config.ts`, configure these loaders to fetch your GitHub activity data as described in their README:
 
-```ts title='src/content/config.ts'
+```ts title='src/content.config.ts'
 import { githubReleasesLoader } from 'astro-loader-github-releases'
 import { githubPrsLoader } from 'astro-loader-github-prs'
 
@@ -40,20 +40,22 @@ export const collections = {
 }
 ```
 
-> [!warning]- A GitHub PAT Is Needed for PRs and for Releases in `mode: 'repoList'`
+> [!warning]- A GitHub PAT is needed for PRs and for releases in `mode: 'repoList'`
 >
 > - Create a [GitHub PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) with at least `repo` scope permissions to authenticate requests.
 > - In the project root, create a `.env` file and set the `GITHUB_TOKEN` environment variable to your PAT.
 > - Make sure `.env` is ignored by Git (it's included in `.gitignore` by default).
 > - Additional reference: [Setting Environment Variables](https://docs.astro.build/en/guides/environment-variables/#setting-environment-variables)
 
-> [!tip]- Utilizing Astro Loaders for GitHub Data Integration
+> [!tip]- Use Astro loaders to fetch external data (may affect startup time)
+>  
+> `githubReleasesLoader` and `githubReleasesLoader` are both [Astro loaders](https://docs.astro.build/en/reference/content-loader-reference/#what-is-a-loader). Built with the [Content Loader API](https://docs.astro.build/en/reference/content-loader-reference/), Astro loaders enable seamless data fetching from various sources as content collections. This API was first introduced in [Astro 4.14](https://astro.build/blog/astro-4140/#experimental-content-layer-api) and became stable in [Astro 5](https://astro.build/blog/astro-5/#content-layer).
 > 
-> `githubReleasesLoader` and `githubPrsLoader` are [Astro loaders](https://docs.astro.build/en/reference/content-loader-reference/#what-is-a-loader) built with the Content Loader API, enabling data fetching from various sources as content collections. This API, introduced in [Astro 4.14](https://astro.build/blog/astro-4140/#experimental-content-layer-api), became stable in [Astro 5](https://astro.build/blog/astro-5/#content-layer).
+> Starting in Astro 5, the dev server address is shown only after external resources are loaded and content is synced. Using Astro loaders may delay server startup.
 
 ## Update Page Content
 
-Depending on your loader configuration, you can modify the settings in `src/config.ts` that affect the UI of these two pages. Refer to the [`UI.githubView` configuration](./basic-configuration/#githubview) for specific details.
+Depending on your loader configuration, you can modify the settings in `src/config.ts` that affect the UI of these two pages. Refer to the [`UI.githubView` option](./basic-configuration/#githubview) for specific details.
 
 In `src/pages/releases.mdx` and `src/pages/prs.mdx`, you can update the frontmatter and directly modify the titles and subtitles rendered on the pages.
 
@@ -95,7 +97,7 @@ jobs:
           echo "Deployment triggered successfully."
 ```
 
-Additionally, to remove a page, uninstall the loader, delete its collection from `src/content/config.ts`, and remove the `.mdx` file in `/page`.
+Additionally, to remove a page, uninstall the loader, delete its collection from `src/content.config.ts`, and remove the `.mdx` file in `/page`.
 
 ## Wrapping Up
 
@@ -107,4 +109,7 @@ Looking forward, the theme will continue leveraging Astro loaders to enable show
 ::summary[Changelog]
 2025-03-31
 - Add: A GitHub PAT Is Needed for PRs and for Releases in `mode: 'repoList'`
+
+2025-04-30
+- Changes for Astro 5.7
 :::

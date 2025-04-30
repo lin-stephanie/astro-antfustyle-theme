@@ -57,7 +57,7 @@ If you change the `theme` configuration (default: `'vitepress'`), you will also 
 
 ## Fully-featured Code Blocks
 
-Supported by :link[astro-expressive-code]{id=https://github.com/expressive-code/expressive-code/tree/main/packages/astro-expressive-code} with [@expressive-code/plugin-collapsible-sections](https://expressive-code.com/plugins/collapsible-sections/) and [@expressive-code/plugin-line-numbers](https://expressive-code.com/plugins/line-numbers/) plugins to add styling and extra functionality for code blocks. 
+Supported by :link[astro-expressive-code]{id=astro-expressive-code} with [@expressive-code/plugin-collapsible-sections](https://expressive-code.com/plugins/collapsible-sections/) and [@expressive-code/plugin-line-numbers](https://expressive-code.com/plugins/line-numbers/) plugins to add styling and extra functionality for code blocks. 
 
 To customize code block themes or functionality, modify the `ec.config.mjs` file at the project root after reviewing the :link[Configuring Expressive Code]{id=https://expressive-code.com/reference/configuration/}, such as [change themes](https://expressive-code.com/guides/themes/#using-bundled-themes), [enable word wrap](https://expressive-code.com/key-features/word-wrap/#wrap), or [toggle line numbers](https://expressive-code.com/plugins/line-numbers/#showlinenumbers).
 
@@ -384,7 +384,7 @@ Use the [`:::image`](https://github.com/lin-stephanie/remark-directive-sugar?tab
 
 > [!warning] 
 > 
-> Setting an image's `width` attribute directly may cause blurriness. [Learn more](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions/17)
+> Setting an image's `width` attribute directly may cause blurriness. [Learn more](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions/17).
 
 ### `:::image-a`
 
@@ -436,15 +436,16 @@ Use the [`::video`](https://github.com/lin-stephanie/remark-directive-sugar?tab=
 Say `example.md` contains:
 
 ```md title='example.md'
-<!-- Embed a YouTube video -->
+<!-- Embed a YouTube or Vimeo or Bilibili video -->
 ::video-youtube{#gxBkghlglTg}
+<!-- ::video-vimeo{id=912831806} -->
+<!-- ::video-bilibili{id=BV1MC4y1c7Kv} -->
 
-<!-- Embed a Bilibili video with a custom `title` attr -->
-::video-bilibili[custom title]{id=BV1MC4y1c7Kv}
+<!-- Embed a video with a custom `title` attr -->
+::video-youtube[custom title]{id=gxBkghlglTg}
 
-<!-- Embed a Vimeo video with class `no-scale` to disable scaling -->
-::video-vimeo{id=912831806 class='no-scale'}
-<!-- ::video-vimeo{id=912831806 .no-scale} -->
+<!-- Embed a video with class `no-scale` to disable scaling -->
+::video-youtube{id=gxBkghlglTg class='no-scale'}
 
 <!-- Embed a custom video URL (must use `id`, not `#`) -->
 ::video{id=https://www.youtube-nocookie.com/embed/gxBkghlglTg}
@@ -454,9 +455,9 @@ Then `example.mdx` renders as:
 
 ::video-youtube{#gxBkghlglTg}
 
-::video-bilibili[custom title]{id=BV1MC4y1c7Kv}
+::video-youtube[custom title]{id=gxBkghlglTg}
 
-::video-vimeo{id=912831806 class='no-scale'}
+::video-youtube{id=gxBkghlglTg class='no-scale'}
 
 ::video{id=https://www.youtube-nocookie.com/embed/gxBkghlglTg}
 

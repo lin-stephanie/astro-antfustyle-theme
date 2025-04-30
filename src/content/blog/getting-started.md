@@ -2,7 +2,7 @@
 title: Getting Started
 description: How to quickly build your personal website with Astro AntfuStyle Theme
 pubDate: 2024-10-04
-lastModDate: 2025-03-31
+lastModDate: ''
 toc: true
 share: true
 ogImage: true
@@ -57,7 +57,7 @@ yarn create astro --template lin-stephanie/astro-antfustyle-theme
 pnpm dlx create-astro --template lin-stephanie/astro-antfustyle-theme
 ```
 
-> [!tip]- Using Zip Files Instead of Git
+> [!tip]- Using zip files instead of Git
 >
 > If you prefer not to use Git, you can [download the ZIP file](https://github.com/lin-stephanie/astro-antfustyle-theme/archive/refs/heads/main.zip), extract it, and work directly in your local directory.
 
@@ -72,6 +72,10 @@ pnpm install
 # Start the local dev server (opens at 'http://localhost:4321')
 pnpm dev
 ```
+
+> [!warning]- Astro shows the dev server address after data sync
+> 
+> When running `pnpm dev`, Astro loads external data (e.g. via loaders) and syncs content before starting the dev server, which may cause a slight delay depending on network conditions and data size.
 
 You can explore the current theme freely. Additionally, the following commands are available:
 
@@ -90,12 +94,19 @@ You can explore the current theme freely. Additionally, the following commands a
 | `pnpm astro --help`                         | Get help using the [Astro CLI](https://docs.astro.build/en/reference/cli-reference/)                                        |
 | `pnpm toolbar:on`<br>`pnpm toolbar:off`<br> | Enable or disable the [Astro Dev Toolbar](https://docs.astro.build/en/guides/dev-toolbar/)                                  |
 
-
-> [!warning]- Handling Package Management Alternatives
+> [!warning]- GitHub PAT required for `/releases` and `/prs` pages
 > 
-> This project uses `pnpm` as the package manager, so you’ll need to install it if you haven’t yet.
+> If no GitHub PAT is set, a warning appears in the console after running `pnpm dev`.  
 >
-> You can execute `npm install -g pnpm` to [install `pnpm`](https://pnpm.io/installation) globally. Alternatively, you can [enable `corepack`](https://github.com/nodejs/corepack) (allows you to manage package manager versions directly via Node.js) or [install the `ni` tool](https://github.com/antfu-collective/ni) (simplifies running commands across different package managers).
+> To remove these pages, see [Removing Pages](../recreating-current-pages/#removing-pages).  
+>
+> To show GitHub activity, see [Customizing GitHub Activity Pages](../customizing-github-activity-pages/).  
+
+> [!tip]- Using `pnpm` or switching to another package manager
+> 
+> This project uses `pnpm` as the package manager, so you’ll need to install it if you haven’t yet. You can execute `npm install -g pnpm` to [install `pnpm`](https://pnpm.io/installation) globally. 
+> 
+> Alternatively, you can [enable `corepack`](https://github.com/nodejs/corepack) (allows you to manage package manager versions directly via Node.js) or [install the `ni` tool](https://github.com/antfu-collective/ni) (simplifies running commands across different package managers).
 >
 > If you want to use a different package manager, make sure to [convert the project to your chosen package manager](../faqs-and-known-issues/#revert-from-pnpm-to-npm-or-yarn) before running its commands.
 
@@ -112,7 +123,7 @@ Once configured, ensure the project is running correctly in your browser, then s
 
 - [**Adding New Posts**](../adding-new-posts/): How to create posts with tips and guidelines.
 - [**Recreating Current Pages**](../recreating-current-pages/): Steps to recreate content for the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, `/highlights`, `/shorts`, and `404` pages, as well as creating and removing pages.
-- :badge-n<a href='../customizing-github-activity-pages/'><strong>Customizing GitHub Activity Pages</strong></a>: Showcase your project releases or pull requests on GitHub.
+- [**Customizing GitHub Activity Pages**](../customizing-github-activity-pages/): Showcase your project releases or pull requests on GitHub.
 - [**Markdown Syntax Guide**](../markdown-syntax-guide/): Showcase of Markdown rendering in this theme.
 - [**Markdown/MDX Extended Features**](../markdown-mdx-extended-features/): Advanced features like callouts, code blocks, image captions, video embedding, and more.
 
@@ -120,7 +131,7 @@ Once configured, ensure the project is running correctly in your browser, then s
 
 Refer to [Astro’s Deployment Guide](https://docs.astro.build/en/guides/deploy/) to choose your preferred platform and follow its guide. Ensure the `SITE.website` option in the `src/config.ts` is correctly set before deploying!
 
-> [!tip]- Deploying Without a Git Repository Using CLI Tools
+> [!tip]- Deploying without a Git repository using CLI tools
 >
 > If you aren’t using GitHub and any other Git provider for deployment, follow the [CLI Deployment Guide](https://docs.astro.build/en/guides/deploy/#cli-deployment) to deploy without a Git repository, such as using [Vercel CLI](https://vercel.com/docs/deployments/deploy-with-vercel-cli#deploying-to-vercel-with-vercel-cli) or [Netlify CLI](https://docs.netlify.com/functions/deploy/#manual-deploys-with-cli).
 

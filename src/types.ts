@@ -69,15 +69,22 @@ export interface Site {
   ogLocale: string
 
   /**
-   * Specifies a list of permitted image source domains for **remote** image optimization.
+   * Specifies the allowed domains for optimizing remote images,
+   * including those used with `![]()` and the `<Image />` or `<Picture />` components.
    *
    * It wiil be passed to the
    * {@link https://docs.astro.build/en/reference/configuration-reference/#imagedomains `image.domains`}
-   * config in Astro, used when displaying
-   * {@link https://docs.astro.build/en/guides/images/#display-optimized-images-with-the-image--component optimized versions with the built-in `<Image />` Astro component}.
+   * config in Astro.
+   *
+   * If you don't need remote image optimization, you can set it to `[]`.
    *
    * @example
    * ['astro.build']
+   *
+   * @see https://docs.astro.build/en/guides/images/#remote-images
+   * @see https://docs.astro.build/en/guides/images/#display-optimized-images-with-the-image--component
+   * @see https://docs.astro.build/en/reference/configuration-reference/#image-options
+   * @see https://astro.build/blog/astro-540/#remote-image-optimization-in-markdown
    */
   imageDomains: string[]
 }

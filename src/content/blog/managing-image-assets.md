@@ -2,7 +2,7 @@
 title: Managing Image Assets
 description: How to organize and use images in the Astro AntfuStyle Theme
 pubDate: 2020-01-03
-lastModDate: ''
+lastModDate: 2025-04-30
 toc: true
 share: true
 ogImage: true
@@ -11,54 +11,47 @@ ogImage: true
 
 This post provides a brief guide on how to organize and use images in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme).
 
-## Supported Cases for Image Processing
+## Supported Cases for Image Optimization
 
-Astro supports processing images during the build phase via the [Image Service API](https://docs.astro.build/en/reference/image-service-reference/) (:link[sharp]{id=lovell/sharp .github} is the [default service](https://docs.astro.build/en/guides/images/#default-image-service)), allowing actions like converting to webp, compressing, adding attributes, inferring dimensions to prevent CLS, lazy loading, and async decoding. However, this only applies in the following cases:
+Astro supports optimizing images during the build phase via the [Image Service API](https://docs.astro.build/en/reference/image-service-reference/) (:link[sharp]{id=lovell/sharp .github} is the [default service](https://docs.astro.build/en/guides/images/#default-image-service)), allowing actions like converting to webp, compressing, adding attributes, inferring dimensions to prevent CLS, lazy loading, and async decoding. However, this only applies in the following cases:
 
-- [Images stored in `src/`](https://docs.astro.build/en/guides/images/#where-to-store-images) (Images in the `public/` folder won’t be processed)
-- [Authorized remote images](https://docs.astro.build/en/guides/images/#authorizing-remote-images) (Note: external images referenced in Markdown using `![]()` will not be processed)
+- [Local images stored in `src/`](https://docs.astro.build/en/guides/images/#where-to-store-images) (Images in `public/` are not processed.)
+- [**Authorized** remote images](https://docs.astro.build/en/guides/images/#authorizing-remote-images) (Includes those used with `![]()`, `<Image />` or `<Picture />`.)
 
 ## Images in Markdown Files
 
 It is recommended to store the local images used in the post under the `src/assets/` directory, and create a subdirectory based on the post’s filename (e.g., images for `src/content/blog/your-post-file-name.md` stored in `src/assets/your-post-file-name/`), which will allow them to be optimized during Astro’s build process and make it easier to organize and maintain (this strategy can also apply to other static resources).
 
+```md title='src/content/blog/post-name.md'
+<!-- Local assets (`src/assets/…`) -->
+<!-- Use a relative path or the import alias -->
+<!-- Astro optimizes these files: hashed names → `dist/_astro/` -->
 
-```md title='src/content/blog/post-name.md' wrap
-# Markdown Post
+![Local image – relative path](../../assets/post/local-image.png)
+![Local image – alias](～/assets/post/local-image.png)
 
-<!-- Local image stored in `src/assets/post-name/`, it wiil be processed and optimized by Astro, resulting in hashed filenames and output to the `_astro/` directory within `dist` -->
+<!-- Public assets (`public/…`) -->
+<!-- Use the file path relative to `public/` -->
+<!-- Served as-is; Astro does NOT optimize -->
 
-<!-- ✅ Use a relative file path -->
-![Local image](../../assets/post-name/local-image.png)
-
-<!-- ✅ Use import alias -->
-![Local image](～/assets/post-name/local-image.png)
-
----
-
-<!-- Image stored in `public/og-images/`, it wiil not be processed and optimized by Astro -->
-<!-- ✅ Use the file path relative to public/ -->
 ![OG image](/public/og-images/og-image.png)
 
----
+<!-- Authorized remote images -->
+<!-- Full URL with `![]()`, `<Image />`, `<Picture />` → optimized by Astro -->
+<!-- Full URL with `<img>` tag  → NOT optimized by Astro-->
 
-<!-- Remote image on another server, it wiil not be processed by Astro -->
-<!-- ✅ Use the full URL of the image -->
 ![Remote image](https://example.com/images/remote-image.png)
+<Image src="https://example.com/remote-image.png" alt="Remote image" />
+<img src="https://example.com/remote-image.png" alt="Remote image" />
 
----
+<!-- Invalid examples -->
+<!-- `<img>` or `<Image />` pointing to local assets won’t work. -->
 
-<!-- ❌ Using <img> tag won't work -->
-<img src="../../assets/post-name/local-image.png" alt="Local image" />
-
----
-
-<!-- ❌ Using <Image /> component won't work -->
-<Image src="../../assets/post-name/local-image.png" alt="Local image" />
-
+<img src="../../assets/post/local-image.png" alt="Local image" />
+<Image src="../../assets/post/local-image.png" alt="Local image" />
 ```
 
-> [!tip]- Adjusting Image Attributes in Markdown/MDX
+> [!tip]- Adjusting image attributes in Markdown/MDX
 >
 > To modify attributes of an `img` element (like size) in Markdown/MDX, use the :link[remark-imgattr]{id=OliverSpeir/remark-imgattr .github} syntax.
 > 
@@ -105,3 +98,9 @@ As mentioned, Astro can compress images from the `src/` folder. However, for ima
 ## Wrapping Up
 
 I hope this post helps clarify image usage in Markdown/MDX within this theme. For anything not covered here, check out the [Astro Images Docs](https://docs.astro.build/en/guides/images/) . 📖
+
+:::details
+::summary[Changelog]
+2025-04-30
+- Changes for Astro 5.7
+:::

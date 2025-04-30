@@ -2,23 +2,25 @@
 title: Recreating Current Pages
 description: How to edit existing pages in Astro AntfuStyle Theme
 pubDate: 2023-12-03
-lastModDate: 2025-03-31
+lastModDate: 2025-04-30
 toc: true
 share: true
 ogImage: true
 ---
 
-In the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme), you can customize the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, and `404` pages. This post also covers creating or removing pages. For `/releases` and `/prs`, see [Customizing GitHub Activity Pages](../customizing-github-activity-pages/).
+You can use any view from the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to build the pages you want. 
+
+This post shows how to recreate the [`/`](#homepage), [`/projects`](#projects), [`/changelog`](#changelog), [`/streams`](#streams), [`/feeds`](#feeds), [`/highlights`](#highlights), [`/shorts`](#shorts), and [`404`](#404) pages, add new ones, or remove existing ones. 
+
+For `/releases` and `/prs`, check out [Customizing GitHub Activity Pages](../customizing-github-activity-pages/).
 
 ## Creating Pages
 
-In [Project Structure](../project-structure/), it is mentioned that the theme’s organizational strategy is to store all substantive content in the `src/content` directory, while the `src/pages` directory uses `.mdx` files to assemble content into structured, styled layouts.
+In [Project Structure](../project-structure/), it is mentioned that the theme’s organizational strategy is to store all substantive content in the `src/content/` directory, while the `src/pages/` directory uses `.mdx` files to assemble content into structured, styled layouts.
 
-Open any `.mdx` file in `src/pages`, and you'll notice a similar structure: YAML frontmatter + imported Astro components + JSX with layout components nesting view components.
+Open any `.mdx` file in `src/pages/`, and you'll notice a similar structure: YAML frontmatter + imported Astro components + JSX with layout components nesting view components.
 
-The theme defined all `.mdx` files in `src/pages/` belong to the `pages` content collection. This is enabled by [Astro’s Content Layer API](https://astro.build/blog/astro-4140/#experimental-content-layer-api), introduced in Astro 4.14, allowing content to exist outside `src/content/`. 
-
-The frontmatter fields for `pages` content collection are defined by `schema: pageSchema`in `src/content/schema.ts` as follows:
+The theme defined all `.mdx` files in `src/pages/` belong to the `pages` collection. The frontmatter fields for `pages` collection are defined by `schema: pageSchema` in `src/content/schema.ts` as follows:
 
 | Property | Type (default)                                                                          | Description                                                                                                                                                                                                                                      |
 | --------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -35,13 +37,13 @@ These properties can be easily passed to layout and view components. If you need
 
 By creating pages this way, you can manage metadata and control features across pages efficiently, making it easy to expand and maintain your site.
 
-> [!tip]- Tips for Creating a New Page
+> [!tip]- Tips for creating a new page
 > 
 > To create a new page, first review the layout components (`src/layouts/`) and view components (`src/components/views/`) in the theme. Ensure you understand their usage, including required props, and preview the rendering in the browser to select the most appropriate layout and view.
 > 
-> Import the `BaseLayout` component in every page and wrap it around your JSX.
+> Make sure to import the `BaseLayout` component in every page and wrap it around your JSX.
 > 
-> When using the `RenderPost` component, ensure that `collectionType` and `slug` correspond to a directory and file in `src/content/` (excluding the extension).
+> When using the `RenderPage` component, ensure that `collectionType` and `id` correspond to a directory and file in `src/content/` (excluding the extension).
 
 ## Updating Pages
 
@@ -49,80 +51,64 @@ By creating pages this way, you can manage metadata and control features across 
 
 To update the homepage, open `src/content/home/index.md` and start writing the content you want to present.
 
-> [!important]- No Frontmatter Needed for the `home` content collection
+> [!important]- No frontmatter needed for the `home` collection
 > 
-> Since the `home` content collection doesn't have a defined frontmatter type in `src/content/config.ts`, you don't need to write any frontmatter. Just focus on the main content, and it should work fine.
+> Since the `home` collection doesn't have a defined schema in `src/content.config.ts`, you don't need to write any frontmatter. Just focus on the main content, and it will work fine.
 
-### [`/projects`](../../projects) Page
+### [`/projects`](../../projects/)
 
-Open `src/content/projects/data.json`, delete the existing content, and use the following as a base:
+Open `src/content/projects/data.json`, delete the existing content, and write your own.
 
-```json title='src/content/projects/data.json'
-{
-  "$schema": "../../../.astro/collections/projects.schema.json",
-  "projects": {
-    "Classification of Projects I": [
-      // your projects
-    ]
-  }
-}
-```
-
-The `projects` field type is `Record<string, projectSchema[]>`. `projectSchema` is defined as follows:
+The fields for `projects` entries are defined by `schema: projectSchema`in `src/content/schema.ts` as follows:
 
 | Property (* required) | Type     | Description                                                                                                                            |
 | --------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`*               | `string` | Name of the project to be displayed.                                                                                                   |
+| `id`*                 | `string` | Name of the project to be displayed.                                                                                                   |
 | `link`*               | `string` | URL linking to the project page or repository.                                                                                         |
 | `desc`*               | `string` | A brief description summarizing the project.                                                                                           |
 | `icon`*               | `Icon`   | Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [UnoCSS](https://unocss.dev/presets/icons) specs. |
+| `category`*           | `string` | Category of the project.                                                                                                               |
 
-
-The theme also includes a code snippet for generating `projectSchema`. Type `projectData` to trigger it, then use `tab` to modify the values.
+The theme includes a code snippet for generating `projectSchema`. Type `projectData` to trigger it, then use `tab` to modify the values.
 
 Finally, update the frontmatter in `src/pages/projects.mdx`.
 
-### [`/changelog`](../../changelog) Page
+> [!important]- Make sure to keep the `id` field unchanged
+>
+> It is required by Astro's [`file()` loader](https://docs.astro.build/en/reference/content-loader-reference/#file-loader) to create entries properly.
 
-To recreate the `/changelog` page, please follow the [Adding New Posts](../adding-new-posts/). The content for the `/changelog` page, stored in the `src/content/changelog/` directory, belongs to the `changelog` content collection. This collection also uses `schema: postSchema` for frontmatter types.
+### [`/changelog`](../../changelog/)
 
-### [`/streams`](../../streams) Page
+To recreate the `/changelog` page, please follow the [Adding New Posts](../adding-new-posts/). The content for the `/changelog` page, stored in the `src/content/changelog/` directory, belongs to the `changelog` collection. This collection also uses `schema: postSchema` for frontmatter types.
 
-Similarly to adding projects,  open `src/content/streams/data.json`, delete the existing content, and use the following as a base:
+### [`/streams`](../../streams/)
 
-```json title='src/content/streams/data.json'
-{
-  "$schema": "../../../.astro/collections/streams.schema.json",
-  "streams": [
-     // your streams
-  ]
-}
-```
+Similarly to adding projects,  open `src/content/streams/data.json`, delete the existing, and write your own.
 
-The `streams` field type is `streamSchema[]`. `streamSchema` is defined as follows:
+The fields for `streams` entries are defined by `schema: streamSchema`in `src/content/schema.ts` as follows:
 
 | Property (* required) | Type      | Description                                                                                                                                                         |
 | ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`*           | `string`  | Sets the stream title.                                                                                                                                              |
+| `id`*           | `string`  | Sets the stream title.                                                                                                                                              |
 | `pubDate`*         | `date`    | Specifies the publication date. See supported formats [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#examples). |
 | `link`*           | `string`  | Specifies the URL link to the stream.                                                                                                                               |
 | `radio`            | `boolean` | Indicates whether the stream is a radio broadcast. If `true`, an icon will be added to the stream item in the list.                                                 |
 | `video`            | `boolean` | Indicates whether the stream is a video broadcast. If `true`, an icon will be added to the stream item in the list.                                                 |
 | `platform`         | `string`  | Specifies the platform where the stream is published.                                                                                                               |
 
-As with `projectSchema`, you can use a code snippet to generate `streamSchema` by typing `streamData`. 
+The theme includes a code snippet for generating `streamSchema`. Type `streamData` to trigger it, then use `tab` to modify the values.
 
 Finally, update the frontmatter in `src/pages/streams.mdx`.
 
-> [!note]- Auto-Generated Schema Files
+> [!important]- Make sure to keep the `id` field unchanged
 >
-> `projects.schema.json` and `streams.schema.json` are auto-generated by Astro 4.13.0, offering autocompletion, validation, and other useful features in your editor. [Learn more](https://v4.docs.astro.build/en/guides/content-collections/#enabling-json-schema-generation). 
+> It is required by Astro's [`file()` loader](https://docs.astro.build/en/reference/content-loader-reference/#file-loader) to create entries properly.
 
-### [`/feeds`](../../feeds) Page
+### [`/feeds`](../../feeds/)
 
 The `/feeds` page displays content retrieved via :link[@ascorbic/feed-loader]{id=https://www.npmjs.com/package/@ascorbic/feed-loader}. You can define an external data source (like RSS, RDF, or Atom feeds) for the `feeds` collection using the following:
 
-```ts title='src/content/config.ts' {5}
+```ts title='src/content.config.ts' {5}
 import { feedLoader } from '@ascorbic/feed-loader'
 
 const feeds = defineCollection({
@@ -132,15 +118,17 @@ const feeds = defineCollection({
 })
 ```
 
-> [!tip]- Use Astro Loaders to Gather External Data  
+> [!tip]- Use Astro loaders to fetch external data (may affect startup time)
 >  
-> The `feedLoader` on this page and the `blueskyPostsLoader` on the `/highlights` page (explained below) are both [Astro loaders](https://docs.astro.build/en/reference/content-loader-reference/#what-is-a-loader). Built with the Content Loader API, Astro loaders enable seamless data fetching from various sources as content collections. This API was first introduced in [Astro 4.14](https://astro.build/blog/astro-4140/#experimental-content-layer-api) and became stable in [Astro 5](https://astro.build/blog/astro-5/#content-layer).
+> `feedLoader` and `blueskyPostsLoader` (below) are both [Astro loaders](https://docs.astro.build/en/reference/content-loader-reference/#what-is-a-loader). Built with the [Content Loader API](https://docs.astro.build/en/reference/content-loader-reference/), Astro loaders enable seamless data fetching from various sources as content collections. This API was first introduced in [Astro 4.14](https://astro.build/blog/astro-4140/#experimental-content-layer-api) and became stable in [Astro 5](https://astro.build/blog/astro-5/#content-layer).
+> 
+> Starting in Astro 5, the dev server address is shown only after external resources are loaded and content is synced. Using Astro loaders may delay server startup.
 
-### [`/highlights`](../../highlights) Page
+### [`/highlights`](../../highlights/)
 
-Similar to the `/feeds` page, the `/highlights` page displays content retrieved via :link[astro-loader-bluesky-posts]{id=https://www.npmjs.com/package/astro-loader-bluesky-posts}. You can reconfigure it in `src/content/config.ts` by referring to the loader's README, specifying the Bluesky posts to fetch:
+Similar to the `/feeds` page, the `/highlights` page displays content retrieved via :link[astro-loader-bluesky-posts]{id=https://www.npmjs.com/package/astro-loader-bluesky-posts}. You can reconfigure it in `src/content.config.ts` by referring to the loader's README, specifying the Bluesky posts to fetch:
 
-```ts title='src/content/config.ts' {5-14}
+```ts title='src/content.config.ts' {5-14}
 import { blueskyPostsLoader } from 'astro-loader-bluesky-posts'
 
 const highlights = defineCollection({
@@ -198,7 +186,7 @@ export const highlightSchema = z.object({
 
 **Step 2: Redefine the `highlights` collection**
 
-```ts title='src/content/config.ts' del={10-19} ins={6,20-21}
+```ts title='src/content.config.ts' del={10-19} ins={6,20-21}
 import {
   pageSchema,
   postSchema,
@@ -297,20 +285,24 @@ This is a sample highlight entry for the `/highlights` page.
 
 ```
 
-> [!warning]- Local File Support Restrictions
+> [!warning]- Local file support restrictions
 > 
 > - When passing local file paths to `images[n].src` and `video.src`, the files must be stored within the `src/assets/` (at any depth). Additionally, the path format must follow `"src/assets/**/*"` for it to work properly.
 > - To use assets from other local paths, modify the relevant logic in `src/components/views/CardItem.astro`.
 > - To store `highlights` outside the `content` directory, consider using [`import.meta.glob()`](https://docs.astro.build/en/guides/imports/#importmetaglob) instead of [`getCollection()`](https://docs.astro.build/en/reference/modules/astro-content/#getcollection), eliminating the need for a Zod schema or collection definition.
 > - Additional references: [Images in `.astro` Files](https://docs.astro.build/en/guides/images/#images-in-astro-files), [Dynamically Import Images](https://docs.astro.build/en/recipes/dynamically-importing-images/).
 
-### [`/shorts`](../../shorts) Page
+> [!tip]- Allow remote images from `'cdn.bsky.app'` to be optimized
+> 
+> The `/highlights` page displays remote images from `'cdn.bsky.app'`. The theme sets this domain in `SITE.imageDomains` so [Astro can optimize them](https://docs.astro.build/en/guides/images/#display-optimized-images-with-the-image--component) — feel free to change it if needed.
 
-The current `/shorts` page uses data from the `blog` collection. To create a standalone `shorts` content collection, follow these steps:
+### [`/shorts`](../../shorts/)
 
-**Step 1: Define the `shorts` content collection**
+The current `/shorts` page uses data from the `blog` collection. To create a standalone `shorts` collection, follow these steps:
 
-```ts title='src/content/config.ts' ins={1-4,8}
+**Step 1: Define the `shorts` collection**
+
+```ts title='src/content.config.ts' ins={1-4,8}
 const shorts = defineCollection({
   type: 'content',
   schema: postSchema,
@@ -356,7 +348,7 @@ if (collectionType === 'shorts') {
 > 
 > For example, `/highlights` (`src/pages/highlights.mdx`) uses `'masonry'`, while `shorts` (`src/pages/shorts.mdx`) uses `'grid'`.  You can customize `CardView` based on your data and layout needs.
 
-### [`404`](../../404) Page
+### [`404`](../../404/)
 
 To update the 404 page, you can directly edit `src/pages/404.mdx`.
 
@@ -366,9 +358,9 @@ Using remove the `/changelog` page as an example:
 
 - Delete `src/pages/changelog.mdx`.
 - Delete `src/content/changelog` directory.
-- Update `src/content/config.ts` and `src/config.ts`:
+- Update `src/content.config.ts` and `src/config.ts`:
 
-```ts title='src/content/config.ts' del={8-11} del='changelog,'
+```ts title='src/content.config.ts' del={8-11} del='changelog,'
 
 import { glob } from 'astro/loaders'
 import { defineCollection } from 'astro:content'
@@ -419,7 +411,11 @@ If you encounter any issues, find errors, or see opportunities for improvement, 
 :::details
 ::summary[Changelog]
 2025-02-28
-- Add: [`/highlights` Page](#highlights-page)
+- Add: [`/highlights`](#highlights)
+
 2025-03-31
-- Add: [`/shorts` Page](#shorts-page)
+- Add: [`/shorts`](#shorts)
+
+2025-04-30
+- Changes for Astro 5.7
 :::

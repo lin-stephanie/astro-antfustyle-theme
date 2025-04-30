@@ -2,7 +2,7 @@
 title: Project Structure
 description: Introduces the structure of the Astro AntfuStyle Theme
 pubDate: 2024-10-03
-lastModDate: 2025-03-31
+lastModDate: 2025-04-30
 toc: true
 share: true
 ogImage: true
@@ -10,20 +10,26 @@ ogImage: true
 
 This post will quickly familiarize you with the entire structure of the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) project.
 
-## Project Structure Overview
+## Overview
 
 Opening the project in your editor will reveal the following folders and files:
 
 ```md
-astro-antfustyle-theme                      
-|-.editorconfig                             // Configuration for maintaining consistent coding styles across editors.
-|-.prettierignore                           // Configuration for Prettier to ignore.
-|-.prettierrc                               // Configuration file for Prettier code formatting rules.
+astro-antfustyle-theme
+|-.github                                   // GitHub-specific files.
 |-.vscode                                   // VS Code settings and configurations.
 | |-astro-antfustyle-theme.code-snippets    // Custom code snippets for faster development within VS Code.
 | |-extensions.json                         // List of recommended VS Code extensions for the project.
 | |-launch.json                             // Debug configuration for VS Code.
 | |-settings.json                           // Workspace-specific settings for VS Code.
+| |-settings.json                           // Workspace-specific settings for VS Code.
+|-LICENSE                                   // The license governing the use of the project.
+|-README.md                                 // The main documentation for the project.
+|-astro.config.ts                           // Astro configuration file.
+|-ec.config.mjs                             // Expressive Code configuration file.
+|-eslint.config.js                          // ESLint configuration for maintaining code quality.
+|-package.json                              // Project metadata and dependencies.
+| |-settings.json                           // Workspace-specific settings for VS Code.                      
 |-LICENSE                                   // The license governing the use of the project.
 |-README.md                                 // The main documentation for the project.
 |-astro.config.ts                           // Astro configuration file.
@@ -38,7 +44,6 @@ astro-antfustyle-theme
 | | |-markup.ts                             // Template for OG image generation.
 | |-remark-generate-og-image.ts             // Plugin for automatically generating OG images.
 | |-remark-reading-time.ts                  // Plugin for calculating eading times.
-|-pnpm-lock.yaml                            // Lock file ensuring consistent installation of dependencies.
 |-public                                    // Publicly accessible static assets.
 | |-apple-touch-icon.png                    // Apple touch icon for iOS devices.
 | |-favicon.ico                             // Favicon for browsers.
@@ -58,19 +63,16 @@ astro-antfustyle-theme
 | | |-toc                                   // Table of contents components.
 | | |-views                                 // View components for different content display layouts.
 | | |-widgets                               // Widget components for interactive features.
-| |-config.ts                               // Configuration file for theme-specific settings.
-| |-content                                 // Stores content/data collections.
-| | |-blog                                  // For 'blog' content collection (with postSchema).
-| | |-changelog                             // For 'changelog' content collection (with postSchema).
-| | |-config.ts                             // Configuration for content/data collections.
-| | |-home                                  // For 'home' content collection.
+| |-content                                 // Stores collections.
+| | |-blog                                  // For 'blog' collection.
+| | |-changelog                             // For 'changelog' collection.
+| | |-home                                  // For 'home' collection.
 | | | |-index.md                            // Homepage content in Markdown.
-| | |-projects                              // For 'projects' content collection (with projectsSchema).
+| | |-projects                              // For 'projects' collection.
 | | | |-data.json                           // Data for project listings.
-| | |-schema.ts                             // Schema definitions for type-checking frontmatter and JSON.
-| | |-streams                               // For 'streams' content collection (with streamsSchema).
+| | |-streams                               // For 'streams' collection.
 | | | |-data.json                           // Data for stream listings.
-| |-env.d.ts                                // TypeScript declaration file for environment variables.
+| | |-schema.ts                             // Schema definitions for type-checking frontmatter and JSON.
 | |-layouts                                 // Layout components for different page structures.
 | | |-BaseLayout.astro                      // Base layout used across the site.
 | | |-StandardLayout.astro                  // Standard layout for most pages.
@@ -98,44 +100,58 @@ astro-antfustyle-theme
 | | |-markdown.css                          // Styles for rendering Markdown content.
 | | |-page.css                              // Styles for specific page.
 | | |-prose.css                             // Prose styles for text content.
-| |-types.ts                                // TypeScript types used across the project.
 | |-utils                                   // Utility functions and helpers.
-| | |-animation.ts                          // For Animation.
-| | |-common.ts                             // For General-purpose.
-| | |-data.ts                               // For handling GitHub/Bluesky data.
-| | |-datetime.ts                           // For date and time.
-| | |-post.ts                               // For working with posts.
+| | |-animation.ts                          // For handling animation.
+| | |-data.ts                               // For handling psots and GitHub/Bluesky data.
+| | |-datetime.ts                           // For handling date and time.
+| | |-path.ts                               // For handling path-related operations.
 | | |-toc.ts                                // For generating tables of contents.
+| |-config.ts                               // Configuration file for theme-specific options.
+| |-content.config.ts                       // Configuration file for Astro collections.
+| |-env.d.ts                                // TypeScript declaration file for environment variables.
+| |-types.ts                                // TypeScript types used for `config.ts`.
+|-.editorconfig                             // Configuration for maintaining consistent coding styles across editors.
+|-.gitattributes                            // Define how Git handles tracked files.
+|-.gitignore                                // Exclude files from Git tracking.
+|-.prettierignore                           // Configuration for Prettier to ignore.
+|-.prettierrc                               // Configuration file for Prettier code formatting rules.
+|-astro.config.ts                           // Astro configuration file.
+|-ec.config.mjs                             // Expressive Code configuration file.
+|-eslint.config.js                          // ESLint configuration for maintaining code quality.
+|-LICENSE.md                                // The license governing the use of the project.
+|-package.json                              // Project metadata and dependencies.
+|-pnpm-lock.yaml                            // Lock file ensuring consistent installation of dependencies.
+|-README.md                                 // The main documentation for the project.
 |-tsconfig.json                             // TypeScript configuration file.
 |-unocss.config.ts                          // UnoCSS configuration for utility-first CSS.
 ```
 
 The above annotations provide a brief overview of the roles of directories and files in this theme project. Below, you'll find additional details on the project structure along with recommendations for its organization.
 
-## Understanding the `Pages` and `Content` Directories
+## `src/pages/` and `src/content/`
 
-The [`src/pages/`](https://docs.astro.build/en/basics/project-structure/#srcpages) directory is a critical part of Astro, responsible for generating website pages, with each page corresponding to a route based on its file name. While Astro supports `.astro`, `.md`, and `.mdx` files for this purpose, **this theme exclusively uses `.astro` and `.mdx` files for generating pages** (the reasoning behind this will be explained below).
+The [`src/pages/`](https://docs.astro.build/en/basics/project-structure/#srcpages) directory is a critical part of Astro, responsible for generating website pages, with each page corresponding to a route based on its file name. While Astro supports `.astro`, `.md`, and `.mdx` files for this purpose, this theme exclusively uses `.astro` and `.mdx` files for generating pages (the reasoning behind this will be explained below).
 
-The [`src/content/`](https://docs.astro.build/en/basics/project-structure/#srccontent) directory is another reserved directory in [Astro 4](https://v4.docs.astro.build/en/guides/content-collections/). It is designated for organizing content collections (supporting `.md` and `.mdx` files) and data collections (supporting `.yaml` and `.json` files). Additionally, it supports [type-checking frontmatter and JSON using zod schemas](https://docs.astro.build/en/guides/content-collections/#defining-datatypes-with-zod). Each new directory created inside `src/content/` represents a new content or data collection (with the directory name serving as the collection name). This is where you’ll store the real content of your site.
+The `src/content/` directory is used in this theme to organize collections, with each subdirectory representing a collection named after the folder. While Astro 5 allows collections to be stored anywhere using the [Content Layer API](https://docs.astro.build/en/reference/content-loader-reference/), this structure is retained from Astro 4 for clarity and consistency. Astro also supports [frontmatter and JSON type-checking with Zod schemas](https://docs.astro.build/en/guides/content-collections/#defining-datatypes-with-zod).
 
-It is recommended to review the [Astro's Content Collections Docs](https://docs.astro.build/en/guides/content-collections/) to get a basic understanding of what Collections are and how to define them. 
+It is recommended to review the Astro's [Content Collections](https://docs.astro.build/en/guides/content-collections/) to get a basic understanding of what collections are and how to define them. 
 
-### Page-Collection Mapping and Zod Schema
+## Page-Collection Mapping
 
-Here’s how the theme’s pages correlate to collections and utilize zod schemas for type-checking:
+How theme pages map to collections (defined in `src/content.config.ts`):
 
 <div class='overflow-x-auto'>
 
-| URL Path                                              | Page File Location                 | Content/Data Collection Path                                     | Zod Schema for Collection |
+| URL Path                                              | Page File Location                 | Collection  Storage Location                                     | Zod Schema |
 | ----------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------- | ------------------------- |
 | `/`                                                   | `src/pages/index.mdx`              | `src/content/home/`                                              | -                         |
 | `/blog`                                               | `src/pages/blog/index.mdx`         | `src/content/blog/`                                              | `postSchema`              |
 | `/blog/post-name` <br>`/blog/sequences/one/two/three` | `src/pages/blog/[...slug].astro`   | `src/content/blog/`                                              | `postSchema`              |
-| `/projects`                                           | `src/pages/projects.mdx`           | `src/content/projects/`                                          | `projectsSchema`          |
+| `/projects`                                           | `src/pages/projects.mdx`           | `src/content/projects/`                                          | `projectSchema`          |
 | `/changelog`                                          | `src/pages/changelog/index.mdx`    | `src/content/changelog/`                                         | `postSchema`              |
 | `/changelog/xxx`                                      | `src/pages/changelog/[slug].astro` | `src/content/changelog/`                                         | `postSchema`              |
 | `/feeds`                                              | `src/pages/feeds.mdx`              | [Via Astro loader](../recreating-current-pages/#feeds-page)      | Default by Astro loader   |
-| `/streams`                                            | `src/pages/streams.mdx`            | `src/content/streams/`                                           | `streamsSchema`           |
+| `/streams`                                            | `src/pages/streams.mdx`            | `src/content/streams/`                                           | `streamSchema`           |
 | `/releases`                                           | `src/pages/releases.mdx`           | [Via Astro loader](../customizing-github-activity-pages/)        | Default by Astro loader   |
 | `/prs`                                                | `src/pages/prs.mdx`                | [Via Astro loader](../customizing-github-activity-pages/)        | Default by Astro loader   |
 | `/highlughts`                                         | `src/pages/highlights.mdx`         | [Via Astro loader](../recreating-current-pages/#highlights-page) | Default by Astro loader   |
@@ -143,7 +159,7 @@ Here’s how the theme’s pages correlate to collections and utilize zod schema
 
 </div>
 
-Further explanation on the decision process of when to use which file format in theme development:
+When to use each file format in theme development:
 
 `.astro`: Used for reusable components (`src/components/`), constructing page layouts (`src/layouts/`), and generating multiple static pages through [dynamic routing](https://docs.astro.build/en/guides/routing/#static-ssg-mode) ( `src/pages/blog/[...slug].astro`, as only `.astro` files can handle [Astro API](https://docs.astro.build/en/reference/api-reference/#getstaticpaths) calls).
 
@@ -153,7 +169,7 @@ Further explanation on the decision process of when to use which file format in 
 
 `.json`: Used for list data (`src/content/projects/data.json`, `src/content/streams/data.json`).
 
-This structure improves maintainability and scalability, and adherence to the file usage rules in this theme is recommended.
+This structure improves maintainability and scalability, and following the file usage rules in this theme is recommended.
 
 > [!important]- Reasons for `.mdx` in `src/pages/`
 > 
@@ -172,3 +188,9 @@ You can also explore [Managing Image Assets](../managing-image-assets/), or dive
 If you encounter any issues, find errors, or see opportunities for improvement as you explore the theme, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions), or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls). Your feedback is highly appreciated! 
 
 Thank you for your interest in this project! 😊
+
+:::details
+::summary[Changelog]
+2025-04-30
+- Changes for Astro 5.7
+:::

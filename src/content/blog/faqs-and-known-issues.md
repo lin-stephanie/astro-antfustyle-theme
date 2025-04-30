@@ -102,7 +102,7 @@ Currently, backgrounds are not supported for pages at the `/blog/[...slug]` path
 
 Additionally, you can directly modify the constants in each background component (`/src/components/backgrounds/`) to customize the animation effects.
 
-> [!warning]- CPU Usage Warning for 'dot' Background
+> [!warning]- CPU usage warning for 'dot' background
 >
 > The 'Dot' background animation can be CPU-intensive, potentially causing slowdowns or noisy fans on less powerful devices ([#1](https://github.com/lin-stephanie/astro-antfustyle-theme/issues/1), [antfu/antfu.me#86](https://github.com/antfu/antfu.me/issues/86)). Despite adjustments to reduce the load ([8fb85e1](https://github.com/lin-stephanie/astro-antfustyle-theme/commit/8fb85e1)), the effect may still be noticeable. If this is an issue, consider using a different background.
 
@@ -114,7 +114,7 @@ You can control the search index dynamically in `src/layouts/StandardLayout.astr
 
 Search for `data-pagefind-` in the editor to see the current setup.
 
-> [!warning]- Pagefind Works After Build
+> [!warning]- Pagefind works after build
 >
 > Pagefind works only after the site is fully built. Test it by running `pnpm build && pnpm preview` after building the Astro site.
 
@@ -182,5 +182,5 @@ Let’s keep pushing forward and making great things happen — your input is al
 :::details
 ::summary[Changelog]
 2025-02-28
-- Add [Choosing a Math Rendering Engine](#choosing-a-math-rendering-engine) section  
+- Add: [Choosing a Math Rendering Engine](#choosing-a-math-rendering-engine)
 :::
