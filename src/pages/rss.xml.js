@@ -1,7 +1,8 @@
-import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
+import rss from '@astrojs/rss'
+
 import { SITE } from '~/config'
-import { getUrl } from '~/utils/common'
+import { withBasePath } from '~/utils/path'
 
 export async function GET() {
   const blog = await getCollection('blog')
@@ -26,12 +27,12 @@ export async function GET() {
 
     items: sortedBlogItems.map((item) => ({
       title: `${item.data.title}`,
-      link: getUrl(`/blog/${item.slug}`),
+      link: withBasePath(`/blog/${item.id}`),
       pubDate: item.data.pubDate,
       description: item.data.description,
       author: SITE.author,
     })),
 
-    stylesheet: getUrl('/rss-styles.xsl'),
+    stylesheet: withBasePath('/rss-styles.xsl'),
   })
 }

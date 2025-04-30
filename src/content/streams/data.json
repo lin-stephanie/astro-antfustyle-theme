@@ -1,75 +1,72 @@
-{
-  "$schema": "../../../.astro/collections/streams.schema.json",
-  "streams": [
-    {
-      "title": "Astro in 100 Seconds",
-      "pubDate": "2021-07-16",
-      "link": "https://www.youtube.com/watch?v=dsTXcSeAZq8",
-      "video": true,
-      "platform": "YouTube"
-    },
-    {
-      "title": "I Tried Astro and I LOVE IT - 5 Reasons You Will TOO!",
-      "pubDate": "2022-08-30",
-      "link": "https://www.youtube.com/watch?v=wND4lSml31A",
-      "video": true,
-      "platform": "YouTube"
-    },
-    {
-      "title": "Everything You Need to Know about Astro",
-      "pubDate": "2023-09-19",
-      "link": "https://www.youtube.com/watch?v=rRxuVOutmFQ",
-      "video": true,
-      "platform": "YouTube"
-    },
-    {
-      "title": "You Don’t Know How to SSR",
-      "pubDate": "2024-02-16",
-      "link": "https://gitnation.com/contents/you-dont-know-how-to-ssr",
-      "video": true,
-      "platform": "GitNation"
-    },
-    {
-      "title": "View Transitions: Fact vs. Fiction",
-      "pubDate": "2023-10-20",
-      "link": "https://www.youtube.com/watch?v=iT-3amHK7tA",
-      "video": true,
-      "platform": "YouTube"
-    },
-    {
-      "title": "Astro and MDX for digital gardening",
-      "pubDate": "2023-11-08",
-      "link": "https://podrocket.logrocket.com/astro-mdx-kathleen-mcmahon",
-      "radio": true,
-      "platform": "PodRocket"
-    },
-    {
-      "title": "Astro Launches an Integrated Database",
-      "pubDate": "2024-03-18",
-      "link": "https://shoptalkshow.com/607/",
-      "radio": true,
-      "platform": "ShopTalk"
-    },
-    {
-      "title": "Building faster websites with Astro",
-      "pubDate": "2023-01-20",
-      "link": "https://www.youtube.com/watch?v=0eka27P4Pr4",
-      "video": true,
-      "platform": "YouTube"
-    },
-    {
-      "title": "Astro Web Framework Crash Course",
-      "pubDate": "2023-09-29",
-      "link": "https://www.youtube.com/watch?v=e-hTm5VmofI",
-      "video": true,
-      "platform": "YouTube"
-    },
-    {
-      "title": "Astro Quick Start Course | Build an SSR Blog",
-      "pubDate": "2023-12-19",
-      "link": "https://www.youtube.com/watch?v=XoIHKO6AkoM",
-      "video": true,
-      "platform": "YouTube"
-    }
-  ]
-}
+[
+  {
+    "id": "Astro in 100 Seconds",
+    "pubDate": "2021-07-16",
+    "link": "https://www.youtube.com/watch?v=dsTXcSeAZq8",
+    "video": true,
+    "platform": "YouTube"
+  },
+  {
+    "id": "I Tried Astro and I LOVE IT - 5 Reasons You Will TOO!",
+    "pubDate": "2022-08-30",
+    "link": "https://www.youtube.com/watch?v=wND4lSml31A",
+    "video": true,
+    "platform": "YouTube"
+  },
+  {
+    "id": "Everything You Need to Know about Astro",
+    "pubDate": "2023-09-19",
+    "link": "https://www.youtube.com/watch?v=rRxuVOutmFQ",
+    "video": true,
+    "platform": "YouTube"
+  },
+  {
+    "id": "You Don’t Know How to SSR",
+    "pubDate": "2024-02-16",
+    "link": "https://gitnation.com/contents/you-dont-know-how-to-ssr",
+    "video": true,
+    "platform": "GitNation"
+  },
+  {
+    "id": "View Transitions: Fact vs. Fiction",
+    "pubDate": "2023-10-20",
+    "link": "https://www.youtube.com/watch?v=iT-3amHK7tA",
+    "video": true,
+    "platform": "YouTube"
+  },
+  {
+    "id": "Astro and MDX for digital gardening",
+    "pubDate": "2023-11-08",
+    "link": "https://podrocket.logrocket.com/astro-mdx-kathleen-mcmahon",
+    "radio": true,
+    "platform": "PodRocket"
+  },
+  {
+    "id": "Astro Launches an Integrated Database",
+    "pubDate": "2024-03-18",
+    "link": "https://shoptalkshow.com/607/",
+    "radio": true,
+    "platform": "ShopTalk"
+  },
+  {
+    "id": "Building faster websites with Astro",
+    "pubDate": "2023-01-20",
+    "link": "https://www.youtube.com/watch?v=0eka27P4Pr4",
+    "video": true,
+    "platform": "YouTube"
+  },
+  {
+    "id": "Astro Web Framework Crash Course",
+    "pubDate": "2023-09-29",
+    "link": "https://www.youtube.com/watch?v=e-hTm5VmofI",
+    "video": true,
+    "platform": "YouTube"
+  },
+  {
+    "id": "Astro Quick Start Course | Build an SSR Blog",
+    "pubDate": "2023-12-19",
+    "link": "https://www.youtube.com/watch?v=XoIHKO6AkoM",
+    "video": true,
+    "platform": "YouTube"
+  }
+]

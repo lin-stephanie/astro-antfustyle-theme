@@ -6,7 +6,7 @@ import GithubItem from '~/components/views/GithubItem.astro'
 import Warning from '~/components/base/Warning.astro'
 import { UI } from '~/config'
 import { formatDate, isDiffMonth } from '~/utils/datetime'
-import { getUrl } from '~/utils/common'
+import { withBasePath } from '~/utils/path'
 import { matchLogo, extractPackageName, processVersion } from '~/utils/data'
 
 import type { RepoWithOwner, Url, Icon } from '~/types'
@@ -180,7 +180,7 @@ if (collectionType === 'prs') {
           See
           <Link
             class="op-100!"
-            href={getUrl('/blog/customizing-github-activity-pages/')}
+            href={withBasePath('/blog/customizing-github-activity-pages/')}
           >
             Customizing GitHub Activity Pages
           </Link>

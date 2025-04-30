@@ -1,4 +1,5 @@
 import { visit } from 'unist-util-visit'
+
 import remarkDirective from 'remark-directive'
 import remarkDirectiveSugar from 'remark-directive-sugar'
 import remarkImgattr from 'remark-imgattr'
@@ -40,9 +41,7 @@ export const remarkPlugins: RemarkPlugins = [
             'aria-hidden': 'true',
           }
           if (node.attributes?.class?.includes('github'))
-            props.src =
-              'https://www.google.com/s2/favicons?domain=github.com&sz=128'
-
+            props.src = 'https://github.githubassets.com/favicons/favicon.svg'
           return props
         },
       },
@@ -63,7 +62,7 @@ export const remarkPlugins: RemarkPlugins = [
 
 export const rehypePlugins: RehypePlugins = [
   // https://docs.astro.build/en/guides/markdown-content/#heading-ids-and-plugins
-  rehypeHeadingIds,
+  [rehypeHeadingIds, { headingIdCompat: true }],
   // https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex
   rehypeKatex,
   // https://github.com/lin-stephanie/rehype-callouts

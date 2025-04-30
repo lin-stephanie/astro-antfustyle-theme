@@ -1,6 +1,6 @@
-export async function GET() {
-  const base = import.meta.env.BASE_URL
+import { base } from 'astro:config/server'
 
+export async function GET() {
   const manifest = {
     name: 'Astro AntfuStyle Theme',
     short_name: 'AntfuStyle',

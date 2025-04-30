@@ -1,6 +1,6 @@
 ---
 import Link from '~/components/base/Link.astro'
-import { ensureTrailingSlash } from '~/utils/common'
+import { ensureTrailingSlash } from '~/utils/path'
 
 const pathSegments = ensureTrailingSlash(Astro.url.pathname)
   .split('/')
@@ -9,4 +9,4 @@ const href = pathSegments.length > 1 ? pathSegments.join('/') + '/' : '/'
 ---
 
 <span class="font-mono op-50">&gt; </span>
-<Link class="font-mono op-50! hover:op-75!" {href}>cd ..</Link>
+<Link class="font-mono op-50!" {href}>cd ..</Link>

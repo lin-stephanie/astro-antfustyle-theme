@@ -1,16 +1,14 @@
 ---
 import Link from '~/components/base/Link.astro'
-import { getUrl } from '~/utils/common'
+import { withBasePath } from '~/utils/path'
 import { SITE } from '~/config'
-
-const title = `${SITE.author} @ ${new URL(SITE.website).hostname}`
 ---
 
 <Link
-  class="link op-transition"
-  href={getUrl('/')}
-  {title}
-  aria-current={Astro.url.pathname === `${getUrl('/')}` ? 'page' : false}
+  class="select-none op-transition"
+  href={withBasePath('/')}
+  aria-label={SITE.author}
+  aria-current={Astro.url.pathname === `${withBasePath('/')}` ? 'page' : false}
 >
   <div class="logo-container">
     <!-- ICON SVG -->
@@ -48,9 +46,10 @@ const title = `${SITE.author} @ ${new URL(SITE.website).hostname}`
       </defs>
     </svg> -->
 
-    <!-- TEXT SVG (Great Vibes) -->
+    <!-- TEXT SVG -->
+    <!-- Generator: https://danmarshall.github.io/google-font-to-svg-path/ -->
+    <!-- Google font: Great Vibes -->
     <svg
-      class="lt-sm:mt-0.3"
       width="107.548"
       height="32.732"
       viewBox="0 0 107.548 32.732"
@@ -59,11 +58,9 @@ const title = `${SITE.author} @ ${new URL(SITE.website).hostname}`
     >
       <g
         id="svgGroup"
-        class="draw dark:fill-[#fdfdfd] dark:stroke-[#fdfdfd]"
+        class="dark:fill-[#fdfdfd]"
         fill="#17191e"
         fill-rule="evenodd"
-        stroke="#17191e"
-        stroke-width="0.4"
         stroke-linecap="round"
         font-size="9pt"
       >
@@ -78,12 +75,6 @@ const title = `${SITE.author} @ ${new URL(SITE.website).hostname}`
 </Link>
 
 <style>
-  .link {
-    /* opacity: 1; */
-    -webkit-user-select: none;
-    user-select: none;
-  }
-
   .logo-container {
     display: flex;
     justify-content: center;
@@ -95,6 +86,8 @@ const title = `${SITE.author} @ ${new URL(SITE.website).hostname}`
 
   @media (max-width: 767.9px) {
     .logo-container {
+      margin-top: 0.125rem;
+
       transform-origin: 0%;
       transform: scale(0.95);
     }
@@ -102,34 +95,5 @@ const title = `${SITE.author} @ ${new URL(SITE.website).hostname}`
 
   .logo-container svg {
     height: 2rem;
-  }
-
-  @keyframes grow {
-    0% {
-      stroke-dashoffset: 1px;
-      stroke-dasharray: 350px 0;
-    }
-    20% {
-      stroke-dasharray: 0 350px;
-    }
-    80% {
-      stroke-dasharray: 0 350px;
-    }
-    to {
-      stroke-dasharray: 350px 0;
-    }
-  }
-
-  .draw {
-    stroke-dashoffset: 1px;
-    stroke-dasharray: 350px 0;
-    animation: grow 10s ease forwards infinite;
-  }
-
-  @media (prefers-reduced-motion), print {
-    .draw {
-      stroke-dasharray: unset !important;
-      animation: none !important;
-    }
   }
 </style>

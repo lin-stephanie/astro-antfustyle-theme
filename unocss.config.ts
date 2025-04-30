@@ -1,17 +1,15 @@
 import {
   defineConfig,
+  presetWind3,
   presetAttributify,
   presetIcons,
-  presetUno,
   presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
 
 import { UI } from './src/config'
-import { extractIconsStartingWithI } from './src/utils/common'
 import projecstData from './src/content/projects/data.json'
-import { VERSION_COLOR } from './src/utils/data'
 
 import type {
   IconNavItem,
@@ -36,15 +34,25 @@ const socialIcons = socialLinks
   )
   .map((item) => (item as IconSocialItem | ResponsiveSocialItem).icon)
 
-const projectIcons = extractIconsStartingWithI(projecstData.projects)
+const projectIcons = projecstData.map((item) => item.icon)
 
-const versionClass = Object.values(VERSION_COLOR).flatMap((colorString) =>
-  colorString.split(' ')
+const githubVersionColor: Record<string, string> = {
+  major: 'bg-rose/15 text-rose-7 dark:text-rose-3',
+  minor: 'bg-purple/15 text-purple-7 dark:text-purple-3',
+  patch: 'bg-green/15 text-green-7 dark:text-green-3',
+  pre: 'bg-teal/15 text-teal-7 dark:text-teal-3',
+}
+const githubVersionClass = Object.keys(githubVersionColor).map(
+  (k) => `github-${k}`
 )
-
-const subLogoIcons = githubView.subLogoMatches.map((item) => item[1])
+const githubSubLogos = githubView.subLogoMatches.map((item) => item[1])
 
 export default defineConfig({
+  // Astro 5 no longer pipes `src/content/**/*.{md,mdx}` through Vite
+  content: {
+    filesystem: ['./src/{content,pages}/**/*.{md,mdx}'],
+  },
+
   // will be deep-merged to the default theme
   extendTheme: (theme) => {
     return {
@@ -85,11 +93,15 @@ export default defineConfig({
       ([_, color]) =>
         `px-2.5 py-1 border border-[#8884]! rounded op-50 transition-all duration-200 ease-out no-underline! hover:(op-100 text-${color} bg-${color}/10)`,
     ],
+    [
+      /^github-(major|minor|patch|pre)$/,
+      ([, version]) => `rounded ${githubVersionColor[version]}`,
+    ],
   ],
 
   // presets are partial configurations
   presets: [
-    presetUno(),
+    presetWind3(),
     presetAttributify({
       strict: true,
       prefix: 'u-',
@@ -122,9 +134,6 @@ export default defineConfig({
     ...socialIcons,
     ...projectIcons,
 
-    /* remark-directive-sugar */
-    'i-carbon-logo-github',
-
     /* BaseLayout */
     'focus:not-sr-only',
     'focus:fixed',
@@ -133,8 +142,8 @@ export default defineConfig({
     'focus:op-20',
 
     /* GithubItem */
-    ...versionClass,
-    ...subLogoIcons,
+    ...githubVersionClass,
+    ...githubSubLogos,
 
     /* Toc */
     'i-ri-menu-2-fill',

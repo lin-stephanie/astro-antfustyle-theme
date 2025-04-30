@@ -1,37 +1,65 @@
 ---
-import { getEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
 
+import Warning from '~/components/base/Warning.astro'
 import Toc from '~/components/toc/Toc.astro'
 import Categorizer from '~/components/base/Categorizer.astro'
 import GroupItem from '~/components/views/GroupItem.astro'
 import { FEATURES } from '~/config'
 
+import type { CollectionKey } from 'astro:content'
+import type { GroupItemData } from '~/components/views/GroupItem.astro'
+
 interface Props {
+  collectionType: CollectionKey
   pageToc: boolean
 }
 
-const { pageToc } = Astro.props
+const { collectionType, pageToc } = Astro.props
+
+const WARNING = `No content available for display.
+  Please review and modify <code>GroupView.astro</code> as needed.`
+
+let isEmpty = false
+let data: Record<string, GroupItemData[]> = {}
+
+/* Projects */
+if (collectionType === 'projects') {
+  const projects = await getCollection(collectionType)
+  isEmpty = projects.length === 0
+
+  data = projects
+    .map((p) => p.data)
+    .reduce((acc: Record<string, GroupItemData[]>, { category, ...rest }) => {
+      ;(acc[category] ??= []).push(rest)
+      return acc
+    }, {})
+}
+
+/* Toc */
 const { toc } = FEATURES
-
-const entry = await getEntry('projects', 'data')
-const { projects } = entry.data
-
 const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
 ---
 
 {
-  tocEnabled && (
-    <Toc
-      category={Object.keys(projects)}
-      style={toc[1].displayPosition === 'right' ? 'right: -5rem' : undefined}
-    />
+  isEmpty ? (
+    <Warning html={WARNING} />
+  ) : (
+    <>
+      {tocEnabled && (
+        <Toc
+          anchors={Object.keys(data)}
+          style={
+            toc[1].displayPosition === 'right' ? 'right: -5rem' : undefined
+          }
+        />
+      )}
+      {Object.keys(data).map((key, idx) => (
+        <div class="slide-enter" style={{ '--enter-stage': idx }}>
+          <Categorizer text={key} needId={tocEnabled} wide={true} />
+          <GroupItem items={data[key]} />
+        </div>
+      ))}
+    </>
   )
-}
-{
-  Object.keys(projects).map((key, idx) => (
-    <div class="slide-enter" style={{ '--enter-stage': idx }}>
-      <Categorizer text={key} needId={tocEnabled} wide={true} />
-      <GroupItem items={projects[key]} />
-    </div>
-  ))
 }

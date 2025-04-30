@@ -47,7 +47,7 @@ export function getCurrentFormattedTime() {
 }
 
 /**
- * Check if the current time is in the same month as the previous time
+ * Check if the current time is in the same month as the previous time.
  */
 export function isDiffMonth(currentTime: string, preTime?: string) {
   return preTime

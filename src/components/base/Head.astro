@@ -1,7 +1,9 @@
 ---
-import { ViewTransitions } from 'astro:transitions'
+import { ClientRouter } from 'astro:transitions'
 import { basename } from 'node:path'
-import { checkFileExistsInDir, getUrl } from '~/utils/common'
+
+import { checkFileExistsInDir } from '../../../plugins/remark-generate-og-image'
+import { withBasePath } from '~/utils/path'
 import { SITE } from '~/config'
 
 interface Props {
@@ -14,6 +16,8 @@ interface Props {
 
 const { title, description, ogImage, pubDate, lastModDate } = Astro.props
 
+const siteName = new URL(SITE.website).hostname
+
 const pageTitle =
   title && title !== SITE.title ? `${title} - ${SITE.title}` : SITE.title
 
@@ -25,18 +29,20 @@ const generatedOgImage = checkFileExistsInDir(
   'public/og-images',
   `${basename(Astro.url.pathname)}.png`
 )
-  ? getUrl('og-images', `${basename(Astro.url.pathname)}.png`)
+  ? withBasePath('og-images', `${basename(Astro.url.pathname)}.png`)
   : undefined
 
 const assignedOgImage =
   ogImage &&
   ogImage !== true &&
   checkFileExistsInDir('public/og-images', ogImage)
-    ? getUrl('og-images', ogImage)
+    ? withBasePath('og-images', ogImage)
     : undefined
 
 const ogImageURL = new URL(
-  assignedOgImage || generatedOgImage || getUrl('og-images', 'og-image.png'),
+  assignedOgImage ||
+    generatedOgImage ||
+    withBasePath('og-images', 'og-image.png'),
   Astro.url
 ).href
 
@@ -92,7 +98,7 @@ const webPageData = {
 <meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={pageDescription} />
 <meta property="og:image" content={ogImageURL} />
-<meta property="og:site_name" content={SITE.title} />
+<meta property="og:site_name" content={siteName} />
 <meta property="og:locale" content={SITE.ogLocale} />
 {
   pubDate && (
@@ -115,21 +121,21 @@ const webPageData = {
 <link rel="canonical" href={canonicalURL} />
 
 <!-- Icon -->
-<link rel="icon" sizes="any" href={getUrl('/favicon.ico')} />
-<link rel="icon" type="image/svg+xml" href={getUrl('/favicon.svg')} />
-<link rel="apple-touch-icon" href={getUrl('/apple-touch-icon.png')} />
+<link rel="icon" sizes="any" href={withBasePath('/favicon.ico')} />
+<link rel="icon" type="image/svg+xml" href={withBasePath('/favicon.svg')} />
+<link rel="apple-touch-icon" href={withBasePath('/apple-touch-icon.png')} />
 
 <!-- Manifest -->
-<link rel="manifest" href={getUrl('/manifest.webmanifest')} />
+<link rel="manifest" href={withBasePath('/manifest.webmanifest')} />
 
 <!-- Sitemap -->
-<link rel="sitemap" href={getUrl('/sitemap-index.xml')} />
+<link rel="sitemap" href={withBasePath('/sitemap-index.xml')} />
 
 <!-- RSS -->
 <link
   rel="alternate"
   type="application/rss+xml"
-  title={getUrl('/rss.xml')}
+  title={withBasePath('/rss.xml')}
   href="/rss.xml"
 />
 
@@ -150,4 +156,4 @@ const webPageData = {
   )
 }
 
-<ViewTransitions />
+<ClientRouter />

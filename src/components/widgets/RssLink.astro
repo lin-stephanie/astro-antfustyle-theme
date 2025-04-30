@@ -1,6 +1,6 @@
 ---
 import Link from '~/components/base/Link.astro'
-import { getUrl } from '~/utils/common'
+import { withBasePath } from '~/utils/path'
 
 interface Props {
   class?: string
@@ -11,7 +11,7 @@ const { class: className } = Astro.props
 
 <Link
   class:list={['op-transition', className]}
-  href={getUrl('/rss.xml')}
+  href={withBasePath('/rss.xml')}
   title="RSS Feed"
   external={true}
 >

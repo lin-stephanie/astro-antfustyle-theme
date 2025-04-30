@@ -1,5 +1,5 @@
 ---
-import { getUrl } from '~/utils/common'
+import { withBasePath } from '~/utils/path'
 ---
 
 <button
@@ -35,7 +35,7 @@ import { getUrl } from '~/utils/common'
       autocomplete="off"
     />
   </div>
-  <div id="search-results" class="overflow-y-auto" data-base={getUrl('/')}></div>
+  <div id="search-results" class="overflow-y-auto" data-base={withBasePath('/')}></div>
 </div>
 
 <script>
@@ -148,7 +148,7 @@ import { getUrl } from '~/utils/common'
 </script>
 
 {import.meta.env.PROD &&
-  <script is:inline define:vars={{scriptUrl: getUrl('/pagefind/pagefind.js')}}>
+  <script is:inline define:vars={{scriptUrl: withBasePath('/pagefind/pagefind.js')}}>
     async function loadPagefind() {
       const pagefind = await import(scriptUrl)
 
