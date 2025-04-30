@@ -24,7 +24,7 @@
     "@ascorbic/feed-loader": "^1.0.4",
     "@astrojs/check": "^0.9.4",
     "@astrojs/markdown-remark": "^6.3.1",
-    "@astrojs/mdx": "^4.2.5",
+    "@astrojs/mdx": "^4.2.6",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.3.1",
     "@atproto/api": "^0.15.5",
@@ -36,8 +36,8 @@
     "@types/nprogress": "^0.2.3",
     "@types/p5": "^1.7.6",
     "@typescript-eslint/parser": "^8.31.1",
-    "@unocss/reset": "66.1.0-beta.12",
-    "astro": "^5.7.9",
+    "@unocss/reset": "66.1.0-beta.13",
+    "astro": "^5.7.10",
     "astro-expressive-code": "^0.41.2",
     "astro-loader-bluesky-posts": "^1.2.2",
     "astro-loader-github-prs": "^1.2.1",
@@ -76,7 +76,7 @@
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.31.1",
     "unist-util-visit": "^5.0.0",
-    "unocss": "66.1.0-beta.12"
+    "unocss": "66.1.0-beta.13"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"

@@ -279,7 +279,7 @@ export async function getShortsFromBlog(data: CollectionEntryList<'blog'>) {
           (h) => h.depth === neededHeadingLevel && h.text !== 'Wrapping Up'
         )
         .map((h) => ({
-          link: `${basePath}${slug}#${h.slug}`,
+          link: `${basePath}${slug}/#${h.slug}`,
           text: `${processedTitle}: ${h.text}`,
           date: date,
         }))

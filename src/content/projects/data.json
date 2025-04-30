@@ -60,28 +60,28 @@
     "link": "https://www.npmjs.com/package/@ascorbic/feed-loader",
     "desc": "Load feeds into your Astro project",
     "icon": "i-flat-color-icons-feed-in",
-    "category": "Astro Content Loaders"
+    "category": "Astro Loaders"
   },
   {
     "id": "astro-loader-github-releases",
     "link": "https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-releases",
     "desc": "Loads GitHub releases from commits or repositories",
     "icon": "i-bx-rocket",
-    "category": "Astro Content Loaders"
+    "category": "Astro Loaders"
   },
   {
     "id": "astro-loader-github-prs",
     "link": "https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-prs",
     "desc": "Loads GitHub pull requests with a search query",
     "icon": "i-ri-git-pull-request-line",
-    "category": "Astro Content Loaders"
+    "category": "Astro Loaders"
   },
   {
     "id": "astro-loader-bluesky-posts",
     "link": "https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-bluesky-posts",
     "desc": "Loads Bluesky posts and threads using post URLs or AT-URIs",
     "icon": "i-logos-bluesky",
-    "category": "Astro Content Loaders"
+    "category": "Astro Loaders"
   },
   {
     "id": "unocss",
