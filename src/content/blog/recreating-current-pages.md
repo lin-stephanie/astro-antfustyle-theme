@@ -213,8 +213,10 @@ const highlights = defineCollection({
 
 **Step 3: Update `CardView` logic**
 
-```astro title='src/components/views/CardView.astro' del={4-8,23-25} ins={9-11,26-33}
+```astro title='src/components/views/CardView.astro' del={6-10,25-27} ins={11-13,28-35} ins="render"
 ---
+import { getCollection, render } from 'astro:content'
+
 if (collectionType === 'highlights') {
   const highlights = await getCollection(collectionType)
   dataForMasonry = processBlueskyPosts(highlights).sort((a, b) =>

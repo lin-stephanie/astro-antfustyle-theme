@@ -8,7 +8,6 @@ share: true
 ogImage: true
 ---
 
-
 This post provides a brief guide on how to organize and use images in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme).
 
 ## Supported Cases for Image Optimization
@@ -23,32 +22,33 @@ Astro supports optimizing images during the build phase via the [Image Service A
 It is recommended to store the local images used in the post under the `src/assets/` directory, and create a subdirectory based on the post’s filename (e.g., images for `src/content/blog/your-post-file-name.md` stored in `src/assets/your-post-file-name/`), which will allow them to be optimized during Astro’s build process and make it easier to organize and maintain (this strategy can also apply to other static resources).
 
 ```md title='src/content/blog/post-name.md'
-<!-- Local assets (`src/assets/…`) -->
+<!-- Local images (`src/assets/`) -->
 <!-- Use a relative path or the import alias -->
 <!-- Astro optimizes these files: hashed names → `dist/_astro/` -->
 
-![Local image – relative path](../../assets/post/local-image.png)
-![Local image – alias](～/assets/post/local-image.png)
+![Local image – relative path](../../assets/about-open-graph-images/plum.png)
+![Local image – alias](~/assets/about-open-graph-images/plum.png)
 
-<!-- Public assets (`public/…`) -->
+<!-- Public images (`public/`) -->
 <!-- Use the file path relative to `public/` -->
 <!-- Served as-is; Astro does NOT optimize -->
 
-![OG image](/public/og-images/og-image.png)
+![Public image](/public/og-images/og-image.png)
+<img src="/public/og-images/og-image.png" alt="Public image" />
 
-<!-- Authorized remote images -->
-<!-- Full URL with `![]()`, `<Image />`, `<Picture />` → optimized by Astro -->
-<!-- Full URL with `<img>` tag  → NOT optimized by Astro-->
+<!-- Remote images -->
+<!-- Full URL with `![]()` or `<img>` tag -->
+<!-- Authorized remote images with `![]()` will be optimized -->
+<!-- Authorized remote images with `<img>` will not be optimized -->
 
 ![Remote image](https://example.com/images/remote-image.png)
-<Image src="https://example.com/remote-image.png" alt="Remote image" />
 <img src="https://example.com/remote-image.png" alt="Remote image" />
 
-<!-- Invalid examples -->
-<!-- `<img>` or `<Image />` pointing to local assets won’t work. -->
+<!-- ❌ Invalid examples -->
 
-<img src="../../assets/post/local-image.png" alt="Local image" />
-<Image src="../../assets/post/local-image.png" alt="Local image" />
+<img src=".../../assets/about-open-graph-images/plum.png" alt="Local image" />
+<Image src="../../assets/about-open-graph-images/plum.png" alt="Local image" />
+<Image src="https://example.com/remote-image.png" alt="Remote image" />
 ```
 
 > [!tip]- Adjusting image attributes in Markdown/MDX
@@ -70,25 +70,29 @@ title: My Page title
 ---
 
 import { Image } from 'astro:assets';
-import rocket from '../assets/rocket.png';
+import plum from '../assets/about-open-graph-images/plum.png';
 
-// Local image stored in the the same folder
-![Houston in the wild](houston.png)
+{/* Local image stored in the the same folder */}
 
-// Local image stored in src/assets/
-<Image src={rocket} alt="A rocketship in space." />
-<img src={rocket.src} alt="A rocketship in space." />
-![A rocketship in space](../assets/rocket.png)
+![Local image](local-image.png)
 
-// Image stored in public/images/
-<Image src="/images/stars.png" alt="A starry night sky." />
-<img src="/images/stars.png" alt="A starry night sky." />
-![A starry night sky.](/images/stars.png)
+{/* Local image stored in `src/assets/` */}
 
-// Remote image on another server
-<Image src="https://example.com/images/remote-image.png" />
-<img src="https://example.com/images/remote-image.png" />
-![Astro](https://example.com/images/remote-image.png)
+<Image src={plum} alt="A rocketship in space." />
+<img src={plum.src} alt="A rocketship in space." />
+![A rocketship in space](../assets/about-open-graph-images/plum.png)
+
+{/* Image stored in `public/` */}
+
+![Public image](/og-images/og-image.png)
+<img src="/og-images/og-image.png" alt="Public image" />
+<Image src="/og-images/og-image.png" alt="Public image" width='1200' height='630'/>
+
+{/* Remote image on another server */}
+
+![Astro](https://example.com/remote-image.png)
+<img src="https://example.com/remote-image.png" />
+<Image src="https://example.com/remote-image.png" infersize />
 ```
 
 ## Image Compression

@@ -76,7 +76,7 @@ Once you've [customized the logo](#customizing-logo) and have the SVG file, it's
 - **`favicon.ico`**: For legacy browsers.
 - **`favicon.svg`**: A single SVG icon with light/dark modes for modern browsers.
 - **`apple-touch-icon.png`**: A 180×180 PNG for Apple devices.
-- **`icon-192.png`**, **`icon-512.png`**, **`icon-mask.png`**: Icons for the web app manifest, including a 192×192 icon for home screens, a 512×512 maskable icon for different Android launchers, and a 512×512 icon for splash screens when the [PWA (Progressive Web App)](https://web.dev/explore/progressive-web-apps) is loading.
+- **`icon-192.png`**, **`icon-512.png`**, **`icon-mask.png`**: Icons for the web app manifest, including a 192×192 icon for home screens, a 512×512 maskable icon for different Android launchers, and a 512×512 icon for splash screens when the [PWA(Progressive Web App)](https://web.dev/explore/progressive-web-apps) is loading.
 
 > [!note]- Web App Manifest
 >
@@ -157,7 +157,7 @@ While the theme offers some quick [UI configuration options](../basic-configurat
 **Where styles are defined**
 
 - `styles/main.css`: Global styles.
-- `styles/prose.css`: Prose- related styles.
+- `styles/prose.css`: Prose-related styles.
 - `styles/markdown.css`: Plugin- and integration-related styles.
 - `styles/page.css`: Page-related styles.
 - `src/components/`: Component-specific styles.
