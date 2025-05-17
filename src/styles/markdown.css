@@ -257,6 +257,10 @@ html.dark .prose {
   padding-inline: 1ch !important;
 }
 
+.expressive-code .collapsible-start .code {
+  height: 1.4em;
+}
+
 /* Medium Zoom */
 .medium-zoom-overlay,
 .medium-zoom-image--opened {
