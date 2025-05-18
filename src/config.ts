@@ -111,6 +111,7 @@ export const UI: Ui = {
     cursorType: '',
     showNewTabIcon: false,
   },
+  postMetaStyle: 'minimal',
 }
 
 /**

@@ -3,10 +3,10 @@ import { render } from 'astro:content'
 
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
+import PostMeta from '~/components/base/PostMeta.astro'
+import Warning from '~/components/base/Warning.astro'
 import Toc from '~/components/toc/Toc.astro'
 import ShareLink from '~/components/widgets/ShareLink.astro'
-import Warning from '~/components/base/Warning.astro'
-import { formatDate } from '~/utils/datetime'
 import { FEATURES } from '~/config'
 
 import type { CollectionEntry } from 'astro:content'
@@ -30,7 +30,7 @@ const lastModDate =
   frontmatter.lastModDate && frontmatter.lastModDate.toISOString()
 const subtitle = frontmatter.subtitle
 const minutesRead =
-  frontmatter.minutesRead || remarkPluginFrontmatter.minutesRead
+  frontmatter.minutesRead || (remarkPluginFrontmatter.minutesRead as number)
 const isDraft = frontmatter.draft
 const tocEnabled = Array.isArray(toc) && toc[0] && frontmatter.toc
 const shareEnabled = Array.isArray(share) && share[0] && frontmatter.share
@@ -43,19 +43,7 @@ frontmatter to <code>false</code> or remove it to publish the post.`
 <BaseLayout {title} {description} {ogImage} {pubDate} {lastModDate}>
   <StandardLayout {title} {subtitle} {isSearchable}>
     <Fragment slot="head">
-      {
-        pubDate && (
-          <p class="mt--6! op-50">
-            <time datetime={pubDate}>{formatDate(pubDate)}</time>
-            {minutesRead !== 0 && <span>· {minutesRead} min</span>}
-            {lastModDate && (
-              <time datetime={lastModDate}>
-                | Updated: {formatDate(lastModDate)}
-              </time>
-            )}
-          </p>
-        )
-      }
+      <PostMeta {pubDate} {lastModDate} {minutesRead} />
     </Fragment>
     <Fragment slot="article">
       {isDraft && <Warning html={WARNING} />}

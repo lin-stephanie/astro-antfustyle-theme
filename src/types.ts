@@ -508,6 +508,17 @@ export interface Ui {
    * and `src/layouts/BaseLayout.astro`.
    */
   externalLink: ExternalLink
+
+  /**
+   * Controls the display style of post metadata (creation date, read time, modified date):
+   * - 'minimal': Plain text with middle dots.
+   * - 'icon': Includes icons before each metadata item.
+   *
+   * On mobile devices, the modified date (if present) is hidden.
+   *
+   * Used in `src/components/base/PostMeta.astro`.
+   */
+  postMetaStyle: 'minimal' | 'icon'
 }
 
 /* FEATURES */

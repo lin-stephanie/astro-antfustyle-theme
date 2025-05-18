@@ -1,0 +1,45 @@
+---
+import { formatDate } from '~/utils/datetime'
+import { UI } from '~/config'
+
+interface Props {
+  pubDate: string
+  lastModDate: string | undefined
+  minutesRead: number
+}
+
+const { pubDate, lastModDate, minutesRead } = Astro.props
+
+const isMinimal = UI.postMetaStyle === 'minimal'
+---
+
+{
+  isMinimal ? (
+    <div class="mt--6! op-50">
+      <time datetime={pubDate}>{formatDate(pubDate)}</time>
+      {minutesRead !== 0 && <span> · {minutesRead} min</span>}
+      {lastModDate && (
+        <time class="lt-sm:hidden" datetime={lastModDate}>
+          · Updated {formatDate(lastModDate)}
+        </time>
+      )}
+    </div>
+  ) : (
+    <div class="flex justify-start items-center gap-4 mt--6! op-50">
+      <div>
+        <span class="i-ri-calendar-line mr-1.2" />
+        <time datetime={pubDate}>{formatDate(pubDate)}</time>
+      </div>
+      {lastModDate && (
+        <div class="lt-sm:hidden">
+          <span class="i-ri-history-fill mr-1.2" />
+          <time datetime={lastModDate}>{formatDate(lastModDate)}</time>
+        </div>
+      )}
+      <div>
+        <span class="i-ri-timer-line mr-1.2 ml--0.6" />
+        {minutesRead !== 0 && <span>{minutesRead} min read</span>}
+      </div>
+    </div>
+  )
+}
