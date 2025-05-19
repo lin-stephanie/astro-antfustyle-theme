@@ -2,8 +2,31 @@
 
 ---
 
-<div class="giscus"></div>
+<div></div>
+<script is:inline data-astro-rerun>
+  console.log('giscus')
+</script>
 
+<script
+  is:inline
+  data-astro-rerun
+  id="giscus-script"
+  src="https://giscus.app/client.js"
+  data-repo="lin-stephanie/astro-antfustyle-theme"
+  data-repo-id="R_kgDOLylKbA"
+  data-category="Giscus"
+  data-category-id="DIC_kwDOLylKbM4Cpugn"
+  data-mapping="title"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="noborder_light"
+  data-lang="en"
+  crossorigin="anonymous"
+  async></script>
+
+<!-- <div class="giscus"></div>
 <script>
   import { FEATURES } from '~/config'
 
@@ -59,4 +82,4 @@
 
   document.addEventListener('astro:before-swap', removeOldGiscus)
   document.addEventListener('astro:page-load', () => addGiscusScript(document))
-</script>
+</script> -->
