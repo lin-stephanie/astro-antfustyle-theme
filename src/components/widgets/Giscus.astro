@@ -1,0 +1,58 @@
+---
+
+---
+
+<div class="giscus"></div>
+
+<script>
+  import { FEATURES } from '~/config'
+
+  const giscusThemeLight = `${location.origin}/giscus/light.css`
+  const giscusThemeDark = `${location.origin}/giscus/dark.css`
+
+  const giscusConfig = Array.isArray(FEATURES.giscus) && FEATURES.giscus[1]
+  const giscusTemplateScript = document.createElement('script')
+
+  Object.entries({
+    ...giscusConfig,
+    ...{
+      'id': 'giscus-script',
+      'src': 'https://giscus.app/client.js',
+      'crossOrigin': 'anonymous',
+      'data-loading': 'lazy',
+      'async': '',
+    },
+  }).forEach(([key, value]) => {
+    giscusTemplateScript.setAttribute(key, value)
+  })
+
+  const removeOldGiscus = () => {
+    document
+      .querySelectorAll('iframe.giscus-frame')
+      .forEach((el) => el.remove())
+
+    document
+      .querySelectorAll('script#giscus-script')
+      .forEach((el) => el.remove())
+  }
+
+  const addGiscusScript = () => {
+    if (!document.querySelector('.giscus')) return
+
+    // Always clone a fresh <script> to ensure it executes again;
+    // reused or previously inserted scripts won't run
+    const clonedScript = giscusTemplateScript.cloneNode(
+      true
+    ) as HTMLScriptElement
+    clonedScript.setAttribute(
+      'data-theme',
+      document.documentElement.classList.contains('dark')
+        ? giscusThemeDark
+        : giscusThemeLight
+    )
+    document.body.appendChild(clonedScript)
+  }
+
+  document.addEventListener('astro:before-swap', removeOldGiscus)
+  document.addEventListener('astro:page-load', addGiscusScript)
+</script>

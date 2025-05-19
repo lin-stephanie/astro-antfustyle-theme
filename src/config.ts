@@ -120,6 +120,24 @@ export const UI: Ui = {
  *  - Set to `[true, {...}]` to enable and configure the feature.
  */
 export const FEATURES: Features = {
+  slideEnterAnim: [true, { enterStep: 60 }],
+  ogImage: [
+    true,
+    {
+      authorOrBrand: `${SITE.title}`,
+      fallbackTitle: `${SITE.description}`,
+      fallbackBgType: 'plum',
+    },
+  ],
+  toc: [
+    true,
+    {
+      minHeadingLevel: 2,
+      maxHeadingLevel: 4,
+      displayPosition: 'left',
+      displayMode: 'content',
+    },
+  ],
   share: [
     true,
     {
@@ -134,22 +152,19 @@ export const FEATURES: Features = {
       email: false,
     },
   ],
-  toc: [
+  giscus: [
     true,
     {
-      minHeadingLevel: 2,
-      maxHeadingLevel: 4,
-      displayPosition: 'left',
-      displayMode: 'content',
+      'data-repo': 'lin-stephanie/astro-antfustyle-theme',
+      'data-repo-id': 'R_kgDOLylKbA',
+      'data-category': 'Giscus',
+      'data-category-id': 'DIC_kwDOLylKbM4Cpugn',
+      'data-mapping': 'title',
+      'data-strict': '0',
+      'data-reactions-enabled': '1',
+      'data-emit-metadata': '0',
+      'data-input-position': 'bottom',
+      'data-lang': 'en',
     },
   ],
-  ogImage: [
-    true,
-    {
-      authorOrBrand: `${SITE.title}`,
-      fallbackTitle: `${SITE.description}`,
-      fallbackBgType: 'plum',
-    },
-  ],
-  slideEnterAnim: [true, { enterStep: 60 }],
 }

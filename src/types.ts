@@ -523,9 +523,71 @@ export interface Ui {
 
 /* FEATURES */
 export type BgType = 'plum' | 'dot' | 'rose' | 'particle'
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6
 type Mentioned = `@${string}` | `@${string}@${string}` | ''
 type FeatureConfig<T> = false | [boolean, T]
-export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6
+
+interface slideEnterAnimConfig {
+  /**
+   * Adjusts the animation speed (ms). Smaller values speed up; larger values slow down.
+   */
+  enterStep: number
+}
+
+interface OgImageConfig {
+  /**
+   * Sets your name or brand name that will be displayed on the OG image.
+   */
+  authorOrBrand: string
+
+  /**
+   * Sets the fallback title for OG images.
+   *
+   * Used when the `title` in the frontmatter is missing or invalid.
+   */
+  fallbackTitle: string
+
+  /**
+   * Sets the fallback background for OG images.
+   *
+   * By default, the background used for auto-generated OG images is based on the `bgType` set in frontmatter.
+   * This value is only used for the fallback OG image (stored at `/public/og-images/og-image.png`)
+   * and as the background when `bgType` is not specified.
+   *
+   * A fallback OG image is the default image used when the specified or auto-generated OG image is missing.
+   * You can delete the existing file to regenerate a new one.
+   */
+  fallbackBgType: BgType
+}
+
+export interface TocConfig {
+  /**
+   * Sets the minimum heading level for TOC.
+   *
+   * Must be a valid heading level (h1-h6) and not greater than {@link maxHeadingLevel}.
+   */
+  minHeadingLevel: HeadingLevel
+
+  /**
+   * Sets the maximum heading level for TOC.
+   *
+   * Must be a valid heading level (h1-h6) and not lower than {@link minHeadingLevel}.
+   */
+  maxHeadingLevel: HeadingLevel
+
+  /**
+   * Sets the position of TOC on the page (either on the left or right).
+   */
+  displayPosition: 'left' | 'right'
+
+  /**
+   * Controls how the page TOC is displayed. Allowed values:
+   * - 'always': TOC is always visible.
+   * - 'content': TOC shows when hovering over the content area (element with class 'prose').
+   * - 'hover': TOC shows only when hovering over the TOC itself.
+   */
+  displayMode: 'always' | 'content' | 'hover'
+}
 
 export interface ShareConfig {
   /**
@@ -586,83 +648,73 @@ export interface ShareConfig {
   email: boolean
 }
 
-export interface TocConfig {
+export interface giscusConfig {
   /**
-   * Sets the minimum heading level for TOC.
+   * GitHub repository in the format `owner/repo`.
    *
-   * Must be a valid heading level (h1-h6) and not greater than {@link maxHeadingLevel}.
+   * @example 'lin-stephanie/astro-antfustyle-theme'
    */
-  minHeadingLevel: HeadingLevel
+  'data-repo': RepoWithOwner
 
   /**
-   * Sets the maximum heading level for TOC.
+   * Unique ID of the GitHub repository.
    *
-   * Must be a valid heading level (h1-h6) and not lower than {@link minHeadingLevel}.
+   * @example "R_kgDOLylKbA"
    */
-  maxHeadingLevel: HeadingLevel
+  'data-repo-id': string
 
   /**
-   * Sets the position of TOC on the page (either on the left or right).
-   */
-  displayPosition: 'left' | 'right'
-
-  /**
-   * Controls how the page TOC is displayed. Allowed values:
-   * - 'always': TOC is always visible.
-   * - 'content': TOC shows when hovering over the content area (element with class 'prose').
-   * - 'hover': TOC shows only when hovering over the TOC itself.
-   */
-  displayMode: 'always' | 'content' | 'hover'
-}
-
-interface OgImageConfig {
-  /**
-   * Sets your name or brand name that will be displayed on the OG image.
-   */
-  authorOrBrand: string
-
-  /**
-   * Sets the fallback title for OG images.
+   * Discussion category name.
    *
-   * Used when the `title` in the frontmatter is missing or invalid.
+   * @example "Giscus"
    */
-  fallbackTitle: string
+  'data-category': string
 
   /**
-   * Sets the fallback background for OG images.
+   * Unique ID of the discussion category.
    *
-   * By default, the background used for auto-generated OG images is based on the `bgType` set in frontmatter.
-   * This value is only used for the fallback OG image (stored at `/public/og-images/og-image.png`)
-   * and as the background when `bgType` is not specified.
-   *
-   * A fallback OG image is the default image used when the specified or auto-generated OG image is missing.
-   * You can delete the existing file to regenerate a new one.
+   * @example "DIC_kwDOLylKbM4Cpugn"
    */
-  fallbackBgType: BgType
-}
+  'data-category-id': string
 
-interface slideEnterAnimConfig {
   /**
-   * Adjusts the animation speed (ms). Smaller values speed up; larger values slow down.
+   * Mapping between pages and discussions.
+   *
+   * @example 'title'
    */
-  enterStep: number
+  'data-mapping': string
+
+  /**
+   * Enable strict mapping (1 = true, 0 = false).
+   */
+  'data-strict': '0' | '1'
+
+  /**
+   * Enable reactions (1 = true, 0 = false).
+   */
+  'data-reactions-enabled': '0' | '1'
+
+  /**
+   * Emit discussion metadata (1 = true, 0 = false).
+   */
+  'data-emit-metadata': '0' | '1'
+
+  /**
+   * Position of the comment input box.
+   */
+  'data-input-position': 'top' | 'bottom'
+
+  /**
+   * Language for the Giscus widget UI.
+   */
+  'data-lang': string
 }
 
 export interface Features {
   /**
-   * Globally controls the sharing feature, displaying social sharing links
-   * at the bottom of all posts when enabled.
-   *
-   * To disable for a specific post, set the `share` field in the frontmatter to `false`.
+   * Controls whether to enable slide enter animation on each page.
    */
-  share: FeatureConfig<ShareConfig>
-
-  /**
-   * Globally controls the TOC feature and related options.
-   *
-   * To disable for a specific post or page, set the `toc` field in the frontmatter to `false`.
-   */
-  toc: FeatureConfig<TocConfig>
+  slideEnterAnim: FeatureConfig<slideEnterAnimConfig>
 
   /**
    * Globally controls global OG image auto-generation and related options.
@@ -677,7 +729,25 @@ export interface Features {
   ogImage: FeatureConfig<OgImageConfig>
 
   /**
-   * Controls whether to enable slide enter animation on each page.
+   * Globally controls the TOC feature and related options.
+   *
+   * To disable for a specific post or page, set the `toc` field in the frontmatter to `false`.
    */
-  slideEnterAnim: FeatureConfig<slideEnterAnimConfig>
+  toc: FeatureConfig<TocConfig>
+
+  /**
+   * Globally controls the sharing feature, displaying social sharing links
+   * at the bottom of all posts when enabled.
+   *
+   * To disable for a specific post, set the `share` field in the frontmatter to `false`.
+   */
+  share: FeatureConfig<ShareConfig>
+
+  /**
+   * Enables and configures the Giscus comment feature globally.
+   * Visit https://giscus.app/ to generate your configuration.
+   *
+   * To disable for a specific post, set the `giscus` field in the frontmatter to `false`.
+   */
+  giscus: FeatureConfig<giscusConfig>
 }
