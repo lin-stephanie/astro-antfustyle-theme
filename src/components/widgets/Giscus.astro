@@ -13,16 +13,14 @@
   const giscusConfig = Array.isArray(FEATURES.giscus) && FEATURES.giscus[1]
   const giscusTemplateScript = document.createElement('script')
 
-  console.log(FEATURES.giscus)
-
   Object.entries({
     ...giscusConfig,
     ...{
-      id: 'giscus-script',
-      src: 'https://giscus.app/client.js',
-      crossOrigin: 'anonymous',
-      // 'data-loading': 'lazy',
-      async: '',
+      'id': 'giscus-script',
+      'src': 'https://giscus.app/client.js',
+      'crossOrigin': 'anonymous',
+      'data-loading': 'lazy',
+      'async': '',
     },
   }).forEach(([key, value]) => {
     giscusTemplateScript.setAttribute(key, value)
@@ -54,8 +52,6 @@
     )
     document.body.appendChild(clonedScript)
   }
-
-  addGiscusScript()
 
   document.addEventListener('astro:before-swap', removeOldGiscus)
   document.addEventListener('astro:page-load', addGiscusScript)
