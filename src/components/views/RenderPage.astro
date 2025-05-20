@@ -14,10 +14,10 @@ interface Props {
 
 const { collectionType, id, pageToc = false } = Astro.props
 
-/* Post */
-const post = await getEntry(collectionType, id)
-if (!post) throw new Error(`Entry not found: ${collectionType}/${id}`)
-const { Content, headings } = await render(post)
+/* Page */
+const content = await getEntry(collectionType, id)
+if (!content) throw new Error(`Entry not found: ${collectionType}/${id}`)
+const { Content, headings } = await render(content)
 
 /* Toc */
 const { toc } = FEATURES

@@ -18,11 +18,9 @@
     if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
       theme = localStorage.theme
     } else {
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        theme = 'dark'
-      } else {
-        theme = 'light'
-      }
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light'
       window.localStorage.setItem('theme', theme)
     }
 

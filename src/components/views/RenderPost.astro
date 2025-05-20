@@ -62,3 +62,16 @@ frontmatter to <code>false</code> or remove it to publish the post.`
     {giscusEnabled && <Giscus />}
   </Fragment>
 </BaseLayout>
+
+<script>
+  import mediumZoom from 'medium-zoom/dist/pure'
+
+  const zoom = mediumZoom({
+    background: 'rgb(0 0 0 / 0.8)',
+  })
+
+  document.addEventListener('astro:page-load', () => {
+    zoom.detach()
+    zoom.attach('.prose img:not(.no-zoom):not(a img)')
+  })
+</script>
