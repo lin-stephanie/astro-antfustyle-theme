@@ -106,9 +106,11 @@ export const postSchema = z.object({
   share: z
     .boolean()
     .default(true)
-    .describe(
-      'Controls whether social sharing options are available for the post.'
-    ),
+    .describe('Controls whether social sharing is available for the post.'),
+  giscus: z
+    .boolean()
+    .default(true)
+    .describe('Controls whether Giscus comments are available for the post.'),
   ogImage: z
     .union([z.string(), z.boolean()])
     .default(true)

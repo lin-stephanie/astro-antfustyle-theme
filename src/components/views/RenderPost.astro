@@ -7,6 +7,7 @@ import PostMeta from '~/components/base/PostMeta.astro'
 import Warning from '~/components/base/Warning.astro'
 import Toc from '~/components/toc/Toc.astro'
 import ShareLink from '~/components/widgets/ShareLink.astro'
+import Giscus from '~/components/widgets/Giscus.astro'
 import { FEATURES } from '~/config'
 
 import type { CollectionEntry } from 'astro:content'
@@ -14,10 +15,11 @@ import type { CollectionEntry } from 'astro:content'
 interface Props {
   post: CollectionEntry<'blog' | 'changelog'>
   isSearchable?: boolean
+  isCommentable?: boolean
 }
 
-const { post, isSearchable = false } = Astro.props
-const { share, toc } = FEATURES
+const { post, isSearchable = false, isCommentable = false } = Astro.props
+const { toc, share, giscus } = FEATURES
 
 const { data: frontmatter } = post
 const { Content, headings, remarkPluginFrontmatter } = await render(post)
@@ -34,6 +36,8 @@ const minutesRead =
 const isDraft = frontmatter.draft
 const tocEnabled = Array.isArray(toc) && toc[0] && frontmatter.toc
 const shareEnabled = Array.isArray(share) && share[0] && frontmatter.share
+const giscusEnabled =
+  isCommentable && Array.isArray(giscus) && giscus[0] && frontmatter.giscus
 
 const WARNING = `This is a draft post that will not be published
 in production. Set the post's <code>draft</code> property in
@@ -53,5 +57,8 @@ frontmatter to <code>false</code> or remove it to publish the post.`
   </StandardLayout>
   <Fragment slot="share">
     {shareEnabled && <ShareLink config={share[1]} />}
+  </Fragment>
+  <Fragment slot="giscus">
+    {giscusEnabled && <Giscus />}
   </Fragment>
 </BaseLayout>

@@ -51,8 +51,26 @@
   document.addEventListener('astro:page-load', () => {
     let isDark: boolean
 
-    const saveTheme = () => {
-      window.localStorage.setItem('theme', isDark ? 'dark' : 'light')
+    const changeGiscusTheme = (isDark: boolean) => {
+      const newTheme = isDark
+        ? `${location.origin}/giscus/dark.css`
+        : `${location.origin}/giscus/light.css`
+
+      const giscusScript = document.getElementById('giscus-script')
+      if (giscusScript) {
+        giscusScript.setAttribute('data-theme', newTheme)
+        const iframe = document.querySelector('iframe.giscus-frame')
+        if (
+          iframe &&
+          iframe instanceof HTMLIFrameElement &&
+          iframe.contentWindow
+        ) {
+          iframe.contentWindow.postMessage(
+            { giscus: { setConfig: { theme: newTheme } } },
+            'https://giscus.app'
+          )
+        }
+      }
     }
 
     const updateAria = (buttonElement: HTMLElement) => {
@@ -68,6 +86,10 @@
       colorThemeMetaTag?.setAttribute('content', bgColor)
     }
 
+    const saveTheme = () => {
+      window.localStorage.setItem('theme', isDark ? 'dark' : 'light')
+    }
+
     /* Handle user toggle button */
     const handleToggle = (event: MouseEvent) => {
       const currentTarget = event.currentTarget
@@ -75,9 +97,10 @@
       const toggle = () => {
         document.documentElement.classList.toggle('dark')
         isDark = document.documentElement.classList.contains('dark')
+        changeGiscusTheme(isDark)
         updateAria(currentTarget as HTMLElement)
-        saveTheme()
         setColorTheme()
+        saveTheme()
       }
 
       const isAppearanceTransition =
@@ -131,8 +154,9 @@
       .addEventListener('change', ({ matches }) => {
         isDark = matches
         document.documentElement.classList.toggle('dark', isDark)
-        saveTheme()
+        changeGiscusTheme(isDark)
         if (toggleThemeButton) updateAria(toggleThemeButton)
+        saveTheme()
       })
   })
 </script>

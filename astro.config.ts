@@ -32,6 +32,12 @@ export default defineConfig({
     experimentalLayout: 'constrained',
   },
   vite: {
+    server: {
+      headers: {
+        // Enable CORS for dev: allow Giscus iframe to load local styles
+        'Access-Control-Allow-Origin': '*',
+      },
+    },
     build: { chunkSizeWarningLimit: 1200 },
   },
   experimental: {

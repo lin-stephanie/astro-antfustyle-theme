@@ -61,16 +61,22 @@ if (hasCustomCursor) style['--external-link-cursor'] = cursorType
     <!-- Background -->
     {bgType && <Background type={bgType} />}
 
-    <!-- Main -->
+    <!-- Skip Link -->
     <Link
       href="#main"
       class="sr-only focus:(not-sr-only fixed start-1 top-1.5 op-20)"
     >
       Skip to content
     </Link>
+
+    <!-- Nav Bar -->
     <NavBar />
+
+    <!-- Main -->
     <main id="main" class="px-7 py-10">
+      <!-- Content -->
       <slot />
+      <!-- Share -->
       {
         Astro.url.pathname !== withBasePath('/') && (
           <footer class="slide-enter animate-delay-1000! prose mx-auto mt-8 print:hidden">
@@ -80,7 +86,18 @@ if (hasCustomCursor) style['--external-link-cursor'] = cursorType
           </footer>
         )
       }
+      <!-- Comments -->
+      {
+        Astro.slots.has('giscus') && (
+          <div class="prose mx-auto mt-8">
+            <hr />
+            <slot name="giscus" />
+          </div>
+        )
+      }
     </main>
+
+    <!-- Footer -->
     <Footer />
     <ToTopButton />
 

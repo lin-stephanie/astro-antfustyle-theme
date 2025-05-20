@@ -1,11 +1,11 @@
 ---
 title: Customizing GitHub Activity Pages
-subtitle: ''
 description: How to showcase your own GitHub releases or pull requests in Astro AntfuStyle Theme
 pubDate: 2023-12-01
 lastModDate: 2025-04-30
 toc: true
 share: true
+giscus: true
 ogImage: true
 ---
 
