@@ -2,7 +2,7 @@
 title: Advanced Configuration
 description: How to configure Astro AntfuStyle Theme
 pubDate: 2024-10-01
-lastModDate: ''
+lastModDate: 2025-05-20
 toc: true
 share: true
 giscus: true
@@ -314,6 +314,78 @@ const copyrightText = `© ${currentYear} ${SITE.author}`
 
 Of course, it would greatly appreciated if you could also keep the `Powered by Astro AntfuStyle Theme` part to help more people discover it. 😊
 
+## Configure Giscus Comments
+
+This theme integrates the :link[Giscus]{id=giscus/giscus} comments. By default, users can comment on posts under `blog/` after logging in with GitHub.
+
+Follow the [setup guide](https://giscus.app/) to make your GitHub repo public, install the Giscus app, enable Discussions, and obtain the config needed for the `FEATURES.giscus` option in `src/config.ts`. This is used in `Giscus.astro`. You can also tweak it per the Gisucs docs.
+
+For styling, the theme loads custom CSS from the `public/giscus/` directory, based on modified styles of the ['noborder_light'](https://github.com/giscus/giscus/blob/main/styles/themes/noborder_light.css) and ['noborder_dark'](https://github.com/giscus/giscus/blob/main/styles/themes/noborder_dark.css) themes. To allow Giscus (which uses an iframe) to load these styles, [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS) must be enabled:
+
+- **Development**: Already configured via Vite Dev Server — no extra setup needed.
+- **Production**: Ensure your host serves the custom CSS with proper CORS headers. If you're on Vercel, the theme's `vercel.json` already includes this setup. But if you use another platform, you’ll need to manually configure it. For example, on Netlify, create a `_headers` file:
+
+```txt title='_headers'
+/giscus/*
+  Access-Control-Allow-Origin: https://giscus.app
+```
+
+If you prefer to use Giscus's built-in themes directly, update `Giscus.astro`, `ThemeSwitch.astro`, and `astro.config.ts` as shown below, and remove the unused `public/giscus/` directory and `vercel.json`.
+
+```astro title='src/components/widgets/Giscus.astro' del={4-5} ins={6-7}
+<script>
+  import { FEATURES } from '~/config'
+
+  const giscusThemeLight = `${location.origin}/giscus/light.css`
+  const giscusThemeDark = `${location.origin}/giscus/dark.css`
+  const giscusThemeLight = 'noborder_light'
+  const giscusThemeDark = 'noborder_dark'
+  ...
+</script>
+```
+
+```astro title='src/components/widgets/ThemeSwitch.astro' del={6-7} ins={8-9}
+<script>
+  document.addEventListener('astro:page-load', () => {
+    ...
+    const changeGiscusTheme = (isDark: boolean) => {
+      const newTheme = isDark
+        ? `${location.origin}/giscus/dark.css`
+        : `${location.origin}/giscus/light.css`
+        ? 'noborder_dark'
+        : 'noborder_light'
+      ...
+    }
+    ...
+  })
+</script>
+```
+
+```ts title='astro.config.ts' del={4-9}
+export default defineConfig({
+  ...
+  vite: {
+    server: {
+      headers: {
+        // Enable CORS for dev: allow Giscus iframe to load local styles
+        'Access-Control-Allow-Origin': '*',
+      },
+    },
+    build: { chunkSizeWarningLimit: 1200 },
+  },
+})
+```
+
+> [!note]- How to enable or disable Giscus
+> To disable Giscus globally, set `FEATURES.giscus` to `false` in `src/config.ts`.
+> 
+> To disable it for a specific post, set `giscus: false` in the post’s frontmatter.
+> 
+> You can also control it via the `isCommentable` prop (default `false`) when using `RenderPost.astro`.
+
+> [!tip]- Restricting allowed domains for Giscus
+> To limit which domains can load Giscus with your repo’s discussions, create a `giscus.json` file in the project root and configure it as shown [here](https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md#giscusjson).
+
 ## Final Cleanup
 
 Finally, you may want to:
@@ -331,3 +403,9 @@ This is a general overview of what you can customize in the project. If you're p
 Next, check out [Authoring Content](../getting-started/#authoring-content) to learn how to tailor each page to your liking.
 
 If you encounter any issues, find errors, or see opportunities for improvement, feel free to join the [discussion](https://github.com/lin-stephanie/astro-antfustyle-theme/discussions) or submit an [issue](https://github.com/lin-stephanie/astro-antfustyle-theme/issues) or [pull request](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls). Your feedback is highly appreciated! ❤️
+
+:::details
+::summary[Changelog]
+2025-05-20
+- Add: [Configure Giscus Comments](#configure-giscus-comments)
+:::

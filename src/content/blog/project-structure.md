@@ -2,7 +2,7 @@
 title: Project Structure
 description: Introduces the structure of the Astro AntfuStyle Theme
 pubDate: 2024-10-03
-lastModDate: 2025-04-30
+lastModDate: 2025-05-20
 toc: true
 share: true
 giscus: true
@@ -125,6 +125,7 @@ astro-antfustyle-theme
 |-README.md                                 // The main documentation for the project.
 |-tsconfig.json                             // TypeScript configuration file.
 |-unocss.config.ts                          // UnoCSS configuration for utility-first CSS.
+|-vercel.json                               // Configuration for Vercel deployment.
 ```
 
 The above annotations provide a brief overview of the roles of directories and files in this theme project. Below, you'll find additional details on the project structure along with recommendations for its organization.
@@ -194,4 +195,7 @@ Thank you for your interest in this project! 😊
 ::summary[Changelog]
 2025-04-30
 - Changes for Astro 5.7
+
+2025-05-20
+- New `vercel.json` for configuring CORS headers 
 :::

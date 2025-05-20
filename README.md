@@ -7,15 +7,16 @@
 
 ![cover image](https://raw.githubusercontent.com/lin-stephanie/assets/refs/heads/main/astro-antfustyle-theme/cover_2x.png)
 
-AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme for blog and portfolio creation, inspired by the minimalist style of [antfu.me](https://antfu.me/). I like this design and have recreated and expanded its functionality.
+AntfuStyle is a customizable, feature-rich [Astro 5](https://astro.build/) theme for blog and portfolio creation, inspired by the minimalist style of [antfu.me](https://antfu.me/). I like this design and have recreated and expanded its functionality.
 
 ## Features
 
 **Optimized Infrastructure**
 
 - Zero UI Framework
-- SEO-friendly
-- Auto-generated RSS Feed
+- SEO-Friendly
+- Auto-Generated RSS Feed
+- Dynamic OG Image Generation
 - Subpath Deployment Support
 - Optimized and Responsive Images
 - VS Code Snippets for Fast Coding
@@ -24,10 +25,8 @@ AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme f
 
 **Content Management**
 
-- Type Safety
 - Markdown & MDX Support
 - Math Equations Rendering
-- Dynamic OG Image Generation
 - Callouts (Alerts/Admonitions)
 - Code Syntax Highlighting & Annotations
 - Ready-To-Use Remark Directives
@@ -40,14 +39,15 @@ AntfuStyle is a customizable, feature-rich [Astro](https://astro.build/) theme f
 **User Experience**
 
 - Responsive Layout
-- Full-platform TOC support
+- Full-Platform TOC Support
 - Light & Dark Modes Toggle
 - Smooth View Transitions
 - Loading Progress Indicator
-- Image Zoom Preview
 - Search Functionality
-- Accessibility Enhancements
+- Image Zoom Preview
 - Social Media Sharing
+- Integrated Giscus Comments
+- Accessibility Enhancements
 - Keyboard-Friendly
 
 > [More features](https://github.com/users/lin-stephanie/projects/4) are continuously being added! 🚀

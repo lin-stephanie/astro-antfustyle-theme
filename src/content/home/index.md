@@ -1,12 +1,13 @@
-Glad you made it here! This is a customizable, feature-rich :link[Astro]{id=withastro/astro} theme for blog and portfolio creation, inspired by the minimalist style of :link[antfu.me]{id=https://antfu.me/ img=https://antfu.me/favicon.svg .square}. The design has been refined and its functionality expanded for greater flexibility.
+Glad you made it here! This is a customizable, feature-rich :link[Astro 5]{id=withastro/astro} theme for blog and portfolio creation, inspired by the minimalist style of :link[antfu.me]{id=https://antfu.me/ img=https://antfu.me/favicon.svg .square}. The design has been refined and its functionality expanded for greater flexibility.
 
 This live demo will guide you through setup and customization, offering helpful insights along the way. Enjoy exploring all the features this theme provides! ✨
 
 **Optimized Infrastructure**
 
 - Zero UI Framework
-- [SEO-friendly](./blog/faqs-and-known-issues/#about-seo-and-accessibility)
-- [Auto-generated RSS Feed](./blog/faqs-and-known-issues/#rss-subscription-scope)
+- [SEO-Friendly](./blog/faqs-and-known-issues/#about-seo-and-accessibility)
+- [Auto-Generated RSS Feed](./blog/faqs-and-known-issues/#rss-subscription-scope)
+- [Dynamic OG Image Generation](./blog/about-open-graph-images/)
 - [Subpath Deployment](./blog/basic-configuration/#configuring-site) Support
 - Optimized and Responsive Images
 - VS Code Snippets for Fast Coding
@@ -15,10 +16,8 @@ This live demo will guide you through setup and customization, offering helpful 
 
 **Content Management**
 
-- Type Safety
 - Markdown & MDX Support
 - [Math Equations Rendering](./blog/faqs-and-known-issues/#choosing-a-math-rendering-engine)
-- [Dynamic OG Image Generation](./blog/about-open-graph-images/)
 - [Callouts (Alerts/Admonitions)](./blog/markdown-mdx-extended-features/#callouts-alerts--admonitions)
 - [Code Syntax Highlighting & Annotations](./blog/markdown-mdx-extended-features/#fully-featured-code-blocks)
 - Ready-To-Use [Remark Directives](./blog/markdown-mdx-extended-features/#image-caption--link-image)
@@ -31,14 +30,15 @@ This live demo will guide you through setup and customization, offering helpful 
 **User Experience**
 
 - Responsive Layout
-- Full-platform TOC support
+- Full-Platform TOC Support
 - Light & Dark Modes Toggle
 - Smooth View Transitions
 - Loading Progress Indicator
-- [Image Zoom Preview](./blog/faqs-and-known-issues/#image-zoom)
 - [Search Functionality](./blog/faqs-and-known-issues/#search-functionality)
-- [Accessibility Enhancements](./blog/faqs-and-known-issues/#about-seo-and-accessibility)
+- [Image Zoom Preview](./blog/faqs-and-known-issues/#image-zoom)
 - Social Media Sharing
+- [Integrated Giscus Comments](./blog/advanced-configuration/#configure-giscus-comments)
+- [Accessibility Enhancements](./blog/faqs-and-known-issues/#about-seo-and-accessibility)
 - Keyboard-Friendly
 
 > [More features](https://github.com/users/lin-stephanie/projects/4) are continuously being added! 🚀

@@ -2,7 +2,7 @@
 title: Basic Configuration
 description: How to configure Astro AntfuStyle Theme
 pubDate: 2024-10-02
-lastModDate: 2025-04-30
+lastModDate: 2025-05-20
 toc: true
 share: true
 giscus: true
@@ -17,8 +17,8 @@ The `SITE` object is used to configure the basic information of your website, an
 
 | Option         | Type                                      | Description                                                                                                                                                                                                                                                                                  | Example                                                                               |
 | -------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `website`      | `http://${string}` \| `https://${string}` | Specifies the final deployed URL, which must start with `http://` or `https://`. It will be passed to the [`site`](https://docs.astro.build/en/reference/configuration-reference/#site) config in Astro,<br>used for generating canonical URLs, `rss.xml` and other features.                | `'https://example.com'`                                                               |
-| `base`         | `/${string}`                              | Specifies the base path for your site, which must start with `/`. It wiil be passed to the [`base`](https://docs.astro.build/en/reference/configuration-reference/#base) config in Astro, used when deploying to a subdirectory.                                                             | `/my-site/` (for a site deployed to `https://example.com/my-site/`)                   |
+| `website`      | `http://${string}` \| `https://${string}` | Specifies the final deployed URL, which must start with `http://` or `https://`. It will be passed to the [`site`](https://docs.astro.build/en/reference/configuration-reference/#site) config in Astro,<br>used for generating canonical URLs, `rss.xml` and other features.                | `'https://example.com'`, `'https://example.com/base'`                                                               |
+| `base`         | `/${string}`                              | Specifies the base path for your site, which must start with `/`. It wiil be passed to the [`base`](https://docs.astro.build/en/reference/configuration-reference/#base) config in Astro, used when deploying to a subdirectory.                                                             | `/base`, `/base/` (for a site deployed to `https://example.com/base`)                   |
 | `title`        | `string`                                  | Specifies the site name for formatting the `title` in the frontmatter as `<pageTitle> - <siteTitle>`.                                                                                                                                                                                        | `Maybe Use Your Name`                                                                 |
 | `description`  | `string`                                  | Specifies the default content for meta tags.                                                                                                                                                                                                                                                 | `Introduce yourself`                                                                  |
 | `author`       | `string`                                  | Specifies your name for meta tags.                                                                                                                                                                                                                                                           | `Your Name`                                                                           |
@@ -30,7 +30,7 @@ The `SITE` object is used to configure the basic information of your website, an
 >
 > During development, leaving `SITE.website` empty is fine. But in production, you must set your deployed URL in this option for SEO-related elements like canonical URLs and social card URLs.
 
-> [!tip] – Set the `SITE.imageDomains` option to enable image optimization for remote images
+> [!tip]- Set the `SITE.imageDomains` option to enable image optimization for remote images
 >   
 > This applies to remote images in Markdown (`![]()`) and in `<Image />` or `<Picture />` components.
 > 
@@ -42,15 +42,17 @@ The `SITE` object is used to configure the basic information of your website, an
 
 The `UI` object allows you to configure navigation, social links, page views, and more. Its configuration options are as follows:
 
-| Option                          | Type                            | Description                                                                                                                                                                       |
-| ------------------------------- | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`internalNavs`](#internalnav)  | `InternalNav[]`                 | Configures internal navigation links. The configuration order matches the display order.                                                                                          |
-| [`socialLinks`](#sociallink)    | `SocialLink[]`                  | Configures external social links. The configuration order matches the display order.                                                                                              |
-| [`NavBarLayout`](#navbarlayout) | `NavBarLayout`                  | Controls the layout of the navigation bar.                                                                                                                                        |
-| `tabbedLayoutTabs`              | `false \| [Tab, Tab, ...Tab[]]` | Enables and configures for tabs within a tabbed layout. If your website does not use the `TabbedLayout`, you can set it to `false`. Otherwise, required before using this layout. |
-| [`groupView`](#groupview)       | `GroupView`                     | Configures the `/projects` UIs.                                                                                                                                                   |
-| [`githubView`](#githubview)     | `GitHubView`                    | Configures the `/releases` and `prs` UIs.                                                                                                                                         |
-| [`externalLink`](#externallink) | `ExternalLink`                  | Configures external links' behavior and appearance.                                                                                                                               |
+| Option                          | Type                            | Description                                                                                                                                                                                |
+| ------------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`internalNavs`](#internalnav)  | `InternalNav[]`                 | Configures internal navigation links. The configuration order matches the display order.                                                                                                   |
+| [`socialLinks`](#sociallink)    | `SocialLink[]`                  | Configures external social links. The configuration order matches the display order.                                                                                                       |
+| [`navBarLayout`](#navbarlayout) | `NavBarLayout`                  | Controls the layout of the navigation bar.                                                                                                                                                 |
+| `tabbedLayoutTabs`              | `false \| [Tab, Tab, ...Tab[]]` | Enables and configures for tabs within a tabbed layout. If your website does not use the `TabbedLayout`, you can set it to `false`. Otherwise, required before using this layout.          |
+| [`groupView`](#groupview)       | `GroupView`                     | Configures the `/projects` UIs.                                                                                                                                                            |
+| [`githubView`](#githubview)     | `GitHubView`                    | Configures the `/releases` and `prs` UIs.                                                                                                                                                  |
+| [`externalLink`](#externallink) | `ExternalLink`                  | Configures external links' behavior and appearance.                                                                                                                                        |
+| `postMetaStyle`                 | `'minimal' \| 'icon'`           | Controls the display style of post metadata (creation date, read time, modified date). On mobile devices, the modified date (if present) is hidden. |
+
 
 ### `internalNav`
 
@@ -116,6 +118,29 @@ The `FEATURES` object globally controls the activation and configuration of spec
 - Set to `false` or `[false, {...}]` to disable the feature.
 - Set to `[true, {...}]` to enable the feature and configure its options.
 
+### `slideEnterAnim`
+
+| Option          | Type                                     | Description                                                                                                                                         | Example              |
+| ---------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `enterStep`      | `number`                                 | Adjusts the animation speed (ms). Smaller values speed up; larger values slow down.                                                                 | `60`                 |
+
+### `ogImage`
+
+| Option          | Type                                     | Description                                                                                                                                         | Example              |
+| ---------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `authorOrBrand`  | `string`                                 | Defines your name or brand name that will be displayed on the OG image.                                                                             | `'Your name'`        |
+| `fallbackTitle`  | `string`                                 | Sets the fallback title for OG images. Used when the `title` in the frontmatter is missing or invalid.                                              | `'Site Description'` |
+| `fallbackBgType` | `'plum' \| 'dot' \| 'rose' \|'particle'` | Sets the fallback background for OG images. This value is only used for the fallback OG image and as the background when `bgType` is not specified. | `'plum'`             |
+
+### `toc`
+
+| Option            | Type                                 | Description                                                                                                                                                                                                          | Example     |
+| ----------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `minHeadingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6`         | Sets the minimum heading level. Must be less than or equal to `maxHeadingLevel`.                                                                                                                                     | `2`         |
+| `maxHeadingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6`         | Sets the maximum heading level. Must be greater than or equal to `minHeadingLevel`.                                                                                                                                  | `4`         |
+| `displayPosition` | `'left' \| 'right'`                  | Sets the position of TOC on the page (either on the left or right).                                                                                                                                                  | `'left'`    |
+| `displayMode`     | `'always' \| 'content'` \| `'hover'` | Controls how the page TOC is displayed. Allowed values:<br>`'always'`: always visible.<br>`'content'`: when hovering over the content area (element with class 'prose').<br>`'hover'`: only when hovering over the TOC itself. | `'content'` |
+
 ### `share`
 
 | Option                         | Type                       | Description                                                                       | Example                          |
@@ -130,28 +155,22 @@ The `FEATURES` object globally controls the activation and configuration of spec
 | `whatsapp`                     | `boolean`                  | Controls whether to include WhatsApp for sharing.                                 | `true`                           |
 | `email`                        | `boolean`                  | Controls whether to include Email for sharing.                                    | `true`                           |
 
-### `toc`
+### `giscus`
 
-| Option            | Type                                 | Description                                                                                                                                                                                                          | Example     |
-| ----------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `minHeadingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6`         | Sets the minimum heading level. Must be less than or equal to `maxHeadingLevel`.                                                                                                                                     | `2`         |
-| `maxHeadingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6`         | Sets the maximum heading level. Must be greater than or equal to `minHeadingLevel`.                                                                                                                                  | `4`         |
-| `displayPosition` | `'left' \| 'right'`                  | Sets the position of TOC on the page (either on the left or right).                                                                                                                                                  | `'left'`    |
-| `displayMode`     | `'always' \| 'content'` \| `'hover'` | Controls how the page TOC is displayed. Allowed values:<br>`'always'`: always visible.<br>`'content'`: when hovering over the content area (element with class 'prose').<br>`'hover'`: only when hovering over the TOC itself. | `'content'` |
+Refer to [Configure Giscus Comments](../advanced-configuration/#configure-giscus-comments) for additional details.
 
-### `ogImage`
-
-| Option          | Type                                     | Description                                                                                                                                         | Example              |
-| ---------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `authorOrBrand`  | `string`                                 | Defines your name or brand name that will be displayed on the OG image.                                                                             | `'Your name'`        |
-| `fallbackTitle`  | `string`                                 | Sets the fallback title for OG images. Used when the `title` in the frontmatter is missing or invalid.                                              | `'Site Description'` |
-| `fallbackBgType` | `'plum' \| 'dot' \| 'rose' \|'particle'` | Sets the fallback background for OG images. This value is only used for the fallback OG image and as the background when `bgType` is not specified. | `'plum'`             |
-
-### `slideEnterAnim`
-
-| Option          | Type                                     | Description                                                                                                                                         | Example              |
-| ---------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `enterStep`      | `number`                                 | Adjusts the animation speed (ms). Smaller values speed up; larger values slow down.                                                                 | `60`                 |
+| Option                                 | Type                  | Description                                     | Example                                  |
+| -------------------------------------- | --------------------- | ----------------------------------------------- | ---------------------------------------- |
+| `data-repo`                            | `${string}/${string}` | GitHub repository in the format `owner/repo`.   | `'lin-stephanie/astro-antfustyle-theme'` |
+| `data-repo-id`                         | `string`              | Unique ID of the GitHub repository.             | `'R_kgDOLylKbA'`                         |
+| `data-category`                        | `string`              | Discussion category name.                       | `'Giscus'`                               |
+| `data-category-id`<br><br><br><br><br> | `string`              | Unique ID of the discussion category.           | `'DIC_kwDOLylKbM4Cpugn'`                 |
+| `data-mapping`                         | `string`              | Mapping between pages and discussions.          | `'title'`                                |
+| `data-strict`                          | `boolean`             | Enable strict mapping (1 = true, 0 = false).    | `0`                                      |
+| `reddit`                               | `boolean`             | Enable reactions (1 = true, 0 = false).         | `1`                                      |
+| `data-emit-metadata`                   | `boolean`             | Emit discussion metadata (1 = true, 0 = false). | `0`                                      |
+| `data-input-position`                  | `'top' \| 'bottom'`   | Position of the comment input box.              | `'bottom'`                               |
+| `data-lang`                            | `string`              | Language for the Giscus widget UI.              | `'en'`                                   |
 
 After making these changes, ensure the project runs smoothly in the browser before moving on to [Advanced Configuration](../advanced-configuration/). 🧗‍♂️
  
@@ -162,4 +181,7 @@ After making these changes, ensure the project runs smoothly in the browser befo
 
 2025-04-30
 - New: `SITE.imageDomains`
+
+2025-05-20
+- New: `UI.postMetaStyle` and `FEATURES.giscus`
 :::

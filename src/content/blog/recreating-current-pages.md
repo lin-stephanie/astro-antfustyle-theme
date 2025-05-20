@@ -307,7 +307,7 @@ The current `/shorts` page uses data from the `blog` collection. To create a sta
 
 ```ts title='src/content.config.ts' ins={1-4,8}
 const shorts = defineCollection({
-  type: 'content',
+  loader: glob({ base: './src/content/shorts', pattern: '**/[^_]*.{md,mdx}' }),
   schema: postSchema,
 })
 
@@ -317,13 +317,13 @@ export const collections = {
 }
 ```
 
-**Step 2: Update `CardView`  to query `shorts` instead of `blog`**
+**Step 2: Update `CardView` to query `shorts` instead of `blog`**
 
 ```astro title='src/components/views/CardView.astro' del={4-7} ins={1-2,8-16}
-import { getFilteredPosts, getSortedPosts } from '~/utils/post'
-import { getUrl, ensureTrailingSlash } from '~/utils/common'
+import { getFilteredPosts, getSortedPosts } from '~/utils/data'
+import { resolvePath } from '~/utils/path'
 
-if (collectionType === ('shorts' as ContentCollectionKey)) {
+if (collectionType === ('shorts' as CollectionKey)) {
   const posts = await getCollection('blog')
   dataForGrid = await getShortsFromBlog(posts)
 }
@@ -331,7 +331,7 @@ if (collectionType === 'shorts') {
   const shorts = await getFilteredPosts(collectionType)
   const sortedShorts = getSortedPosts(shorts)
   dataForGrid = sortedShorts.map((item)=>({
-    link: getUrl(ensureTrailingSlash(collectionType)) + item.slug,
+    link: resolvePath(collectionType) + item.id,
     text: item.data.title,
     date: item.data.pubDate,
   }))
