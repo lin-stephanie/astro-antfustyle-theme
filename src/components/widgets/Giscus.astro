@@ -16,11 +16,11 @@
   Object.entries({
     ...giscusConfig,
     ...{
-      'id': 'giscus-script',
-      'src': 'https://giscus.app/client.js',
-      'crossOrigin': 'anonymous',
-      'data-loading': 'lazy',
-      'async': '',
+      id: 'giscus-script',
+      src: 'https://giscus.app/client.js',
+      crossOrigin: 'anonymous',
+      // 'data-loading': 'lazy',
+      async: '',
     },
   }).forEach(([key, value]) => {
     giscusTemplateScript.setAttribute(key, value)

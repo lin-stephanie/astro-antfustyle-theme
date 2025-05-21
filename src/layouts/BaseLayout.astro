@@ -87,14 +87,7 @@ if (hasCustomCursor) style['--external-link-cursor'] = cursorType
         )
       }
       <!-- Comments -->
-      {
-        Astro.slots.has('giscus') && (
-          <div class="prose mx-auto mt-8">
-            <hr />
-            <slot name="giscus" />
-          </div>
-        )
-      }
+      <slot name="giscus" />
     </main>
 
     <!-- Footer -->
