@@ -1,0 +1,39 @@
+---
+interface Props {
+  style?: string
+  class?: string
+}
+
+const { style, class: className } = Astro.props
+---
+
+<div
+  {style}
+  class={`flex items-center justify-center gap-3 h-full w-full ${className}`}
+>
+  <div
+    class="w-4 h-4 rounded-full bg-[#88888850] animate-[dot-pulse_1.5s_ease-in-out_both_infinite]"
+  >
+  </div>
+  <div
+    class="w-4 h-4 rounded-full bg-[#88888850] animate-[dot-pulse_1.5s_ease-in-out_both_infinite_0.16s]"
+  >
+  </div>
+  <div
+    class="w-4 h-4 rounded-full bg-[#88888850] animate-[dot-pulse_1.5s_ease-in-out_both_infinite_0.32s]"
+  >
+  </div>
+</div>
+
+<style>
+  @keyframes dot-pulse {
+    0%,
+    80%,
+    100% {
+      transform: scale(0);
+    }
+    40% {
+      transform: scale(1);
+    }
+  }
+</style>

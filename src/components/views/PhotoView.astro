@@ -1,0 +1,318 @@
+---
+import Loader from '~/components/widgets/Loader.astro'
+
+import { hash } from '~/pages/photos/photos.[hash].json'
+
+interface Props {
+  gap?: number
+  minCardWidth?: number
+  maxCardWidth?: number
+  layout?: 'grid' | 'masonry'
+  masonryStrategy?: 'sequential' | 'balanced'
+}
+
+const {
+  gap = 16,
+  minCardWidth = 220,
+  maxCardWidth = 1000,
+  layout = 'masonry',
+  masonryStrategy = 'sequential',
+} = Astro.props as Props
+---
+
+<div class="mx-20 lt-md:mx-1">
+  <photo-view
+    data-hash={hash}
+    data-gap={gap}
+    data-min-card-width={minCardWidth}
+    data-max-card-width={maxCardWidth}
+    data-layout={layout}
+    data-masonry-strategy={layout === 'masonry' ? masonryStrategy : undefined}
+    class="photo-view block relative w-full"
+  >
+  </photo-view>
+  <Loader style="height: calc(100vh - 20rem)" class="photo-loading" />
+</div>
+
+<script>
+  import type { PhotoItem } from '~/pages/photos/photos.[hash].json'
+
+  class PhotoView extends HTMLElement {
+    #initialized = false
+    #layout: 'grid' | 'masonry' = 'masonry'
+    #masonryStrategy: 'sequential' | 'balanced' = 'sequential'
+
+    #gap = parseInt(this.dataset.gap || '16', 10)
+    #minCardWidth = parseInt(this.dataset.minCardWidth || '220', 10)
+    #maxCardWidth = parseInt(this.dataset.maxCardWidth || '1000', 10)
+
+    #columns = 0
+    #colWidth = 0
+    #containerWidth = 0
+    #colHeights: number[] = []
+
+    #currentIndex = 0
+    #isLoading = false
+    allLoaded = false
+    #batchSize = 15
+    #allItems: PhotoItem[] = []
+    #ticking = false
+    #distanceToBottom = 200
+
+    #loader: HTMLElement | null = null
+    #resizeObserver: ResizeObserver | null = null
+    #debounceTimeout: ReturnType<typeof setTimeout> | null = null
+
+    async connectedCallback() {
+      if (this.#initialized) return
+      this.#initialized = true
+      this.#loader = document.getElementsByClassName(
+        'photo-loading'
+      )[0] as HTMLElement
+
+      await this.#fetchData()
+      this.#buildLayout()
+      this.handleScroll()
+
+      window.addEventListener('scroll', this.#handleWindowScroll, {
+        passive: true,
+      })
+
+      this.#resizeObserver = new ResizeObserver(this.#handleResize)
+      this.#resizeObserver.observe(this)
+    }
+
+    disconnectedCallback() {
+      window.removeEventListener('scroll', this.#handleWindowScroll)
+
+      if (this.#resizeObserver) {
+        this.#resizeObserver.disconnect()
+        this.#resizeObserver = null
+      }
+
+      if (this.#debounceTimeout) {
+        clearTimeout(this.#debounceTimeout)
+        this.#debounceTimeout = null
+      }
+
+      this.#initialized = false
+    }
+
+    #fetchData = async () => {
+      try {
+        const res = await fetch(`/photos/photos.${this.dataset.hash}.json`)
+        const [_v, data] = (await res.json()) as [string, PhotoItem[]]
+        this.#allItems = data
+
+        // if (import.meta.env.DEV) console.log(this.#allItems)
+      } catch (err) {
+        console.error('[PhotoView] fetch error:', err)
+      }
+    }
+
+    #buildLayout = (toggle = false) => {
+      if (toggle) {
+        this.innerHTML = ''
+        this.#loader!.style.display = ''
+
+        this.#currentIndex = 0
+        this.#isLoading = true
+        this.allLoaded = false
+      }
+
+      if (this.#layout === 'masonry') {
+        this.#getMasonryParams()
+        this.#renderMasonry()
+        this.#isLoading = false
+      } else {
+        // this.#renderGrid()
+        // this.#isLoading = false
+      }
+    }
+
+    #getMasonryParams = () => {
+      this.#containerWidth = this.offsetWidth
+
+      this.#columns = Math.floor(this.#containerWidth / this.#minCardWidth)
+      this.#columns = Math.max(
+        1,
+        Math.min(this.#columns, this.#allItems.length)
+      )
+
+      const totalGap = this.#gap * (this.#columns - 1)
+      this.#colWidth = (this.#containerWidth - totalGap) / this.#columns
+      this.#colWidth = Math.min(this.#colWidth, this.#maxCardWidth)
+
+      this.#colHeights = new Array(this.#columns).fill(0)
+    }
+
+    #renderMasonry = () => {
+      const startIndex = this.#currentIndex * this.#batchSize
+      const endIndex = startIndex + this.#batchSize
+      const items = this.#allItems.slice(startIndex, endIndex)
+
+      if (items.length === 0) {
+        this.#isLoading = false
+        this.allLoaded = true
+        return
+      }
+
+      const fragment = document.createDocumentFragment()
+      let idx = startIndex
+      for (const item of items) {
+        const aspect = item.aspectRatio
+
+        const col =
+          this.#masonryStrategy === 'sequential'
+            ? idx % this.#columns
+            : this.#colHeights.indexOf(Math.min(...this.#colHeights))
+        const top = this.#colHeights[col]
+        const left = col * (this.#colWidth + this.#gap)
+
+        const fig = document.createElement('figure')
+        fig.className = 'photo-figure'
+        fig.style.cursor = 'pointer'
+        fig.style.overflow = 'hidden'
+        fig.style.position = 'absolute'
+        fig.style.top = '0'
+        fig.style.left = '0'
+        fig.style.width = `${this.#colWidth}px`
+        fig.style.borderRadius = '0.375rem'
+        fig.style.transform = `translate(${left}px, ${top}px)`
+        fig.style.backgroundImage = `url(${item.placeholder})`
+        fig.style.backgroundSize = 'cover'
+        fig.dataset.aspectRatio = aspect.toString()
+        fig.tabIndex = 0
+
+        const img = document.createElement('img')
+        img.src = item.src
+        img.alt = item.desc
+        img.style.width = '100%'
+        img.style.height = '100%'
+        img.style.objectFit = 'cover'
+        img.style.opacity = '0'
+        img.style.transition = 'all 0.3s ease-in-out'
+        img.loading = idx <= 10 ? 'eager' : 'lazy'
+        img.decoding = idx <= 10 ? 'sync' : 'async'
+        img.fetchPriority = idx <= 10 ? 'high' : 'low'
+        img.addEventListener(
+          'load',
+          function (this: HTMLImageElement) {
+            this.style.opacity = '1'
+          },
+          { once: true }
+        )
+        fig.appendChild(img)
+
+        if (item.desc) {
+          const figcaption = document.createElement('figcaption')
+          figcaption.style.position = 'absolute'
+          figcaption.style.bottom = '0'
+          figcaption.style.left = '0'
+          figcaption.style.paddingLeft = '0.6rem'
+          figcaption.style.paddingRight = '0.6rem'
+          figcaption.style.paddingTop = '1rem'
+          figcaption.style.paddingBottom = '0.6rem'
+          figcaption.style.width = '100%'
+          figcaption.style.fontSize = '0.875rem'
+          figcaption.style.color = 'white'
+          figcaption.style.background =
+            'linear-gradient(to top, rgba(0,0,0,0.5), transparent)'
+          figcaption.style.opacity = '0'
+          figcaption.style.transition = 'opacity 0.3s ease-in-out'
+          figcaption.textContent = item.desc
+          fig.appendChild(figcaption)
+        }
+
+        this.#colHeights[col] += this.#colWidth / aspect + this.#gap
+        fragment.appendChild(fig)
+        idx++
+      }
+      this.#loader!.style.display = 'none'
+      this.style.height = `${Math.max(...this.#colHeights)}px`
+      this.appendChild(fragment)
+      this.#currentIndex++
+    }
+
+    handleScroll = () => {
+      if (this.#isLoading || this.allLoaded) return
+
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+      const windowHeight = window.innerHeight
+      const documentHeight = document.documentElement.scrollHeight
+      const isNearBottom =
+        documentHeight - (scrollTop + windowHeight) <= this.#distanceToBottom
+
+      if (isNearBottom) {
+        this.#isLoading = true
+        this.#layout === 'masonry'
+          ? this.#renderMasonry()
+          : this.#renderMasonry()
+        this.#isLoading = false
+      }
+    }
+
+    #handleWindowScroll = () => {
+      if (!this.allLoaded && !this.#ticking) {
+        window.requestAnimationFrame(() => {
+          this.handleScroll()
+          this.#ticking = false
+        })
+        this.#ticking = true
+      }
+    }
+
+    #handleResize = () => {
+      this.#debounceUpdateLayout()
+    }
+
+    #debounceUpdateLayout = () => {
+      if (this.#debounceTimeout) clearTimeout(this.#debounceTimeout)
+      this.#debounceTimeout = setTimeout(() => this.#updateMasonryLayout(), 100)
+    }
+
+    #updateMasonryLayout = () => {
+      const containerWidth = this.offsetWidth
+      if (containerWidth === this.#containerWidth) return
+      this.#containerWidth = containerWidth
+
+      const figs = Array.from(
+        this.querySelectorAll('.photo-figure')
+      ) as HTMLElement[]
+      if (!figs.length) return
+
+      this.#columns = Math.floor(containerWidth / this.#minCardWidth)
+      this.#columns = Math.max(1, Math.min(this.#columns, figs.length))
+
+      const totalGap = this.#gap * (this.#columns - 1)
+      this.#colWidth = (containerWidth - totalGap) / this.#columns
+      this.#colWidth = Math.min(this.#colWidth, this.#maxCardWidth)
+
+      this.#colHeights = new Array(this.#columns).fill(0)
+      for (let idx = 0; idx < figs.length; idx++) {
+        const fig = figs[idx]
+
+        const col =
+          this.#masonryStrategy === 'sequential'
+            ? idx % this.#columns
+            : this.#colHeights.indexOf(Math.min(...this.#colHeights))
+        const top = this.#colHeights[col]
+        const left = col * (this.#colWidth + this.#gap)
+
+        fig.style.width = `${this.#colWidth}px`
+        fig.style.transform = `translate(${left}px, ${top}px)`
+
+        const ratio = parseFloat(fig.dataset.aspectRatio!)
+        this.#colHeights[col] += this.#colWidth / ratio + this.#gap
+      }
+
+      const height = Math.max(...this.#colHeights)
+      this.style.height = `${height}px`
+
+      // if (import.meta.env.DEV) console.log('height', height)
+    }
+  }
+
+  if (!customElements.get('photo-view'))
+    customElements.define('photo-view', PhotoView)
+</script>

@@ -11,6 +11,7 @@ import {
   postSchema,
   projectSchema,
   streamSchema,
+  photoSchema,
 } from '~/content/schema'
 
 const pages = defineCollection({
@@ -98,6 +99,11 @@ const highlights = defineCollection({
   }),
 })
 
+const photos = defineCollection({
+  loader: file('src/content/photos/data.json'),
+  schema: photoSchema,
+})
+
 export const collections = {
   pages,
   home,
@@ -109,4 +115,5 @@ export const collections = {
   releases,
   prs,
   highlights,
+  photos,
 }
