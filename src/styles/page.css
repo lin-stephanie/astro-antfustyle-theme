@@ -45,3 +45,17 @@ summary::-webkit-details-marker {
 
   --uno: 'hover:(shadow-custom_0_0_15_-3 scale-103 transition-transform)';
 }
+
+/* /photos */
+.photo-view:hover img {
+  filter: grayscale(1);
+}
+
+.photo-view .photo-figure:hover img {
+  filter: grayscale(0);
+  transform: scale(1.05);
+}
+
+.photo-view .photo-figure:hover figcaption {
+  opacity: 1 !important;
+}

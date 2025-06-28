@@ -104,9 +104,6 @@ importers:
       mdast-util-to-string:
         specifier: ^4.0.0
         version: 4.0.0
-      medium-zoom:
-        specifier: ^1.1.0
-        version: 1.1.0
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
@@ -176,6 +173,9 @@ importers:
       unocss:
         specifier: 66.1.2
         version: 66.1.2(postcss@8.5.3)(vite@6.3.5(@types/node@22.15.19)(jiti@2.4.2)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))
+      viewerjs:
+        specifier: ^1.11.7
+        version: 1.11.7
 
 packages:
 
@@ -2701,9 +2701,6 @@ packages:
   mdn-data@2.12.2:
     resolution: {integrity: sha512-IEn+pegP1aManZuckezWCO+XZQDplx1366JoVhTpMpBB1sPey/SbveZQUosKiKiGYjg1wH4pMlNgXbCiYgihQA==}
 
-  medium-zoom@1.1.0:
-    resolution: {integrity: sha512-ewyDsp7k4InCUp3jRmwHBRFGyjBimKps/AJLjRSox+2q/2H4p/PNpQf+pwONWlJiOudkBXtbdmVbFjqyybfTmQ==}
-
   meow@13.2.0:
     resolution: {integrity: sha512-pxQJQzB6djGPXh08dacEloMFopsOqGVRKFPYvPOt9XDZ1HasbgDZA74CJGreSU4G3Ak7EFJGoiH2auq+yXISgA==}
     engines: {node: '>=18'}
@@ -3790,6 +3787,9 @@ packages:
 
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
+
+  viewerjs@1.11.7:
+    resolution: {integrity: sha512-0JuVqOmL5v1jmEAlG5EBDR3XquxY8DWFQbFMprOXgaBB0F7Q/X9xWdEaQc59D8xzwkdUgXEMSSknTpriq95igg==}
 
   vite@6.3.5:
     resolution: {integrity: sha512-cZn6NDFE7wdTpINgs++ZJ4N49W2vRp8LCKrn3Ob1kYNtOo21vfDoaV5GzBfLU4MovSAB8uNRm4jgzVQZ+mBzPQ==}
@@ -7209,8 +7209,6 @@ snapshots:
 
   mdn-data@2.12.2: {}
 
-  medium-zoom@1.1.0: {}
-
   meow@13.2.0: {}
 
   merge-stream@2.0.0: {}
@@ -8705,6 +8703,8 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
+
+  viewerjs@1.11.7: {}
 
   vite@6.3.5(@types/node@22.15.19)(jiti@2.4.2)(yaml@2.7.1):
     dependencies:

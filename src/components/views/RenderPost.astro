@@ -8,6 +8,7 @@ import Warning from '~/components/base/Warning.astro'
 import Toc from '~/components/toc/Toc.astro'
 import ShareLink from '~/components/widgets/ShareLink.astro'
 import Giscus from '~/components/widgets/Giscus.astro'
+import ImageViewer from '~/components/widgets/ImageViewer.astro'
 import { FEATURES } from '~/config'
 
 import type { CollectionEntry } from 'astro:content'
@@ -66,17 +67,5 @@ frontmatter to <code>false</code> or remove it to publish the post.`
       </div>
     )
   }
+  <ImageViewer options={{ title: 0, navbar: 0 }} />
 </BaseLayout>
-
-<script>
-  import mediumZoom from 'medium-zoom/dist/pure'
-
-  const zoom = mediumZoom({
-    background: 'rgb(0 0 0 / 0.8)',
-  })
-
-  document.addEventListener('astro:page-load', () => {
-    zoom.detach()
-    zoom.attach('.prose img:not(.no-zoom):not(a img)')
-  })
-</script>
