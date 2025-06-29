@@ -33,7 +33,11 @@ const {
   >
   </photo-view>
   <Loader style="height: calc(100vh - 20rem)" class="photo-loading" />
-  <ImageViewer selector=".photo-view" asyncInsert={true} />
+  <ImageViewer
+    selector=".photo-view"
+    asyncInsert={true}
+    options={{ url: 'data-origin' }}
+  />
 </div>
 
 <script>
@@ -187,7 +191,7 @@ const {
         fig.tabIndex = 0
 
         const img = document.createElement('img')
-        img.src = item.src
+        img.src = item.thumbnail
         img.alt = item.desc
         img.style.width = '100%'
         img.style.height = '100%'
@@ -197,6 +201,7 @@ const {
         img.loading = idx <= 10 ? 'eager' : 'lazy'
         img.decoding = idx <= 10 ? 'sync' : 'async'
         img.fetchPriority = idx <= 10 ? 'high' : 'low'
+        img.dataset.origin = item.src
         img.addEventListener(
           'load',
           function (this: HTMLImageElement) {

@@ -1,8 +1,8 @@
 import crypto from 'node:crypto'
-import { readFileSync } from 'node:fs'
 import { getCollection } from 'astro:content'
+import { getImage } from 'astro:assets'
 
-import { fetchRemoteImageWithSharp, generatePlaceholder } from '~/utils/image'
+import { generatePlaceholder } from '~/utils/image'
 
 import type { APIRoute } from 'astro'
 
@@ -10,6 +10,7 @@ export interface PhotoItem {
   uuid: string
   src: string
   desc: string
+  thumbnail: string
   placeholder: string
   aspectRatio: number
 }
@@ -31,72 +32,53 @@ const localImages = import.meta.glob<{ default: ImageMetadata }>(
   '/src/content/photos/**/*.{jpg,jpeg,png,webp}'
 )
 const localImageKeys = Object.keys(localImages)
-// if (import.meta.env.DEV) console.log(localImageKeys)
+// console.log(localImageKeys)
 
 for (const photo of photos) {
   const { id, desc } = photo
   const uuid = crypto.createHash('sha256').update(id).digest('hex').slice(0, 12)
+  const isRemote = id.startsWith('http://') || id.startsWith('https://')
 
-  if (id.startsWith('http://') || id.startsWith('https://')) {
-    const remoteImage = await fetchRemoteImageWithSharp(id)
-
-    if (!remoteImage.isImage) {
+  let result
+  if (isRemote) {
+    // set unified width to 720 to balance high pixel density and file size
+    result = await getImage({
+      src: id,
+      inferSize: true,
+      widths: [720],
+    })
+  } else {
+    const localImagePath = localImageKeys.find((path) => path.includes(id))
+    if (!localImagePath) {
       console.warn(`[photos.${hash}.json.ts] Skipping invalid image: ${id}`)
       continue
     }
+    const localImage = (await localImages[localImagePath]()).default
 
-    const placeholder = await generatePlaceholder(
-      id,
-      remoteImage.data,
-      remoteImage.width,
-      remoteImage.height
-    )
-
-    data.push({
-      uuid,
-      src: id,
-      desc,
-      placeholder,
-      aspectRatio: remoteImage.width / remoteImage.height,
+    result = await getImage({
+      src: localImage,
+      widths: [720],
     })
-
-    continue
   }
 
-  const localImagePath = localImageKeys.find((path) => path.includes(id))
-  if (!localImagePath) {
-    console.warn(`[photos.${hash}.json.ts] Skipping invalid image: ${id}`)
-    continue
-  }
-
-  const localImage = (await localImages[localImagePath]()).default
-  const localImageBuffer = readFileSync(
-    (
-      localImage as ImageMetadata & {
-        fsPath: string
-      }
-    ).fsPath
-  )
+  // console.log('result', result)
+  // console.log('result.srcSet', result.srcSet)
 
   const placeholder = await generatePlaceholder(
     id,
-    localImageBuffer,
-    localImage.width,
-    localImage.height
+    result.srcSet.values[0].url,
+    result.attributes.width,
+    result.attributes.height
   )
 
   data.push({
     uuid,
-    src: localImage.src,
+    src: result.src,
     desc,
     placeholder,
-    aspectRatio: localImage.width / localImage.height,
+    aspectRatio: result.attributes.width / result.attributes.height,
+    thumbnail: result.srcSet.values[0].url,
   })
-
-  if (!localImage) {
-    console.warn(`[photos.${hash}.json.ts] Skipping invalid image: ${id}`)
-    continue
-  }
 }
 
 export const GET: APIRoute = ({ params }) => {

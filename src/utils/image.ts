@@ -3,8 +3,6 @@ import { mkdirSync, readFileSync, writeFileSync } from 'fs'
 import { shorthash } from 'astro/runtime/server/shorthash.js'
 import sharp from 'sharp'
 
-import type { SharpInput } from 'sharp'
-
 const CACHE_PATH = './node_modules/.astro/placeholders/'
 
 interface RemoteImageSuccess {
@@ -40,29 +38,39 @@ function getBitmapDimensions(
 }
 
 /**
- * Generates a placeholder image for the given image buffer.
+ * Generates a placeholder image from running in dev mode.
  */
 export async function generatePlaceholder(
   id: string,
-  buffer: SharpInput,
+  devSrc: string,
   width: number,
   height: number,
   quality = 100
 ) {
-  // calculate appropriate dimensions for the placeholder
-  const dims = getBitmapDimensions(width, height, quality)
+  // console.log('devSrc', devSrc)
+  // /_image?href=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1612476177007-a36dc9e6d7a3&w=720&h=1080&f=webp
 
   // create a unique hash for caching
   const hash = shorthash(id + width + height + quality)
 
-  // in production mode, try to load from cache first
-  if (import.meta.env.PROD) {
-    try {
-      return readFileSync(CACHE_PATH + hash, 'utf-8')
-    } catch (_) {
-      /* ignore cache miss */
-    }
+  // try to load from cache first
+  try {
+    return readFileSync(CACHE_PATH + hash, 'utf-8')
+  } catch (_) {
+    /* ignore cache miss */
   }
+
+  // fetch from astro internal endpoint `/_image` when running in dev mode
+  const origin = process.env.ASTRO_DEV_ORIGIN ?? 'http://localhost:4321'
+  const res = await fetch(new URL(devSrc, origin))
+  if (!res.ok)
+    console.error(
+      `[photos.${hash}.json.ts] fetch ${devSrc} failed: ${res.status}`
+    )
+  const buffer = Buffer.from(await res.arrayBuffer())
+
+  // calculate appropriate dimensions for the placeholder
+  const dims = getBitmapDimensions(width, height, quality)
 
   // process the image buffer to create a low-quality placeholder
   const placeholder = await sharp(buffer)
@@ -75,11 +83,9 @@ export async function generatePlaceholder(
   // convert the processed image to a base64 data URL for embedding in HTML
   const dataUrl = `data:image/${placeholder.info.format};base64,${placeholder.data.toString('base64')}`
 
-  // in production mode, save the generated placeholder to cache for future use
-  if (import.meta.env.PROD) {
-    mkdirSync(CACHE_PATH, { recursive: true })
-    writeFileSync(CACHE_PATH + hash, dataUrl)
-  }
+  // save the generated placeholder to cache for future use
+  mkdirSync(CACHE_PATH, { recursive: true })
+  writeFileSync(CACHE_PATH + hash, dataUrl)
 
   return dataUrl
 }

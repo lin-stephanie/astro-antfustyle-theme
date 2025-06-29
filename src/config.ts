@@ -9,7 +9,7 @@ export const SITE: Site = {
   author: 'Stephanie Lin',
   lang: 'en',
   ogLocale: 'en_US',
-  imageDomains: ['cdn.bsky.app'],
+  imageDomains: ['cdn.bsky.app', 'images.unsplash.com'],
 }
 
 export const UI: Ui = {
