@@ -3,17 +3,24 @@ import Viewer from 'viewerjs'
 
 interface Props {
   selector: string
-  asyncInsert?: boolean
   options?: Viewer.Options
+  asyncInsert?: boolean
+  tabFocus?: boolean
 }
 
-const { selector, asyncInsert = false, options } = Astro.props as Props
+const {
+  selector,
+  options,
+  asyncInsert = false,
+  tabFocus = false,
+} = Astro.props as Props
 ---
 
 <image-viewer
   data-selector={selector}
   data-options={JSON.stringify(options)}
   data-async-insert={asyncInsert ? '' : undefined}
+  data-tab-focus={tabFocus ? '' : undefined}
 >
 </image-viewer>
 
@@ -72,19 +79,21 @@ const { selector, asyncInsert = false, options } = Astro.props as Props
         if (container.querySelector('img')) {
           this.#viewer = new Viewer(container, {
             ...userOptions,
-            viewed: ({ detail }) => {
-              this.#lastViewedImage = detail.originalImage
-            },
-            hidden: () => {
-              if (this.#lastViewedImage) {
-                const el = this.#lastViewedImage.parentNode
-                if (el?.nodeName === 'FIGURE') {
-                  requestAnimationFrame(() => (el as HTMLElement)?.focus())
+            ...(this.hasAttribute('data-tab-focus') && {
+              viewed: ({ detail }) => {
+                this.#lastViewedImage = detail.originalImage
+              },
+              hidden: () => {
+                if (this.#lastViewedImage) {
+                  const el = this.#lastViewedImage.parentNode
+                  if (el?.nodeName === 'FIGURE') {
+                    requestAnimationFrame(() => (el as HTMLElement)?.focus())
+                  }
+                  requestAnimationFrame(() => this.#lastViewedImage?.focus())
+                  this.#lastViewedImage = null
                 }
-                requestAnimationFrame(() => this.#lastViewedImage?.focus())
-                this.#lastViewedImage = null
-              }
-            },
+              },
+            }),
           })
 
           // https://github.com/fengyuanchen/viewerjs/issues/197

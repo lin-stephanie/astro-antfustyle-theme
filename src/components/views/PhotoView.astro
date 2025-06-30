@@ -8,7 +8,7 @@ interface Props {
   gap?: number
   minPhotoWidth?: number
   maxPhotoWidth?: number
-  layout?: 'grid' | 'masonry'
+  layout?: 'masonry' | 'square'
   masonryStrategy?: 'sequential' | 'balanced'
 }
 
@@ -46,8 +46,9 @@ const {
   <Loader class="photo-loader" />
   <ImageViewer
     selector=".photo-container"
-    asyncInsert={true}
     options={{ url: 'data-origin' }}
+    asyncInsert={true}
+    tabFocus={true}
   />
 </div>
 
@@ -86,9 +87,7 @@ const {
       if (this.#initialized) return
       this.#initialized = true
       this.#container = this.querySelector('.photo-container')
-      this.#loader = document.getElementsByClassName(
-        'photo-loader'
-      )[0] as HTMLElement
+      this.#loader = document.querySelector('.photo-loader')
 
       await this.#fetchData()
       this.#getLayout()
@@ -152,11 +151,11 @@ const {
         this.#isMasonry = this.dataset.layout === 'masonry'
         localStorage.setItem(
           'photo-layout',
-          this.#isMasonry ? 'masonry' : 'grid'
+          this.#isMasonry ? 'masonry' : 'square'
         )
       }
 
-      this.dataset.layout = this.#isMasonry ? 'masonry' : 'grid'
+      this.dataset.layout = this.#isMasonry ? 'masonry' : 'square'
     }
 
     #buildLayout = () => {
@@ -183,7 +182,7 @@ const {
       const totalGap = this.#gap * (this.#columns - 1)
       this.#colWidth = (this.#containerWidth - totalGap) / this.#columns
       this.#colWidth = Math.min(this.#colWidth, this.#maxPhotoWidth)
-      this.#container!.style.setProperty('--photo-width', `${this.#colWidth}px`)
+      this.#container?.style.setProperty('--photo-width', `${this.#colWidth}px`)
 
       this.#colHeights = new Array(this.#columns).fill(0)
     }
@@ -254,18 +253,18 @@ const {
         fragment.appendChild(fig)
         idx++
       }
-      this.#loader!.style.display = 'none'
+      if (this.#loader) this.#loader.style.display = 'none'
       this.style.height = `${Math.max(...this.#colHeights)}px`
-      this.#container!.appendChild(fragment)
+      this.#container?.appendChild(fragment)
       this.#currentIndex++
     }
 
     #getGridParams = () => {
-      this.#container!.style.setProperty(
+      this.#container?.style.setProperty(
         '--min-photo-width',
         `${this.#minPhotoWidth}px`
       )
-      this.#container!.style.setProperty('--photo-gap', `${this.#gap}px`)
+      this.#container?.style.setProperty('--photo-gap', `${this.#gap}px`)
     }
 
     #renderGrid = () => {
@@ -315,8 +314,8 @@ const {
         fragment.appendChild(fig)
         idx++
       }
-      this.#loader!.style.display = 'none'
-      this.#container!.appendChild(fragment)
+      if (this.#loader) this.#loader.style.display = 'none'
+      this.#container?.appendChild(fragment)
       this.#currentIndex++
     }
 
@@ -375,13 +374,15 @@ const {
     }
 
     #handleClickToggle = () => {
-      this.#container!.innerHTML = ''
-      this.#loader!.style.display = ''
+      if (this.#container) {
+        this.#container.innerHTML = ''
+        this.#container.style = ''
+      }
+      if (this.#loader) this.#loader.style.display = ''
 
       this.#isMasonry = !this.#isMasonry
-      this.dataset.layout = this.#isMasonry ? 'masonry' : 'grid'
+      this.dataset.layout = this.#isMasonry ? 'masonry' : 'square'
       this.style.height = this.#isMasonry ? '0' : 'auto'
-      this.#container!.style = ''
 
       this.#currentIndex = 0
       this.#isLoading = true
@@ -391,7 +392,7 @@ const {
 
       window.localStorage.setItem(
         'photo-layout',
-        this.#isMasonry ? 'masonry' : 'grid'
+        this.#isMasonry ? 'masonry' : 'square'
       )
     }
 
