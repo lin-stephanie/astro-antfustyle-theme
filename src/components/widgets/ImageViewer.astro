@@ -2,16 +2,12 @@
 import Viewer from 'viewerjs'
 
 interface Props {
-  selector?: string
-  options?: Viewer.Options
+  selector: string
   asyncInsert?: boolean
+  options?: Viewer.Options
 }
 
-const {
-  selector = 'article',
-  options,
-  asyncInsert = false,
-} = Astro.props as Props
+const { selector, asyncInsert = false, options } = Astro.props as Props
 ---
 
 <image-viewer
@@ -28,7 +24,14 @@ const {
   Viewer.setDefaults({
     button: false,
     navbar: 2,
-    title: [2, (image: { alt: string }) => `${image.alt}`],
+    title: [
+      2,
+      (img: HTMLImageElement) => {
+        // prevent filling in alt with image URL when empty
+        const fn = img.src.split('/').pop()?.split(/[?#]/)[0]
+        return img.alt && img.alt !== fn ? img.alt : ''
+      },
+    ],
     toolbar: false,
     container: 'image-viewer',
     initialCoverage: 1,
@@ -46,11 +49,11 @@ const {
   export class ImageViewer extends HTMLElement {
     #viewer: InstanceType<typeof Viewer> | null = null
     #mutationObserver: MutationObserver | null = null
+    #lastViewedImage: HTMLImageElement | null = null
 
     connectedCallback() {
-      const selector = this.dataset.selector || 'article'
+      const selector = this.dataset.selector || 'img'
       const container = document.querySelector(selector) as HTMLElement | null
-
       if (!container) return
 
       let userOptions: Viewer.Options = {}
@@ -67,7 +70,23 @@ const {
         }
 
         if (container.querySelector('img')) {
-          this.#viewer = new Viewer(container, userOptions)
+          this.#viewer = new Viewer(container, {
+            ...userOptions,
+            viewed: ({ detail }) => {
+              this.#lastViewedImage = detail.originalImage
+            },
+            hidden: () => {
+              if (this.#lastViewedImage) {
+                const el = this.#lastViewedImage.parentNode
+                if (el?.nodeName === 'FIGURE') {
+                  requestAnimationFrame(() => (el as HTMLElement)?.focus())
+                }
+                requestAnimationFrame(() => this.#lastViewedImage?.focus())
+                this.#lastViewedImage = null
+              }
+            },
+          })
+
           // https://github.com/fengyuanchen/viewerjs/issues/197
           // @ts-expect-error (ignore)
           // eslint-disable-next-line @typescript-eslint/no-empty-function

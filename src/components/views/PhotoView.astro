@@ -14,14 +14,14 @@ interface Props {
 
 const {
   gap = 16,
-  minPhotoWidth = 220,
+  minPhotoWidth = 240,
   maxPhotoWidth = 1000,
   layout = 'masonry',
   masonryStrategy = 'sequential',
 } = Astro.props as Props
 ---
 
-<div class="mx-20 lt-lg:mx-10 lt-md:mx-1">
+<div class="mx-20 lt-lgp:mx-10 lt-md:mx-1">
   <photo-view
     data-hash={hash}
     data-gap={gap}
@@ -60,7 +60,7 @@ const {
     #masonryStrategy = this.dataset.masonryStrategy || 'sequential'
 
     #gap = parseInt(this.dataset.gap || '16', 10)
-    #minPhotoWidth = parseInt(this.dataset.minPhotoWidth || '220', 10)
+    #minPhotoWidth = parseInt(this.dataset.minPhotoWidth || '240', 10)
     #maxPhotoWidth = parseInt(this.dataset.maxPhotoWidth || '1000', 10)
 
     #columns = 0
@@ -91,6 +91,7 @@ const {
       )[0] as HTMLElement
 
       await this.#fetchData()
+      this.#getLayout()
       this.#buildLayout()
       this.#handleWindowScroll()
 
@@ -103,6 +104,8 @@ const {
 
       this.#button = this.querySelector('.photo-layout-toggle')
       this.#button?.addEventListener('click', this.#handleClickToggle)
+
+      this.#container?.addEventListener('keydown', this.#handleKeyOpen)
     }
 
     disconnectedCallback() {
@@ -123,6 +126,11 @@ const {
         this.#button = null
       }
 
+      if (this.#container) {
+        this.#container.removeEventListener('keydown', this.#handleKeyOpen)
+        this.#container = null
+      }
+
       this.#initialized = false
     }
 
@@ -137,12 +145,27 @@ const {
       }
     }
 
+    #getLayout = () => {
+      if (localStorage.getItem('photo-layout')) {
+        this.#isMasonry = localStorage.getItem('photo-layout') === 'masonry'
+      } else {
+        this.#isMasonry = this.dataset.layout === 'masonry'
+        localStorage.setItem(
+          'photo-layout',
+          this.#isMasonry ? 'masonry' : 'grid'
+        )
+      }
+
+      this.dataset.layout = this.#isMasonry ? 'masonry' : 'grid'
+    }
+
     #buildLayout = () => {
       if (this.#isMasonry) {
         this.#getMasonryParams()
         this.#renderMasonry()
         this.#isLoading = false
       } else {
+        this.#getGridParams()
         this.#renderGrid()
         this.#isLoading = false
       }
@@ -196,11 +219,13 @@ const {
 
         const fig = document.createElement('figure')
         fig.className = 'photo-figure'
+        fig.dataset.aspectRatio = aspect.toString()
+        fig.setAttribute('role', 'button')
+        fig.setAttribute('tabindex', '0')
+        fig.setAttribute('aria-label', 'Open viewer')
         fig.style.setProperty('--photo-top', top.toString() + 'px')
         fig.style.setProperty('--photo-left', left.toString() + 'px')
         fig.style.setProperty('--photo-placeholder', `url(${item.placeholder})`)
-        fig.dataset.aspectRatio = aspect.toString()
-        fig.tabIndex = 0
 
         const img = document.createElement('img')
         img.src = item.thumbnail
@@ -221,6 +246,7 @@ const {
         if (item.desc) {
           const figcaption = document.createElement('figcaption')
           figcaption.textContent = item.desc
+          figcaption.setAttribute('aria-hidden', 'true')
           fig.appendChild(figcaption)
         }
 
@@ -232,6 +258,14 @@ const {
       this.style.height = `${Math.max(...this.#colHeights)}px`
       this.#container!.appendChild(fragment)
       this.#currentIndex++
+    }
+
+    #getGridParams = () => {
+      this.#container!.style.setProperty(
+        '--min-photo-width',
+        `${this.#minPhotoWidth}px`
+      )
+      this.#container!.style.setProperty('--photo-gap', `${this.#gap}px`)
     }
 
     #renderGrid = () => {
@@ -250,8 +284,10 @@ const {
       for (const item of items) {
         const fig = document.createElement('figure')
         fig.className = 'photo-figure'
+        fig.setAttribute('role', 'button')
+        fig.setAttribute('tabindex', '0')
+        fig.setAttribute('aria-label', 'Open viewer')
         fig.style.setProperty('--photo-placeholder', `url(${item.placeholder})`)
-        fig.tabIndex = 0
 
         const img = document.createElement('img')
         img.src = item.thumbnail
@@ -272,6 +308,7 @@ const {
         if (item.desc) {
           const figcaption = document.createElement('figcaption')
           figcaption.textContent = item.desc
+          figcaption.setAttribute('aria-hidden', 'true')
           fig.appendChild(figcaption)
         }
 
@@ -344,12 +381,30 @@ const {
       this.#isMasonry = !this.#isMasonry
       this.dataset.layout = this.#isMasonry ? 'masonry' : 'grid'
       this.style.height = this.#isMasonry ? '0' : 'auto'
+      this.#container!.style = ''
 
       this.#currentIndex = 0
       this.#isLoading = true
       this.allLoaded = false
 
       this.#buildLayout()
+
+      window.localStorage.setItem(
+        'photo-layout',
+        this.#isMasonry ? 'masonry' : 'grid'
+      )
+    }
+
+    // event delegation: open viewer when focus is on a figure and presses Enter
+    #handleKeyOpen = (ev: KeyboardEvent) => {
+      if (ev.defaultPrevented) return
+      if (!(ev.key === 'Enter')) return
+
+      const fig = (ev.target as HTMLElement)?.closest('.photo-figure')
+      if (!fig) return
+
+      const img = fig.querySelector('img')
+      img?.click()
     }
   }
 
