@@ -3,6 +3,8 @@ import { mkdirSync, readFileSync, writeFileSync } from 'fs'
 import { shorthash } from 'astro/runtime/server/shorthash.js'
 import sharp from 'sharp'
 
+import type { SharpInput } from 'sharp'
+
 const CACHE_PATH = './node_modules/.astro/placeholders/'
 
 interface RemoteImageSuccess {
@@ -38,17 +40,17 @@ function getBitmapDimensions(
 }
 
 /**
- * Generates a placeholder image from running in dev mode.
+ * Generates a placeholder image for the given image buffer.
  */
 export async function generatePlaceholder(
   id: string,
-  devSrc: string,
+  buffer: SharpInput,
   width: number,
   height: number,
   quality = 100
 ) {
-  // console.log('devSrc', devSrc)
-  // /_image?href=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1612476177007-a36dc9e6d7a3&w=720&h=1080&f=webp
+  // calculate appropriate dimensions for the placeholder
+  const dims = getBitmapDimensions(width, height, quality)
 
   // create a unique hash for caching
   const hash = shorthash(id + width + height + quality)
@@ -59,18 +61,6 @@ export async function generatePlaceholder(
   } catch (_) {
     /* ignore cache miss */
   }
-
-  // fetch from astro internal endpoint `/_image` when running in dev mode
-  const origin = process.env.ASTRO_DEV_ORIGIN ?? 'http://localhost:4321'
-  const res = await fetch(new URL(devSrc, origin))
-  if (!res.ok)
-    console.error(
-      `[photos.${hash}.json.ts] fetch ${devSrc} failed: ${res.status}`
-    )
-  const buffer = Buffer.from(await res.arrayBuffer())
-
-  // calculate appropriate dimensions for the placeholder
-  const dims = getBitmapDimensions(width, height, quality)
 
   // process the image buffer to create a low-quality placeholder
   const placeholder = await sharp(buffer)
