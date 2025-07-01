@@ -195,10 +195,6 @@ html.dark .prose {
   right: 0rem;
 }
 
-#toc-panel > ul {
-  overflow-y: auto;
-}
-
 #toc-panel ul {
   margin-top: 0;
   margin-bottom: 0;

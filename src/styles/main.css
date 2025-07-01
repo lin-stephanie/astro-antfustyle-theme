@@ -12,10 +12,13 @@
   --c-text: #fff;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   overflow-x: hidden;
   overflow-y: scroll;
-  scroll-behavior: smooth;
 
   background-color: var(--c-bg);
 }
@@ -49,7 +52,9 @@ body {
     scrollbar-color: var(--c-scrollbar) var(--c-bg);
   }
 
-  #search-results {
+  #search-results,
+  #nav-panel,
+  #toc-panel {
     scrollbar-width: none;
   }
 }

@@ -17,10 +17,7 @@
 <script>
   document.addEventListener('astro:page-load', () => {
     const handleClick = () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      })
+      window.scrollTo({ top: 0 })
     }
     const toTopButton = document.getElementById('to-top-button')
     toTopButton?.addEventListener('click', handleClick)
