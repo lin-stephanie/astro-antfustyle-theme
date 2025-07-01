@@ -78,7 +78,7 @@
     "prefix": "photoData",
     "body": [
       "{",
-      "  \"id\": \"${1:File name of the image in the `src/content/photos/` directory or a remote image URL}\",",
+      "  \"id\": \"${1:File (name/path) of the image in the `src/content/photos/` directory or a remote image URL}\",",
       "  \"desc\": \"${2:If not needed, leave the field as an empty string or delete it}\"",
       "}",
     ],

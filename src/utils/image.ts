@@ -1,11 +1,7 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'fs'
-
-import { shorthash } from 'astro/runtime/server/shorthash.js'
+import { getImage } from 'astro:assets'
 import sharp from 'sharp'
 
 import type { SharpInput } from 'sharp'
-
-const CACHE_PATH = './node_modules/.astro/placeholders/'
 
 interface RemoteImageSuccess {
   isImage: true
@@ -43,24 +39,13 @@ function getBitmapDimensions(
  * Generates a placeholder image for the given image buffer.
  */
 export async function generatePlaceholder(
-  id: string,
   buffer: SharpInput,
   width: number,
   height: number,
-  quality = 100
+  pixelTarget: number
 ) {
   // calculate appropriate dimensions for the placeholder
-  const dims = getBitmapDimensions(width, height, quality)
-
-  // create a unique hash for caching
-  const hash = shorthash(id + width + height + quality)
-
-  // try to load from cache first
-  try {
-    return readFileSync(CACHE_PATH + hash, 'utf-8')
-  } catch (_) {
-    /* ignore cache miss */
-  }
+  const dims = getBitmapDimensions(width, height, pixelTarget)
 
   // process the image buffer to create a low-quality placeholder
   const placeholder = await sharp(buffer)
@@ -68,14 +53,10 @@ export async function generatePlaceholder(
     .toFormat('webp', { quality: 1 })
     .modulate({ brightness: 1, saturation: 1.2 })
     .blur()
-    .toBuffer({ resolveWithObject: true }) // apply blur effect for smoother appearance
+    .toBuffer({ resolveWithObject: true })
 
   // convert the processed image to a base64 data URL for embedding in HTML
   const dataUrl = `data:image/${placeholder.info.format};base64,${placeholder.data.toString('base64')}`
-
-  // save the generated placeholder to cache for future use
-  mkdirSync(CACHE_PATH, { recursive: true })
-  writeFileSync(CACHE_PATH + hash, dataUrl)
 
   return dataUrl
 }
@@ -206,4 +187,22 @@ export async function fetchRemoteImageWithSharp(
     )
     return { isImage: false, data: null, width: null, height: null }
   }
+}
+
+/**
+ * Generates a thumbnail for the given image.
+ */
+export async function getThumbnail(
+  src: string | ImageMetadata,
+  width: number,
+  ratio: number
+): Promise<string> {
+  const result = await getImage({
+    src,
+    width,
+    height: width / ratio,
+    widths: [width],
+  })
+
+  return result.src
 }

@@ -1,11 +1,21 @@
 import crypto from 'node:crypto'
-import { readFileSync } from 'node:fs'
-import { getCollection } from 'astro:content'
-import { getImage } from 'astro:assets'
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 
-import { fetchRemoteImageWithSharp, generatePlaceholder } from '~/utils/image'
+import { getCollection } from 'astro:content'
+import { shorthash } from 'astro/runtime/server/shorthash.js'
+
+import {
+  fetchRemoteImageWithSharp,
+  generatePlaceholder,
+  getThumbnail,
+} from '~/utils/image'
 
 import type { APIRoute } from 'astro'
+
+const CACHE_PATH = './node_modules/.astro/photos/'
+const PLACEHOLDER_PIXEL_TARGET = 100
+// balance high pixel density and file size
+const THUMBNAIL_WIDTH = 720
 
 export interface PhotoItem {
   uuid: string
@@ -30,58 +40,108 @@ export const hash = crypto
 
 const data: PhotoItem[] = []
 const localImages = import.meta.glob<{ default: ImageMetadata }>(
-  '/src/content/photos/**/*.{jpg,jpeg,png,webp}'
+  '/src/content/photos/**/*.{jpg,jpeg,png,webp,avif}'
 )
 const localImageKeys = Object.keys(localImages)
 // if (import.meta.env.DEV) console.log(localImageKeys)
 
 for (const photo of photos) {
   const { id, desc } = photo
-  const uuid = crypto.createHash('sha256').update(id).digest('hex').slice(0, 12)
 
+  // remote image
   if (id.startsWith('http://') || id.startsWith('https://')) {
-    const remoteImage = await fetchRemoteImageWithSharp(id)
+    // try to load from cache first
+    const uuid = shorthash(id + PLACEHOLDER_PIXEL_TARGET)
+    try {
+      const cache = JSON.parse(readFileSync(CACHE_PATH + uuid, 'utf-8'))
+      const thumbnail = await getThumbnail(
+        id,
+        THUMBNAIL_WIDTH,
+        cache.aspectRatio
+      )
+      data.push({
+        uuid,
+        src: id,
+        desc,
+        thumbnail,
+        placeholder: cache.placeholder,
+        aspectRatio: cache.aspectRatio,
+      })
+      continue
+    } catch (_) {
+      // ignore cache miss
+    }
 
+    // get placeholder
+    const remoteImage = await fetchRemoteImageWithSharp(id)
     if (!remoteImage.isImage) {
       console.warn(`[photos.${hash}.json.ts] Skipping invalid image: ${id}`)
       continue
     }
-
     const placeholder = await generatePlaceholder(
-      id,
       remoteImage.data,
       remoteImage.width,
-      remoteImage.height
+      remoteImage.height,
+      PLACEHOLDER_PIXEL_TARGET
     )
 
-    const radio = remoteImage.width / remoteImage.height
-    // set unified width to 720 to balance high pixel density and file size
-    const result = await getImage({
-      src: id,
-      width: 720,
-      height: 720 / radio,
-      widths: [720],
-    })
+    // get thumbnail
+    const aspectRatio = remoteImage.width / remoteImage.height
+    const thumbnail = await getThumbnail(id, THUMBNAIL_WIDTH, aspectRatio)
 
     data.push({
       uuid,
       src: id,
       desc,
-      thumbnail: result.src,
+      thumbnail,
       placeholder,
-      aspectRatio: radio,
+      aspectRatio,
     })
+
+    // save to cache
+    mkdirSync(CACHE_PATH, { recursive: true })
+    writeFileSync(
+      CACHE_PATH + uuid,
+      JSON.stringify({ placeholder, aspectRatio })
+    )
 
     continue
   }
 
+  // local image
+  // match id with local image path
   const localImagePath = localImageKeys.find((path) => path.includes(id))
   if (!localImagePath) {
     console.warn(`[photos.${hash}.json.ts] Skipping invalid image: ${id}`)
     continue
   }
 
+  // try to load from cache first
   const localImage = (await localImages[localImagePath]()).default
+  const uuid = shorthash(
+    id + PLACEHOLDER_PIXEL_TARGET + localImage.width + localImage.height
+  )
+  try {
+    const cache = JSON.parse(readFileSync(CACHE_PATH + uuid, 'utf-8'))
+    const thumbnail = await getThumbnail(
+      localImage,
+      THUMBNAIL_WIDTH,
+      cache.aspectRatio
+    )
+    data.push({
+      uuid,
+      src: localImage.src,
+      desc,
+      thumbnail,
+      placeholder: cache.placeholder,
+      aspectRatio: cache.aspectRatio,
+    })
+    continue
+  } catch (_) {
+    // ignore cache miss
+  }
+
+  // get placeholder
   const localImageBuffer = readFileSync(
     (
       localImage as ImageMetadata & {
@@ -89,35 +149,29 @@ for (const photo of photos) {
       }
     ).fsPath
   )
-
   const placeholder = await generatePlaceholder(
-    id,
     localImageBuffer,
     localImage.width,
-    localImage.height
+    localImage.height,
+    PLACEHOLDER_PIXEL_TARGET
   )
 
-  const radio = localImage.width / localImage.height
-  const result = await getImage({
-    src: localImage,
-    width: 720,
-    height: 720 / radio,
-    widths: [720],
-  })
+  // get thumbnail
+  const aspectRatio = localImage.width / localImage.height
+  const thumbnail = await getThumbnail(localImage, THUMBNAIL_WIDTH, aspectRatio)
 
   data.push({
     uuid,
     src: localImage.src,
     desc,
-    thumbnail: result.src,
+    thumbnail,
     placeholder,
-    aspectRatio: radio,
+    aspectRatio,
   })
 
-  if (!localImage) {
-    console.warn(`[photos.${hash}.json.ts] Skipping invalid image: ${id}`)
-    continue
-  }
+  // save to cache
+  mkdirSync(CACHE_PATH, { recursive: true })
+  writeFileSync(CACHE_PATH + uuid, JSON.stringify({ placeholder, aspectRatio }))
 }
 
 export const GET: APIRoute = ({ params }) => {
@@ -131,5 +185,5 @@ export const GET: APIRoute = ({ params }) => {
 }
 
 export async function getStaticPaths() {
-  return [{ params: { hash: hash } }]
+  return [{ params: { hash } }]
 }
