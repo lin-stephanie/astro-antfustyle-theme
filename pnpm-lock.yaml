@@ -158,9 +158,6 @@ importers:
       simple-git-hooks:
         specifier: ^2.13.0
         version: 2.13.0
-      swiper:
-        specifier: ^11.2.7
-        version: 11.2.7
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -3512,10 +3509,6 @@ packages:
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
-
-  swiper@11.2.7:
-    resolution: {integrity: sha512-oPJCwdcjFMw3SoBM7AdB1RJzjT7JaE4Mg7TWceTmJ/i2OtF8L01Ct+5eOf48nG3trgR0wXFekWdfnTdl0eg6Pg==}
-    engines: {node: '>= 4.7.0'}
 
   synckit@0.11.4:
     resolution: {integrity: sha512-Q/XQKRaJiLiFIBNN+mndW7S/RHxvwzuZS6ZwmRzUBqJBv/5QIKCEwkBC8GBf8EQJKYnaFs0wOZbKTXBPj8L9oQ==}
@@ -8430,8 +8423,6 @@ snapshots:
   supports-color@7.2.0:
     dependencies:
       has-flag: 4.0.0
-
-  swiper@11.2.7: {}
 
   synckit@0.11.4:
     dependencies:

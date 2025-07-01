@@ -1,0 +1,105 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+import type { LocalImageProps, RemoteImageProps } from 'astro:assets'
+
+export interface Props {
+  images: {
+    src: string | ImageMetadata
+    alt: string
+  }[]
+  imageProps?: LocalImageProps | RemoteImageProps
+  autoplayDelay?: number
+}
+
+const { images, imageProps, autoplayDelay = 3000 } = Astro.props
+---
+
+<image-carousel
+  class="block relative"
+  data-autoplay-delay={autoplayDelay}
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="Image carousel"
+  aria-live="polite"
+>
+  {
+    images.map((item) => (
+      <div class="op-transition-600" role="group" aria-roledescription="slide">
+        {/* @ts-expect-error(ignore) */}
+        <Image
+          class="aspect-[16/9] object-cover"
+          src={item.src}
+          alt={item.alt}
+          {...(typeof item.src === 'string' ? { inferSize: true } : {})}
+          {...imageProps}
+        />
+      </div>
+    ))
+  }
+</image-carousel>
+
+<script>
+  class ImageCarousel extends HTMLElement {
+    #current = 0
+    #autoplayDelay = parseInt(this.dataset.autoplayDelay || '3000', 10)
+    #autoplayTimer: number | null = null
+    #slides: HTMLElement[] = []
+
+    connectedCallback() {
+      this.#slides = Array.from(this.children) as HTMLElement[]
+
+      for (let idx = 0; idx < this.#slides.length; idx++) {
+        const el = this.#slides[idx]
+        el.setAttribute('aria-label', `${idx + 1} / ${this.#slides.length}`)
+        if (idx !== 0) {
+          el.style.position = 'absolute'
+          el.style.inset = '0'
+        }
+      }
+
+      this.#update()
+      this.#startAutoplay()
+    }
+
+    disconnectedCallback() {
+      this.#stopAutoplay()
+    }
+
+    #update = () => {
+      for (let idx = 0; idx < this.#slides.length; idx++) {
+        const el = this.#slides[idx]
+        el.style.opacity = idx === this.#current ? '1' : '0'
+        el.setAttribute('aria-hidden', idx === this.#current ? 'false' : 'true')
+        el.setAttribute(
+          'aria-current',
+          idx === this.#current ? 'true' : 'false'
+        )
+      }
+    }
+
+    #go = (idx: number) => {
+      if (idx === this.#current) return
+      this.#current = idx
+      this.#update()
+    }
+
+    #next = () => {
+      this.#go((this.#current + 1) % this.#slides.length)
+    }
+
+    #startAutoplay = () => {
+      this.#autoplayTimer = window.setInterval(this.#next, this.#autoplayDelay)
+    }
+
+    #stopAutoplay = () => {
+      if (this.#autoplayTimer !== null) {
+        clearInterval(this.#autoplayTimer)
+        this.#autoplayTimer = null
+      }
+    }
+  }
+
+  if (!customElements.get('image-carousel'))
+    customElements.define('image-carousel', ImageCarousel)
+</script>

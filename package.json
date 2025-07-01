@@ -71,7 +71,6 @@
     "satori-html": "^0.3.2",
     "sharp": "^0.34.1",
     "simple-git-hooks": "^2.13.0",
-    "swiper": "^11.2.7",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.32.1",
     "unist-util-visit": "^5.0.0",

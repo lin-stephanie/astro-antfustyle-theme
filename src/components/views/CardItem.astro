@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets'
 
 import Link from '~/components/base/Link.astro'
-import SwiperCarousel from '~/components/widgets/SwiperCarousel.astro'
+import ImageCarousel from '~/components/widgets/ImageCarousel.astro'
 import { formatDate } from '~/utils/datetime'
 
 import type { ImageMetadata } from 'astro'
@@ -115,7 +115,7 @@ if (images && images.length > 0) {
         >
           {images &&
             (images.length > 1 ? (
-              <SwiperCarousel
+              <ImageCarousel
                 images={proccessedImages}
                 imageProps={imageProps}
               />
