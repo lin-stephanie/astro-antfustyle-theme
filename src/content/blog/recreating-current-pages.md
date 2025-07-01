@@ -2,7 +2,7 @@
 title: Recreating Current Pages
 description: How to edit existing pages in Astro AntfuStyle Theme
 pubDate: 2023-12-03
-lastModDate: 2025-04-30
+lastModDate: 2025-07-01
 toc: true
 share: true
 giscus: true
@@ -11,7 +11,7 @@ ogImage: true
 
 You can use any view from the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to build the pages you want. 
 
-This post shows how to recreate the [`/`](#homepage), [`/projects`](#projects), [`/changelog`](#changelog), [`/streams`](#streams), [`/feeds`](#feeds), [`/highlights`](#highlights), [`/shorts`](#shorts), and [`404`](#404) pages, add new ones, or remove existing ones. 
+This post shows how to recreate the [`/`](#homepage), [`/projects`](#projects), [`/highlights`](#highlights), [`/photos`](#photos), [`/shorts`](#shorts), [`/changelog`](#changelog), [`/streams`](#streams), [`/feeds`](#feeds) and [`404`](#404) pages, add new ones, or remove existing ones. 
 
 For `/releases` and `/prs`, check out [Customizing GitHub Activity Pages](../customizing-github-activity-pages/).
 
@@ -21,7 +21,7 @@ In [Project Structure](../project-structure/), it is mentioned that the theme’
 
 Open any `.mdx` file in `src/pages/`, and you'll notice a similar structure: YAML frontmatter + imported Astro components + JSX with layout components nesting view components.
 
-The theme defined all `.mdx` files in `src/pages/` belong to the `pages` collection. The frontmatter fields for `pages` collection are defined by `schema: pageSchema` in `src/content/schema.ts` as follows:
+The theme defined all `.mdx` files in `src/pages/` belong to the `pages` collection. The frontmatter fields for `pages` collection are defined by `pageSchema` in `src/content/schema.ts` as follows:
 
 | Property | Type (default)                                                                          | Description                                                                                                                                                                                                                                      |
 | --------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -60,7 +60,7 @@ To update the homepage, open `src/content/home/index.md` and start writing the c
 
 Open `src/content/projects/data.json`, delete the existing content, and write your own.
 
-The fields for `projects` entries are defined by `schema: projectSchema`in `src/content/schema.ts` as follows:
+The fields for each entry in the `projects` collection are defined by `projectSchema` as follows:
 
 | Property (* required) | Type     | Description                                                                                                                            |
 | --------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
@@ -77,53 +77,6 @@ Finally, update the frontmatter in `src/pages/projects.mdx`.
 > [!important]- Make sure to keep the `id` field unchanged
 >
 > It is required by Astro's [`file()` loader](https://docs.astro.build/en/reference/content-loader-reference/#file-loader) to create entries properly.
-
-### [`/changelog`](../../changelog/)
-
-To recreate the `/changelog` page, please follow the [Adding New Posts](../adding-new-posts/). The content for the `/changelog` page, stored in the `src/content/changelog/` directory, belongs to the `changelog` collection. This collection also uses `schema: postSchema` for frontmatter types.
-
-### [`/streams`](../../streams/)
-
-Similarly to adding projects,  open `src/content/streams/data.json`, delete the existing, and write your own.
-
-The fields for `streams` entries are defined by `schema: streamSchema`in `src/content/schema.ts` as follows:
-
-| Property (* required) | Type      | Description                                                                                                                                                         |
-| ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`*           | `string`  | Sets the stream title.                                                                                                                                              |
-| `pubDate`*         | `date`    | Specifies the publication date. See supported formats [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#examples). |
-| `link`*           | `string`  | Specifies the URL link to the stream.                                                                                                                               |
-| `radio`            | `boolean` | Indicates whether the stream is a radio broadcast. If `true`, an icon will be added to the stream item in the list.                                                 |
-| `video`            | `boolean` | Indicates whether the stream is a video broadcast. If `true`, an icon will be added to the stream item in the list.                                                 |
-| `platform`         | `string`  | Specifies the platform where the stream is published.                                                                                                               |
-
-The theme includes a code snippet for generating `streamSchema`. Type `streamData` to trigger it, then use `tab` to modify the values.
-
-Finally, update the frontmatter in `src/pages/streams.mdx`.
-
-> [!important]- Make sure to keep the `id` field unchanged
->
-> It is required by Astro's [`file()` loader](https://docs.astro.build/en/reference/content-loader-reference/#file-loader) to create entries properly.
-
-### [`/feeds`](../../feeds/)
-
-The `/feeds` page displays content retrieved via :link[@ascorbic/feed-loader]{id=https://www.npmjs.com/package/@ascorbic/feed-loader}. You can define an external data source (like RSS, RDF, or Atom feeds) for the `feeds` collection using the following:
-
-```ts title='src/content.config.ts' {5}
-import { feedLoader } from '@ascorbic/feed-loader'
-
-const feeds = defineCollection({
-  loader: feedLoader({
-    url: 'https://astro.build/rss.xml',
-  }),
-})
-```
-
-> [!tip]- Use Astro loaders to fetch external data (may affect startup time)
->  
-> `feedLoader` and `blueskyPostsLoader` (below) are both [Astro loaders](https://docs.astro.build/en/reference/content-loader-reference/#what-is-a-loader). Built with the [Content Loader API](https://docs.astro.build/en/reference/content-loader-reference/), Astro loaders enable seamless data fetching from various sources as content collections. This API was first introduced in [Astro 4.14](https://astro.build/blog/astro-4140/#experimental-content-layer-api) and became stable in [Astro 5](https://astro.build/blog/astro-5/#content-layer).
-> 
-> Starting in Astro 5, the dev server address is shown only after external resources are loaded and content is synced. Using Astro loaders may delay server startup.
 
 ### [`/highlights`](../../highlights/)
 
@@ -299,6 +252,58 @@ This is a sample highlight entry for the `/highlights` page.
 > 
 > The `/highlights` page displays remote images from `'cdn.bsky.app'`. The theme sets this domain in `SITE.imageDomains` so [Astro can optimize them](https://docs.astro.build/en/guides/images/#display-optimized-images-with-the-image--component) — feel free to change it if needed.
 
+> [!tip]- Use Astro loaders to fetch external data (may affect startup time)
+>  
+> `blueskyPostsLoader` and `feedLoader` (below) are both [Astro loaders](https://docs.astro.build/en/reference/content-loader-reference/#what-is-a-loader). Built with the [Content Loader API](https://docs.astro.build/en/reference/content-loader-reference/), Astro loaders enable seamless data fetching from various sources as content collections. This API was first introduced in [Astro 4.14](https://astro.build/blog/astro-4140/#experimental-content-layer-api) and became stable in [Astro 5](https://astro.build/blog/astro-5/#content-layer).
+> 
+> Starting in Astro 5, the dev server address is shown only after external resources are loaded and content is synced. Using Astro loaders may delay server startup.
+
+### [`/photos`](../../photos/)
+
+Photos on the `/photos` page are manually configured in `src/content/photos/data.json`. Both local and public remote images are supported and can be mixed. This page can also showcase designs, illustrations, and other images — not just photos.
+
+The fields for each entry in the `photos` collection are defined by `photoSchema` as follows:
+
+| Property (* required) | Type     | Description                                                                                 |
+| --------------------- | -------- | ------------------------------------------------------------------------------------------- |
+| `id`*                 | `string` | File (name/path) of the image in the `src/content/photos/` directory or a remote image URL. |
+| `desc`                | `string` | Optional description for the image.                                                         |
+
+For local images, files must be placed in `src/content/photos/`, and `id` must be configured such that it can be correctly matched in the following code:
+
+```ts title='src/pages/photos/photos.[hash].json.ts'
+const localImages = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/content/photos/**/*.{jpg,jpeg,png,webp,avif}'
+)
+const localImageKeys = Object.keys(localImages)
+const localImagePath = localImageKeys.find((path) => path.includes(id))
+```
+
+For remote images, `id` must start with `http` or `https`. To enable thumbnail generation, also configure `imageDomains` in `src/config.ts` (see explanation below).
+
+**Page implementation details**
+
+- At build time, a `photos.[hash].json` file is generated based on your `data.json` config. When the `/photos` page loads, it fetches this file and renders the images dynamically.
+- The file is served by `src/pages/photos/photos.[hash].json.ts` as a [static file endpoint](https://docs.astro.build/en/guides/endpoints/#static-file-endpoints), which does the following:
+  - Loads remote or local images to extract metadata.
+  - Uses :link[sharp]{id=lovell/sharp .github} to generate a blurred placeholder as a Data URL (cached in `'./node_modules/.astro/photos/'` during development).
+  - Uses Astro’s [`getImage()`](https://docs.astro.build/en/reference/modules/astro-assets/#getimage) to generate 720px-wide thumbnails (served via Astro's built-in `/_image` endpoint during development, and HTTP cached during build).
+
+
+**Additional notes that may be useful**
+
+- Remote images larger than 10MB or loading longer than 10 seconds will be skipped with a warning. You can adjust these limits in `src/utils/image.ts`.
+- Photos are displayed in a left-to-right, top-to-bottom flow based on their order in `data.json`.
+- Lightbox view is powered by :link[viewerjs]{id=fengyuanchen/viewerjs .github}, customizable via `ImageViewer.astro`. Note: this component is also used in `Photoview.astro` and `RenderPost.astro`.
+- To generate thumbnails for remote images, Astro requires [remote image authorization](https://docs.astro.build/en/guides/images/#authorizing-remote-images). For large images over 720px wide, consider setting the `imageDomains` option in `src/config.ts`; otherwise, you can ignore this.
+
+> [!warning]- Avoid mismatches caused by outdated placeholder or aspect ratio cache
+>
+> - For local images, the cache key is based on `id + PLACEHOLDER_PIXEL_TARGET + localImage.width + localImage.height`
+> - For remote images, the cache key is based on `id + PLACEHOLDER_PIXEL_TARGET`
+>
+> If needed, delete `'./node_modules/.astro/photos/'` to clear the cache.
+
 ### [`/shorts`](../../shorts/)
 
 The current `/shorts` page uses data from the `blog` collection. To create a standalone `shorts` collection, follow these steps:
@@ -350,6 +355,47 @@ if (collectionType === 'shorts') {
 > The `CardView` component supports both `'masonry'` and `'grid'` layouts via the `mode` prop. 
 > 
 > For example, `/highlights` (`src/pages/highlights.mdx`) uses `'masonry'`, while `shorts` (`src/pages/shorts.mdx`) uses `'grid'`.  You can customize `CardView` based on your data and layout needs.
+
+### [`/changelog`](../../changelog/)
+
+To recreate the `/changelog` page, please follow the [Adding New Posts](../adding-new-posts/). The content for the `/changelog` page, stored in the `src/content/changelog/` directory, belongs to the `changelog` collection. This collection also uses `postSchema` for frontmatter types.
+
+### [`/streams`](../../streams/)
+
+Similarly to adding projects,  open `src/content/streams/data.json`, delete the existing, and write your own.
+
+The fields for each entry in the `streams` collection are defined by `streamSchema` as follows:
+
+| Property (* required) | Type      | Description                                                                                                                                                         |
+| ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`*           | `string`  | Sets the stream title.                                                                                                                                              |
+| `pubDate`*         | `date`    | Specifies the publication date. See supported formats [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#examples). |
+| `link`*           | `string`  | Specifies the URL link to the stream.                                                                                                                               |
+| `radio`            | `boolean` | Indicates whether the stream is a radio broadcast. If `true`, an icon will be added to the stream item in the list.                                                 |
+| `video`            | `boolean` | Indicates whether the stream is a video broadcast. If `true`, an icon will be added to the stream item in the list.                                                 |
+| `platform`         | `string`  | Specifies the platform where the stream is published.                                                                                                               |
+
+The theme includes a code snippet for generating `streamSchema`. Type `streamData` to trigger it, then use `tab` to modify the values.
+
+Finally, update the frontmatter in `src/pages/streams.mdx`.
+
+> [!important]- Make sure to keep the `id` field unchanged
+>
+> It is required by Astro's [`file()` loader](https://docs.astro.build/en/reference/content-loader-reference/#file-loader) to create entries properly.
+
+### [`/feeds`](../../feeds/)
+
+The `/feeds` page displays content retrieved via :link[@ascorbic/feed-loader]{id=https://www.npmjs.com/package/@ascorbic/feed-loader}. You can define an external data source (like RSS, RDF, or Atom feeds) for the `feeds` collection using the following:
+
+```ts title='src/content.config.ts' {5}
+import { feedLoader } from '@ascorbic/feed-loader'
+
+const feeds = defineCollection({
+  loader: feedLoader({
+    url: 'https://astro.build/rss.xml',
+  }),
+})
+```
 
 ### [`404`](../../404/)
 
@@ -421,4 +467,7 @@ If you encounter any issues, find errors, or see opportunities for improvement, 
 
 2025-04-30
 - Changes for Astro 5.7
+
+2025-07-01
+- Add: [`/photos`](#photos)
 :::

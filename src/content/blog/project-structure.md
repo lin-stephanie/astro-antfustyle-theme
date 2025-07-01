@@ -68,25 +68,26 @@ astro-antfustyle-theme
 | | |-blog                                  // For 'blog' collection.
 | | |-changelog                             // For 'changelog' collection.
 | | |-home                                  // For 'home' collection.
-| | | |-index.md                            // Homepage content in Markdown.
+| | |-photos                                // For 'photos' collection.
 | | |-projects                              // For 'projects' collection.
-| | | |-data.json                           // Data for project listings.
 | | |-streams                               // For 'streams' collection.
-| | | |-data.json                           // Data for stream listings.
 | | |-schema.ts                             // Schema definitions for type-checking frontmatter and JSON.
 | |-layouts                                 // Layout components for different page structures.
 | | |-BaseLayout.astro                      // Base layout used across the site.
 | | |-StandardLayout.astro                  // Standard layout for most pages.
 | | |-TabbedLayout.astro                    // Tabbed layout for easy content navigation.
 | |-pages                                   // Directory for generating pages in the Astro project.
-| | |-404.mdx                               // Custom 404 error page.
 | | |-blog                                  // Blog post pages.
 | | | |-[...slug].astro                     // Dynamic routing for individual blog posts.
 | | | |-index.mdx                           // Blog index page.
 | | |-changelog                             // Changlog post pages.
 | | | |-[slug].astro                        // Dynamic routing for individual changlog posts.
 | | | |-index.mdx                           // Changlog index page.
-| | |-feeds.mdx                             // Example: fetching Astro Blog using @ascorbic/feed-loader.
+| | |-photos                                // Display photos.
+| | | |-index.mdx                           // Photos index page.
+| | | |-photos.[hash].json.ts               // Build-time generated `photos.[hash].json` for client-side retrieval.
+| | |-404.mdx                               // Custom 404 error page.
+| | |-feeds.mdx                             // Example: fetching Astro Blog using `@ascorbic/feed-loader`.
 | | |-highlights.mdx                        // Display creative work or curated posts.
 | | |-index.mdx                             // Homepage.
 | | |-manifest.webmanifest.js               // Web app manifest file for mobile and PWA support.
@@ -105,6 +106,7 @@ astro-antfustyle-theme
 | | |-animation.ts                          // For handling animation.
 | | |-data.ts                               // For handling psots and GitHub/Bluesky data.
 | | |-datetime.ts                           // For handling date and time.
+| | |-image.ts                              // For handling image.
 | | |-path.ts                               // For handling path-related operations.
 | | |-toc.ts                                // For generating tables of contents.
 | |-config.ts                               // Configuration file for theme-specific options.
@@ -144,20 +146,21 @@ How theme pages map to collections (defined in `src/content.config.ts`):
 
 <div class='overflow-x-auto'>
 
-| URL Path                                              | Page File Location                 | Collection  Storage Location                                     | Zod Schema |
-| ----------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------- | ------------------------- |
-| `/`                                                   | `src/pages/index.mdx`              | `src/content/home/`                                              | -                         |
-| `/blog`                                               | `src/pages/blog/index.mdx`         | `src/content/blog/`                                              | `postSchema`              |
-| `/blog/post-name` <br>`/blog/sequences/one/two/three` | `src/pages/blog/[...slug].astro`   | `src/content/blog/`                                              | `postSchema`              |
-| `/projects`                                           | `src/pages/projects.mdx`           | `src/content/projects/`                                          | `projectSchema`          |
-| `/changelog`                                          | `src/pages/changelog/index.mdx`    | `src/content/changelog/`                                         | `postSchema`              |
-| `/changelog/xxx`                                      | `src/pages/changelog/[slug].astro` | `src/content/changelog/`                                         | `postSchema`              |
-| `/feeds`                                              | `src/pages/feeds.mdx`              | [Via Astro loader](../recreating-current-pages/#feeds-page)      | Default by Astro loader   |
-| `/streams`                                            | `src/pages/streams.mdx`            | `src/content/streams/`                                           | `streamSchema`           |
-| `/releases`                                           | `src/pages/releases.mdx`           | [Via Astro loader](../customizing-github-activity-pages/)        | Default by Astro loader   |
-| `/prs`                                                | `src/pages/prs.mdx`                | [Via Astro loader](../customizing-github-activity-pages/)        | Default by Astro loader   |
-| `/highlughts`                                         | `src/pages/highlights.mdx`         | [Via Astro loader](../recreating-current-pages/#highlights-page) | Default by Astro loader   |
-| `/shorts`                                             | `src/pages/shorts.mdx`             | `src/content/blog/` (processed for demo)                         | `postSchema`              |
+| URL Path                                              | Page File Location                 | Collection  Storage Location                                     | Zod Schema              |
+| ----------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------- | ----------------------- |
+| `/`                                                   | `src/pages/index.mdx`              | `src/content/home/`                                              | -                       |
+| `/blog`                                               | `src/pages/blog/index.mdx`         | `src/content/blog/`                                              | `postSchema`            |
+| `/blog/post-name` <br>`/blog/sequences/one/two/three` | `src/pages/blog/[...slug].astro`   | `src/content/blog/`                                              | `postSchema`            |
+| `/projects`                                           | `src/pages/projects.mdx`           | `src/content/projects/`                                          | `projectSchema`         |
+| `/releases`                                           | `src/pages/releases.mdx`           | [Via Astro loader](../customizing-github-activity-pages/)        | Default by Astro loader |
+| `/prs`                                                | `src/pages/prs.mdx`                | [Via Astro loader](../customizing-github-activity-pages/)        | Default by Astro loader |
+| `/highlughts`                                         | `src/pages/highlights.mdx`         | [Via Astro loader](../recreating-current-pages/#highlights-page) | Default by Astro loader |
+| `/photos`                                             | `src/pages/photos/index.mdx`       | `src/content/photos/`                                            | `photoSchema`           |
+| `/shorts`                                             | `src/pages/shorts.mdx`             | `src/content/blog/` (processed for demo)                         | `postSchema`            |
+| `/changelog`                                          | `src/pages/changelog/index.mdx`    | `src/content/changelog/`                                         | `postSchema`            |
+| `/changelog/xxx`                                      | `src/pages/changelog/[slug].astro` | `src/content/changelog/`                                         | `postSchema`            |
+| `/feeds`                                              | `src/pages/feeds.mdx`              | [Via Astro loader](../recreating-current-pages/#feeds-page)      | Default by Astro loader |
+| `/streams`                                            | `src/pages/streams.mdx`            | `src/content/streams/`                                           | `streamSchema`          |
 
 </div>
 

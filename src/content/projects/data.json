@@ -182,9 +182,9 @@
     "category": "Image Handling"
   },
   {
-    "id": "medium-zoom",
-    "link": "https://github.com/francoischalifour/medium-zoom",
-    "desc": "Medium-inspired zoom for images",
+    "id": "viewerjs",
+    "link": "https://github.com/fengyuanchen/viewerjs",
+    "desc": "JavaScript image viewer",
     "icon": "i-icon-park-zoom-in",
     "category": "Image Handling"
   },
@@ -228,13 +228,6 @@
     "link": "https://github.com/rstacruz/nprogress",
     "desc": "Slim progress bars for Ajax applications",
     "icon": "i-svg-spinners-3-dots-fade",
-    "category": "Utilities"
-  },
-  {
-    "id": "swiper",
-    "link": "https://github.com/nolimits4web/swiper",
-    "desc": "Most modern mobile touch slider",
-    "icon": "i-ion-images-sharp",
     "category": "Utilities"
   },
   {

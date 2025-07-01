@@ -2,7 +2,7 @@
 title: FAQs and Known Issues
 description: FAQs and known issues in Astro AntfuStyle Theme
 pubDate: 2020-01-01
-lastModDate: 2025-02-28
+lastModDate: 2025-07-01
 toc: true
 share: true
 giscus: true
@@ -121,9 +121,9 @@ Search for `data-pagefind-` in the editor to see the current setup.
 
 ### Image Zoom
 
-The theme uses :link[medium-zoom]{id=francoischalifour/medium-zoom .github} to zoom images that match the `.prose img:not(.no-zoom)` selector. To disable zoom for a specific image, add the `no-zoom` class. 
+The theme uses :link[viewerjs]{id=fengyuanchen/viewerjs .github} to zoom images that match the `article img:not(.no-zoom)` selector. To disable zoom for a specific image, add the `no-zoom` class. 
 
-Configuration can be done in `src/layouts/BaseLayout.astro`.
+Configuration can be done in `src/components/views/RenderPost.astro` and `src/components/widgets/ImageViewer.astro`.
 
 ### RSS Subscription Scope
 
@@ -184,4 +184,7 @@ Let’s keep pushing forward and making great things happen — your input is al
 ::summary[Changelog]
 2025-02-28
 - Add: [Choosing a Math Rendering Engine](#choosing-a-math-rendering-engine)
+
+2025-07-01
+- Update: [Image Zoom](#image-zoom)
 :::

@@ -16,7 +16,7 @@ This post provides a brief guide on how to organize and use images in the [Astro
 Astro supports optimizing images during the build phase via the [Image Service API](https://docs.astro.build/en/reference/image-service-reference/) (:link[sharp]{id=lovell/sharp .github} is the [default service](https://docs.astro.build/en/guides/images/#default-image-service)), allowing actions like converting to webp, compressing, adding attributes, inferring dimensions to prevent CLS, lazy loading, and async decoding. However, this only applies in the following cases:
 
 - [Local images stored in `src/`](https://docs.astro.build/en/guides/images/#where-to-store-images) (Images in `public/` are not processed.)
-- [**Authorized** remote images](https://docs.astro.build/en/guides/images/#authorizing-remote-images) (Includes those used with `![]()`, `<Image />` or `<Picture />`.)
+- [**Authorized** remote images](https://docs.astro.build/en/guides/images/#authorizing-remote-images) (Includes those used with `![]()`, `<Image />`, `<Picture />` or `getImage()`.)
 
 ## Images in Markdown Files
 

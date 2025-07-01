@@ -24,8 +24,9 @@ This live demo will guide you through setup and customization, offering helpful 
 - Customizable Layouts, Views, and Navigation
 - [Configurable Animated Backgrounds](./blog/faqs-and-known-issues/#page-backgrounds) (Take a look around!)
 - [Showcase Your GitHub Releases and PRs](./blog/customizing-github-activity-pages)
-- [Highlight Your Creative Work or Curated Posts](./blog/recreating-current-pages/#highlights-page)
-- [Share Your Short Notes or Quick Thoughts](./blog/recreating-current-pages/#shorts-page)
+- [Highlight Your Creative Work or Curated Posts](./blog/recreating-current-pages/#highlights)
+- [Share Your Short Notes or Quick Thoughts](./blog/recreating-current-pages/#shorts)
+- [Create Your Personal Gallery](./blog/recreating-current-pages/#photos)
 
 **User Experience**
 

@@ -123,7 +123,7 @@ Before configuring, it is advisable to review [**Project Structure**](../project
 Once configured, ensure the project is running correctly in your browser, then start creating or migrating your content. Jump to the section you're interested in:
 
 - [**Adding New Posts**](../adding-new-posts/): How to create posts with tips and guidelines.
-- [**Recreating Current Pages**](../recreating-current-pages/): Steps to recreate content for the `/`, `/projects`, `/changelog`, `/streams`, `/feeds`, `/highlights`, `/shorts`, and `404` pages, as well as creating and removing pages.
+- [**Recreating Current Pages**](../recreating-current-pages/): Steps to recreate content for the `/`, `/projects`, `/highlights`, `photos`, `/shorts`, `/changelog`, `/streams`, `/feeds` and `404` pages, as well as creating and removing pages.
 - [**Customizing GitHub Activity Pages**](../customizing-github-activity-pages/): Showcase your project releases or pull requests on GitHub.
 - [**Markdown Syntax Guide**](../markdown-syntax-guide/): Showcase of Markdown rendering in this theme.
 - [**Markdown/MDX Extended Features**](../markdown-mdx-extended-features/): Advanced features like callouts, code blocks, image captions, video embedding, and more.

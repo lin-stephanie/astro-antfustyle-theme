@@ -35,6 +35,7 @@ AntfuStyle is a customizable, feature-rich [Astro 5](https://astro.build/) theme
 - Showcase Your GitHub Releases and PRs
 - Highlight Your Creative Work or Curated Posts
 - Share Your Short Notes or Quick Thoughts
+- Create Your Personal Gallery
 
 **User Experience**
 
