@@ -273,6 +273,10 @@ html.dark .prose {
   border: 1px solid #000;
 }
 
+article img:not(.no-zoom) {
+  cursor: zoom-in;
+}
+
 /* rehype-autolink-headings */
 a.header-anchor {
   float: left;

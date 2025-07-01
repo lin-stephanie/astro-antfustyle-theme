@@ -77,14 +77,14 @@ let proccessedImages: { src: string | ImageMetadata; alt: string }[] = []
 if (images && images.length > 0) {
   if (images.some((image) => !image.src.startsWith('http'))) {
     const localImages = import.meta.glob<{ default: ImageMetadata }>(
-      '/src/assets/**/*.{jpg,jpeg,png,webp}'
+      '/src/assets/**/*.{jpg,jpeg,png,webp,avif}'
     )
 
     proccessedImages = await Promise.all(
       images.map(async (image) => {
         if (!image.src.startsWith('http') && !localImages[image.src])
           throw new Error(
-            `"${image.src}" does not exist in glob: "/src/assets/**/*.{jpg,jpeg,png,webp}"`
+            `"${image.src}" does not exist in glob: "/src/assets/**/*.{jpg,jpeg,png,webp,avif}"`
           )
 
         return {

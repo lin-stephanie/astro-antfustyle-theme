@@ -109,14 +109,11 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
           : this.#getElements('.toc-heading')
 
       // observe heading elements to trigger highlight change
-      this.#observer = new IntersectionObserver(
-        (entries) => this.#onIntersect(entries),
-        {
-          root: null,
-          rootMargin: '0% 0% -75% 0%',
-          threshold: 0,
-        }
-      )
+      this.#observer = new IntersectionObserver(this.#onIntersect, {
+        root: null,
+        rootMargin: '0% 0% -75% 0%',
+        threshold: 0,
+      })
 
       for (const headingEl of headings) {
         this.#observer.observe(headingEl)

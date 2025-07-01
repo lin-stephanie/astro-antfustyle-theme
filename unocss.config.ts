@@ -86,7 +86,7 @@ export default defineConfig({
     [
       /^shadow-custom_(-?\d+)_(-?\d+)_(-?\d+)_(-?\d+)$/,
       ([_, x, y, blur, spread]) =>
-        `shadow-[${x}px_${y}px_${blur}px_${spread}px_rgba(0,0,0,0.2)] dark:shadow-[${x}px_${y}px_${blur}px_${spread}px_rgba(255,255,255,0.4)]`,
+        `shadow-[${x}px_${y}px_${blur}px_${spread}px_rgba(0,0,0,0.2)] dark:shadow-[${x}px_${y}px_${blur}px_${spread}px_rgba(255,255,255,0.25)]`,
     ],
     [
       /^btn-(\w+)$/,

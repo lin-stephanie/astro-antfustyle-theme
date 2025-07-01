@@ -17,6 +17,9 @@ interface RemoteImageFail {
   height: null
 }
 
+const TIMEOUT_MS = 10_000
+const MAX_BYTES = 10_000_000
+
 /**
  * Calculates appropriate dimensions for the placeholder
  * based on original image size and quality.
@@ -93,7 +96,7 @@ export async function fetchRemoteImageWithSharp(
   urlStr: string,
   opts: { timeoutMs?: number; maxBytes?: number } = {}
 ): Promise<RemoteImageSuccess | RemoteImageFail> {
-  const { timeoutMs = 10_000, maxBytes = 10_000_000 } = opts
+  const { timeoutMs = TIMEOUT_MS, maxBytes = MAX_BYTES } = opts
 
   // 0. URL & protocol validation
   let url: URL

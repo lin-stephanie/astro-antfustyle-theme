@@ -23,7 +23,7 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# ESLint cache
+# eslint cache
 .eslintcache
 
 # local archive
