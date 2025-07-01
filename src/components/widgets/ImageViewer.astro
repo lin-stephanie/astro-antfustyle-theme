@@ -1,0 +1,136 @@
+---
+import Viewer from 'viewerjs'
+
+interface Props {
+  selector: string
+  options?: Viewer.Options
+  asyncInsert?: boolean
+  tabFocus?: boolean
+}
+
+const {
+  selector,
+  options,
+  asyncInsert = false,
+  tabFocus = false,
+} = Astro.props as Props
+---
+
+<image-viewer
+  data-selector={selector}
+  data-options={JSON.stringify(options)}
+  data-async-insert={asyncInsert ? '' : undefined}
+  data-tab-focus={tabFocus ? '' : undefined}
+>
+</image-viewer>
+
+<script>
+  import Viewer from 'viewerjs'
+
+  // global default config
+  Viewer.setDefaults({
+    button: false,
+    navbar: 2,
+    title: [
+      2,
+      (img: HTMLImageElement) => {
+        // prevent filling in alt with image URL when empty
+        const fn = img.src.split('/').pop()?.split(/[?#]/)[0]
+        return img.alt && img.alt !== fn ? img.alt : ''
+      },
+    ],
+    toolbar: false,
+    container: 'image-viewer',
+    initialCoverage: 1,
+    transition: false,
+    zIndexInline: 300,
+    filter: (image: HTMLImageElement) => {
+      return (
+        !image.classList.contains('no-zoom') &&
+        image.parentNode?.nodeName !== 'A' &&
+        image.parentNode?.parentNode?.nodeName !== 'A'
+      )
+    },
+  })
+
+  export class ImageViewer extends HTMLElement {
+    #viewer: InstanceType<typeof Viewer> | null = null
+    #mutationObserver: MutationObserver | null = null
+    #lastViewedImage: HTMLImageElement | null = null
+
+    connectedCallback() {
+      const selector = this.dataset.selector || 'img'
+      const container = document.querySelector(selector) as HTMLElement | null
+      if (!container) return
+
+      let userOptions: Viewer.Options = {}
+      try {
+        if (this.dataset.options) userOptions = JSON.parse(this.dataset.options)
+      } catch (err) {
+        console.error('[ImageViewer] Failed to parse options:', err)
+      }
+
+      const initOrUpdateViewer = () => {
+        if (this.#viewer) {
+          this.#viewer.update()
+          return
+        }
+
+        if (container.querySelector('img')) {
+          this.#viewer = new Viewer(container, {
+            ...userOptions,
+            ...(this.hasAttribute('data-tab-focus') && {
+              viewed: ({ detail }) => {
+                this.#lastViewedImage = detail.originalImage
+              },
+              hidden: () => {
+                if (this.#lastViewedImage) {
+                  const el = this.#lastViewedImage.parentNode
+                  if (el?.nodeName === 'FIGURE') {
+                    requestAnimationFrame(() => (el as HTMLElement)?.focus())
+                  }
+                  requestAnimationFrame(() => this.#lastViewedImage?.focus())
+                  this.#lastViewedImage = null
+                }
+              },
+            }),
+          })
+
+          // https://github.com/fengyuanchen/viewerjs/issues/197
+          // @ts-expect-error (ignore)
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          this.#viewer.close = function () {}
+          // @ts-expect-error (ignore)
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          this.#viewer.open = function () {}
+        }
+      }
+
+      initOrUpdateViewer()
+
+      // watch for future DOM changes
+      if (this.hasAttribute('data-async-insert')) {
+        this.#mutationObserver = new MutationObserver(initOrUpdateViewer)
+        this.#mutationObserver.observe(container, {
+          childList: true,
+        })
+      }
+    }
+
+    disconnectedCallback() {
+      if (this.#mutationObserver) {
+        this.#mutationObserver.disconnect()
+        this.#mutationObserver = null
+      }
+
+      if (this.#viewer) {
+        this.#viewer.destroy()
+        this.#viewer = null
+      }
+    }
+  }
+
+  if (!customElements.get('image-viewer')) {
+    customElements.define('image-viewer', ImageViewer)
+  }
+</script>

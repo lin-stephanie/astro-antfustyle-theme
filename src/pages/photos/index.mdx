@@ -1,0 +1,27 @@
+---
+title: Photos
+subtitle: Create your personal gallery (photos below from Unsplash)
+description: Create your personal gallery (photos below from Unsplash)
+bgType: false
+toc: false
+ogImage: false
+---
+
+import BaseLayout from '~/layouts/BaseLayout.astro'
+import StandardLayout from '~/layouts/StandardLayout.astro'
+import PhotoView from '~/components/views/PhotoView.astro'
+
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  bgType={frontmatter.bgType}
+  ogImage={frontmatter.ogImage}
+>
+  <StandardLayout
+    title={frontmatter.title}
+    subtitle={frontmatter.subtitle}
+    isCentered={true}
+  >
+    <PhotoView />
+  </StandardLayout>
+</BaseLayout>

@@ -1,0 +1,414 @@
+---
+import Loader from '~/components/widgets/Loader.astro'
+import ImageViewer from '~/components/widgets/ImageViewer.astro'
+
+import { hash } from '~/pages/photos/photos.[hash].json'
+
+interface Props {
+  gap?: number
+  minPhotoWidth?: number
+  maxPhotoWidth?: number
+  layout?: 'masonry' | 'square'
+  masonryStrategy?: 'sequential' | 'balanced'
+}
+
+const {
+  gap = 16,
+  minPhotoWidth = 240,
+  maxPhotoWidth = 1000,
+  layout = 'masonry',
+  masonryStrategy = 'sequential',
+} = Astro.props as Props
+---
+
+<div class="mx-20 lt-lgp:mx-10 lt-md:mx-1">
+  <photo-view
+    data-hash={hash}
+    data-gap={gap}
+    data-min-photo-width={minPhotoWidth}
+    data-max-photo-width={maxPhotoWidth}
+    data-layout={layout}
+    data-masonry-strategy={layout === 'masonry' ? masonryStrategy : undefined}
+    class="photo-view block relative w-full"
+  >
+    <div class="photo-container"></div>
+    <button
+      class="photo-layout-toggle z-50 fixed left-5 bottom-6
+        flex items-center justify-center w-10 h-10 rounded-full
+        op-30 op-transition lt-lgp:(op-50! bg-#8883 dark:bg-#8886)
+        hover:(op-100! bg-#8883) print:hidden"
+      title="Layout toggle"
+    >
+      <div u-i-ri-layout-masonry-line class="icon-masonry hidden"></div>
+      <div u-i-ri-layout-grid-2-line class="icon-grid hidden"></div>
+    </button>
+  </photo-view>
+  <Loader class="photo-loader" />
+  <ImageViewer
+    selector=".photo-container"
+    options={{ url: 'data-origin' }}
+    asyncInsert={true}
+    tabFocus={true}
+  />
+</div>
+
+<script>
+  import type { PhotoItem } from '~/pages/photos/photos.[hash].json'
+
+  class PhotoView extends HTMLElement {
+    #initialized = false
+    #isMasonry = this.dataset.layout === 'masonry'
+    #masonryStrategy = this.dataset.masonryStrategy || 'sequential'
+
+    #gap = parseInt(this.dataset.gap || '16', 10)
+    #minPhotoWidth = parseInt(this.dataset.minPhotoWidth || '240', 10)
+    #maxPhotoWidth = parseInt(this.dataset.maxPhotoWidth || '1000', 10)
+
+    #columns = 0
+    #colWidth = 0
+    #containerWidth = 0
+    #colHeights: number[] = []
+
+    #currentIndex = 0
+    #isLoading = false
+    allLoaded = false
+    #batchSize = 15
+    #allItems: PhotoItem[] = []
+    #ticking = false
+    #distanceToBottom = 200
+
+    #loader: HTMLElement | null = null
+    #container: HTMLElement | null = null
+    #button: HTMLButtonElement | null = null
+    #resizeObserver: ResizeObserver | null = null
+    #debounceTimeout: ReturnType<typeof setTimeout> | null = null
+
+    async connectedCallback() {
+      if (this.#initialized) return
+      this.#initialized = true
+      this.#container = this.querySelector('.photo-container')
+      this.#loader = document.querySelector('.photo-loader')
+
+      await this.#fetchData()
+      this.#getLayout()
+      this.#buildLayout()
+      this.#handleWindowScroll()
+
+      window.addEventListener('scroll', this.#handleWindowScroll, {
+        passive: true,
+      })
+
+      this.#resizeObserver = new ResizeObserver(this.#handleResize)
+      this.#resizeObserver.observe(this)
+
+      this.#button = this.querySelector('.photo-layout-toggle')
+      this.#button?.addEventListener('click', this.#handleClickToggle)
+
+      this.#container?.addEventListener('keydown', this.#handleKeyOpen)
+    }
+
+    disconnectedCallback() {
+      window.removeEventListener('scroll', this.#handleWindowScroll)
+
+      if (this.#resizeObserver) {
+        this.#resizeObserver.disconnect()
+        this.#resizeObserver = null
+      }
+
+      if (this.#debounceTimeout) {
+        clearTimeout(this.#debounceTimeout)
+        this.#debounceTimeout = null
+      }
+
+      if (this.#button) {
+        this.#button.removeEventListener('click', this.#handleClickToggle)
+        this.#button = null
+      }
+
+      if (this.#container) {
+        this.#container.removeEventListener('keydown', this.#handleKeyOpen)
+        this.#container = null
+      }
+
+      this.#initialized = false
+    }
+
+    #fetchData = async () => {
+      try {
+        const res = await fetch(`/photos/photos.${this.dataset.hash}.json`)
+        const [_v, data] = (await res.json()) as [string, PhotoItem[]]
+        this.#allItems = data
+        // if (import.meta.env.DEV) console.log(this.#allItems)
+      } catch (err) {
+        console.error('[PhotoView] fetch error:', err)
+      }
+    }
+
+    #getLayout = () => {
+      if (localStorage.getItem('photo-layout')) {
+        this.#isMasonry = localStorage.getItem('photo-layout') === 'masonry'
+      } else {
+        this.#isMasonry = this.dataset.layout === 'masonry'
+        localStorage.setItem(
+          'photo-layout',
+          this.#isMasonry ? 'masonry' : 'square'
+        )
+      }
+
+      this.dataset.layout = this.#isMasonry ? 'masonry' : 'square'
+    }
+
+    #buildLayout = () => {
+      if (this.#isMasonry) {
+        this.#getMasonryParams()
+        this.#renderMasonry()
+        this.#isLoading = false
+      } else {
+        this.#getGridParams()
+        this.#renderGrid()
+        this.#isLoading = false
+      }
+    }
+
+    #getMasonryParams = () => {
+      this.#containerWidth = this.offsetWidth
+
+      this.#columns = Math.floor(this.#containerWidth / this.#minPhotoWidth)
+      this.#columns = Math.max(
+        1,
+        Math.min(this.#columns, this.#allItems.length)
+      )
+
+      const totalGap = this.#gap * (this.#columns - 1)
+      this.#colWidth = (this.#containerWidth - totalGap) / this.#columns
+      this.#colWidth = Math.min(this.#colWidth, this.#maxPhotoWidth)
+      this.#container?.style.setProperty('--photo-width', `${this.#colWidth}px`)
+
+      this.#colHeights = new Array(this.#columns).fill(0)
+    }
+
+    #calcMasonryTranslate = (
+      idx: number
+    ): { col: number; left: number; top: number } => {
+      const col =
+        this.#masonryStrategy === 'sequential'
+          ? idx % this.#columns
+          : this.#colHeights.indexOf(Math.min(...this.#colHeights))
+      const top = this.#colHeights[col]
+      const left = col * (this.#colWidth + this.#gap)
+      return { col, left, top }
+    }
+
+    #renderMasonry = () => {
+      const startIndex = this.#currentIndex * this.#batchSize
+      const endIndex = startIndex + this.#batchSize
+      const items = this.#allItems.slice(startIndex, endIndex)
+
+      if (items.length === 0) {
+        this.#isLoading = false
+        this.allLoaded = true
+        return
+      }
+
+      const fragment = document.createDocumentFragment()
+      let idx = startIndex
+      for (const item of items) {
+        const aspect = item.aspectRatio
+        const { col, left, top } = this.#calcMasonryTranslate(idx)
+
+        const fig = document.createElement('figure')
+        fig.className = 'photo-figure'
+        fig.dataset.aspectRatio = aspect.toString()
+        fig.setAttribute('role', 'button')
+        fig.setAttribute('tabindex', '0')
+        fig.setAttribute('aria-label', 'Open viewer')
+        fig.style.setProperty('--photo-top', top.toString() + 'px')
+        fig.style.setProperty('--photo-left', left.toString() + 'px')
+        fig.style.setProperty('--photo-placeholder', `url(${item.placeholder})`)
+
+        const img = document.createElement('img')
+        img.src = item.thumbnail
+        img.alt = item.desc
+        img.dataset.origin = item.src
+        img.loading = idx <= 10 ? 'eager' : 'lazy'
+        img.decoding = idx <= 10 ? 'sync' : 'async'
+        img.fetchPriority = idx <= 10 ? 'high' : 'low'
+        img.addEventListener(
+          'load',
+          function (this: HTMLImageElement) {
+            this.style.setProperty('--photo-opacity', '1')
+          },
+          { once: true }
+        )
+        fig.appendChild(img)
+
+        if (item.desc) {
+          const figcaption = document.createElement('figcaption')
+          figcaption.textContent = item.desc
+          figcaption.setAttribute('aria-hidden', 'true')
+          fig.appendChild(figcaption)
+        }
+
+        this.#colHeights[col] += this.#colWidth / aspect + this.#gap
+        fragment.appendChild(fig)
+        idx++
+      }
+      if (this.#loader) this.#loader.style.display = 'none'
+      this.style.height = `${Math.max(...this.#colHeights)}px`
+      this.#container?.appendChild(fragment)
+      this.#currentIndex++
+    }
+
+    #getGridParams = () => {
+      this.#container?.style.setProperty(
+        '--min-photo-width',
+        `${this.#minPhotoWidth}px`
+      )
+      this.#container?.style.setProperty('--photo-gap', `${this.#gap}px`)
+    }
+
+    #renderGrid = () => {
+      const startIndex = this.#currentIndex * this.#batchSize
+      const endIndex = startIndex + this.#batchSize
+      const items = this.#allItems.slice(startIndex, endIndex)
+
+      if (items.length === 0) {
+        this.#isLoading = false
+        this.allLoaded = true
+        return
+      }
+
+      const fragment = document.createDocumentFragment()
+      let idx = startIndex
+      for (const item of items) {
+        const fig = document.createElement('figure')
+        fig.className = 'photo-figure'
+        fig.setAttribute('role', 'button')
+        fig.setAttribute('tabindex', '0')
+        fig.setAttribute('aria-label', 'Open viewer')
+        fig.style.setProperty('--photo-placeholder', `url(${item.placeholder})`)
+
+        const img = document.createElement('img')
+        img.src = item.thumbnail
+        img.alt = item.desc
+        img.dataset.origin = item.src
+        img.loading = idx <= 10 ? 'eager' : 'lazy'
+        img.decoding = idx <= 10 ? 'sync' : 'async'
+        img.fetchPriority = idx <= 10 ? 'high' : 'low'
+        img.addEventListener(
+          'load',
+          function (this: HTMLImageElement) {
+            this.style.opacity = '1'
+          },
+          { once: true }
+        )
+        fig.appendChild(img)
+
+        if (item.desc) {
+          const figcaption = document.createElement('figcaption')
+          figcaption.textContent = item.desc
+          figcaption.setAttribute('aria-hidden', 'true')
+          fig.appendChild(figcaption)
+        }
+
+        fragment.appendChild(fig)
+        idx++
+      }
+      if (this.#loader) this.#loader.style.display = 'none'
+      this.#container?.appendChild(fragment)
+      this.#currentIndex++
+    }
+
+    #updateMasonryLayout = () => {
+      if (this.#containerWidth === this.offsetWidth) return
+      this.#getMasonryParams()
+
+      const figs = Array.from(
+        this.querySelectorAll('.photo-figure')
+      ) as HTMLElement[]
+      for (let idx = 0; idx < figs.length; idx++) {
+        const { col, left, top } = this.#calcMasonryTranslate(idx)
+
+        const fig = figs[idx]
+        fig.style.setProperty('--photo-left', left.toString() + 'px')
+        fig.style.setProperty('--photo-top', top.toString() + 'px')
+
+        const ratio = parseFloat(fig.dataset.aspectRatio!)
+        this.#colHeights[col] += this.#colWidth / ratio + this.#gap
+      }
+
+      this.style.height = `${Math.max(...this.#colHeights)}px`
+    }
+
+    #handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+      const windowHeight = window.innerHeight
+      const documentHeight = document.documentElement.scrollHeight
+      const isNearBottom =
+        documentHeight - (scrollTop + windowHeight) <= this.#distanceToBottom
+
+      if (isNearBottom) {
+        this.#isLoading = true
+        this.#isMasonry ? this.#renderMasonry() : this.#renderGrid()
+        this.#isLoading = false
+      }
+    }
+
+    #handleWindowScroll = () => {
+      if (!this.#ticking && !this.#isLoading && !this.allLoaded) {
+        window.requestAnimationFrame(() => {
+          this.#handleScroll()
+          this.#ticking = false
+        })
+        this.#ticking = true
+      }
+    }
+
+    #debounceUpdateLayout = () => {
+      if (this.#debounceTimeout) clearTimeout(this.#debounceTimeout)
+      this.#debounceTimeout = setTimeout(() => this.#updateMasonryLayout(), 100)
+    }
+
+    #handleResize = () => {
+      if (this.#isMasonry) this.#debounceUpdateLayout()
+    }
+
+    #handleClickToggle = () => {
+      if (this.#container) {
+        this.#container.innerHTML = ''
+        this.#container.style = ''
+      }
+      if (this.#loader) this.#loader.style.display = ''
+
+      this.#isMasonry = !this.#isMasonry
+      this.dataset.layout = this.#isMasonry ? 'masonry' : 'square'
+      this.style.height = this.#isMasonry ? '0' : 'auto'
+
+      this.#currentIndex = 0
+      this.#isLoading = true
+      this.allLoaded = false
+
+      this.#buildLayout()
+
+      window.localStorage.setItem(
+        'photo-layout',
+        this.#isMasonry ? 'masonry' : 'square'
+      )
+    }
+
+    // event delegation: open viewer when focus is on a figure and presses Enter
+    #handleKeyOpen = (ev: KeyboardEvent) => {
+      if (ev.defaultPrevented) return
+      if (!(ev.key === 'Enter')) return
+
+      const fig = (ev.target as HTMLElement)?.closest('.photo-figure')
+      if (!fig) return
+
+      const img = fig.querySelector('img')
+      img?.click()
+    }
+  }
+
+  if (!customElements.get('photo-view'))
+    customElements.define('photo-view', PhotoView)
+</script>

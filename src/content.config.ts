@@ -11,6 +11,7 @@ import {
   postSchema,
   projectSchema,
   streamSchema,
+  photoSchema,
 } from '~/content/schema'
 
 const pages = defineCollection({
@@ -28,27 +29,8 @@ const blog = defineCollection({
 })
 
 const projects = defineCollection({
-  loader: file('src/content/projects/data.json'),
+  loader: file('./src/content/projects/data.json'),
   schema: projectSchema,
-})
-
-const changelog = defineCollection({
-  loader: glob({
-    base: './src/content/changelog',
-    pattern: '**/[^_]*.{md,mdx}',
-  }),
-  schema: postSchema,
-})
-
-const streams = defineCollection({
-  loader: file('src/content/streams/data.json'),
-  schema: streamSchema,
-})
-
-const feeds = defineCollection({
-  loader: feedLoader({
-    url: 'https://astro.build/rss.xml',
-  }),
 })
 
 const releases = defineCollection({
@@ -98,15 +80,40 @@ const highlights = defineCollection({
   }),
 })
 
+const photos = defineCollection({
+  loader: file('src/content/photos/data.json'),
+  schema: photoSchema,
+})
+
+const changelog = defineCollection({
+  loader: glob({
+    base: './src/content/changelog',
+    pattern: '**/[^_]*.{md,mdx}',
+  }),
+  schema: postSchema,
+})
+
+const streams = defineCollection({
+  loader: file('./src/content/streams/data.json'),
+  schema: streamSchema,
+})
+
+const feeds = defineCollection({
+  loader: feedLoader({
+    url: 'https://astro.build/rss.xml',
+  }),
+})
+
 export const collections = {
   pages,
   home,
   blog,
   projects,
-  changelog,
-  streams,
-  feeds,
   releases,
   prs,
   highlights,
+  photos,
+  changelog,
+  streams,
+  feeds,
 }

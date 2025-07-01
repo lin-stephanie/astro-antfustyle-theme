@@ -72,4 +72,16 @@
     ],
     "description": "Insert a stream entry for streams data",
   },
+
+  "Add a photo data": {
+    "scope": "json",
+    "prefix": "photoData",
+    "body": [
+      "{",
+      "  \"id\": \"${1:File (name/path) of the image in the `src/content/photos/` directory or a remote image URL}\",",
+      "  \"desc\": \"${2:If not needed, leave the field as an empty string or delete it}\"",
+      "}",
+    ],
+    "description": "Insert a photo entry for photos data",
+  },
 }

@@ -9,7 +9,7 @@ export const SITE: Site = {
   author: 'Stephanie Lin',
   lang: 'en',
   ogLocale: 'en_US',
-  imageDomains: ['cdn.bsky.app'],
+  imageDomains: ['cdn.bsky.app', 'images.unsplash.com'],
 }
 
 export const UI: Ui = {
@@ -27,18 +27,25 @@ export const UI: Ui = {
       text: 'Projects',
     },
     {
-      path: '/shorts',
-      title: 'Shorts',
-      displayMode: 'iconToTextOnMobile',
-      text: 'Shorts',
-      icon: 'i-material-symbols-note-stack-outline-sharp',
-    },
-    {
       path: '/highlights',
       title: 'Highlights',
       displayMode: 'iconToTextOnMobile',
       text: 'Highlights',
       icon: 'i-ri-screenshot-line',
+    },
+    {
+      path: '/photos',
+      title: 'Photos',
+      displayMode: 'iconToTextOnMobile',
+      text: 'Photos',
+      icon: 'i-ri-camera-ai-line',
+    },
+    {
+      path: '/shorts',
+      title: 'Shorts',
+      displayMode: 'iconToTextOnMobile',
+      text: 'Shorts',
+      icon: 'i-meteor-icons-grid',
     },
     {
       path: '/changelog',
