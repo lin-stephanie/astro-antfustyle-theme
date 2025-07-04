@@ -258,6 +258,10 @@ html.dark .prose {
 }
 
 /* viewerjs */
+.viewer-canvas.viewer-loading > img {
+  opacity: 0;
+}
+
 .viewer-backdrop {
   background-color: rgba(0, 0, 0, 0.9);
 }

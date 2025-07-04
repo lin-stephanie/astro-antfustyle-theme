@@ -75,6 +75,7 @@ summary::-webkit-details-marker {
   left: 0;
 
   width: var(--photo-width);
+  height: var(--photo-height);
   border-radius: 0.375rem;
 
   transform: translate(var(--photo-left), var(--photo-top));
