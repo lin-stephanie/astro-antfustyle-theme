@@ -154,7 +154,7 @@ How theme pages map to collections (defined in `src/content.config.ts`):
 | `/projects`                                           | `src/pages/projects.mdx`           | `src/content/projects/`                                          | `projectSchema`         |
 | `/releases`                                           | `src/pages/releases.mdx`           | [Via Astro loader](../customizing-github-activity-pages/)        | Default by Astro loader |
 | `/prs`                                                | `src/pages/prs.mdx`                | [Via Astro loader](../customizing-github-activity-pages/)        | Default by Astro loader |
-| `/highlughts`                                         | `src/pages/highlights.mdx`         | [Via Astro loader](../recreating-current-pages/#highlights-page) | Default by Astro loader |
+| `/highlights`                                         | `src/pages/highlights.mdx`         | [Via Astro loader](../recreating-current-pages/#highlights-page) | Default by Astro loader |
 | `/photos`                                             | `src/pages/photos/index.mdx`       | `src/content/photos/`                                            | `photoSchema`           |
 | `/shorts`                                             | `src/pages/shorts.mdx`             | `src/content/blog/` (processed for demo)                         | `postSchema`            |
 | `/changelog`                                          | `src/pages/changelog/index.mdx`    | `src/content/changelog/`                                         | `postSchema`            |
