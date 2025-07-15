@@ -8,6 +8,7 @@ interface Props {
   gap?: number
   minPhotoWidth?: number
   maxPhotoWidth?: number
+  batchSize?: number
   layout?: 'masonry' | 'square'
   masonryStrategy?: 'sequential' | 'balanced'
 }
@@ -16,6 +17,7 @@ const {
   gap = 16,
   minPhotoWidth = 240,
   maxPhotoWidth = 1000,
+  batchSize = 15,
   layout = 'masonry',
   masonryStrategy = 'sequential',
 } = Astro.props as Props
@@ -27,6 +29,7 @@ const {
     data-gap={gap}
     data-min-photo-width={minPhotoWidth}
     data-max-photo-width={maxPhotoWidth}
+    data-batch-size={batchSize}
     data-layout={layout}
     data-masonry-strategy={layout === 'masonry' ? masonryStrategy : undefined}
     class="photo-view block relative w-full"
@@ -63,6 +66,7 @@ const {
     #gap = parseInt(this.dataset.gap || '16', 10)
     #minPhotoWidth = parseInt(this.dataset.minPhotoWidth || '240', 10)
     #maxPhotoWidth = parseInt(this.dataset.maxPhotoWidth || '1000', 10)
+    #batchSize = parseInt(this.dataset.batchSize || '15', 10)
 
     #columns = 0
     #colWidth = 0
@@ -72,10 +76,10 @@ const {
     #currentIndex = 0
     #isLoading = false
     #allLoaded = false
-    #batchSize = 15
     #allItems: PhotoItem[] = []
+
     #ticking = false
-    #distanceToBottom = 200
+    #distanceToBottom = window.innerHeight * 0.6
 
     #loader: HTMLElement | null = null
     #container: HTMLElement | null = null
