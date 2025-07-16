@@ -9,7 +9,6 @@ import { remarkPlugins, rehypePlugins } from './plugins'
 import { SITE } from './src/config'
 
 // https://docs.astro.build/en/reference/configuration-reference/
-// https://docs.astro.build/en/reference/experimental-flags/
 export default defineConfig({
   site: SITE.website,
   base: SITE.base,
@@ -27,9 +26,11 @@ export default defineConfig({
   },
   image: {
     domains: SITE.imageDomains,
-    // Used for all local (except `/public`) and remote images using `![]()` syntax; not configurable per-image
+    // https://docs.astro.build/en/guides/images/#responsive-image-behavior
+    // Used for all local (except `/public`) and authorized remote images using `![]()` syntax; not configurable per-image
     // Used for all `<Image />` and `<Picture />` components unless overridden with `layout` prop
-    experimentalLayout: 'constrained',
+    layout: 'constrained',
+    responsiveStyles: true,
   },
   vite: {
     server: {
@@ -40,8 +41,8 @@ export default defineConfig({
     },
     build: { chunkSizeWarningLimit: 1200 },
   },
+  // https://docs.astro.build/en/reference/experimental-flags/
   experimental: {
-    responsiveImages: true,
     contentIntellisense: true,
     preserveScriptOrder: true,
     headingIdCompat: true,

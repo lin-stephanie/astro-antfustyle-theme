@@ -1,5 +1,6 @@
 {
   "experimentalTernaries": false,
+  "experimentalOperatorPosition": "end",
   "printWidth": 80,
   "tabWidth": 2,
   "useTabs": false,
@@ -9,6 +10,7 @@
   "jsxSingleQuote": false,
   "trailingComma": "es5",
   "bracketSpacing": true,
+  "objectWrap": "preserve",
   "bracketSameLine": false,
   "arrowParens": "always",
   "proseWrap": "preserve",
