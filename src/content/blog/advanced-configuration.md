@@ -2,7 +2,7 @@
 title: Advanced Configuration
 description: How to configure Astro AntfuStyle Theme
 pubDate: 2024-10-01
-lastModDate: 2025-05-20
+lastModDate: 2025-07-16
 toc: true
 share: true
 giscus: true
@@ -83,21 +83,36 @@ Once you've [customized the logo](#customizing-logo) and have the SVG file, it's
 >
 > A web app manifest is a JSON file that helps a browser install your website as an app. It originated from Google's PWA initiative.
 
-First, open the `favicon.svg` file in a text editor. Locate a `<path>` element with a dark or missing fill, and add a CSS media query to adjust the fill color based on the theme:
+First, open the `favicon.svg` file in a text editor. Add `<style>` to adjust the fill color based on the theme:
 
-```xml ins={2-8,10} del={9}
+```xml {2-7}
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
   <style>
+    .path { fill: #17191e }
     @media (prefers-color-scheme: dark) {
-      .a {
-        fill: #f0f0f0;
-      }
+      .path { fill: #f0f0f0 }
     }
   </style>
-  <path fill="#0f0f0f" d="…"></path>
-  <path class="a" fill="#0f0f0f" d="…"></path>
+  <path d="…"></path>
 </svg>
 ```
+
+> [!tip]- Alternative way to make favicons respond to theme changes
+> 
+> In the implementation mentioned above, the browser always downloads the same file on initial load. When the user switches the system or browser theme, the browser doesn’t re-parse the SVG, so the favicon only updates after a page refresh or reopening the tab.
+>
+> For real-time responsiveness, you can store separate files like `favicon-light.svg` and `favicon-dark.svg`, and update `Head.astro` as follows:
+> 
+> ```astro title='src/components/base/Head.astro' del={4} ins={2-3}
+> <!-- Icon -->
+> <link rel="icon" type="image/svg+xml" href={withBasePath('/favicon-light.svg')} media="(prefers-color-scheme: light)">
+> <link rel="icon" type="image/svg+xml" href={withBasePath('/favicon-dark.svg')}  media="(prefers-color-scheme: dark)">
+> <link rel="icon" type="image/svg+xml" href={withBasePath('/favicon.svg')} />
+> <link rel="icon" sizes="32x32" href={withBasePath('/favicon.ico')} />
+> <link rel="apple-touch-icon" href={withBasePath('/apple-touch-icon.png')} />
+> ```
+> 
+> Note that [Firefox has not yet implemented `link` level media query switching of favicon](https://bugzilla.mozilla.org/show_bug.cgi?id=1603885).
 
 Next, use the steps in :link[How to Favicon in 2024]{id=https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs#step-2-create-an-ico-file} or :link[Real Favicon Generator]{id=https://realfavicongenerator.net/} to generate the icons. Rename the files as mentioned above and copy them to the `public` directory to replace the existing ones.
 
@@ -408,4 +423,7 @@ If you encounter any issues, find errors, or see opportunities for improvement, 
 ::summary[Changelog]
 2025-05-20
 - Add: [Configure Giscus Comments](#configure-giscus-comments)
+
+2025-07-16
+- Add: Alternative way to make favicons respond to theme changes
 :::

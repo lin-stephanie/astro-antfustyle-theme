@@ -2,7 +2,7 @@
 title: Basic Configuration
 description: How to configure Astro AntfuStyle Theme
 pubDate: 2024-10-02
-lastModDate: 2025-05-20
+lastModDate: 2025-07-16
 toc: true
 share: true
 giscus: true
@@ -26,17 +26,17 @@ The `SITE` object is used to configure the basic information of your website, an
 | `ogLocale`     | `string`                                  | Specifies the page content's language and region for better content display on social platforms. It must be in `language_TERRITORY` format, which you can find in [Language-Territory Information](https://www.unicode.org/cldr/charts/44/supplemental/language_territory_information.html). | `'zh_CN'`<br>`'fr_FR'`                                                                |
 | `imageDomains` | `string[]`                                | Specifies the allowed domains for **remote** image optimization, including those used with `![]()` and the `<Image />` or `<Picture />` components. This is passed to the [`image.domains`](https://docs.astro.build/en/reference/configuration-reference/#imagedomains) config in Astro. Set to `[]` if remote optimization is not needed.                                     | `['astro.build']`                                                                     |
 
-> [!important]- Ensure `site.website` is edited before deploying
+> [!important]- Ensure `SITE.website` is edited before deploying
 >
 > During development, leaving `SITE.website` empty is fine. But in production, you must set your deployed URL in this option for SEO-related elements like canonical URLs and social card URLs.
 
-> [!tip]- Set the `SITE.imageDomains` option to enable image optimization for remote images
+> [!tip]- Set the `SITE.imageDomains` option to enable [optimization](https://docs.astro.build/en/guides/images/#remote-images) and [responsive behavior](https://docs.astro.build/en/guides/images/#responsive-image-behavior) for **remote images**
 >   
-> This applies to remote images in Markdown (`![]()`) and in `<Image />` or `<Picture />` components.
+> This applies to remote images in Markdown (`![]()`), as well as in `<Image />` and `<Picture />` components.
 > 
-> The [optimization](https://docs.astro.build/en/guides/images/#display-optimized-images-with-the-image--component) covers format conversion, proper attributes, and site safety, and is **not** related to [experimental responsive images](https://docs.astro.build/en/reference/experimental-flags/responsive-images/).  
->  
-> See also: [Remote images](https://docs.astro.build/en/guides/images/#remote-images), [Remote image optimization in Markdown](https://astro.build/blog/astro-540/#remote-image-optimization-in-markdown)
+> See the [official example](https://docs.astro.build/en/guides/images/#image-) to understand how Astro optimizes images.
+> 
+> Related: [Remote image optimization in Markdown](https://astro.build/blog/astro-540/#remote-image-optimization-in-markdown), [Authorizing remote images](https://docs.astro.build/en/guides/images/#authorizing-remote-images)
 
 ## Configuring `UI`
 
@@ -184,4 +184,8 @@ After making these changes, ensure the project runs smoothly in the browser befo
 
 2025-05-20
 - New: `UI.postMetaStyle` and `FEATURES.giscus`
+
+2025-07-16
+- Update: Set the `SITE.imageDomains` option to enable optimization and responsive behavior for remote images
 :::
+

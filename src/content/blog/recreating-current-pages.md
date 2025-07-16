@@ -289,13 +289,13 @@ For remote images, `id` must start with `http` or `https`. To enable thumbnail g
   - Uses :link[sharp]{id=lovell/sharp .github} to generate a blurred placeholder as a Data URL (cached in `'./node_modules/.astro/photos/'` during development).
   - Uses Astro’s [`getImage()`](https://docs.astro.build/en/reference/modules/astro-assets/#getimage) to generate 720px-wide thumbnails (served via Astro's built-in `/_image` endpoint during development, and HTTP cached during build).
 
-
 **Additional notes that may be useful**
 
 - Remote images larger than 10MB or loading longer than 10 seconds will be skipped with a warning. You can adjust these limits in `src/utils/image.ts`.
 - Photos are displayed in a left-to-right, top-to-bottom flow based on their order in `data.json`.
-- Lightbox view is powered by :link[viewerjs]{id=fengyuanchen/viewerjs .github}, customizable via `ImageViewer.astro`. Note: this component is also used in `Photoview.astro` and `RenderPost.astro`.
+- Lightbox view is powered by :link[viewerjs]{id=fengyuanchen/viewerjs .github}, customizable via `ImageViewer.astro`. Note: this component is also used in `PhotoView.astro` and `RenderPost.astro`.
 - To generate thumbnails for remote images, Astro requires [remote image authorization](https://docs.astro.build/en/guides/images/#authorizing-remote-images). For large images over 720px wide, consider setting the `imageDomains` option in `src/config.ts`; otherwise, you can ignore this.
+- You can customize the default parameters related to image loading and layout as needed in `PhotoView.astro`. For certain edge cases, see [#33](https://github.com/lin-stephanie/astro-antfustyle-theme/issues/33).
 
 > [!warning]- Avoid mismatches caused by outdated placeholder or aspect ratio cache
 >

@@ -2,7 +2,7 @@
 title: Managing Image Assets
 description: How to organize and use images in the Astro AntfuStyle Theme
 pubDate: 2020-01-03
-lastModDate: 2025-04-30
+lastModDate: 2025-07-16
 toc: true
 share: true
 giscus: true
@@ -11,12 +11,12 @@ ogImage: true
 
 This post provides a brief guide on how to organize and use images in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme).
 
-## Supported Cases for Image Optimization
+## Supported Cases for Image Optimization and Responsive Processing
 
-Astro supports optimizing images during the build phase via the [Image Service API](https://docs.astro.build/en/reference/image-service-reference/) (:link[sharp]{id=lovell/sharp .github} is the [default service](https://docs.astro.build/en/guides/images/#default-image-service)), allowing actions like converting to webp, compressing, adding attributes, inferring dimensions to prevent CLS, lazy loading, and async decoding. However, this only applies in the following cases:
+Astro supports optimizing images and generating responsive images via the [Image Service API](https://docs.astro.build/en/reference/image-service-reference/) (:link[sharp]{id=lovell/sharp .github} is the [default service](https://docs.astro.build/en/guides/images/#default-image-service)). This enables optimizations such as converting to WebP, compressing, adding attributes, inferring dimensions to prevent CLS, lazy loading and async decoding. With responsive image properties, [Astro internally automatically generate the required `srcset` and `sizes` values for your images](https://docs.astro.build/en/guides/images/#responsive-image-behavior). These optimizations apply in the following cases:
 
 - [Local images stored in `src/`](https://docs.astro.build/en/guides/images/#where-to-store-images) (Images in `public/` are not processed.)
-- [**Authorized** remote images](https://docs.astro.build/en/guides/images/#authorizing-remote-images) (Includes those used with `![]()`, `<Image />`, `<Picture />` or `getImage()`.)
+- [**Authorized** remote images](https://docs.astro.build/en/guides/images/#authorizing-remote-images) (including those used with `![]()`, `<Image />`, `<Picture />` and `getImage()`)
 
 ## Images in Markdown Files
 
@@ -108,4 +108,7 @@ I hope this post helps clarify image usage in Markdown/MDX within this theme. Fo
 ::summary[Changelog]
 2025-04-30
 - Changes for Astro 5.7
+
+2025-07-16
+- Update: [Supported Cases for Image Optimization and Responsive Processing](#supported-cases-for-image-optimization-and-responsive-processing)
 :::
