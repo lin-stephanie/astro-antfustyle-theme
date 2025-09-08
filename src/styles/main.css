@@ -14,13 +14,13 @@
 
 html {
   scroll-behavior: smooth;
+
+  background-color: var(--c-bg);
 }
 
 body {
   overflow-x: hidden;
   overflow-y: scroll;
-
-  background-color: var(--c-bg);
 }
 
 ::selection {

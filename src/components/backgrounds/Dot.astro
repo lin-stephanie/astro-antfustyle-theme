@@ -3,7 +3,7 @@
 ---
 
 <bg-dot
-  class="z--1 fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden dark:invert"
+  class="z--1 fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden"
 >
 </bg-dot>
 
@@ -12,16 +12,10 @@
   import type { default as P5Instance } from 'p5'
 
   class BgDotElement extends HTMLElement {
-    p5Instance: P5Instance | null
-
-    constructor() {
-      super()
-      this.p5Instance = null
-    }
+    p5Instance: P5Instance | null = null
 
     connectedCallback() {
       const sketch = (p: P5Instance) => {
-        const BACKGROUND = '#fff'
         const SCALE = 200
         const LENGTH = 10
         const SPACING = 15
@@ -53,13 +47,12 @@
 
         p.setup = () => {
           p.createCanvas(width, height)
-          p.background(BACKGROUND)
-          p.frameRate(30)
+          p.frameRate(10)
           addPoints()
         }
 
         p.draw = () => {
-          p.background(BACKGROUND)
+          p.clear()
 
           const t = +new Date() / 10000
           for (const point of points) {
@@ -68,10 +61,13 @@
             const length = getLength(x, y, t)
             const nx = x + p.cos(rad) * length
             const ny = y + p.sin(rad) * length
+
+            const isDark = document.documentElement.classList.contains('dark')
+            const color = isDark ? 55 : 200
             p.stroke(
-              200,
-              200,
-              200,
+              color,
+              color,
+              color,
               (Math.abs(p.cos(rad)) * 0.8 + 0.2) * point.opacity * 255
             )
             p.strokeWeight(2)
@@ -92,5 +88,7 @@
     }
   }
 
-  customElements.define('bg-dot', BgDotElement)
+  if (!customElements.get('bg-dot')) {
+    customElements.define('bg-dot', BgDotElement)
+  }
 </script>

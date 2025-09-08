@@ -65,16 +65,7 @@ export default defineConfig({
   },
 
   // define utility classes and the resulting CSS
-  rules: [
-    [
-      /^bg-radial-gradient-(\d+)$/,
-      ([, n]) => {
-        return {
-          'background-image': `radial-gradient(ellipse at bottom left, #ffffff 0%, #fefefe 70%, #88888855 ${n}%)`,
-        }
-      },
-    ],
-  ],
+  rules: [],
 
   // combine multiple rules as utility classes
   shortcuts: [

@@ -3,7 +3,7 @@
 ---
 
 <bg-particle
-  class="z--1 fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden dark:invert"
+  class="z--1 fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden"
 >
 </bg-particle>
 
@@ -21,16 +21,10 @@
   }
 
   class BgParticleElement extends HTMLElement {
-    p5Instance: P5Instance | null
-
-    constructor() {
-      super()
-      this.p5Instance = null
-    }
+    p5Instance: P5Instance | null = null
 
     connectedCallback() {
       const sketch = (p: P5Instance) => {
-        const BACKGROUND = '#fff'
         const COLOR = '#88888825'
         const VELOCITY = 0.8
         const DENSITY = 6000
@@ -52,12 +46,6 @@
           return { x, y, velocity }
         }
 
-        function drawParticle(particle: Particle) {
-          p.noStroke()
-          p.fill(COLOR)
-          p.circle(particle.x, particle.y, 3)
-        }
-
         function updateParticle(particle: Particle) {
           // change dir if outside map
           if (particle.x > width + 20 || particle.x < -20) {
@@ -71,9 +59,14 @@
           particle.y += particle.velocity.y
         }
 
+        function drawParticle(particle: Particle) {
+          p.noStroke()
+          p.fill(COLOR)
+          p.circle(particle.x, particle.y, 3)
+        }
+
         p.setup = () => {
           p.createCanvas(width, height)
-          p.background(BACKGROUND)
 
           // initialize particles
           const particleCount = (width * height) / DENSITY
@@ -104,7 +97,7 @@
         }
 
         p.draw = () => {
-          p.background(BACKGROUND)
+          p.clear()
 
           // update and draw particles
           particles.forEach((particle) => {

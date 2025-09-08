@@ -12,9 +12,8 @@ const roses = [
     w-full h-full
     op-50 dark:op-100
     pointer-events-none
-    print:hidden dark:invert"
-  style="mask-image: radial-gradient(circle, transparent, black);
-    --webkit-mask-image: radial-gradient(circle, transparent, black)"
+    print:hidden"
+  style="mask-image: radial-gradient(circle, transparent, black);"
 >
   {
     roses.map((rose) => (
@@ -24,14 +23,12 @@ const roses = [
       >
         {Array.from({ length: rose.petals }, (_, i) => (
           <div
-            class="petal absolute left-50%
-              h-full w-full
+            class="petal absolute left-50% h-full w-full
               transition-(transform duration-60000 ease-out) origin-bottom-center
-              before:(content-empty
-                absolute w-full h-full border-(solid 0.6 #22222260) dark:border-(solid 0.8 #88888860)
-                rounded-(tl-[50%_35%] br-[35%_50%] tr-[45%] bl-[10%])
-                bg-radial-gradient-98 dark:bg-radial-gradient-85
-                transform-rotate-[-45deg])"
+              before:(content-empty absolute w-full h-full rounded-(tl-[50%_35%] br-[35%_50%] tr-[45%] bl-[10%])
+              bg-[radial-gradient(ellipse_at_bottom_left,#ffffff_0%,#fefefe_70%,#88888855_95%)]
+              dark:bg-[radial-gradient(ellipse_at_bottom_left,#000000_0%,#000000_70%,#77777755_85%)]
+              transform-rotate-[-45deg])"
             style={{
               'z-index': rose.petals - i,
               'transform': `scale(${i * rose.scale}, ${i * rose.scale}) rotate(${i * rose.rotation}deg)`,
@@ -76,7 +73,6 @@ const roses = [
         const scaleValue = (idx + 1) * scaleBase
         const rotateValue = (idx + 1) * (r + rotationBase)
 
-        // @ts-expect-error (for Property 'style' does not exist on type 'Element'.ts(2339))
         petal.style.transform = `scale(${scaleValue}, ${scaleValue}) rotate(${rotateValue}deg)`
       })
     }
