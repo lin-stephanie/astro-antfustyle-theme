@@ -84,6 +84,9 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
     #observer: IntersectionObserver | null = null
     #headingMapToc = new Map<Element, HTMLAnchorElement[]>()
 
+    #currentActiveHeading: Element | null = null
+    #previousActiveLinks: HTMLAnchorElement[] = []
+
     connectedCallback() {
       this.#onIdle(() => this.#init())
     }
@@ -124,9 +127,14 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
       (window.requestIdleCallback || ((cb) => setTimeout(cb, 1)))(cb)
 
     #onIntersect = (entries: IntersectionObserverEntry[]) => {
+      if (!entries.length) return
+
       // get latest trigger heading element
-      const sortedEntries = entries.sort((a, b) => b.time - a.time)
-      const latestTriggerHeading = sortedEntries[0]?.target
+      let latest = entries[0]
+      for (let i = 1; i < entries.length; i++) {
+        if (entries[i].time > latest.time) latest = entries[i]
+      }
+      const latestTriggerHeading = latest.target
       if (!latestTriggerHeading) return
 
       // get need to highlight heading element
@@ -134,22 +142,31 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
       // highlight previous heading)
       // (avoid highlight next heading when scrolling up)
       const isLocatedBelow =
-        latestTriggerHeading.getBoundingClientRect().top >
-        window.innerHeight / 4
+        latest.boundingClientRect.top > window.innerHeight / 4
       const targetHeading = isLocatedBelow
         ? this.#getPreviousHeading(this.#headingMapToc, latestTriggerHeading)
         : latestTriggerHeading
 
-      // handle highlight change
-      for (const tocLinkEl of this.#headingMapToc.values()) {
-        tocLinkEl.forEach((item) => item.removeAttribute('aria-current'))
+      // if target heading is not changed, return
+      if (!targetHeading || targetHeading === this.#currentActiveHeading) return
+
+      // diff update aria-current
+      const newLinks = this.#headingMapToc.get(targetHeading) ?? []
+
+      if (this.#previousActiveLinks && this.#previousActiveLinks.length) {
+        for (const tocLinkEl of this.#previousActiveLinks) {
+          tocLinkEl.removeAttribute('aria-current')
+        }
       }
-      if (targetHeading) {
-        const currentLink = this.#headingMapToc.get(targetHeading)
-        currentLink?.forEach((item) =>
-          item.setAttribute('aria-current', 'true')
-        )
+      for (const tocLinkEl of newLinks) {
+        tocLinkEl.setAttribute('aria-current', 'true')
+
+        // when toc is too long, scroll active toc link into viewport
+        tocLinkEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
       }
+
+      this.#currentActiveHeading = targetHeading
+      this.#previousActiveLinks = newLinks
     }
 
     #getHeadingLevel = (level: string | undefined) => {
@@ -212,6 +229,8 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
       this.#observer?.disconnect()
       this.#observer = null
       this.#headingMapToc.clear()
+      this.#currentActiveHeading = null
+      this.#previousActiveLinks = []
     }
   }
 
