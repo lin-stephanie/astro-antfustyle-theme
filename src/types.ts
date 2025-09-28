@@ -710,6 +710,51 @@ export interface giscusConfig {
   'data-lang': string
 }
 
+interface SearchConfig {
+  /**
+   * Specify which content collections rendered by `RenderPost.astro` are indexed.
+   *
+   * - By default, only `blog`, `shorts`, and `changelog` are indexed, as their dynamic routes
+   * (`/blog/[...slug]`, `/shorts/[...slug]`, and `/changelog/[...slug]`) use `RenderPost.astro`.
+   * - If needed, see https://pagefind.app/ for adjusting the search implementation.
+   */
+  includes: string[]
+
+  /**
+   * Whether to enable search filtering by path.
+   *
+   * When enabled, the search panel displays multiple tabs named after the paths,
+   * allowing users to filter search results by path.
+   *
+   * When disabled, all results are searched together without path filters.
+   */
+  filter: boolean
+
+  /**
+   * Whether to enable Pagefind’s built-in highlight feature.
+   *
+   * When enabled, search terms are highlighted on the destination page
+   * after navigating from the search results.
+   */
+  navHighlight: boolean
+
+  /**
+   * Configure batch loading for search results.
+   *
+   *  - Set to `false` or `[false, N]` to load all results at once.
+   *  - Set to `[true, N]` to load results in batches of N pages.
+   */
+  batchLoadSize: FeatureConfig<number>
+
+  /**
+   * Limits how many matched items are shown for each result (page).
+   *
+   * - Set to `false` or `[false, N]` to show all matched items.
+   * - Set to `[true, N]` to enable and limit to N items.
+   */
+  maxItemsPerPage: FeatureConfig<number>
+}
+
 export interface Features {
   /**
    * Controls whether to enable slide enter animation on each page.
@@ -750,4 +795,13 @@ export interface Features {
    * To disable for a specific post, set the `giscus` field in the frontmatter to `false`.
    */
   giscus: FeatureConfig<giscusConfig>
+
+  /**
+   * Whether to enable Pagefind search feature.
+   *
+   * To disable for a specific post, set the `search` field in the frontmatter to `false`.
+   *
+   * For Pagefind’s built-in configuration, directly modify `src/components/widgets/SearchSwitch.astro`.
+   */
+  search: FeatureConfig<SearchConfig>
 }

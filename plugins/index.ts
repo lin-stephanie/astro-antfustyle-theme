@@ -152,7 +152,8 @@ export const rehypePlugins: RehypePlugins = [
           'tab-index': 0,
           'aria-hidden': 'false',
           'aria-label': content ? `Link to ${content}` : undefined,
-          'data-pagefind-ignore': true,
+          // avoid `#` being indexed and show in search results
+          'data-pagefind-ignore': '',
         }
       },
       content: {

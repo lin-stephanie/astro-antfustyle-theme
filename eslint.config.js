@@ -47,6 +47,8 @@ export default ts.config(
         'error',
         { allowTernary: true },
       ],
+      // https://ota-meshi.github.io/eslint-plugin-astro/rules/jsx-a11y/label-has-associated-control/
+      'astro/jsx-a11y/label-has-associated-control': 'off',
     },
   }
 )
