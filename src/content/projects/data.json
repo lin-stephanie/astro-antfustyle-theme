@@ -109,56 +109,56 @@
     "link": "https://github.com/remarkjs/remark-directive",
     "desc": "Remark plugin for custom Markdown directives",
     "icon": "i-mdi-magic",
-    "category": "Markdown/HTML Handling"
+    "category": "Markdown Handling"
   },
   {
     "id": "remark-directive-sugar",
     "link": "https://github.com/lin-stephanie/remark-directive-sugar",
     "desc": "Remark plugin to provide predefined directives",
     "icon": "i-ep-sugar",
-    "category": "Markdown/HTML Handling"
+    "category": "Markdown Handling"
   },
   {
     "id": "remark-imgattr",
     "link": "https://github.com/OliverSpeir/remark-imgattr",
     "desc": "Remark plugin to add attributes to markdown and mdx images",
     "icon": "i-bi-images",
-    "category": "Markdown/HTML Handling"
+    "category": "Markdown Handling"
   },
   {
     "id": "remark-math",
     "link": "https://github.com/remarkjs/remark-math/tree/main/packages/remark-math",
     "desc": "Remark plugin to support math (`$C_L$`)",
     "icon": "i-mynaui-math-square",
-    "category": "Markdown/HTML Handling"
+    "category": "Markdown Handling"
   },
   {
     "id": "rehype-autolink-headings",
     "link": "https://github.com/rehypejs/rehype-autolink-headings",
     "desc": "Rehype plugin for automatically linking headings",
     "icon": "i-lucide-lab-heading-square",
-    "category": "Markdown/HTML Handling"
+    "category": "HTML Handling"
   },
   {
     "id": "rehype-callouts",
     "link": "https://github.com/lin-stephanie/rehype-callouts",
     "desc": "Rehype plugin for rendering blockquote-based callouts",
     "icon": "i-fluent-mdl2-text-callout",
-    "category": "Markdown/HTML Handling"
+    "category": "HTML Handling"
   },
   {
     "id": "rehype-external-links",
     "link": "https://github.com/rehypejs/rehype-external-links",
     "desc": "Rehype plugin for handling external links",
     "icon": "i-line-md-external-link",
-    "category": "Markdown/HTML Handling"
+    "category": "HTML Handling"
   },
   {
     "id": "rehype-katex",
     "link": "https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex",
     "desc": "Rehype plugin to render elements with a `language-math` class with KaTeX",
     "icon": "i-tabler-math",
-    "category": "Markdown/HTML Handling"
+    "category": "HTML Handling"
   },
   {
     "id": "sharp",

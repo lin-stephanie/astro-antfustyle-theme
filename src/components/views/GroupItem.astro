@@ -18,15 +18,15 @@ const { maxGroupColumns, showGroupItemColorOnHover } = UI.groupView
 ---
 
 <div
-  class={`grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-3
+  class={`grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-3
     py-8 mx-auto lt-lgp:max-w-[712px]! lt-md:max-w-[350px]!`}
   style={`max-width: calc(350px * ${maxGroupColumns} + ${maxGroupColumns - 1} * 0.75rem);`}
 >
   {
     items.map((item) => (
       <Link
-        class={`link relative flex items-center
-          w-[350px] max-w-full px-3.5 pt-2 pb-3.5 rounded-md
+        class={`group relative flex items-center
+          px-3.5 pt-2 pb-3.5 rounded-md
           bg-transparent hover:bg-[#88888811]
           text-4.4 transition-all duration-300`}
         href={item.link}
@@ -35,7 +35,8 @@ const { maxGroupColumns, showGroupItemColorOnHover } = UI.groupView
       >
         <div class="pt-2 pr-5">
           <div
-            class={`icon op-50 saturate-0 leading-9 text-7.5 ${item.icon}`}
+            class={`group-hover:data-[show-color]:saturate-100 op-50 saturate-0 leading-9 text-7.5 ${item.icon}`}
+            data-show-color={showGroupItemColorOnHover ? '' : undefined}
           />
         </div>
         <div class="flex-auto">
@@ -47,10 +48,3 @@ const { maxGroupColumns, showGroupItemColorOnHover } = UI.groupView
   }
 </div>
 
-{showGroupItemColorOnHover && (
-  <style>
-    .link:hover .icon {
-      filter: saturate(1);
-    }
-  </style>
-)}
