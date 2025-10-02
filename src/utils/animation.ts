@@ -12,12 +12,14 @@ export function toggleFadeEffect(
 
   if (visible) {
     element.classList.remove(hiddenClass)
-    if (!window.matchMedia('(prefers-reduced-motion)').matches) {
-      element.classList.add('fade-in')
-    }
+    if (elementId === 'backdrop')
+      document.documentElement.style.overflow = 'hidden'
+    if (window.matchMedia('(prefers-reduced-motion)').matches) return
+    element.classList.add('fade-in')
   } else {
     if (window.matchMedia('(prefers-reduced-motion)').matches) {
       element.classList.add(hiddenClass)
+      if (elementId === 'backdrop') document.documentElement.style.overflow = ''
       return
     }
     element.classList.add('fade-out')
@@ -26,6 +28,8 @@ export function toggleFadeEffect(
       () => {
         element.classList.remove('fade-in', 'fade-out')
         element.classList.add(hiddenClass)
+        if (elementId === 'backdrop')
+          document.documentElement.style.overflow = ''
       },
       { once: true }
     )
