@@ -54,9 +54,9 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
 <search-panel
   role="dialog"
   id="search-panel"
-  class={`hidden z-200 fixed top-15% left-50% translate-x--50%
+  class={`hidden z-200 fixed top-15% lt-lgp:(top-10%) left-50% translate-x--50%
     grid grid-rows-[auto_1fr_auto]
-    w-42rem lt-lgp:(w-90%) max-h-70vh px-3 pt-3 pb-2.5 rounded-lg
+    w-42rem lt-lgp:(w-90%) max-h-70vh lt-lgp:(max-h-80vh) p-3 lt-lgp:(pb-1) rounded-lg
     text-[var(--c-text)] bg-[var(--c-bg)] shadow-custom_0_0_10_0`}
   aria-modal="true"
   aria-labelledby="search-label"
@@ -93,7 +93,7 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
     <!-- Search Bar -->
     <div
       class="grid grid-cols-[auto_1fr] items-center
-        h-10 px-3 rounded-md mb-1
+        h-10 px-3 rounded-md
         bg-[#88888811] dark:bg-[#88888818]"
     >
       <div u-i-grommet-icons-search></div>
@@ -118,7 +118,7 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
   <div
     role="listbox"
     id="search-results"
-    class="overflow-y-auto mb-2.5"
+    class="overflow-y-auto my-1"
     aria-labelledby="search-input"
     tabindex="-1"
     data-base={withBasePath('/')}
@@ -128,14 +128,14 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
     <!-- Feedback -->
     <div
       id="search-feedback"
-      class="hidden pt-3 pb-1 text-center text-sm op-40"
+      class="hidden py-3 text-center text-sm op-40"
     >
     </div>
     <!-- Pagination -->
     <div
       id="search-pagination"
       style="display: none"
-      class="items-center justify-center gap-4 pt-3 pb-1 text-xs"
+      class="items-center justify-center gap-4 pt-4 pb-3 text-xs"
     >
       <button
         class="flex items-center justify-center gap-1 op-40 hover:op-100 op-transition"
@@ -160,7 +160,7 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
   >
     <ul
       class="flex flex-wrap items-center gap-4.5 lt-md:hidden
-        pt-2.5 border-t border-[#7d7d7d4d]
+        pt-3 border-t border-[#7d7d7d4d]
         text-xs op-40 select-none"
     >
       <li class="flex items-center gap-1">
@@ -670,12 +670,8 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
       if (!this.#slectedItem || this.#slectedItem === next) return
 
       this.#slectedItem.setAttribute('aria-selected', 'false');
-      // this.#slectedItem.setAttribute('tabindex', '-1');
-
       this.#slectedItem = next;
-
       this.#slectedItem.setAttribute('aria-selected', 'true');
-      // this.#slectedItem.setAttribute('tabindex', '0');
     }
 
     #isItem(el: Element | null): el is HTMLAnchorElement {
