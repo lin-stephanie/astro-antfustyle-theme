@@ -710,7 +710,9 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
       // https://pagefind.app/docs/search-config/
       await pagefind.options({
         'excerptLength': 20,
-        'highlightParam': "search",
+        ...(navHighlight && {
+          'highlightParam': 'search'
+        }),
 
         // https://pagefind.app/docs/ranking/
         ranking: {
@@ -733,8 +735,10 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
     async function loadPagefindHighlight() {
       await import(scriptUrl)
 
-      // https://pagefind.app/docs/highlight-config
+      const PagefindHighlight = window.PagefindHighlight
+      if (!PagefindHighlight) return
       const pagefindHighlight = new PagefindHighlight({
+        // https://pagefind.app/docs/highlight-config
         highlightParam: "search",
         markContext: "[data-pagefind-body]",
         // https://markjs.io/#mark
