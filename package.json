@@ -18,7 +18,7 @@
     "toolbar:on": "astro preferences enable devToolbar",
     "toolbar:off": "astro preferences disable devToolbar",
     "prepare": "simple-git-hooks",
-    "postbuild": "pagefind --site dist && del-cli \"dist/pagefind/*ui*\""
+    "postbuild": "pagefind --site dist --exclude-selectors \"pre\" --include-characters \"<>\" && del-cli \"dist/pagefind/*ui*\""
   },
   "devDependencies": {
     "@ascorbic/feed-loader": "^1.0.4",
@@ -55,7 +55,7 @@
     "mdast-util-to-string": "^4.0.0",
     "nprogress": "^0.2.0",
     "p5": "^1.11.3",
-    "pagefind": "^1.3.0",
+    "pagefind": "^1.4.0",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "reading-time": "^1.5.0",

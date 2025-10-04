@@ -15,12 +15,11 @@ import type { CollectionEntry } from 'astro:content'
 
 interface Props {
   post: CollectionEntry<'blog' | 'changelog'>
-  isSearchable?: boolean
   isCommentable?: boolean
 }
 
-const { post, isSearchable = false, isCommentable = false } = Astro.props
-const { toc, share, giscus } = FEATURES
+const { post, isCommentable = false } = Astro.props
+const { toc, share, giscus, search } = FEATURES
 
 const { data: frontmatter } = post
 const { Content, headings, remarkPluginFrontmatter } = await render(post)
@@ -35,10 +34,20 @@ const subtitle = frontmatter.subtitle
 const minutesRead =
   frontmatter.minutesRead || (remarkPluginFrontmatter.minutesRead as number)
 const isDraft = frontmatter.draft
+
 const tocEnabled = Array.isArray(toc) && toc[0] && frontmatter.toc
 const shareEnabled = Array.isArray(share) && share[0] && frontmatter.share
 const giscusEnabled =
   isCommentable && Array.isArray(giscus) && giscus[0] && frontmatter.giscus
+
+const collectionType = post.collection
+const isSearchable =
+  Array.isArray(search) &&
+  search[0] &&
+  search[1].includes.includes(collectionType) &&
+  frontmatter.search
+const searchFilter =
+  isSearchable && search[1].filter ? `collection:${collectionType}` : undefined
 
 const WARNING = `This is a draft post that will not be published
 in production. Set the post's <code>draft</code> property in
@@ -46,7 +55,7 @@ frontmatter to <code>false</code> or remove it to publish the post.`
 ---
 
 <BaseLayout {title} {description} {ogImage} {pubDate} {lastModDate}>
-  <StandardLayout {title} {subtitle} {isSearchable}>
+  <StandardLayout {title} {subtitle} {isSearchable} {searchFilter}>
     <Fragment slot="head">
       <PostMeta {pubDate} {lastModDate} {minutesRead} />
     </Fragment>

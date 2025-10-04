@@ -1,8 +1,47 @@
 ---
+import { FEATURES } from '~/config'
 import { withBasePath } from '~/utils/path'
+
+const { search } = FEATURES
+if (!search || (Array.isArray(search) && !search[0])) return
+
+const { includes, filter, navHighlight, batchLoadSize, maxItemsPerPage } =
+  search[1]
+const checkInt = (num: number) =>
+  isNaN(num) || num < 1 || !Number.isInteger(num)
+
+if (includes.length === 0)
+  throw new Error(
+    'Search feature enabled, but `includes` array is empty. Please check `src/config.ts` for the correct configuration.'
+  )
+if (
+  Array.isArray(maxItemsPerPage) &&
+  maxItemsPerPage[0] &&
+  checkInt(maxItemsPerPage[1])
+)
+  throw new Error(
+    '`maxItemsPerPage` must be a number greater than 0. Please check `src/config.ts` for the correct configuration.'
+  )
+if (
+  Array.isArray(batchLoadSize) &&
+  batchLoadSize[0] &&
+  checkInt(batchLoadSize[1])
+)
+  throw new Error(
+    '`batchLoadSize` must be a number greater than 0. Please check `src/config.ts` for the correct configuration.'
+  )
+
+const filterEnabled = filter && includes.length > 1
+const batchSize =
+  Array.isArray(batchLoadSize) && batchLoadSize[0]
+    ? batchLoadSize[1]
+    : undefined
+const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
 ---
 
+<!-- Search Switch -->
 <button
+  type="button"
   id="search-switch"
   class="op-60 hover:op-100 op-transition"
   title="Search"
@@ -11,32 +50,141 @@ import { withBasePath } from '~/utils/path'
   <div u-i-grommet-icons-search></div>
 </button>
 
-<div
-  transition:persist
+<!-- Search Panel -->
+<search-panel
+  role="dialog"
   id="search-panel"
-  class="z-200 fixed top-20 right-8
-    hidden grid grid-rows-[auto_1fr]
-    w-30rem max-h-82vh p-2 rounded-lg lt-lgp:(w-90% left-5% right-5%)
-    bg-[var(--c-bg)] shadow-custom_0_0_20_0"
+  class={`hidden z-200 fixed top-15% lt-lgp:(top-10%) left-50% translate-x--50%
+    grid grid-rows-[auto_1fr_auto]
+    w-42rem lt-lgp:(w-90%) max-h-70vh lt-lgp:(max-h-80vh) p-3 lt-lgp:(pb-1) rounded-lg
+    text-[var(--c-text)] bg-[var(--c-bg)] shadow-custom_0_0_10_0`}
+  aria-modal="true"
+  aria-labelledby="search-label"
+  aria-keyshortcuts="ArrowUp,ArrowDown,Enter,Esc"
+  data-filter={filterEnabled}
+  data-batch-size={batchSize}
+  data-max-items={maxItems}
 >
-  <div
-    id="search-bar"
-    class="grid grid-cols-[auto_1fr] items-center
-      h-10 px-3 rounded-md
-      bg-[#88888811] dark:bg-[#88888822]"
-  >
-    <div u-i-grommet-icons-search id="search-icon" class="op-60"></div>
-    <label class="sr-only" for="search-input">Search</label>
-    <input
-      type="search"
-      id="search-input"
-      class="h-full pl-2 bg-transparent outline-0"
-      placeholder="Search"
-      autocomplete="off"
-    />
+  <div class="flex flex-col gap-2">
+    <!-- Tab list -->
+    {
+      filterEnabled && (
+        <div
+          role="tablist"
+          class="search-tabs flex gap-2 justify-start items-center text-xs"
+          aria-label="Search categories"
+        >
+          {includes.map((item) => (
+            <button
+              type="button"
+              role="tab"
+              class="px-1.5 py-0.5 rounded
+                bg-[#88888816]! dark:bg-[#88888823]!
+                aria-[selected=false]:op-40 aria-[selected=true]:op-100
+                aria-[selected=false]:hover:op-70 op-transition cursor-pointer"
+              data-type={item.toLowerCase()}
+            >
+              {item.charAt(0).toUpperCase() + item.slice(1)}
+            </button>
+          ))}
+        </div>
+      )
+    }
+    <!-- Search Bar -->
+    <div
+      class="grid grid-cols-[auto_1fr] items-center
+        h-10 px-3 rounded-md
+        bg-[#88888811] dark:bg-[#88888818]"
+    >
+      <div u-i-grommet-icons-search></div>
+      <label for="search-input" id="search-label" class="sr-only"></label>
+      <input
+        type="search"
+        role="combobox"
+        id="search-input"
+        class="h-full pl-2 bg-transparent outline-0"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        aria-labelledby="search-label"
+        aria-autocomplete="list"
+        aria-controls="search-results"
+        aria-expanded="false"
+        aria-live="polite"
+      />
+    </div>
   </div>
-  <div id="search-results" class="overflow-y-auto" data-base={withBasePath('/')}></div>
-</div>
+  <!-- Search Results -->
+  <div
+    role="listbox"
+    id="search-results"
+    class="overflow-y-auto my-1"
+    aria-labelledby="search-input"
+    tabindex="-1"
+    data-base={withBasePath('/')}
+  >
+    <!-- Results -->
+    <div id="search-content"></div>
+    <!-- Feedback -->
+    <div
+      id="search-feedback"
+      class="hidden py-3 text-center text-sm op-40"
+    >
+    </div>
+    <!-- Pagination -->
+    <div
+      id="search-pagination"
+      style="display: none"
+      class="items-center justify-center gap-4 pt-4 pb-3 text-xs"
+    >
+      <button
+        class="flex items-center justify-center gap-1 op-40 hover:op-100 op-transition"
+        data-action="more"
+      >
+        <div u-i-material-symbols-arrow-cool-down></div>
+        <span></span>
+      </button>
+      <button
+        class="flex items-center justify-center gap-1 op-40 hover:op-100 op-transition"
+        data-action="all"
+      >
+        <div u-i-material-symbols-expand-all></div>
+        <span></span>
+      </button>
+    </div>
+  </div>
+  <!-- Shortcuts Footer -->
+  <footer
+    role="note"
+    aria-label="Keyboard shortcuts"
+  >
+    <ul
+      class="flex flex-wrap items-center gap-4.5 lt-md:hidden
+        pt-3 border-t border-[#7d7d7d4d]
+        text-xs op-40 select-none"
+    >
+      <li class="flex items-center gap-1">
+        <kbd class="search-kbd-key">
+          <div u-i-material-symbols-arrow-upward></div>
+        </kbd>
+        <kbd class="search-kbd-key">
+          <div u-i-material-symbols-arrow-downward></div>
+        </kbd>
+        <span>Navigate</span>
+      </li>
+      <li class="flex items-center gap-1">
+        <kbd class="search-kbd-key">
+          <div u-i-grommet-icons-return></div>
+        </kbd>
+        <span>Go to Page</span>
+      </li>
+      <li class="flex items-center gap-1">
+        <kbd class="search-kbd-key">esc</kbd>
+        <span>Close</span>
+      </li>
+    </ul>
+  </footer>
+</search-panel>
 
 <script>
   import { toggleFadeEffect } from '~/utils/animation'
@@ -44,122 +192,576 @@ import { withBasePath } from '~/utils/path'
   /* Handle click on search switch to open or close */
   document.addEventListener('astro:page-load', () => {
     const handleToggle = () => {
-      const searchPanel = document.getElementById('search-panel')
-      const isClosed = searchPanel?.classList.contains('hidden')
-      const isWidthUnder1128 = window.innerWidth < 1128
+      toggleFadeEffect('backdrop', true, 'hidden')
+      toggleFadeEffect('search-panel', true, 'hidden')
 
-      if (searchPanel && isClosed) {
-        if (isWidthUnder1128) toggleFadeEffect('backdrop', true, 'hidden')
-        toggleFadeEffect('search-panel', true, 'hidden')
-      } else if (searchPanel && !isClosed && !isWidthUnder1128) {
-        toggleFadeEffect('search-panel', false, 'hidden')
-      }
+      // auto-focus the search input after panel becomes visible
+      requestAnimationFrame(() => {
+        const input = document.getElementById('search-input')
+        if (input) input.focus()
+      })
     }
 
     const searchSwitch = document.getElementById('search-switch')
     searchSwitch?.addEventListener('click', handleToggle)
   })
-
-  /* Handle click on link or outside search panel to close */
-  const handleClose = (event: MouseEvent) => {
-    const searchPanel = document.getElementById('search-panel')
-    if (!searchPanel || searchPanel.classList.contains('hidden')) return
-
-    const isWidthUnder1128 = window.innerWidth < 1128
-    const target = event.target
-
-    // check if the click event occurred outside the search panel
-    // in a non-ignored area ('search-switch')
-    const isClickedOutsideOnDesktop =
-      !isWidthUnder1128 &&
-      target instanceof Node &&
-      !searchPanel.contains(target) &&
-      !document.getElementById('search-switch')?.contains(target)
-
-    if (isClickedOutsideOnDesktop) {
-      toggleFadeEffect('search-panel', false, 'hidden')
-      return
-    }
-
-    // check if a link within 'search-results' was clicked
-    const isClickedOnLinkInSearchResults =
-      target instanceof HTMLElement &&
-      target.closest('#search-results') &&
-      target.closest('a')
-
-    if (isClickedOnLinkInSearchResults) {
-      if (isWidthUnder1128) toggleFadeEffect('backdrop', false, 'hidden')
-      if (!window.matchMedia('(prefers-reduced-motion)').matches)
-        searchPanel.classList.remove('fade-in')
-      searchPanel.classList.add('hidden')
-    }
-  }
-
-  document.addEventListener('click', handleClose)
 </script>
 
 <script>
+  import { toggleFadeEffect } from '~/utils/animation'
+
+  interface Anchor {
+    element: string
+    id: string
+    text: string
+    location: number
+  }
+
+  interface WeightedLocation {
+    location: number
+    weight: number
+    balanced_score: number
+  }
+
+  interface SubResult {
+    title: string
+    url: string
+    anchor: Anchor
+    weighted_locations: WeightedLocation[]
+    locations: number[]
+    excerpt: string
+  }
+
   const fakeResults = [
     {
       meta: {
         title: 'Simulated Search Result in Dev Env',
       },
-      excerpt: 'Mock data is used to simulate pagefind search <mark>in development</mark>, where files required for indexing exist only in memory.',
+      excerpt:
+        'Mock data is used to simulate pagefind search <mark>in development</mark>, where files required for indexing exist only in memory.',
     },
     {
       meta: {
         title: 'Testing Search Functionality in Prod Env',
       },
       excerpt: 'Try running <mark>pnpm build && pnpm preview</mark> instead.',
-    }
+    },
   ]
 
-  /* Handle user input */
-  const handleInput = async (event: Event) => {
-    const searchResults = document.getElementById('search-results')
-    if (searchResults) searchResults.innerHTML = ''
-    if (import.meta.env.PROD) {
-      // @ts-expect-error (for Cannot find name 'pagefind'.ts(2304), used as window.pagefind)
-      const search = await pagefind.search(event.target.value)
+  class SearchPanel extends HTMLElement {
+    #input: HTMLInputElement | null = null
+    #label: HTMLLabelElement | null = null
+    #results: HTMLElement | null = null
+    #feedback: HTMLElement | null = null
+    #content: HTMLElement | null = null
+    #pagination: HTMLElement | null = null
+    #btnMore: HTMLButtonElement | null = null
+    #btnAll: HTMLButtonElement | null = null
 
-      for (const result of search.results) {
-        const data = await result.data()
-        // console.log('data', data)
-        document.getElementById('search-results')!.innerHTML += `
-        <a href="${data.url}" class="search-results-item">
-          <div class="search-results-title">${data.meta.title}</div>
-          <div class="search-results-excerpt">${data.excerpt}</div>
-        </a>`
+    #activeRequestId = 0
+
+    #filter = this.dataset.filter === 'true'
+    #tabs: HTMLElement[] = []
+    #currentTab = 0
+
+    #batchLoading = false
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    #allResults: any[] = []
+    #renderedCount = 0
+
+    #batchSize = this.dataset.batchSize
+      ? parseInt(this.dataset.batchSize || '5', 10)
+      : undefined
+
+    #maxItems = this.dataset.maxItems
+      ? parseInt(this.dataset.maxItems || '10', 10)
+      : undefined
+
+    #slectedItem: HTMLAnchorElement | null | undefined = null
+
+    connectedCallback() {
+      this.#input = this.querySelector('#search-input')
+      this.#label = this.querySelector('#search-label')
+      this.#results = this.querySelector('#search-results')
+      this.#feedback = this.querySelector('#search-feedback')
+      this.#content = this.querySelector('#search-content')
+
+      this.#initFilter()
+      this.#initPagination()
+
+      this.#input?.addEventListener('input', this.#handleInput)
+
+      this.#content?.addEventListener('click', this.#handleResultClick)
+      this.#content?.addEventListener('pointerover', this.#handleResultsPointerOver)
+
+      this.addEventListener('keydown', this.#handleResultsKeyDown)
+    }
+
+    disconnectedCallback() {
+      this.#input?.removeEventListener('input', this.#handleInput)
+
+      this.#content?.removeEventListener('click', this.#handleResultClick)
+      this.#content?.removeEventListener('pointerover', this.#handleResultsPointerOver)
+
+      this.removeEventListener('keydown', this.#handleResultsKeyDown)
+
+      if (this.#filter)
+        for (const tab of this.#tabs) tab.replaceWith(tab.cloneNode(true))
+      if (this.#batchSize) {
+        this.#btnMore?.removeEventListener('click', this.#handlePaginateClick)
+        this.#btnAll?.removeEventListener('click', this.#handlePaginateClick)
       }
-    } else {
-      for (const data of fakeResults) {
-        const searchResults = document.getElementById('search-results')!
-        searchResults.innerHTML += `
-          <a href=${searchResults.dataset.base} class="search-results-item">
-            <div class="search-results-title">${data.meta.title}</div>
-            <div class="search-results-excerpt">${data.excerpt}</div>
-          </a>`
+
+      this.#activeRequestId++
+    }
+
+    #initFilter = () => {
+      if (!this.#filter) this.#updateHint()
+
+      const storedTab = localStorage.getItem('search-tab')
+      this.#currentTab = storedTab ? parseInt(storedTab, 10) : 0
+
+      this.#tabs = Array.from(this.querySelectorAll('[role="tab"]'))
+      for(let i = 0; i < this.#tabs.length; i++) {
+        const isSelected = i === this.#currentTab
+        this.#tabs[i].setAttribute('aria-selected', isSelected.toString())
+        if (isSelected) this.#updateHint(this.#tabs[i].dataset.type || '')
+
+        this.#tabs[i].addEventListener('click', () => this.#activateTab(i))
       }
+    }
+
+    #initPagination = () => {
+      if (!this.#batchSize) return
+
+      this.#pagination = this.querySelector('#search-pagination')
+      this.#btnMore = this.querySelector('[data-action="more"]')
+      this.#btnAll = this.querySelector('[data-action="all"]')
+
+      this.#btnMore?.addEventListener('click', this.#handlePaginateClick)
+      this.#btnAll?.addEventListener('click', this.#handlePaginateClick)
+    }
+
+    #handleInput = async (event: Event) => {
+      if (!this.#content) return
+      const value = (event.target as HTMLInputElement).value.trim()
+
+      if (import.meta.env.PROD) {
+        const requestId = ++this.#activeRequestId
+        this.#slectedItem = null
+
+        // reset view if search value is empty
+        if (value.length === 0) {
+          this.#resetView()
+          return
+        }
+
+        // start search
+        try {
+          const options: { filters?: Record<string, string | string[]> } = {}
+          if (this.#filter && this.#tabs[this.#currentTab]) {
+            const type = this.#tabs[this.#currentTab].dataset.type
+            if (type) options.filters = { collection: type }
+          }
+
+          this.#showLoading(requestId)
+
+          // @ts-expect-error (for Cannot find name 'pagefind'.ts(2304))
+          const res = await pagefind.debouncedSearch(value, options, 300)
+          if (res === null) return
+          if (requestId !== this.#activeRequestId) return
+
+          // when no results
+          if (res.results.length === 0) {
+            this.#showOnlyNoResult(requestId)
+            return
+          }
+
+          // batch render or single render
+          this.#allResults = res.results
+          this.#renderedCount = 0
+          this.#renderNextBatch(requestId)
+        } catch (_err) {
+          this.#showOnlyError(requestId)
+        }
+      } else {
+        if (this.#content.innerHTML && value) return
+        if (!value) {
+          this.#content.innerHTML = ''
+          return
+        }
+        for (const result of fakeResults) {
+          this.#content.innerHTML += `
+            <a href="${this.#results?.dataset.base}" class="search-result-item">
+              <div class="search-result-title">${result.meta.title}</div>
+              <div class="search-result-excerpt">${result.excerpt}</div>
+            </a>`
+        }
+        this.#slectedItem = this.#content.querySelector('a')
+        this.#slectedItem?.setAttribute('aria-selected', 'true')
+      }
+    }
+
+    #handleResultClick = (event: MouseEvent) => {
+      if (!this.#getLink(event)) return
+
+      if (!window.matchMedia('(prefers-reduced-motion)').matches)
+        this.classList.remove('fade-in')
+      this.classList.add('hidden')
+      toggleFadeEffect('backdrop', false, 'hidden')
+    }
+
+    #handleResultsPointerOver = (event: MouseEvent) => {
+      const link = this.#getLink(event)
+      if (!link) return
+
+      this.#updateSlectedItem(link)
+    }
+
+    #handleResultsKeyDown = (event: KeyboardEvent) => {
+      if (!this.#slectedItem || document.activeElement !== this.#input) return
+
+      const key = event.key
+      if (key !== 'ArrowDown' && key !== 'ArrowUp' && key !== 'Enter') return
+
+      event.preventDefault()
+
+      if(key === 'Enter') {
+        this.#slectedItem.click()
+        return
+      }
+
+      let target =
+        key === 'ArrowDown'
+          ? this.#getNextItem(this.#slectedItem)
+          : this.#getPrevItem(this.#slectedItem)
+
+      // when there's no next/prev item, loop around
+      if (!target) {
+        target =
+          key === 'ArrowDown'
+            ? this.#content?.querySelector('a') ?? null
+            : this.#content?.querySelector('a:last-child') ?? null
+      }
+
+      if(target) {
+        this.#updateSlectedItem(target)
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    #updateHint = (type?: string) => {
+      let hint = 'Search'
+      if (type) {
+        const cap = type.charAt(0).toUpperCase() + type.slice(1)
+        hint = `Search ${cap}`.trim()
+      }
+
+      if (this.#input) this.#input.placeholder = hint
+      if (this.#label) this.#label.textContent = hint
+    }
+
+    #activateTab = async (idx: number) => {
+      if (idx === this.#currentTab) return
+
+      this.#tabs[this.#currentTab]?.setAttribute('aria-selected', 'false')
+      this.#tabs[idx]?.setAttribute('aria-selected', 'true')
+
+      this.#currentTab = idx
+      localStorage.setItem('search-tab', idx.toString())
+
+      const type = this.#tabs[idx]?.dataset.type || ''
+      this.#updateHint(type)
+
+      if (this.#input?.value){
+        this.#resetView()
+        await this.#handleInput({ target: this.#input } as unknown as Event)
+        this.#input?.focus()
+      }
+    }
+
+    #handlePaginateClick = async (ev: MouseEvent) => {
+      const btn = ev.currentTarget as HTMLButtonElement
+      if (!btn || this.#batchLoading) return
+
+      const requestId = this.#activeRequestId
+
+      const action = btn.dataset.action
+      if (action === 'more') {
+        await this.#renderNextBatch(requestId)
+        this.#input?.focus()
+      } else if (action === 'all') {
+        await this.#renderNextBatch(requestId, true)
+        this.#input?.focus()
+      }
+    }
+
+    #renderNextBatch = async(requestId: number, all = false) => {
+      if (!this.#content) return
+      if (requestId !== this.#activeRequestId) return
+      if (this.#batchSize && this.#batchLoading) return
+
+      const start = this.#renderedCount
+      const end =
+        !this.#batchSize || all
+          ? this.#allResults.length
+          : Math.min(start + this.#batchSize, this.#allResults.length)
+
+      this.#showLoading(requestId, true)
+
+      try {
+        const slice = this.#allResults.slice(start, end)
+        const settled = await Promise.allSettled(slice.map((r) => r.data()))
+        if (requestId !== this.#activeRequestId) return
+
+        const fulfilled = settled.filter((s) => s.status === 'fulfilled')
+        if (fulfilled.length === 0) {
+          this.#showOnlyError(requestId)
+          return
+        }
+
+        const frag = document.createDocumentFragment()
+        for (let r = 0; r < fulfilled.length; r++) {
+          if (requestId !== this.#activeRequestId) return
+          const data = fulfilled[r].value
+
+          const h1 = document.createElement('div')
+          h1.className = 'search-result-h1'
+          h1.textContent = data.meta?.title ?? ''
+          frag.appendChild(h1)
+
+          let subResults = data.sub_results
+          if (this.#maxItems)
+            subResults = this.#sortSubResults(subResults, this.#maxItems)
+
+          for (let s = 0; s < subResults.length; s++) {
+            const a = document.createElement('a')
+            a.href = subResults[s].url
+            a.className = 'search-result-item'
+            a.setAttribute('role', 'option')
+            a.setAttribute('tabindex', '-1')
+
+            if (r === 0 && s === 0) {
+              a.setAttribute('aria-selected', 'true')
+              if(this.#slectedItem) this.#slectedItem.setAttribute('aria-selected', 'false')
+              this.#slectedItem = a
+            } else {
+              a.setAttribute('aria-selected', 'false')
+            }
+
+            a.innerHTML = `
+              <div class="search-result-title">${subResults[s].title}</div>
+              <div class="search-result-excerpt">${subResults[s].excerpt}</div>`
+            frag.appendChild(a)
+          }
+        }
+
+        this.#showFeedback(false)
+        this.#content.appendChild(frag)
+        this.#renderedCount = end
+        this.#slectedItem?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        if (this.#batchSize) {
+          const hasMore = this.#renderedCount < this.#allResults.length
+          this.#showPagination(hasMore)
+          this.#batchLoading = false
+        }
+      } catch (_err) {
+        this.#showOnlyError(requestId)
+      } finally {
+        if (requestId === this.#activeRequestId) {
+          this.#results?.removeAttribute('aria-busy')
+          this.#input?.setAttribute('aria-expanded', 'true')
+        }
+      }
+    }
+
+    #sortSubResults = (data: SubResult[], maxItems: number) => {
+      return data
+        .toSorted((a, b) => {
+          const aWeightedCount = a.weighted_locations.length
+          const bWeightedCount = b.weighted_locations.length
+          if (aWeightedCount !== bWeightedCount) {
+            return bWeightedCount - aWeightedCount
+          }
+          const aAvgWeight =
+            a.weighted_locations.reduce((sum, loc) => sum + loc.weight, 0) /
+            (aWeightedCount || 1)
+          const bAvgWeight =
+            b.weighted_locations.reduce((sum, loc) => sum + loc.weight, 0) /
+            (bWeightedCount || 1)
+          return bAvgWeight - aAvgWeight
+        })
+        .slice(0, maxItems)
+    }
+
+    #resetView = () => {
+      this.#content?.replaceChildren()
+      this.#showFeedback(false)
+      this.#results?.removeAttribute('aria-busy')
+      this.#input?.setAttribute('aria-expanded', 'false')
+
+      this.#allResults = []
+      this.#renderedCount = 0
+      this.#slectedItem = null
+
+      if (this.#batchSize) {
+        this.#batchLoading = false
+        this.#showPagination(false)
+      }
+    }
+
+    #showFeedback = (show: boolean, feedback?: string) => {
+      if (this.#feedback && feedback) this.#feedback.textContent = feedback
+      this.#feedback?.classList.toggle('hidden', !show)
+    }
+
+    #showLoading = (requestId: number, more = false) => {
+      if (requestId !== this.#activeRequestId) return
+
+      if (more) {
+        this.#batchLoading = true
+      } else {
+        this.#content?.replaceChildren()
+      }
+
+      this.#showPagination(false)
+      this.#showFeedback(true, 'Loading...')
+      this.#results?.setAttribute('aria-busy', 'true')
+    }
+
+    #showOnlyError = (requestId: number) => {
+      if (requestId !== this.#activeRequestId) return
+
+      this.#content?.replaceChildren()
+      this.#showFeedback(true, 'Oops! Something went wrong. Try again.')
+      this.#results?.removeAttribute('aria-busy')
+
+      if (this.#batchSize) this.#showPagination(false)
+    }
+
+    #showOnlyNoResult = (requestId: number) => {
+      if (requestId !== this.#activeRequestId) return
+
+      this.#content?.replaceChildren()
+      this.#showFeedback(true, 'No results found.')
+      this.#results?.removeAttribute('aria-busy')
+
+      if (this.#batchSize) this.#showPagination(false)
+    }
+
+    #showPagination = (show: boolean) => {
+      if (!this.#pagination || !this.#batchSize) return
+
+      const all = this.#allResults.length
+      const more = Math.min(this.#batchSize, all - this.#renderedCount)
+
+      if(this.#btnMore) this.#btnMore.querySelector('span')!.textContent = `More +${more}`
+      if(this.#btnAll) this.#btnAll.querySelector('span')!.textContent = `All ${all}`
+
+      this.#pagination.style.display = show ? 'flex' : 'none'
+    }
+
+    #getLink = (event: Event)=>{
+      return event.target instanceof HTMLElement && event.target.closest('a')
+    }
+
+    #updateSlectedItem(next: HTMLAnchorElement) {
+      if (!this.#slectedItem || this.#slectedItem === next) return
+
+      this.#slectedItem.setAttribute('aria-selected', 'false');
+      this.#slectedItem = next;
+      this.#slectedItem.setAttribute('aria-selected', 'true');
+    }
+
+    #isItem(el: Element | null): el is HTMLAnchorElement {
+      return !!(el instanceof HTMLAnchorElement);
+    }
+
+    #getNextItem(from: HTMLElement): HTMLAnchorElement | null {
+      let cur: Element | null = from.nextElementSibling;
+      while (cur) {
+        if (this.#isItem(cur)) return cur;
+        cur = cur.nextElementSibling;
+      }
+      return null;
+    }
+
+    #getPrevItem(from: HTMLElement): HTMLAnchorElement | null {
+      let cur: Element | null = from.previousElementSibling;
+      while (cur) {
+        if (this.#isItem(cur)) return cur;
+        cur = cur.previousElementSibling;
+      }
+      return null;
     }
   }
 
-  const searchInput = document.getElementById('search-input')
-  searchInput?.addEventListener('input', handleInput)
+  if (!customElements.get('search-panel'))
+    customElements.define('search-panel', SearchPanel)
 </script>
 
+<!-- https://github.com/pagefind/pagefind/blob/production-docs/pagefind_web_js/types/index.d.ts -->
 {import.meta.env.PROD &&
-  <script is:inline define:vars={{scriptUrl: withBasePath('/pagefind/pagefind.js')}}>
+  <script is:inline define:vars={{scriptUrl: withBasePath('/pagefind/pagefind.js'), navHighlight}}>
     async function loadPagefind() {
       const pagefind = await import(scriptUrl)
 
+      // https://pagefind.app/docs/search-config/
       await pagefind.options({
-        'excerptLength': 20
+        'excerptLength': 20,
+        ...(navHighlight && {
+          'highlightParam': 'search'
+        }),
+
+        // https://pagefind.app/docs/ranking/
+        ranking: {
+          termFrequency: 0.6,
+          termSimilarity: 1.0,
+          pageLength: 0.0,
+          termSaturation: 1.4
+        }
       })
 
       pagefind.init()
       window.pagefind = pagefind
-      pagefind.search('')
     }
 
     if (!window.pagefind) loadPagefind()
+  </script>}
+
+{import.meta.env.PROD && navHighlight &&
+  <script is:inline define:vars={{scriptUrl: withBasePath('/pagefind/pagefind-highlight.js')}}>
+    async function loadPagefindHighlight() {
+      await import(scriptUrl)
+
+      const PagefindHighlight = window.PagefindHighlight
+      if (!PagefindHighlight) return
+      const pagefindHighlight = new PagefindHighlight({
+        // https://pagefind.app/docs/highlight-config
+        highlightParam: "search",
+        markContext: "[data-pagefind-body]",
+        // https://markjs.io/#mark
+        markOptions: {
+          className: "pagefind-highlight",
+          exclude: ["[data-pagefind-ignore]", "[data-pagefind-ignore] *"],
+        },
+        addStyles: false,
+      });
+
+      window.pagefindHighlight = pagefindHighlight
+    }
+
+    if (!window.pagefindHighlight) loadPagefindHighlight()
+  </script>}
+
+{import.meta.env.PROD && navHighlight &&
+  <script>
+    document.addEventListener('astro:page-load', () => {
+      const params = new URLSearchParams(location.search)
+      if(!params.has('search')) return
+
+      // @ts-expect-error (for Cannot find name 'pagefindHighlight'.ts(2304))
+      pagefindHighlight.highlight()
+    })
   </script>}

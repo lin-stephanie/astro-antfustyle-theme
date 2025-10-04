@@ -97,6 +97,12 @@ export const postSchema = z.object({
     .describe(
       'Specifies the platform where the audio or video content is published. If provided, the platform name will be displayed. If not needed, leave the field as an empty string or delete it.'
     ),
+  ogImage: z
+    .union([z.string(), z.boolean()])
+    .default(true)
+    .describe(
+      'Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field or set to `true`. To disable it, set the field to `false`. To use a custom image, provide the full filename from `/public/og-images/`.'
+    ),
   toc: z
     .boolean()
     .default(true)
@@ -111,11 +117,11 @@ export const postSchema = z.object({
     .boolean()
     .default(true)
     .describe('Controls whether Giscus comments are available for the post.'),
-  ogImage: z
-    .union([z.string(), z.boolean()])
+  search: z
+    .boolean()
     .default(true)
     .describe(
-      'Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field or set to `true`. To disable it, set the field to `false`. To use a custom image, provide the full filename from `/public/og-images/`.'
+      'Defines a URL to redirect the post. If not needed, delete the field or set to `false`'
     ),
   redirect: z
     .string()
