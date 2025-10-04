@@ -231,13 +231,17 @@ body {
 }
 
 /* Search */
-input[type='search']::-webkit-search-cancel-button {
-  display: none;
+#search-input:focus {
+  outline: none;
 }
 
-input[type='search']::placeholder {
+#search-input::placeholder {
   color: inherit;
   opacity: 0.4;
+}
+
+#search-input::-webkit-search-cancel-button {
+  display: none;
 }
 
 .search-result-h1 {

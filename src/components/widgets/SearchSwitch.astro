@@ -99,7 +99,7 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
       <div u-i-grommet-icons-search></div>
       <label for="search-input" id="search-label" class="sr-only"></label>
       <input
-        type="text"
+        type="search"
         role="combobox"
         id="search-input"
         class="h-full pl-2 bg-transparent outline-0"
@@ -703,7 +703,7 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
 
 <!-- https://github.com/pagefind/pagefind/blob/production-docs/pagefind_web_js/types/index.d.ts -->
 {import.meta.env.PROD &&
-  <script is:inline define:vars={{scriptUrl: withBasePath('/pagefind/pagefind.js')}}>
+  <script is:inline define:vars={{scriptUrl: withBasePath('/pagefind/pagefind.js'), navHighlight}}>
     async function loadPagefind() {
       const pagefind = await import(scriptUrl)
 
