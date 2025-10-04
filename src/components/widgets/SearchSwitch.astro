@@ -759,9 +759,9 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
   <script>
     document.addEventListener('astro:page-load', () => {
       const params = new URLSearchParams(location.search)
-      if (params.has('search')){
-        // @ts-expect-error (for Cannot find name 'pagefindHighlight'.ts(2304))
-        pagefindHighlight.highlight()
-      }
+      if(!params.has('search')) return
+
+      // @ts-expect-error (for Cannot find name 'pagefindHighlight'.ts(2304))
+      pagefindHighlight.highlight()
     })
   </script>}

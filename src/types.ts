@@ -714,19 +714,19 @@ interface SearchConfig {
   /**
    * Specify which content collections rendered by `RenderPost.astro` are indexed.
    *
-   * - By default, only `blog`, `shorts`, and `changelog` are indexed, as their dynamic routes
-   * (`/blog/[...slug]`, `/shorts/[...slug]`, and `/changelog/[...slug]`) use `RenderPost.astro`.
+   * - By default, only `blog` and `changelog` are indexed, as their dynamic routes
+   * (`/blog/[...slug]` and `/changelog/[slug]`) use `RenderPost.astro`.
    * - If needed, see https://pagefind.app/ for adjusting the search implementation.
    */
   includes: string[]
 
   /**
-   * Whether to enable search filtering by path.
+   * Whether to enable search filtering by collection.
    *
-   * When enabled, the search panel displays multiple tabs named after the paths,
-   * allowing users to filter search results by path.
+   * When enabled, the search panel displays multiple tabs named after the collections,
+   * allowing users to search in each collection separately.
    *
-   * When disabled, all results are searched together without path filters.
+   * When disabled, all results are searched together.
    */
   filter: boolean
 
