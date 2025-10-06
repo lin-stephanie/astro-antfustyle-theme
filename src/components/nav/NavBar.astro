@@ -7,13 +7,10 @@ import RssLink from '~/components/widgets/RssLink.astro'
 import NavItem from '~/components/nav/NavItem.astro'
 import NavSwitch from '~/components/nav/NavSwitch.astro'
 
-import { UI, FEATURES } from '~/config'
+import { UI } from '~/config'
 
 const { navBarLayout, internalNavs, socialLinks } = UI
 const { left, right, mergeOnMobile } = navBarLayout
-
-const { search } = FEATURES
-const searchEnabled = Array.isArray(search) && search[0]
 
 for (const item of new Set(left)) {
   if (new Set(right).has(item)) {
@@ -41,7 +38,7 @@ for (const item of new Set(left)) {
           {left.map((key) =>
             key === 'hr' ? (
               <Divider class={mergeOnMobile ? 'lt-md:hidden' : undefined} />
-            ) : key === 'searchButton' && searchEnabled ? (
+            ) : key === 'searchButton' ? (
               <SearchSwitch />
             ) : key === 'themeButton' ? (
               <ThemeSwitch />
@@ -70,7 +67,7 @@ for (const item of new Set(left)) {
           {right.map((key) =>
             key === 'hr' ? (
               <Divider class={mergeOnMobile ? 'lt-md:hidden' : undefined} />
-            ) : key === 'searchButton' && searchEnabled ? (
+            ) : key === 'searchButton' ? (
               <SearchSwitch />
             ) : key === 'themeButton' ? (
               <ThemeSwitch />
