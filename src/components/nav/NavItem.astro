@@ -39,7 +39,7 @@ const ariaCurrent =
           item.displayMode === 'iconToTextOnMobile') && (
           <li class="block py-3 border-b b-[var(--c-scrollbar)] leading-6">
             <Link
-              class="block op-transition"
+              class="block op-50! op-transition"
               href={href}
               title={item.title}
               rel={rel}
@@ -54,7 +54,7 @@ const ariaCurrent =
         (item.displayMode === 'alwaysIcon' ||
           item.displayMode === 'textToIconOnMobile') && (
           <Link
-            class="block op-transition"
+            class="block op-50! op-transition"
             href={href}
             title={item.title}
             rel={rel}
@@ -67,7 +67,7 @@ const ariaCurrent =
       )
     ) : (
       <Link
-        class="lt-md:hidden op-transition"
+        class="lt-md:hidden op-50! op-transition"
         href={href}
         title={item.title}
         rel={rel}

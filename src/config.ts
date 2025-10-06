@@ -174,4 +174,14 @@ export const FEATURES: Features = {
       'data-lang': 'en',
     },
   ],
+  search: [
+    true,
+    {
+      includes: ['blog', 'changelog'],
+      filter: true,
+      navHighlight: true,
+      batchLoadSize: [true, 5],
+      maxItemsPerPage: [true, 3],
+    },
+  ],
 }

@@ -202,7 +202,7 @@ html.dark .prose {
 
 #toc-panel ul > li > a {
   color: inherit;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 .toc-desktop [aria-current='true'],
