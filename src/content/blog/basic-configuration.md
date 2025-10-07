@@ -91,15 +91,11 @@ The `UI` object allows you to configure navigation, social links, page views, an
 
 ### `githubView`
 
-<div class='overflow-x-auto'>
-
 | Option            | Type                                       | Description                                                                                                                                | Example                                                                                                |
 | ------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
 | `monorepos`         | `${string}/${string}[]`                    | Defines monorepo repositories using `<owner>/<repo>` format. For monorepos, the tag name is used as the primary text for `/releases` page. | `['withastro/astro']` (If you want all components to appear on the right side, leave this array empty) |
 | `mainLogoOverrides` | `[RepoWithOwner \| RegExp, Url \| Icon][]` | Configures main logos for repositories or packages (for monorepos). Defaults to the owner's avatar if no custom logo is set.               | `[/starlight/, 'https://starlight.astro.build/favicon.svg']` (Prioritized by order)                    |
 | `subLogoMatches`    | `[RepoWithOwner \| RegExp, Url \| Icon][]` | Configures auxiliary logos for rrepositories or packages (for monorepos). No logo is shown if unmatched.                                   | `[/tweet/, 'i-logos-twitter']`  (Prioritized by order)                                                 |
-
-</div>
 
 ### `externalLink`
 

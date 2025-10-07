@@ -12,6 +12,8 @@ import rehypeCallouts from 'rehype-callouts'
 import rehypeKatex from 'rehype-katex'
 import rehypeExternalLinks from 'rehype-external-links'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+// @ts-expect-error(rehype-wrap-all is not typed)
+import rehypeWrapAll from 'rehype-wrap-all'
 
 import { UI, FEATURES } from '../src/config'
 
@@ -160,6 +162,14 @@ export const rehypePlugins: RehypePlugins = [
         type: 'text',
         value: '#',
       },
+    },
+  ],
+  // https://github.com/florentb/rehype-wrap-all
+  [
+    rehypeWrapAll,
+    {
+      selector: 'table',
+      wrapper: 'div',
     },
   ],
 ]

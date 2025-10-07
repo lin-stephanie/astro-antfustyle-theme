@@ -144,8 +144,6 @@ It is recommended to review the Astro's [Content Collections](https://docs.astro
 
 How theme pages map to collections (defined in `src/content.config.ts`):
 
-<div class='overflow-x-auto'>
-
 | URL Path                                              | Page File Location                 | Collection  Storage Location                                     | Zod Schema              |
 | ----------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------- | ----------------------- |
 | `/`                                                   | `src/pages/index.mdx`              | `src/content/home/`                                              | -                       |
@@ -161,8 +159,6 @@ How theme pages map to collections (defined in `src/content.config.ts`):
 | `/changelog/xxx`                                      | `src/pages/changelog/[slug].astro` | `src/content/changelog/`                                         | `postSchema`            |
 | `/feeds`                                              | `src/pages/feeds.mdx`              | [Via Astro loader](../recreating-current-pages/#feeds-page)      | Default by Astro loader |
 | `/streams`                                            | `src/pages/streams.mdx`            | `src/content/streams/`                                           | `streamSchema`          |
-
-</div>
 
 When to use each file format in theme development:
 
