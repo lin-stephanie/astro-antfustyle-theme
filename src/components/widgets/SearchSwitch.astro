@@ -1,42 +1,20 @@
 ---
 import { FEATURES } from '~/config'
 import { withBasePath } from '~/utils/path'
+import { parseTuple } from '~/utils/data'
 
 const { search } = FEATURES
 if (!search || (Array.isArray(search) && !search[0])) return
 
 const { includes, filter, navHighlight, batchLoadSize, maxItemsPerPage } =
   search[1]
-const checkInt = (num: number) =>
-  isNaN(num) || num < 1 || !Number.isInteger(num)
-
 if (includes.length === 0)
   throw new Error(
-    'Search feature enabled, but `includes` array is empty. Please check `src/config.ts` for the correct configuration.'
+    "Search feature enabled, but `includes` array is empty. Please check 'src/config.ts' for the correct configuration."
   )
-if (
-  Array.isArray(maxItemsPerPage) &&
-  maxItemsPerPage[0] &&
-  checkInt(maxItemsPerPage[1])
-)
-  throw new Error(
-    '`maxItemsPerPage` must be a number greater than 0. Please check `src/config.ts` for the correct configuration.'
-  )
-if (
-  Array.isArray(batchLoadSize) &&
-  batchLoadSize[0] &&
-  checkInt(batchLoadSize[1])
-)
-  throw new Error(
-    '`batchLoadSize` must be a number greater than 0. Please check `src/config.ts` for the correct configuration.'
-  )
-
 const filterEnabled = filter && includes.length > 1
-const batchSize =
-  Array.isArray(batchLoadSize) && batchLoadSize[0]
-    ? batchLoadSize[1]
-    : undefined
-const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
+const batchSize = parseTuple(batchLoadSize, 'batchLoadSize')
+const maxItems = parseTuple(maxItemsPerPage, 'maxItemsPerPage')
 ---
 
 <!-- Search Switch -->
@@ -110,7 +88,6 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
         aria-autocomplete="list"
         aria-controls="search-results"
         aria-expanded="false"
-        aria-live="polite"
       />
     </div>
   </div>
@@ -126,10 +103,7 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
     <!-- Results -->
     <div id="search-content"></div>
     <!-- Feedback -->
-    <div
-      id="search-feedback"
-      class="hidden py-3 text-center text-sm op-40"
-    >
+    <div id="search-feedback" class="hidden py-3 text-center text-sm op-40">
     </div>
     <!-- Pagination -->
     <div
@@ -154,10 +128,7 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
     </div>
   </div>
   <!-- Shortcuts Footer -->
-  <footer
-    role="note"
-    aria-label="Keyboard shortcuts"
-  >
+  <footer role="note" aria-label="Keyboard shortcuts">
     <ul
       class="flex flex-wrap items-center gap-4.5 lt-md:hidden
         pt-3 border-t border-[#7d7d7d4d]
@@ -257,27 +228,24 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
     #pagination: HTMLElement | null = null
     #btnMore: HTMLButtonElement | null = null
     #btnAll: HTMLButtonElement | null = null
-
-    #activeRequestId = 0
+    #selectedItem: HTMLAnchorElement | null = null
 
     #filter = this.dataset.filter === 'true'
     #tabs: HTMLElement[] = []
     #currentTab = 0
 
-    #batchLoading = false
+    #activeRequestId = 0
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     #allResults: any[] = []
     #renderedCount = 0
-
-    #batchSize = this.dataset.batchSize
-      ? parseInt(this.dataset.batchSize || '5', 10)
-      : undefined
-
     #maxItems = this.dataset.maxItems
       ? parseInt(this.dataset.maxItems || '10', 10)
       : undefined
 
-    #slectedItem: HTMLAnchorElement | null | undefined = null
+    #batchLoading = false
+    #batchSize = this.dataset.batchSize
+      ? parseInt(this.dataset.batchSize || '5', 10)
+      : undefined
 
     connectedCallback() {
       this.#input = this.querySelector('#search-input')
@@ -292,7 +260,10 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
       this.#input?.addEventListener('input', this.#handleInput)
 
       this.#content?.addEventListener('click', this.#handleResultClick)
-      this.#content?.addEventListener('pointerover', this.#handleResultsPointerOver)
+      this.#content?.addEventListener(
+        'pointerover',
+        this.#handleResultsPointerOver
+      )
 
       this.addEventListener('keydown', this.#handleResultsKeyDown)
     }
@@ -301,7 +272,10 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
       this.#input?.removeEventListener('input', this.#handleInput)
 
       this.#content?.removeEventListener('click', this.#handleResultClick)
-      this.#content?.removeEventListener('pointerover', this.#handleResultsPointerOver)
+      this.#content?.removeEventListener(
+        'pointerover',
+        this.#handleResultsPointerOver
+      )
 
       this.removeEventListener('keydown', this.#handleResultsKeyDown)
 
@@ -316,13 +290,16 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
     }
 
     #initFilter = () => {
-      if (!this.#filter) this.#updateHint()
+      if (!this.#filter) {
+        this.#updateHint()
+        return
+      }
 
       const storedTab = localStorage.getItem('search-tab')
       this.#currentTab = storedTab ? parseInt(storedTab, 10) : 0
 
       this.#tabs = Array.from(this.querySelectorAll('[role="tab"]'))
-      for(let i = 0; i < this.#tabs.length; i++) {
+      for (let i = 0; i < this.#tabs.length; i++) {
         const isSelected = i === this.#currentTab
         this.#tabs[i].setAttribute('aria-selected', isSelected.toString())
         if (isSelected) this.#updateHint(this.#tabs[i].dataset.type || '')
@@ -348,13 +325,8 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
 
       if (import.meta.env.PROD) {
         const requestId = ++this.#activeRequestId
-        this.#slectedItem = null
-
-        // reset view if search value is empty
-        if (value.length === 0) {
-          this.#resetView()
-          return
-        }
+        this.#resetView()
+        if (value.length === 0) return
 
         // start search
         try {
@@ -368,6 +340,7 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
 
           // @ts-expect-error (for Cannot find name 'pagefind'.ts(2304))
           const res = await pagefind.debouncedSearch(value, options, 300)
+          // a more recent search call has been made, nothing to do
           if (res === null) return
           if (requestId !== this.#activeRequestId) return
 
@@ -379,8 +352,7 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
 
           // batch render or single render
           this.#allResults = res.results
-          this.#renderedCount = 0
-          this.#renderNextBatch(requestId)
+          this.#render({ requestId })
         } catch (_err) {
           this.#showOnlyError(requestId)
         }
@@ -397,8 +369,8 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
               <div class="search-result-excerpt">${result.excerpt}</div>
             </a>`
         }
-        this.#slectedItem = this.#content.querySelector('a')
-        this.#slectedItem?.setAttribute('aria-selected', 'true')
+        this.#selectedItem = this.#content.querySelector('a')
+        this.#selectedItem?.setAttribute('aria-selected', 'true')
       }
     }
 
@@ -419,34 +391,34 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
     }
 
     #handleResultsKeyDown = (event: KeyboardEvent) => {
-      if (!this.#slectedItem || document.activeElement !== this.#input) return
+      if (!this.#selectedItem || document.activeElement !== this.#input) return
 
       const key = event.key
       if (key !== 'ArrowDown' && key !== 'ArrowUp' && key !== 'Enter') return
 
       event.preventDefault()
 
-      if(key === 'Enter') {
-        this.#slectedItem.click()
+      if (key === 'Enter') {
+        this.#selectedItem.click()
         return
       }
 
       let target =
         key === 'ArrowDown'
-          ? this.#getNextItem(this.#slectedItem)
-          : this.#getPrevItem(this.#slectedItem)
+          ? this.#getNextItem(this.#selectedItem)
+          : this.#getPrevItem(this.#selectedItem)
 
       // when there's no next/prev item, loop around
       if (!target) {
         target =
           key === 'ArrowDown'
-            ? this.#content?.querySelector('a') ?? null
-            : this.#content?.querySelector('a:last-child') ?? null
+            ? (this.#content?.querySelector('a') ?? null)
+            : (this.#content?.querySelector('a:last-child') ?? null)
       }
 
-      if(target) {
+      if (target) {
         this.#updateSlectedItem(target)
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' })
       }
     }
 
@@ -473,7 +445,7 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
       const type = this.#tabs[idx]?.dataset.type || ''
       this.#updateHint(type)
 
-      if (this.#input?.value){
+      if (this.#input?.value) {
         this.#resetView()
         await this.#handleInput({ target: this.#input } as unknown as Event)
         this.#input?.focus()
@@ -488,32 +460,39 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
 
       const action = btn.dataset.action
       if (action === 'more') {
-        await this.#renderNextBatch(requestId)
+        await this.#render({ requestId, next: true, all: false })
         this.#input?.focus()
       } else if (action === 'all') {
-        await this.#renderNextBatch(requestId, true)
+        await this.#render({ requestId, next: true, all: true })
         this.#input?.focus()
       }
     }
 
-    #renderNextBatch = async(requestId: number, all = false) => {
+    #render = async ({
+      requestId,
+      next = false,
+      all = false,
+    }: {
+      requestId: number
+      next?: boolean
+      all?: boolean
+    }) => {
       if (!this.#content) return
       if (requestId !== this.#activeRequestId) return
       if (this.#batchSize && this.#batchLoading) return
 
-      const start = this.#renderedCount
-      const end =
-        !this.#batchSize || all
-          ? this.#allResults.length
-          : Math.min(start + this.#batchSize, this.#allResults.length)
-
-      this.#showLoading(requestId, true)
-
       try {
+        const start = this.#renderedCount
+        const end =
+          !this.#batchSize || all
+            ? this.#allResults.length
+            : Math.min(start + this.#batchSize, this.#allResults.length)
+
+        if (next) this.#showLoading(requestId, true)
+
         const slice = this.#allResults.slice(start, end)
         const settled = await Promise.allSettled(slice.map((r) => r.data()))
         if (requestId !== this.#activeRequestId) return
-
         const fulfilled = settled.filter((s) => s.status === 'fulfilled')
         if (fulfilled.length === 0) {
           this.#showOnlyError(requestId)
@@ -543,8 +522,9 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
 
             if (r === 0 && s === 0) {
               a.setAttribute('aria-selected', 'true')
-              if(this.#slectedItem) this.#slectedItem.setAttribute('aria-selected', 'false')
-              this.#slectedItem = a
+              if (this.#selectedItem)
+                this.#selectedItem.setAttribute('aria-selected', 'false')
+              this.#selectedItem = a
             } else {
               a.setAttribute('aria-selected', 'false')
             }
@@ -556,23 +536,24 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
           }
         }
 
-        this.#showFeedback(false)
+        if (requestId !== this.#activeRequestId) return
+        this.#showFeedback('')
         this.#content.appendChild(frag)
-        this.#renderedCount = end
-        this.#slectedItem?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        this.#selectedItem?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
 
         if (this.#batchSize) {
+          this.#renderedCount = end
           const hasMore = this.#renderedCount < this.#allResults.length
           this.#showPagination(hasMore)
-          this.#batchLoading = false
         }
       } catch (_err) {
         this.#showOnlyError(requestId)
       } finally {
-        if (requestId === this.#activeRequestId) {
-          this.#results?.removeAttribute('aria-busy')
-          this.#input?.setAttribute('aria-expanded', 'true')
-        }
+        this.#results?.removeAttribute('aria-busy')
+        if (this.#batchSize) this.#batchLoading = false
       }
     }
 
@@ -597,13 +578,13 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
 
     #resetView = () => {
       this.#content?.replaceChildren()
-      this.#showFeedback(false)
-      this.#results?.removeAttribute('aria-busy')
+      this.#showFeedback('')
       this.#input?.setAttribute('aria-expanded', 'false')
+      this.#results?.removeAttribute('aria-busy')
 
       this.#allResults = []
       this.#renderedCount = 0
-      this.#slectedItem = null
+      this.#selectedItem = null
 
       if (this.#batchSize) {
         this.#batchLoading = false
@@ -611,43 +592,36 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
       }
     }
 
-    #showFeedback = (show: boolean, feedback?: string) => {
-      if (this.#feedback && feedback) this.#feedback.textContent = feedback
-      this.#feedback?.classList.toggle('hidden', !show)
+    #showFeedback = (feedback: string) => {
+      if (!this.#feedback) return
+      if (feedback) this.#feedback.textContent = feedback
+      this.#feedback.classList.toggle('hidden', !feedback)
     }
 
-    #showLoading = (requestId: number, more = false) => {
+    #showLoading = (requestId: number, next = false) => {
       if (requestId !== this.#activeRequestId) return
 
-      if (more) {
+      if (next) {
+        this.#showPagination(false)
         this.#batchLoading = true
-      } else {
-        this.#content?.replaceChildren()
       }
-
-      this.#showPagination(false)
-      this.#showFeedback(true, 'Loading...')
+      this.#showFeedback('Loading...')
       this.#results?.setAttribute('aria-busy', 'true')
+      if (!next) this.#input?.setAttribute('aria-expanded', 'true')
     }
 
     #showOnlyError = (requestId: number) => {
       if (requestId !== this.#activeRequestId) return
 
-      this.#content?.replaceChildren()
-      this.#showFeedback(true, 'Oops! Something went wrong. Try again.')
+      this.#showFeedback('Oops! Something went wrong. Try again.')
       this.#results?.removeAttribute('aria-busy')
-
-      if (this.#batchSize) this.#showPagination(false)
     }
 
     #showOnlyNoResult = (requestId: number) => {
       if (requestId !== this.#activeRequestId) return
 
-      this.#content?.replaceChildren()
-      this.#showFeedback(true, 'No results found.')
+      this.#showFeedback('No results found.')
       this.#results?.removeAttribute('aria-busy')
-
-      if (this.#batchSize) this.#showPagination(false)
     }
 
     #showPagination = (show: boolean) => {
@@ -656,44 +630,46 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
       const all = this.#allResults.length
       const more = Math.min(this.#batchSize, all - this.#renderedCount)
 
-      if(this.#btnMore) this.#btnMore.querySelector('span')!.textContent = `More +${more}`
-      if(this.#btnAll) this.#btnAll.querySelector('span')!.textContent = `All ${all}`
+      if (this.#btnMore)
+        this.#btnMore.querySelector('span')!.textContent = `More +${more}`
+      if (this.#btnAll)
+        this.#btnAll.querySelector('span')!.textContent = `All ${all}`
 
       this.#pagination.style.display = show ? 'flex' : 'none'
     }
 
-    #getLink = (event: Event)=>{
+    #getLink = (event: Event) => {
       return event.target instanceof HTMLElement && event.target.closest('a')
     }
 
-    #updateSlectedItem(next: HTMLAnchorElement) {
-      if (!this.#slectedItem || this.#slectedItem === next) return
+    #updateSlectedItem = (next: HTMLAnchorElement) => {
+      if (!this.#selectedItem || this.#selectedItem === next) return
 
-      this.#slectedItem.setAttribute('aria-selected', 'false');
-      this.#slectedItem = next;
-      this.#slectedItem.setAttribute('aria-selected', 'true');
+      this.#selectedItem.setAttribute('aria-selected', 'false')
+      this.#selectedItem = next
+      this.#selectedItem.setAttribute('aria-selected', 'true')
     }
 
-    #isItem(el: Element | null): el is HTMLAnchorElement {
-      return !!(el instanceof HTMLAnchorElement);
+    #isItem = (el: Element | null): el is HTMLAnchorElement => {
+      return !!(el instanceof HTMLAnchorElement)
     }
 
-    #getNextItem(from: HTMLElement): HTMLAnchorElement | null {
-      let cur: Element | null = from.nextElementSibling;
+    #getNextItem = (from: HTMLElement): HTMLAnchorElement | null => {
+      let cur: Element | null = from.nextElementSibling
       while (cur) {
-        if (this.#isItem(cur)) return cur;
-        cur = cur.nextElementSibling;
+        if (this.#isItem(cur)) return cur
+        cur = cur.nextElementSibling
       }
-      return null;
+      return null
     }
 
-    #getPrevItem(from: HTMLElement): HTMLAnchorElement | null {
-      let cur: Element | null = from.previousElementSibling;
+    #getPrevItem = (from: HTMLElement): HTMLAnchorElement | null => {
+      let cur: Element | null = from.previousElementSibling
       while (cur) {
-        if (this.#isItem(cur)) return cur;
-        cur = cur.previousElementSibling;
+        if (this.#isItem(cur)) return cur
+        cur = cur.previousElementSibling
       }
-      return null;
+      return null
     }
   }
 
@@ -741,8 +717,8 @@ const maxItems = Array.isArray(maxItemsPerPage) ? maxItemsPerPage[1] : undefined
         // https://pagefind.app/docs/highlight-config
         highlightParam: "search",
         markContext: "[data-pagefind-body]",
-        // https://markjs.io/#mark
         markOptions: {
+          // https://markjs.io/#mark
           className: "pagefind-highlight",
           exclude: ["[data-pagefind-ignore]", "[data-pagefind-ignore] *"],
         },
