@@ -101,6 +101,10 @@ html.dark .prose {
   --uno: 'bg-[#88888820] dark:bg-[#88888830]';
 }
 
+.prose div:has(> table) {
+  overflow-x: auto;
+}
+
 /* Toc */
 .toc-desktop {
   position: fixed;
