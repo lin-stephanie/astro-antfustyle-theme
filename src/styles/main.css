@@ -18,6 +18,10 @@ html {
   background-color: var(--c-bg);
 }
 
+html:has(#bg-rose) {
+  scrollbar-gutter: stable;
+}
+
 body {
   overflow-x: hidden;
   overflow-y: scroll;
@@ -47,50 +51,14 @@ body {
 
 /* Scrollbar */
 @supports (scrollbar-width: auto) {
-  * {
-    scrollbar-width: auto;
-    scrollbar-color: var(--c-scrollbar) var(--c-bg);
-  }
-
-  #search-results,
-  #nav-panel,
-  #toc-panel {
+  *:not(html) {
     scrollbar-width: none;
   }
 }
 
-@supports selector(::-webkit-scrollbar) {
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  ::-webkit-scrollbar:horizontal {
-    height: 8px;
-  }
-
-  ::-webkit-scrollbar-track,
-  ::-webkit-scrollbar-corner {
-    border-radius: 10px;
-    background: var(--c-bg);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background: var(--c-scrollbar);
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--c-scrollbar-hover);
-  }
-
-  .table-of-contents > ul::-webkit-scrollbar,
-  #search-results::-webkit-scrollbar {
-    width: 0;
-  }
-
-  .table-of-contents > ul::-webkit-scrollbar:horizontal,
-  #search-results::-webkit-scrollbar:horizontal {
-    height: 0;
+@supports (scrollbar-color: auto) {
+  * {
+    scrollbar-color: var(--c-scrollbar) var(--c-bg);
   }
 }
 

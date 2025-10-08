@@ -158,7 +158,7 @@ const maxItems = parseTuple(maxItemsPerPage, 'maxItemsPerPage')
 </search-panel>
 
 <script>
-  import { toggleFadeEffect } from '~/utils/animation'
+  import { toggleFadeEffect } from '~/utils/misc'
 
   /* Handle click on search switch to open or close */
   document.addEventListener('astro:page-load', () => {
@@ -179,7 +179,7 @@ const maxItems = parseTuple(maxItemsPerPage, 'maxItemsPerPage')
 </script>
 
 <script>
-  import { toggleFadeEffect } from '~/utils/animation'
+  import { toggleFadeEffect } from '~/utils/misc'
 
   interface Anchor {
     element: string

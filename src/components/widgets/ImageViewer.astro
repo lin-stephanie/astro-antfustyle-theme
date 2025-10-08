@@ -26,6 +26,7 @@ const {
 
 <script>
   import Viewer from 'viewerjs'
+  import { lockScroll, unlockScroll } from '~/utils/misc'
 
   // global default config
   Viewer.setDefaults({
@@ -99,11 +100,11 @@ const {
           // https://github.com/fengyuanchen/viewerjs/issues/197
           // @ts-expect-error (ignore)
           this.#viewer.open = function () {
-            document.documentElement.style.overflow = 'hidden'
+            lockScroll()
           }
           // @ts-expect-error (ignore)
           this.#viewer.close = function () {
-            document.documentElement.style.overflow = ''
+            unlockScroll()
           }
         }
       }
@@ -132,7 +133,6 @@ const {
     }
   }
 
-  if (!customElements.get('image-viewer')) {
+  if (!customElements.get('image-viewer'))
     customElements.define('image-viewer', ImageViewer)
-  }
 </script>
