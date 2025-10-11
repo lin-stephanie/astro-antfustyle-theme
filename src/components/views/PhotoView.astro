@@ -355,7 +355,7 @@ const {
 
     #handleWindowScroll = () => {
       if (!this.#ticking && !this.#isLoading && !this.#allLoaded) {
-        window.requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
           this.#handleScroll()
           this.#ticking = false
         })

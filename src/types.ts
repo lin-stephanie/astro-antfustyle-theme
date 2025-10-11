@@ -50,6 +50,7 @@ export interface Site {
    * (also known as BCP 47).
    *
    * @example
+   * 'zh-Hans' (Chinese written using the Simplified Chinese script)
    * 'zh-Hant' (Chinese written using the Traditional Chinese script)
    * 'fr' (French)
    */
@@ -111,25 +112,25 @@ interface BaseNavItem {
 interface TextNavItem extends BaseNavItem {
   /**
    * Defines how the navigation item is displayed responsively. Allowed values:
-   *  - 'alwaysText': Always display text, regardless of screen size.
-   *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
-   *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
-   *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
-   *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
-   *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
+   *  - `'alwaysText'`: Always display text, regardless of screen size.
+   *  - `'alwaysIcon'`: Always display as a chart, regardless of screen size.
+   *  - `'textHiddenOnMobile'`: Display text when viewport is ≥768px, hide text when <768px.
+   *  - `'iconHiddenOnMobile'`: Display icon when viewport is ≥768px, hide icon when <768px.
+   *  - `'textToIconOnMobile'`: Display text when viewport is ≥768px, switch to icon when <768px.
+   *  - `'iconToTextOnMobile'`: Display icon when viewport is ≥768px, switch to text when <768px.
    *
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
+   * The `text` property is required for `'alwaysText'`, `'textHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
+   * The `icon` property is required for `'alwaysIcon'`, `'iconHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
    */
   displayMode: 'alwaysText' | 'textHiddenOnMobile'
 
   /**
    * Sets the text displayed for the navigation item.
    *
-   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
+   * Required for `displayMode` values `'alwaysText'`, `'textHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
    */
   text: string
 }
@@ -137,17 +138,17 @@ interface TextNavItem extends BaseNavItem {
 export interface IconNavItem extends BaseNavItem {
   /**
    * Defines how the navigation item is displayed responsively. Allowed values:
-   *  - 'alwaysText': Always display text, regardless of screen size.
-   *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
-   *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
-   *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
-   *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
-   *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
+   *  - `'alwaysText'`: Always display text, regardless of screen size.
+   *  - `'alwaysIcon'`: Always display as a chart, regardless of screen size.
+   *  - `'textHiddenOnMobile'`: Display text when viewport is ≥768px, hide text when <768px.
+   *  - `'iconHiddenOnMobile'`: Display icon when viewport is ≥768px, hide icon when <768px.
+   *  - `'textToIconOnMobile'`: Display text when viewport is ≥768px, switch to icon when <768px.
+   *  - `'iconToTextOnMobile'`: Display icon when viewport is ≥768px, switch to text when <768px.
    *
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
+   * The `text` property is required for `'alwaysText'`, `'textHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
+   * The `icon` property is required for `'alwaysIcon'`, `'iconHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
    */
   displayMode: 'alwaysIcon' | 'iconHiddenOnMobile'
 
@@ -157,8 +158,8 @@ export interface IconNavItem extends BaseNavItem {
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
    * as per {@link https://unocss.dev/presets/icons UnoCSS} specs.
    *
-   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
+   * Required for `displayMode` values `'alwaysIcon'`, `'iconHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
    *
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
@@ -171,25 +172,25 @@ export interface IconNavItem extends BaseNavItem {
 export interface ResponsiveNavItem extends BaseNavItem {
   /**
    * Defines how the navigation item is displayed responsively. Allowed values:
-   *  - 'alwaysText': Always display text, regardless of screen size.
-   *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
-   *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
-   *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
-   *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
-   *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
+   *  - `'alwaysText'`: Always display text, regardless of screen size.
+   *  - `'alwaysIcon'`: Always display as a chart, regardless of screen size.
+   *  - `'textHiddenOnMobile'`: Display text when viewport is ≥768px, hide text when <768px.
+   *  - `'iconHiddenOnMobile'`: Display icon when viewport is ≥768px, hide icon when <768px.
+   *  - `'textToIconOnMobile'`: Display text when viewport is ≥768px, switch to icon when <768px.
+   *  - `'iconToTextOnMobile'`: Display icon when viewport is ≥768px, switch to text when <768px.
    *
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
+   * The `text` property is required for `'alwaysText'`, `'textHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
+   * The `icon` property is required for `'alwaysIcon'`, `'iconHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
    */
   displayMode: 'textToIconOnMobile' | 'iconToTextOnMobile'
 
   /**
    * Sets the text displayed for the navigation item.
    *
-   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
+   * Required for `displayMode` values `'alwaysText'`, `'textHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
    */
   text: string
 
@@ -199,8 +200,8 @@ export interface ResponsiveNavItem extends BaseNavItem {
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
    * as per {@link https://unocss.dev/presets/icons UnoCSS} specs.
    *
-   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
+   * Required for `displayMode` values `'alwaysIcon'`, `'iconHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
    *
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
@@ -232,25 +233,25 @@ interface BaseSocialItem {
 interface TextSocialItem extends BaseSocialItem {
   /**
    * Defines how the social item is displayed responsively. Allowed values:
-   *  - 'alwaysText': Always display text, regardless of screen size.
-   *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
-   *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
-   *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
-   *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
-   *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
+   *  - `'alwaysText'`: Always display text, regardless of screen size.
+   *  - `'alwaysIcon'`: Always display as a chart, regardless of screen size.
+   *  - `'textHiddenOnMobile'`: Display text when viewport is ≥768px, hide text when <768px.
+   *  - `'iconHiddenOnMobile'`: Display icon when viewport is ≥768px, hide icon when <768px.
+   *  - `'textToIconOnMobile'`: Display text when viewport is ≥768px, switch to icon when <768px.
+   *  - `'iconToTextOnMobile'`: Display icon when viewport is ≥768px, switch to text when <768px.
    *
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
+   * The `text` property is required for `'alwaysText'`, `'textHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
+   * The `icon` property is required for `'alwaysIcon'`, `'iconHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
    */
   displayMode: 'alwaysText' | 'textHiddenOnMobile'
 
   /**
    * Sets the text displayed for the social item.
    *
-   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
+   * Required for `displayMode` values `'alwaysText'`, `'textHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
    */
   text: string
 }
@@ -258,17 +259,17 @@ interface TextSocialItem extends BaseSocialItem {
 export interface IconSocialItem extends BaseSocialItem {
   /**
    * Defines how the social item is displayed responsively. Allowed values:
-   *  - 'alwaysText': Always display text, regardless of screen size.
-   *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
-   *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
-   *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
-   *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
-   *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
+   *  - `'alwaysText'`: Always display text, regardless of screen size.
+   *  - `'alwaysIcon'`: Always display as a chart, regardless of screen size.
+   *  - `'textHiddenOnMobile'`: Display text when viewport is ≥768px, hide text when <768px.
+   *  - `'iconHiddenOnMobile'`: Display icon when viewport is ≥768px, hide icon when <768px.
+   *  - `'textToIconOnMobile'`: Display text when viewport is ≥768px, switch to icon when <768px.
+   *  - `'iconToTextOnMobile'`: Display icon when viewport is ≥768px, switch to text when <768px.
    *
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
+   * The `text` property is required for `'alwaysText'`, `'textHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
+   * The `icon` property is required for `'alwaysIcon'`, `'iconHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
    */
   displayMode: 'alwaysIcon' | 'iconHiddenOnMobile'
 
@@ -278,8 +279,8 @@ export interface IconSocialItem extends BaseSocialItem {
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
    * as per {@link https://unocss.dev/presets/icons UnoCSS} specs.
    *
-   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
+   * Required for `displayMode` values `'alwaysIcon'`, `'iconHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
    *
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
@@ -292,26 +293,26 @@ export interface IconSocialItem extends BaseSocialItem {
 export interface ResponsiveSocialItem extends BaseSocialItem {
   /**
    * Defines how the social item is displayed responsively. Allowed values:
-   *  - 'alwaysText': Always display text, regardless of screen size.
-   *  - 'alwaysIcon': Always display as a chart, regardless of screen size.
-   *  - 'textHiddenOnMobile': Display text when viewport is ≥768px, hide text when <768px.
-   *  - 'iconHiddenOnMobile': Display icon when viewport is ≥768px, hide icon when <768px.
-   *  - 'textToIconOnMobile': Display text when viewport is ≥768px, switch to icon when <768px.
-   *  - 'iconToTextOnMobile': Display icon when viewport is ≥768px, switch to text when <768px.
+   *  - `'alwaysText'`: Always display text, regardless of screen size.
+   *  - `'alwaysIcon'`: Always display as a chart, regardless of screen size.
+   *  - `'textHiddenOnMobile'`: Display text when viewport is ≥768px, hide text when <768px.
+   *  - `'iconHiddenOnMobile'`: Display icon when viewport is ≥768px, hide icon when <768px.
+   *  - `'textToIconOnMobile'`: Display text when viewport is ≥768px, switch to icon when <768px.
+   *  - `'iconToTextOnMobile'`: Display icon when viewport is ≥768px, switch to text when <768px.
    *
    * @remark
-   * The `text` property is required for 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
-   * The `icon` property is required for 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
+   * The `text` property is required for `'alwaysText'`, `'textHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
+   * The `icon` property is required for `'alwaysIcon'`, `'iconHiddenOnMobile'`,
+   * `'iconToTextOnMobile'` or `'textToIconOnMobile'`.
    */
   displayMode: 'textToIconOnMobile' | 'iconToTextOnMobile'
 
   /**
    * Sets the text displayed for the social item.
    *
-   * Required for `displayMode` values 'alwaysText', 'textHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
+   * Required for `displayMode` values `'alwaysText'`, `'textHiddenOnMobile'`, `'iconToTextOnMobile'`
+   * or `'textToIconOnMobile'`.
    */
   text: string
 
@@ -321,8 +322,8 @@ export interface ResponsiveSocialItem extends BaseSocialItem {
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
    * as per {@link https://unocss.dev/presets/icons UnoCSS} specs.
    *
-   * Required for `displayMode` values 'alwaysIcon', 'iconHiddenOnMobile', 'iconToTextOnMobile'
-   * or 'textToIconOnMobile'.
+   * Required for `displayMode` values `'alwaysIcon'`, `'iconHiddenOnMobile'`, `'iconToTextOnMobile'`
+   * or `'textToIconOnMobile'`.
    *
    * @example
    * "i-ri:twitter-x-fill", "i-ri-twitter-x-fill", "i-mdi:github", "i-mdi-github"
@@ -392,8 +393,6 @@ export type Tabs = [Tab, Tab, ...Tab[]]
 interface GroupView {
   /**
    * Sets the maximum number of columns displayed in the group view.
-   *
-   * Used in `src/components/views/GroupItem.astro`.
    */
   maxGroupColumns: 2 | 3
 
@@ -401,8 +400,6 @@ interface GroupView {
    * Determines whether group item icons display in color when hovered over.
    *
    * If `true`, the icon for the group item will display in its original colors on hover.
-   *
-   * Used in `src/components/views/GroupView.astro` and `src/components/base/Categorizer.astro`.
    */
   showGroupItemColorOnHover: boolean
 }
@@ -469,6 +466,8 @@ export interface Ui {
 
   /**
    * Sets external social links in display order.
+   *
+   * Used in `src/components/nav/NavBar.astro`.
    */
   socialLinks: SocialLink[]
 
@@ -491,11 +490,13 @@ export interface Ui {
 
   /**
    * Configures the `/projects` UIs.
+   *
+   * Used in `src/components/views/GroupItem.astro` and `src/components/base/Categorizer.astro`.
    */
   groupView: GroupView
 
   /**
-   * Configures the `/releases` and `prs` UIs.
+   * Configures the `/releases` and `/prs` UIs.
    *
    * Used in `src/components/views/GithubView.astro`.
    */
@@ -581,10 +582,10 @@ export interface TocConfig {
   displayPosition: 'left' | 'right'
 
   /**
-   * Controls how the page TOC is displayed. Allowed values:
-   * - 'always': TOC is always visible.
-   * - 'content': TOC shows when hovering over the content area (element with class 'prose').
-   * - 'hover': TOC shows only when hovering over the TOC itself.
+   * Controls how the TOC is displayed. Allowed values:
+   * - `'always'`: TOC is always visible.
+   * - `'content'`: TOC shows when hovering over the content area (element with class 'prose').
+   * - `'hover'`: TOC shows only when hovering over the TOC itself.
    */
   displayMode: 'always' | 'content' | 'hover'
 }
@@ -648,7 +649,7 @@ export interface ShareConfig {
   email: boolean
 }
 
-export interface giscusConfig {
+interface GiscusConfig {
   /**
    * GitHub repository in the format `owner/repo`.
    *
@@ -757,44 +758,49 @@ interface SearchConfig {
 
 export interface Features {
   /**
-   * Controls whether to enable slide enter animation on each page.
+   * Whether to enable slide-in animation on each page
+   * except the `/highlights`, `/photos`, and `/shorts` pages.
    */
   slideEnterAnim: FeatureConfig<slideEnterAnimConfig>
 
   /**
-   * Globally controls global OG image auto-generation and related options.
+   * Whether to enable OG image auto-generation.
    *
    * - Automatically generates OG images for Markdown/MDX files when:
    *   - The `ogImage` field is absent in frontmatter, or
    *   - The `ogImage` field is set to `true`.
-   * - To disable for a specific post, set `ogImage: false` in the frontmatter.
+   * - To disable for a specific post or page, set `ogImage: false` in the frontmatter.
    * - Generated images are saved in `/public/og-images`.
    * - If disabled, deleting `/public/og-images/og-image.png` won't regenerate it.
    */
   ogImage: FeatureConfig<OgImageConfig>
 
   /**
-   * Globally controls the TOC feature and related options.
+   * Whether to enable TOC feature.
    *
    * To disable for a specific post or page, set the `toc` field in the frontmatter to `false`.
+   *
+   * Note: The feature is not supported on the `/highlights`, `/photos`, `/shorts`, `/releases`
+   * and `/prs` pages.
    */
   toc: FeatureConfig<TocConfig>
 
   /**
-   * Globally controls the sharing feature, displaying social sharing links
-   * at the bottom of all posts when enabled.
+   * Whether to enable sharing feature to display social links at the bottom of posts.
    *
    * To disable for a specific post, set the `share` field in the frontmatter to `false`.
    */
   share: FeatureConfig<ShareConfig>
 
   /**
-   * Enables and configures the Giscus comment feature globally.
-   * Visit https://giscus.app/ to generate your configuration.
+   * Whether to enable Giscus comment feature.
+   *
+   * - Generate your configuration: https://giscus.app/
+   * - For more details: https://astro-antfustyle-theme.vercel.app/blog/advanced-configuration/#configure-giscus-comments
    *
    * To disable for a specific post, set the `giscus` field in the frontmatter to `false`.
    */
-  giscus: FeatureConfig<giscusConfig>
+  giscus: FeatureConfig<GiscusConfig>
 
   /**
    * Whether to enable Pagefind search feature.
