@@ -3,10 +3,11 @@ title: Markdown/MDX Extended Features
 description: The special syntax available in Astro AntfuStyle Theme to extend Markdown/MDX features
 pubDate: 2022-03-02
 lastModDate: 2025-03-31
+ogImage: true
 toc: true
 share: true
 giscus: true
-ogImage: true
+search: true
 ---
 
 This post introduces some handy tricks for using special syntax in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to enhance your Markdown/MDX content. These shortcuts let the theme’s built-in integrations or plugins handle the heavy lifting, automatically converting everything into HTML — _no need to write complex code yourself!_ 🎨
@@ -554,4 +555,6 @@ Thanks for checking out the theme. Have fun and enjoy creating! ⚡️
 ::summary[Changelog]
 2025-03-31
 - Update: Image Caption & Link, Video Embedding, Styled Link and Badges
+
+[View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/markdown-mdx-extended-features.md)
 :::

@@ -2,11 +2,12 @@
 title: Basic Configuration
 description: How to configure Astro AntfuStyle Theme
 pubDate: 2024-10-02
-lastModDate: 2025-07-16
+lastModDate: 2025-10-12
+ogImage: true
 toc: true
 share: true
 giscus: true
-ogImage: true
+search: true
 ---
 
 This post is an basic guide on how to configure the `src/config.ts` file. If you’ve already set it up or feel confident configuring it (a simple task with type hints appearing on hover), you can skip ahead to [Advanced Configuration](../advanced-configuration/).
@@ -168,6 +169,16 @@ Refer to [Configure Giscus Comments](../advanced-configuration/#configure-giscus
 | `data-input-position`                  | `'top' \| 'bottom'`   | Position of the comment input box.              | `'bottom'`                               |
 | `data-lang`                            | `string`              | Language for the Giscus widget UI.              | `'en'`                                   |
 
+### `search`
+
+| Option            | Type                    | Description                                                                                         | Example                 |
+| ----------------- | ----------------------- | --------------------------------------------------------------------------------------------------- | ----------------------- |
+| `includes`        | `string[]`              | Specify which content collections rendered by `RenderPost.astro` are indexed.                       | `["blog", "changelog"]` |
+| `filter`          | `boolean`               | Enables filtering by collection. Shows tabs per collection; if disabled, searches all together.     | `true`                  |
+| `navHighlight`    | `boolean`               | Enables Pagefind’s highlight on the target page after navigation.                                   | `true`                  |
+| `batchLoadSize`   | `FeatureConfig<number>` | Controls batch loading. `false` or `[false, N]` loads all; `[true, N]` loads in batches of N pages. | `[true, 3]`             |
+| `maxItemsPerPage` | `FeatureConfig<number>` | Limits shown matches per result. `false` or `[false, N]` shows all; `[true, N]` limits to N items.  | `[true, 5]`             |
+
 After making these changes, ensure the project runs smoothly in the browser before moving on to [Advanced Configuration](../advanced-configuration/). 🧗‍♂️
  
 :::details
@@ -183,5 +194,9 @@ After making these changes, ensure the project runs smoothly in the browser befo
 
 2025-07-16
 - Update: Set the `SITE.imageDomains` option to enable optimization and responsive behavior for remote images
-:::
 
+2025-10-12
+- Update: Add `search` configuration
+
+[View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/basic-configuration.md)
+:::

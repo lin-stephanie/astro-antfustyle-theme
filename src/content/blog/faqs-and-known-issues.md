@@ -2,11 +2,12 @@
 title: FAQs and Known Issues
 description: FAQs and known issues in Astro AntfuStyle Theme
 pubDate: 2020-01-01
-lastModDate: 2025-07-01
+lastModDate: 2025-10-12
+ogImage: true
 toc: true
 share: true
 giscus: true
-ogImage: true
+search: true
 ---
 
 ## FAQs
@@ -109,11 +110,9 @@ Additionally, you can directly modify the constants in each background component
 
 ### Search Functionality
 
-The theme utilizes :link[Pagefind]{id=CloudCannon/pagefind} to enable search functionality.
+The theme uses :link[Pagefind]{id=CloudCannon/pagefind} for search functionality. It is implemented in the `Search.astro` component and configured via `RenderPost.astro` and `StandardLayout.astro`. By default, pages generated through dynamic routes that use `RenderPost.astro` and whose collections are listed in the `includes` option will be indexed by Pagefind and become searchable after build.
 
-You can control the search index dynamically in `src/layouts/StandardLayout.astro`. By default, only blog posts are searchable (set in `src/pages/blog/[...slug].astro` with `isSearchable={true}`). You can adjust this by passing the `isSearchable` prop to the StandardLayout component, or for more custom search options, check out [Configuring what content is indexed](https://pagefind.app/docs/indexing/). 
-
-Search for `data-pagefind-` in the editor to see the current setup.
+The search feature supports filtering by content collections, batch loading, search term highlighting on the results page, and limiting the number of displayed results. See [configurable options](../basic-configuration/#search) for details. You can also search for `data-pagefind-` in the editor to view all related setup.
 
 > [!warning]- Pagefind works after build
 >
@@ -187,4 +186,9 @@ Let’s keep pushing forward and making great things happen — your input is al
 
 2025-07-01
 - Update: [Image Zoom](#image-zoom)
+
+2025-10-12
+- Update: [Search Functionality](#search-functionality)
+
+[View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/faqs-and-known-issues.md)
 :::

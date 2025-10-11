@@ -3,10 +3,11 @@ title: Customizing GitHub Activity Pages
 description: How to showcase your own GitHub releases or pull requests in Astro AntfuStyle Theme
 pubDate: 2023-12-01
 lastModDate: 2025-04-30
+ogImage: true
 toc: true
 share: true
 giscus: true
-ogImage: true
+search: true
 ---
 
 This post guides you on recreating the [`/releases`](../../releases/) and [`/prs`](../../prs/) pages in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to showcase your GitHub releases and pull requests.
@@ -112,4 +113,6 @@ Looking forward, the theme will continue leveraging Astro loaders to enable show
 
 2025-04-30
 - Changes for Astro 5.7
+
+[View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/customizing-github-activity-pages.md)
 :::

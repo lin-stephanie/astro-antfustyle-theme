@@ -3,10 +3,11 @@ title: Advanced Configuration
 description: How to configure Astro AntfuStyle Theme
 pubDate: 2024-10-01
 lastModDate: 2025-07-16
+ogImage: true
 toc: true
 share: true
 giscus: true
-ogImage: true
+search: true
 ---
 
 This post is an advanced guide on customizing the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme). If you have not yet configured the `src/config.ts` file, it is recommended to first review [Basic Configuration](../basic-configuration/).
@@ -77,7 +78,7 @@ Once you've [customized the logo](#customizing-logo) and have the SVG file, it's
 - **`favicon.ico`**: For legacy browsers.
 - **`favicon.svg`**: A single SVG icon with light/dark modes for modern browsers.
 - **`apple-touch-icon.png`**: A 180×180 PNG for Apple devices.
-- **`icon-192.png`**, **`icon-512.png`**, **`icon-mask.png`**: Icons for the web app manifest, including a 192×192 icon for home screens, a 512×512 maskable icon for different Android launchers, and a 512×512 icon for splash screens when the [PWA(Progressive Web App)](https://web.dev/explore/progressive-web-apps) is loading.
+- **`icon-192.png`**, **`icon-512.png`**, **`icon-mask.png`**: Icons for the web app manifest, including a 192×192 icon for home screens, a 512×512 maskable icon for different Android launchers, and a 512×512 icon for splash screens when the [PWA (Progressive Web App)](https://web.dev/explore/progressive-web-apps) is loading.
 
 > [!note]- Web App Manifest
 >
@@ -116,29 +117,39 @@ First, open the `favicon.svg` file in a text editor. Add `<style>` to adjust the
 
 Next, use the steps in :link[How to Favicon in 2024]{id=https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs#step-2-create-an-ico-file} or :link[Real Favicon Generator]{id=https://realfavicongenerator.net/} to generate the icons. Rename the files as mentioned above and copy them to the `public` directory to replace the existing ones.
 
-Lastly, update `src/pages/manifest.webmanifest.js` with the following:
+Lastly, update `src/pages/app.webmanifest.js` with the following:
 
-```js {5-8,22-23} title='src/pages/manifest.webmanifest.js'
+```js {7-10,32-33} title='src/pages/app.webmanifest.js'
+import { withBasePath } from '~/utils/path'
+
 export async function GET() {
-  const base = import.meta.env.BASE_URL
-
+  // https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest
   const manifest = {
+    id: withBasePath('/'),
     name: 'Astro AntfuStyle Theme',
     short_name: 'AntfuStyle',
     description:
       'A customizable, feature-rich Astro theme for blog and portfolio',
     icons: [
-      { src: `${base}icon-192.png`, type: 'image/png', sizes: '192x192' },
-      { src: `${base}icon-512.png`, type: 'image/png', sizes: '512x512' },
       {
-        src: `${base}icon-mask.png`,
+        src: withBasePath('icon-192.png'),
+        type: 'image/png',
+        sizes: '192x192',
+      },
+      {
+        src: withBasePath('icon-512.png'),
+        type: 'image/png',
+        sizes: '512x512',
+      },
+      {
+        src: withBasePath('icon-mask.png'),
         type: 'image/png',
         sizes: '512x512',
         purpose: 'maskable',
       },
     ],
-    scope: base,
-    start_url: base,
+    scope: withBasePath('/'),
+    start_url: withBasePath('/'),
     display: 'standalone',
     theme_color: '#fff',
     background_color: '#fff',
@@ -152,7 +163,7 @@ export async function GET() {
 }
 ```
 
-If you don't need PWA support, you can delete `manifest.webmanifest.js`, `icon-192.png`, `icon-512.png`, and `icon-mask.png`.
+If you don't need PWA support, you can delete `app.webmanifest.js`, `icon-192.png`, `icon-512.png`, and `icon-mask.png`.
 
 > [!important]- Handling icons after using Real Favicon Generator
 >
@@ -426,4 +437,6 @@ If you encounter any issues, find errors, or see opportunities for improvement, 
 
 2025-07-16
 - Add: Alternative way to make favicons respond to theme changes
+
+[View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/advanced-configuration.md)
 :::

@@ -3,10 +3,11 @@ title: Getting Started
 description: How to quickly build your personal website with Astro AntfuStyle Theme
 pubDate: 2024-10-04
 lastModDate: ''
+ogImage: true
 toc: true
 share: true
 giscus: true
-ogImage: true
+search: true
 ---
 
 This post outlines the essential steps to quickly set up your personal website using the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme). Each step may involve more detailed content, requiring you to consult other posts for further information.

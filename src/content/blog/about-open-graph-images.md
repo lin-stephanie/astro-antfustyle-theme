@@ -3,10 +3,11 @@ title: About Open Graph Images
 description: How to configure OG images in the Astro AntfuStyle Theme
 pubDate: 2020-01-02
 lastModDate: ''
+ogImage: true
 toc: true
 share: true
 giscus: true
-ogImage: true
+search: true
 ---
 
 This post explains how to configure Open Graph (OG) images in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme).

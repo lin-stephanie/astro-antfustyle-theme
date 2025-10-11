@@ -3,10 +3,11 @@ title: Adding New Posts
 description: "How to create new posts in Astro AntfuStyle Theme: guidelines, tips, and tricks"
 pubDate: 2023-12-06
 lastModDate: ''
+ogImage: true
 toc: true
 share: true
 giscus: true
-ogImage: true
+search: true
 ---
 
 This post explains how to create new posts in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) and provides guidelines, tips, and tricks for writing posts.
@@ -49,7 +50,6 @@ Use MDX if:
 All `.md` and `.mdx` files in the `src/content/blog/` belong to the `blog` collection.
 
 Each post requires [YAML frontmatter](https://jekyllrb.com/docs/front-matter/) , which adds metadata at the top of Markdown/MDX files. The frontmatter fields for `blog` posts are defined by `schema: postSchema`in `src/content/schema.ts` as follows:
-
 
 | Property (* required) | Type (default)                                | Description                                                                                                                                                                                                                                                    |
 | --------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

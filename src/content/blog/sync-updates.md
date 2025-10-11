@@ -3,10 +3,11 @@ title: Sync Updates
 description: How to sync your project with the latest version of the Astro AntfuStyle Theme
 pubDate: 2021-06-06
 lastModDate: ''
+ogImage: true
 toc: true
 share: true
 giscus: true
-ogImage: true
+search: true
 ---
 
 Opening this post suggests that you may already be using the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) — thanks for choosing it! 
@@ -18,7 +19,7 @@ This guide provides instructions on how to stay up-to-date with the latest theme
 If you've made significant changes to your project, syncing may not be straightforward. 
 You may consider checking the the [changelog](../../changelog/) or [releases](https://github.com/lin-stephanie/astro-antfustyle-theme/releases), and manually updating each file selectively (this is the only option if you're not using Git). Alternatively, for a more efficient approach, you can follow the steps below.
 
-Before syncing, pay special attention  to directories or files you have customized or modified, such as: `src/content/`, `public/`, `src/config.ts`, `ec.config.mjs`, `src/pages/manifest.webmanifest.js`, and any new CSS files you've created for style modifications.
+Before syncing, pay special attention  to directories or files you have customized or modified, such as: `src/content/`, `public/`, `src/config.ts`, `ec.config.mjs`, `src/pages/app.webmanifest.js`, and any new CSS files you've created for style modifications.
 
 **Step 1: Add the Upstream Remote Repository**
 

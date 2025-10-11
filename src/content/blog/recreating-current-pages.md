@@ -3,10 +3,11 @@ title: Recreating Current Pages
 description: How to edit existing pages in Astro AntfuStyle Theme
 pubDate: 2023-12-03
 lastModDate: 2025-07-01
+ogImage: true
 toc: true
 share: true
 giscus: true
-ogImage: true
+search: true
 ---
 
 You can use any view from the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to build the pages you want. 
@@ -470,4 +471,6 @@ If you encounter any issues, find errors, or see opportunities for improvement, 
 
 2025-07-01
 - Add: [`/photos`](#photos)
+
+[View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/recreating-current-pages.md)
 :::

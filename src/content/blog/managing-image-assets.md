@@ -3,10 +3,11 @@ title: Managing Image Assets
 description: How to organize and use images in the Astro AntfuStyle Theme
 pubDate: 2020-01-03
 lastModDate: 2025-07-16
+ogImage: true
 toc: true
 share: true
 giscus: true
-ogImage: true
+search: true
 ---
 
 This post provides a brief guide on how to organize and use images in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme).
@@ -111,4 +112,6 @@ I hope this post helps clarify image usage in Markdown/MDX within this theme. Fo
 
 2025-07-16
 - Update: [Supported Cases for Image Optimization and Responsive Processing](#supported-cases-for-image-optimization-and-responsive-processing)
+
+[View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/managing-image-assets.md)
 :::

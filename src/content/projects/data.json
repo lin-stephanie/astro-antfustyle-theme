@@ -161,6 +161,13 @@
     "category": "HTML Handling"
   },
   {
+    "id": "rehype-wrap-all",
+    "link": "https://github.com/florentb/rehype-wrap-all",
+    "desc": "Rehype plugin to wrap all matching elements with a given element",
+    "icon": "i-tcarbon-element-picker",
+    "category": "HTML Handling"
+  },
+  {
     "id": "sharp",
     "link": "https://github.com/lovell/sharp",
     "desc": "High performance Node.js image processing",
