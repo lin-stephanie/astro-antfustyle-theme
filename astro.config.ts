@@ -46,5 +46,7 @@ export default defineConfig({
     contentIntellisense: true,
     preserveScriptOrder: true,
     headingIdCompat: true,
+    chromeDevtoolsWorkspace: true,
+    failOnPrerenderConflict: true,
   },
 })
