@@ -51,7 +51,13 @@ body {
 
 /* Scrollbar */
 @supports (scrollbar-width: auto) {
-  *:not(html) {
+  * {
+    scrollbar-width: auto;
+  }
+
+  #search-results,
+  #nav-panel,
+  #toc-panel {
     scrollbar-width: none;
   }
 }
