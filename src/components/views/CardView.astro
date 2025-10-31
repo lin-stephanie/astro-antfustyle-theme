@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content'
 
 import CardItem from '~/components/views/CardItem.astro'
+import Loader from '~/components/widgets/Loader.astro'
 import Warning from '~/components/base/Warning.astro'
 import { processBlueskyPosts, getShortsFromBlog } from '~/utils/data'
 
@@ -54,16 +55,22 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
   ) : (
     <>
       {mode === 'masonry' && (
-        <responsive-masonry
-          class="block relative w-full min-h-screen op-0 op-transition-500"
-          data-gap={gap}
-          data-min-card-width={minCardWidth}
-          data-max-card-width={maxCardWidth}
-        >
-          {dataForMasonry.map((item) => (
-            <CardItem class="card-masonry absolute top-0 left-0" item={item} />
-          ))}
-        </responsive-masonry>
+        <>
+          <responsive-masonry
+            class="block relative w-full op-0 op-transition-500"
+            data-gap={gap}
+            data-min-card-width={minCardWidth}
+            data-max-card-width={maxCardWidth}
+          >
+            {dataForMasonry.map((item) => (
+              <CardItem
+                class="card-masonry absolute top-0 left-0"
+                item={item}
+              />
+            ))}
+          </responsive-masonry>
+          <Loader class="card-loader" />
+        </>
       )}
       {mode === 'grid' && (
         <div
@@ -86,6 +93,7 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
 <script>
   export class ResponsiveMasonry extends HTMLElement {
     #initialized = false
+    #loader: HTMLElement | null = null
     #resizeObserver: ResizeObserver | null = null
     #mutationObserver: MutationObserver | null = null
     #debounceTimeout: number | null = null
@@ -101,6 +109,8 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
     connectedCallback() {
       if (this.#initialized) return
       this.#initialized = true
+
+      this.#loader = document.querySelector('.card-loader')
 
       this.#resizeObserver = new ResizeObserver(this.#handleResize)
       this.#resizeObserver.observe(this)
@@ -131,16 +141,6 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
       }
 
       this.#initialized = false
-    }
-
-    attributeChangedCallback = (
-      _name: string,
-      oldValue: string,
-      newValue: string
-    ) => {
-      if (this.#initialized && oldValue !== newValue) {
-        this.#debounceUpdateLayout()
-      }
     }
 
     #getParseInt = (data: string) => {
@@ -207,6 +207,7 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
       })
 
       const maxHeight = Math.max(...columnHeights)
+      if (this.#loader) this.#loader.style.display = 'none'
       this.style.height = `${maxHeight}px`
       if (this.classList.contains('op-0')) this.classList.remove('op-0')
     }
