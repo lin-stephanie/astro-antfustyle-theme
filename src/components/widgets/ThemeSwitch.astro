@@ -46,6 +46,22 @@
 </script>
 
 <script>
+  // related to #45
+  const chooseFill = (): FillMode => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const uach = (navigator as any).userAgentData
+
+    if (uach?.brands?.length) {
+      const brands: { brand: string; version: string }[] = uach.brands
+      const isChromiumBrand = brands.some((b) => /Chrom(e|ium)/i.test(b.brand))
+      if (isChromiumBrand) return 'both'
+      return 'none'
+    }
+
+    return 'none'
+  }
+  const fill = chooseFill()
+
   document.addEventListener('astro:page-load', () => {
     let isDark: boolean
 
@@ -118,8 +134,6 @@
         Math.max(y, innerHeight - y)
       )
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore (View Transitions API)
       const transition = document.startViewTransition(() => toggle())
 
       transition.ready.then(() => {
@@ -135,6 +149,7 @@
           {
             duration: 400,
             easing: 'ease-out',
+            fill,
             pseudoElement: isDark
               ? '::view-transition-old(root)'
               : '::view-transition-new(root)',
