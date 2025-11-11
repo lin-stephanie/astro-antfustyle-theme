@@ -7,6 +7,7 @@ import { formatDate } from '~/utils/datetime'
 interface Props {
   idx: number
   collectionType: string
+  lang: string
   redirect?: string
   postSlug?: string
   title: string
@@ -19,6 +20,7 @@ interface Props {
 
 const {
   idx,
+  lang,
   redirect,
   collectionType,
   postSlug,
@@ -39,6 +41,17 @@ const {
     external={redirect ? true : false}
     enableNewTabWarning={redirect ? true : false}
   >
+    {
+      lang === 'zh' && (
+        <span
+          align-middle
+          flex-none
+          class="text-xs bg-zinc:15 text-zinc5 rounded px-1 py-0.5 my-auto"
+        >
+          中文
+        </span>
+      )
+    }
     <Fragment slot="title">{title}</Fragment>
     <span slot="end" u-flex="~ gap-2 items-center">
       {
