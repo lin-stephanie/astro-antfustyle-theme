@@ -134,6 +134,10 @@ export const postSchema = z.object({
     .describe(
       'Marks the post as a draft. If `true`, it is only visible in development and excluded from production builds.'
     ),
+  lang: z
+    .string()
+    .default('')
+    .describe('The language of the post. Default is zh.'),
 })
 
 export type PostSchema = z.infer<typeof postSchema>

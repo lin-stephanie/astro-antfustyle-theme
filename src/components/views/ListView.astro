@@ -133,6 +133,7 @@ if (collectionType === 'feeds') {
                 date={data.pubDate}
                 {minutesRead}
                 platform={data.platform}
+                lang={data.lang}
               />
             </>
           )
@@ -170,6 +171,7 @@ if (collectionType === 'feeds') {
                 radio={item.radio}
                 date={item.pubDate}
                 platform={item.platform}
+                lang={item.lang}
               />
             </>
           )
@@ -214,6 +216,7 @@ if (collectionType === 'feeds') {
                 redirect={item.data.link as string}
                 title={item.data.title as string}
                 date={item.data.pubdate as Date | string}
+                lang={item.data.lang}
               />
             </>
           )
