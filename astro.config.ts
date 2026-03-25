@@ -12,6 +12,9 @@ import { SITE } from './src/config'
 export default defineConfig({
   site: SITE.website,
   base: SITE.base,
+  build: {
+    inlineStylesheets: 'never',
+  },
   integrations: [
     sitemap(),
     robotsTxt(),
