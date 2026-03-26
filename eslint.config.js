@@ -1,10 +1,11 @@
+import { defineConfig } from 'eslint/config'
 import globals from 'globals'
 import js from '@eslint/js'
 import ts from 'typescript-eslint'
 import astro from 'eslint-plugin-astro'
 import prettier from 'eslint-config-prettier/flat'
 
-export default ts.config(
+export default defineConfig(
   {
     // https://eslint.org/docs/latest/use/configure/configuration-files#globally-ignoring-files-with-ignores
     ignores: ['dist/', '.astro/', '.local/'],
@@ -21,7 +22,6 @@ export default ts.config(
     },
   },
   js.configs.recommended,
-  ts.configs.eslintRecommended,
   ts.configs.recommended,
   ts.configs.stylistic,
   astro.configs.recommended,
