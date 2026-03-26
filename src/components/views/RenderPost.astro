@@ -6,6 +6,7 @@ import StandardLayout from '~/layouts/StandardLayout.astro'
 import PostMeta from '~/components/base/PostMeta.astro'
 import Warning from '~/components/base/Warning.astro'
 import Toc from '~/components/toc/Toc.astro'
+import PostCover from '~/components/base/PostCover.astro'
 import ShareLink from '~/components/widgets/ShareLink.astro'
 import Giscus from '~/components/widgets/Giscus.astro'
 import ImageViewer from '~/components/widgets/ImageViewer.astro'
@@ -39,6 +40,9 @@ const minutesRead = getMinutesRead(
 )
 const isDraft = frontmatter.draft
 
+const cover = frontmatter.cover
+const coverAlt = frontmatter.coverAlt
+
 const tocEnabled = Array.isArray(toc) && toc[0] && frontmatter.toc
 const shareEnabled = Array.isArray(share) && share[0] && frontmatter.share
 const giscusEnabled =
@@ -66,6 +70,7 @@ frontmatter to <code>false</code> or remove it to publish the post.`
     <Fragment slot="article">
       {isDraft && <Warning html={WARNING} />}
       {tocEnabled && <Toc {headings} />}
+      <PostCover {cover} {coverAlt} />
       <Content />
     </Fragment>
   </StandardLayout>

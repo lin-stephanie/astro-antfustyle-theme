@@ -10,7 +10,7 @@ interface Props {
 
 const { pubDate, lastModDate, minutesRead } = Astro.props
 
-const isMinimal = UI.postMetaStyle === 'minimal'
+const isMinimal = UI.postView.postMetaStyle === 'minimal'
 ---
 
 {

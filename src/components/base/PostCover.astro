@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets'
+import { UI } from '~/config'
+
+import type { ImageMetadata } from 'astro'
+
+interface Props {
+  cover: string | ImageMetadata
+  coverAlt: string
+}
+
+const { cover, coverAlt } = Astro.props
+const useCoverAltAsCaption = UI.postView.useCoverAltAsCaption
+---
+
+{
+  cover &&
+    (typeof cover === 'string' ? (
+      <Image
+        class="mb-0! mt--4!"
+        src={cover}
+        alt={coverAlt}
+        priority
+        inferSize
+      />
+    ) : (
+      <Image
+        src={cover as ImageMetadata}
+        alt={coverAlt || 'Cover image'}
+        priority
+      />
+    ))
+}
+{
+  useCoverAltAsCaption && coverAlt && (
+    <div class="pt-2 pb-3 text-[#55555580] dark:text-[#bbbbbb80] text-xs text-center">
+      {coverAlt.trim()}
+    </div>
+  )
+}

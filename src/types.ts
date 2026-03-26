@@ -387,8 +387,26 @@ interface Tab {
    */
   title: string
 }
-
 export type Tabs = [Tab, Tab, ...Tab[]]
+
+interface PostView {
+  /**
+   * Controls the display style of post metadata (creation date, read time, modified date):
+   * - `'minimal'`: Plain text with middle dots.
+   * - `'icon'`: Includes icons before each metadata item.
+   *
+   * On mobile devices, the modified date (if present) is hidden.
+   */
+  postMetaStyle: 'minimal' | 'icon'
+
+  /**
+   * Whether to show the custom frontmatter `coverAlt` as the cover caption.
+   *
+   * If `true`, the `coverAlt` text will appear below the cover image.
+   * You can style it in `src/components/views/RenderPost.astro`.
+   */
+  useCoverAltAsCaption: boolean
+}
 
 interface GroupView {
   /**
@@ -489,6 +507,13 @@ export interface Ui {
   tabbedLayoutTabs: false | Tabs
 
   /**
+   * Configures the post UIs.
+   *
+   * Used in `src/components/base/PostMeta.astro`and `src/components/base/PostCover.astro`.
+   */
+  postView: PostView
+
+  /**
    * Configures the `/projects` UIs.
    *
    * Used in `src/components/views/GroupItem.astro` and `src/components/base/Categorizer.astro`.
@@ -509,17 +534,6 @@ export interface Ui {
    * and `src/layouts/BaseLayout.astro`.
    */
   externalLink: ExternalLink
-
-  /**
-   * Controls the display style of post metadata (creation date, read time, modified date):
-   * - 'minimal': Plain text with middle dots.
-   * - 'icon': Includes icons before each metadata item.
-   *
-   * On mobile devices, the modified date (if present) is hidden.
-   *
-   * Used in `src/components/base/PostMeta.astro`.
-   */
-  postMetaStyle: 'minimal' | 'icon'
 }
 
 /* FEATURES */

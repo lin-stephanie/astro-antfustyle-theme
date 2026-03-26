@@ -93,6 +93,10 @@ export const UI: Ui = {
     { title: 'AstroBlog', path: '/feeds' },
     { title: 'AstroStreams', path: '/streams' },
   ],
+  postView: {
+    postMetaStyle: 'minimal',
+    useCoverAltAsCaption: true,
+  },
   groupView: {
     maxGroupColumns: 3,
     showGroupItemColorOnHover: true,
@@ -118,11 +122,10 @@ export const UI: Ui = {
     cursorType: '',
     showNewTabIcon: false,
   },
-  postMetaStyle: 'minimal',
 }
 
 /**
- * Configures whether to enable special features:
+ * Globally controls whether to enable special features:
  *  - Set to `false` or `[false, {...}]` to disable the feature.
  *  - Set to `[true, {...}]` to enable and configure the feature.
  */
