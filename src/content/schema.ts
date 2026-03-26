@@ -1,4 +1,5 @@
 import { z } from 'astro:content'
+import type { SchemaContext } from 'astro:content'
 
 /* Pages */
 export const pageSchema = z.object({
