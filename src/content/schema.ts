@@ -1,6 +1,6 @@
 import { z } from 'astro:content'
 
-/* Pages*/
+/* Pages */
 export const pageSchema = z.object({
   title: z
     .string()
@@ -26,21 +26,19 @@ export const pageSchema = z.object({
     .describe(
       'Specifies whether to apply a background on this page and select its type. If not needed, delete the field or set to `false`.'
     ),
-  toc: z
-    .boolean()
-    .default(false)
-    .describe(
-      'Controls whether the table of contents (TOC) is generated for the page.'
-    ),
   ogImage: z
     .union([z.string(), z.boolean()])
     .default(true)
     .describe(
       'Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field or set to `true`. To disable it, set the field to `false`. To use a custom image, provide the full filename from `/public/og-images/`.'
     ),
+  toc: z
+    .boolean()
+    .default(false)
+    .describe(
+      'Controls whether the table of contents (TOC) is generated for the page.'
+    ),
 })
-
-export type PageSchema = z.infer<typeof pageSchema>
 
 /* Posts */
 export const postSchema = z.object({
@@ -49,19 +47,22 @@ export const postSchema = z.object({
     .max(60)
     .describe(
       "**Required**. Sets the post title, limited to **60 characters**. This follows Moz's recommendation, ensuring approximately 90% of titles display correctly in SERPs and preventing truncation on smaller screens or social platforms. [Learn more](https://moz.com/learn/seo/title-tag)."
-    ),
+    )
+    .transform((value) => value.trim()),
   subtitle: z
     .string()
     .default('')
     .describe(
       'Provides a post subtitle. If provided, it will be displayed below the title. If not needed, leave the field as an empty string or delete it.'
-    ),
+    )
+    .transform((value) => value.trim()),
   description: z
     .string()
     .default('')
     .describe(
       'Provides a brief description, used in meta tags for SEO and sharing purposes. If not needed, leave the field as an empty string or delete it, and the `SITE.description` will be used directly.'
-    ),
+    )
+    .transform((value) => value.trim()),
   pubDate: z.coerce
     .date()
     .describe(
@@ -74,10 +75,10 @@ export const postSchema = z.object({
       'Tracks the last modified date. If not needed, leave the field as an empty string or delete it.'
     ),
   minutesRead: z
-    .number()
-    .optional()
+    .union([z.number(), z.boolean()])
+    .default(true)
     .describe(
-      'Provides an estimated reading time in minutes. To auto-generate, delete the field; to hide it on the page, enter 0'
+      'Provides an estimated reading time in minutes. To auto-generate, delete the field or set to `true`; to hide it on the page, enter 0 or `false`'
     ),
   radio: z
     .boolean()
@@ -121,13 +122,14 @@ export const postSchema = z.object({
     .boolean()
     .default(true)
     .describe(
-      'Defines a URL to redirect the post. If not needed, delete the field or set to `false`'
+      'Controls whether search is available for the post. If `true`, search will be enabled; otherwise, it will be disabled.'
     ),
   redirect: z
-    .string()
-    .url('Invalid url.')
-    .optional()
-    .describe('Defines a URL to redirect the post.'),
+    .union([z.string().url('Invalid url.'), z.literal('')])
+    .default('')
+    .describe(
+      'Defines a URL to redirect the post. If not needed, leave the field as an empty string or delete it.'
+    ),
   draft: z
     .boolean()
     .default(false)
@@ -135,8 +137,6 @@ export const postSchema = z.object({
       'Marks the post as a draft. If `true`, it is only visible in development and excluded from production builds.'
     ),
 })
-
-export type PostSchema = z.infer<typeof postSchema>
 
 /* Projects */
 export const projectSchema = z.object({
@@ -160,8 +160,6 @@ export const projectSchema = z.object({
   category: z.string().describe('**Required**. Category of the project.'),
 })
 
-export type ProjectSchema = z.infer<typeof projectSchema>
-
 /* Photos */
 export const photoSchema = z.object({
   id: z
@@ -171,8 +169,6 @@ export const photoSchema = z.object({
     ),
   desc: z.string().default('').describe('Optional description for the image.'),
 })
-
-export type PhotoSchema = z.infer<typeof photoSchema>
 
 /* Stremas */
 export const streamSchema = z.object({
@@ -203,5 +199,3 @@ export const streamSchema = z.object({
     .default('')
     .describe('Specifies the platform where the stream is published.'),
 })
-
-export type StreamSchema = z.infer<typeof streamSchema>

@@ -39,6 +39,20 @@ export function parseTuple(
 }
 
 /**
+ * Retrieves the minutes read for a post.
+ */
+export function getMinutesRead(
+  minutesRead: number | boolean,
+  computedMinutesRead: number
+) {
+  return minutesRead === false
+    ? 0
+    : typeof minutesRead === 'number' && minutesRead > 0
+      ? minutesRead
+      : computedMinutesRead
+}
+
+/**
  * Retrieves filtered posts from the specified content collection.
  * In production, it filters out draft posts.
  */

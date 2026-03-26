@@ -35,7 +35,7 @@ const {
   <Link
     u-flex="~ items-center lt-md:(col items-start) gap-2"
     class="border-b-none! mb-6 mt-2 op-transition!"
-    href={redirect ?? withBasePath(`/${collectionType}/${postSlug}/`)}
+    href={redirect ? redirect : withBasePath(`/${collectionType}/${postSlug}/`)}
     external={redirect ? true : false}
     enableNewTabWarning={redirect ? true : false}
   >
@@ -68,7 +68,7 @@ const {
         {formatDate(date, false)}
       </time>
       {
-        typeof minutesRead === 'number' && minutesRead > 0 && (
+        !!minutesRead && (
           <span class="op-40 text-sm ws-nowrap">· {minutesRead} min</span>
         )
       }

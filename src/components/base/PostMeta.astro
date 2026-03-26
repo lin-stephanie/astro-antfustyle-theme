@@ -17,7 +17,7 @@ const isMinimal = UI.postMetaStyle === 'minimal'
   isMinimal ? (
     <div class="mt--6! op-50">
       <time datetime={pubDate}>{formatDate(pubDate)}</time>
-      {minutesRead !== 0 && <span> · {minutesRead} min</span>}
+      {minutesRead > 0 && <span> · {minutesRead} min</span>}
       {lastModDate && (
         <time class="lt-sm:hidden" datetime={lastModDate}>
           · Updated {formatDate(lastModDate)}
@@ -38,7 +38,7 @@ const isMinimal = UI.postMetaStyle === 'minimal'
       )}
       <div>
         <span class="i-ri-timer-line mr-1.2 ml--0.6" />
-        {minutesRead !== 0 && <span>{minutesRead} min read</span>}
+        {minutesRead > 0 && <span>{minutesRead} min read</span>}
       </div>
     </div>
   )

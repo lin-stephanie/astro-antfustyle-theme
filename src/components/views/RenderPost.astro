@@ -9,6 +9,8 @@ import Toc from '~/components/toc/Toc.astro'
 import ShareLink from '~/components/widgets/ShareLink.astro'
 import Giscus from '~/components/widgets/Giscus.astro'
 import ImageViewer from '~/components/widgets/ImageViewer.astro'
+
+import { getMinutesRead } from '~/utils/data'
 import { FEATURES } from '~/config'
 
 import type { CollectionEntry } from 'astro:content'
@@ -31,8 +33,10 @@ const pubDate = frontmatter.pubDate.toISOString()
 const lastModDate =
   frontmatter.lastModDate && frontmatter.lastModDate.toISOString()
 const subtitle = frontmatter.subtitle
-const minutesRead =
-  frontmatter.minutesRead || (remarkPluginFrontmatter.minutesRead as number)
+const minutesRead = getMinutesRead(
+  frontmatter.minutesRead,
+  remarkPluginFrontmatter.minutesRead as number
+)
 const isDraft = frontmatter.draft
 
 const tocEnabled = Array.isArray(toc) && toc[0] && frontmatter.toc

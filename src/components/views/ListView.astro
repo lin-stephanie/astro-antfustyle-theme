@@ -8,10 +8,9 @@ import Warning from '~/components/base/Warning.astro'
 
 import { FEATURES } from '~/config'
 import { isSameYear, getYear } from '~/utils/datetime'
-import { getFilteredPosts, getSortedPosts } from '~/utils/data'
+import { getFilteredPosts, getSortedPosts, getMinutesRead } from '~/utils/data'
 
 import type { CollectionEntry, CollectionKey } from 'astro:content'
-import type { StreamSchema } from '~/content/schema'
 
 interface Props {
   collectionType: CollectionKey
@@ -49,18 +48,18 @@ if (collectionType === 'blog' || collectionType === 'changelog') {
 }
 
 /* Streams */
-let sortedStreamItems: StreamSchema[] = []
+let sortedStreamItems: CollectionEntry<'streams'>[] = []
 if (collectionType === 'streams') {
   const streamItems = await getCollection(collectionType)
 
-  sortedStreamItems = streamItems
-    .map((item) => item.data)
-    .sort((a, b) => b.pubDate.valueOf() - a.pubDate.valueOf())
+  sortedStreamItems = streamItems.sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  )
 
   if (tocEnabled) {
     const yearsSet = new Set<number>()
     sortedStreamItems.forEach((item) => {
-      const year = getYear(item.pubDate)
+      const year = getYear(item.data.pubDate)
       yearsSet.add(year)
     })
 
@@ -107,8 +106,10 @@ if (collectionType === 'feeds') {
         sortedBlogItems.map(async (item, idx) => {
           const { data, id } = item
           const { remarkPluginFrontmatter } = await render(item)
-          const minutesRead =
-            data.minutesRead || remarkPluginFrontmatter.minutesRead
+          const minutesRead = getMinutesRead(
+            data.minutesRead,
+            remarkPluginFrontmatter.minutesRead
+          )
 
           return (
             <>
@@ -131,7 +132,7 @@ if (collectionType === 'feeds') {
                 video={data.video}
                 radio={data.radio}
                 date={data.pubDate}
-                {minutesRead}
+                minutesRead={minutesRead}
                 platform={data.platform}
               />
             </>
