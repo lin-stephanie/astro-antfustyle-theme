@@ -144,7 +144,7 @@ export const FEATURES: Features = {
     {
       minHeadingLevel: 2,
       maxHeadingLevel: 4,
-      displayPosition: 'left',
+      displayPosition: 'right',
       displayMode: 'content',
     },
   ],
@@ -185,6 +185,14 @@ export const FEATURES: Features = {
       navHighlight: true,
       batchLoadSize: [true, 5],
       maxItemsPerPage: [true, 3],
+    },
+  ],
+  tag: [
+    true,
+    {
+      displayPosition: 'right',
+      displayMode: 'content',
+      filterMode: 'AND',
     },
   ],
 }
