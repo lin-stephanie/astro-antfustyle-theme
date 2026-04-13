@@ -4,7 +4,15 @@ import { getCollection } from 'astro:content'
 import CardItem from '~/components/views/CardItem.astro'
 import Loader from '~/components/widgets/Loader.astro'
 import Warning from '~/components/base/Warning.astro'
-import { processBlueskyPosts, getShortsFromBlog } from '~/utils/data'
+import DesktopAside from '~/components/base/DesktopAside.astro'
+import MobileControl from '~/components/base/MobileControl.astro'
+
+import { FEATURES } from '~/config'
+import {
+  processBlueskyPosts,
+  getFilteredPosts,
+  sortPostsByField,
+} from '~/utils/data'
 
 import type { CollectionKey } from 'astro:content'
 import type { CardItemData } from '~/components/views/CardItem.astro'
@@ -15,6 +23,7 @@ interface Props {
   gap?: 'number'
   minCardWidth?: number
   maxCardWidth?: number
+  pageTag?: boolean
 }
 
 const {
@@ -23,6 +32,7 @@ const {
   gap = 16,
   minCardWidth,
   maxCardWidth,
+  pageTag = false,
 } = Astro.props
 
 const WARNING = `No content available for display.
@@ -32,6 +42,13 @@ let isEmpty = false
 let dataForMasonry: CardItemData[] = []
 let dataForGrid: CardItemData[] = []
 
+/* Tag */
+const { tag } = FEATURES
+const tagEnabled = Array.isArray(tag) && tag[0] && pageTag
+let tags: string[][] = []
+let haveTags = false
+
+/* /highlights */
 if (collectionType === 'highlights') {
   const highlights = await getCollection(collectionType)
   dataForMasonry = processBlueskyPosts(highlights).sort((a, b) =>
@@ -41,9 +58,26 @@ if (collectionType === 'highlights') {
   )
 }
 
-if (collectionType === ('shorts' as CollectionKey)) {
-  const posts = await getCollection('blog')
-  dataForGrid = await getShortsFromBlog(posts)
+/* /shorts */
+if (collectionType === 'shorts') {
+  const items = await getFilteredPosts(collectionType)
+  const sorted = sortPostsByField(items, 'title')
+  dataForGrid = sorted.map((item) => ({
+    link: item.data.redirect || `/${collectionType}/${item.id}`,
+    text: item.data.title,
+    date: item.data.pubDate,
+    tags: item.data.tags,
+  }))
+
+  if (tagEnabled) {
+    for (const item of sorted) {
+      const tag = item.data.tags
+      if (tag.length === 0) continue
+      tags.push(tag)
+    }
+  }
+
+  haveTags = tagEnabled && tags.length > 0
 }
 
 if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
@@ -72,7 +106,7 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
           <Loader class="card-loader" />
         </>
       )}
-      {mode === 'grid' && (
+      {mode === 'grid' && !haveTags && (
         <div
           class="grid mx-20 lt-md:mx-1 fade-in"
           style={{
@@ -85,6 +119,37 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
             <CardItem class="card-grid min-h-40 lt-md:min-h-0" item={item} />
           ))}
         </div>
+      )}
+      {mode === 'grid' && haveTags && (
+        <div
+          class="grid items-start gap-8 grid-cols-[minmax(0,1fr)_15.625rem] lt-lgp:(grid-cols-1)
+              mx-20 lt-lgp:mx-10 lt-md:mx-1 fade-in"
+        >
+          <div
+            class="grid items-stretch auto-rows-[minmax(12.5rem,1fr)]"
+            style={{
+              '--fade-in-duration': '0.6s',
+              'gap': `${gap}px`,
+              'grid-template-columns': `repeat(auto-fill, minmax(${minCardWidth ? `${minCardWidth}px` : '180px'}, ${maxCardWidth ? `${maxCardWidth}px` : '1fr'}))`,
+            }}
+          >
+            {dataForGrid.map((item) => (
+              <CardItem class="card-grid" item={item} />
+            ))}
+          </div>
+          {tagEnabled && tags.length > 0 && (
+            <DesktopAside
+              tags={tags}
+              style="position: sticky"
+              tagStyle="max-height: 54vh; opacity: 0.6"
+              tagButtonText="Choose Tags"
+            />
+          )}
+        </div>
+        <>
+          {/* Move out of the fade-in element to avoid layering issues causing the panel to be below the backdrop */}
+          {tagEnabled && tags.length > 0 && <MobileControl tags={tags} />}
+        </>
       )}
     </>
   )

@@ -7,6 +7,7 @@ import {
   AppBskyEmbedRecordWithMedia,
 } from '@atproto/api'
 import { atUriToPostUri } from 'astro-loader-bluesky-posts'
+import { SITE } from '../config'
 
 import type { CollectionEntry, CollectionKey } from 'astro:content'
 import type { CardItemData } from '~/components/views/CardItem.astro'
@@ -54,7 +55,9 @@ export function getMinutesRead(
  * Retrieves filtered posts from the specified content collection.
  * In production, it filters out draft posts.
  */
-export async function getFilteredPosts(collection: 'blog' | 'changelog') {
+export async function getFilteredPosts(
+  collection: 'blog' | 'changelog' | 'shorts'
+) {
   return await getCollection(collection, ({ data }) => {
     return import.meta.env.PROD ? !data.draft : true
   })
@@ -64,11 +67,32 @@ export async function getFilteredPosts(collection: 'blog' | 'changelog') {
  * Sorts an array of posts by their publication date in descending order.
  */
 export function getSortedPosts(
-  posts: CollectionEntryList<'blog' | 'changelog'>
+  posts: CollectionEntryList<'blog' | 'changelog' | 'shorts'>
 ) {
   return posts.sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   )
+}
+
+export function sortPostsByField(
+  posts: CollectionEntryList<'blog' | 'changelog' | 'shorts'>,
+  field: 'pubDate' | 'lastModDate' | 'title'
+) {
+  return posts.sort((a, b) => {
+    if (field === 'title') {
+      return a.data.title.localeCompare(b.data.title, SITE.lang, {
+        sensitivity: 'base',
+      })
+    }
+
+    if (field === 'pubDate' || field === 'lastModDate') {
+      const aTime = (a.data[field] as Date).getTime()
+      const bTime = (b.data[field] as Date).getTime()
+      return bTime - aTime
+    }
+
+    return 0
+  })
 }
 
 /**

@@ -59,6 +59,12 @@ export const postSchema = ({ image }: SchemaContext) =>
         'Provides a brief description, used in meta tags for SEO and sharing purposes. If not needed, leave the field as an empty string or delete it, and the `SITE.description` will be used directly.'
       )
       .transform((value) => value.trim()),
+    tags: z
+      .array(z.string())
+      .default([])
+      .describe(
+        'Tags for the post. If not needed, leave the field as an empty array or delete it.'
+      ),
     cover: z
       .union([image(), z.string().url()])
       .default('')

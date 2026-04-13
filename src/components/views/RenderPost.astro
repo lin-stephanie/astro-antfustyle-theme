@@ -18,11 +18,12 @@ import { FEATURES } from '~/config'
 import type { CollectionEntry } from 'astro:content'
 
 interface Props {
-  post: CollectionEntry<'blog' | 'changelog'>
+  post: CollectionEntry<'blog' | 'changelog' | 'shorts'>
   isCommentable?: boolean
+  pageToc?: boolean
 }
 
-const { post, isCommentable = false } = Astro.props
+const { post, isCommentable = false, pageToc = true } = Astro.props
 const { toc, share, giscus, search } = FEATURES
 
 const { data: frontmatter } = post
@@ -44,7 +45,7 @@ const isDraft = frontmatter.draft
 const cover = frontmatter.cover
 const coverAlt = frontmatter.coverAlt
 
-const tocEnabled = Array.isArray(toc) && toc[0] && frontmatter.toc
+const tocEnabled = Array.isArray(toc) && toc[0] && frontmatter.toc && pageToc
 const haveHeadings = tocEnabled && headings.length > 0
 const shareEnabled = Array.isArray(share) && share[0] && frontmatter.share
 const giscusEnabled =
