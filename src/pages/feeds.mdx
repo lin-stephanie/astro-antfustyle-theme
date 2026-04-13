@@ -3,7 +3,6 @@ title: Astro Blog
 description: 'Example: fetching Astro blog using @ascorbic/feed-loader'
 subtitle: 'Example: fetching Astro blog using @ascorbic/feed-loader'
 bgType: false
-toc: true
 ogImage: false
 ---
 
@@ -18,6 +17,6 @@ import ListView from '~/components/views/ListView.astro'
   ogImage={frontmatter.ogImage}
 >
   <TabbedLayout subtitle={frontmatter.subtitle}>
-    <ListView collectionType="feeds" pageToc={frontmatter.toc} />
+    <ListView collectionType="feeds" pageToc={true} />
   </TabbedLayout>
 </BaseLayout>

@@ -33,12 +33,6 @@ export const pageSchema = z.object({
     .describe(
       'Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field or set to `true`. To disable it, set the field to `false`. To use a custom image, provide the full filename from `/public/og-images/`.'
     ),
-  toc: z
-    .boolean()
-    .default(false)
-    .describe(
-      'Controls whether the table of contents (TOC) is generated for the page.'
-    ),
 })
 
 /* Posts */

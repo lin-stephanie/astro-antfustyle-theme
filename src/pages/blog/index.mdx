@@ -3,7 +3,6 @@ title: Blog
 description: How to use the Astro AntfuStyle Theme
 subtitle: How to use the Astro AntfuStyle Theme
 bgType: rose
-toc: false
 ogImage: true
 ---
 
@@ -22,6 +21,6 @@ import ListView from '~/components/views/ListView.astro'
     title={frontmatter.title}
     subtitle={frontmatter.subtitle}
   >
-    <ListView collectionType="blog" pageToc={frontmatter.toc} />
+    <ListView collectionType="blog" />
   </StandardLayout>
 </BaseLayout>
