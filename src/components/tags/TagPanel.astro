@@ -1,0 +1,37 @@
+---
+import Tag from '~/components/tags/Tag.astro'
+import { buildTagRelations } from '~/utils/data'
+
+interface Props {
+  tags: string[][]
+  style?: string
+}
+
+const { tags, style } = Astro.props
+const { unique, relations } = buildTagRelations(tags)
+---
+
+<!-- less than 1128px -->
+<div
+  id="tag-panel"
+  class="hidden! z-200 fixed top-10% left-50% translate-x--50%
+    overflow-y-auto flex flex-col
+    w-90% max-h-80vh py-4 px-6 rounded-lg
+    bg-[var(--c-bg)] shadow-custom_0_0_10_0 text-[var(--c-text)]"
+  {style}
+>
+  <div class="pb-1 b-b b-[var(--c-text)] op-50">Tags</div>
+  <div
+    role="listbox"
+    class="flex flex-wrap justify-start items-start content-start
+      gap-y-3 gap-x-2.5 overflow-y-auto mt-3
+      op-60 op-transition-700 text-sm color-[var(--c-text)]"
+    aria-multiselectable="true"
+  >
+    {
+      unique.map((tag) => (
+        <Tag tag={tag} relations={relations} interactive={true} />
+      ))
+    }
+  </div>
+</div>

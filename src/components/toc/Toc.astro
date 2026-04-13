@@ -1,81 +1,24 @@
 ---
-import TocButton from '~/components/toc/TocButton.astro'
-import TocItem from '~/components/toc/TocItem.astro'
-import { generateToc } from '~/utils/toc'
 import { FEATURES } from '~/config'
 
-import type { MarkdownHeading } from 'astro'
-import type { TocConfig } from '~/types'
-
-type Props =
-  | {
-      headings: MarkdownHeading[]
-      anchors?: never
-      style?: string
-    }
-  | {
-      anchors: string[]
-      headings?: never
-      style?: string
-    }
-
-const { headings = [], anchors = [], style } = Astro.props
-
-const getTocConfig = () => {
-  const defaultConfig: TocConfig = {
-    minHeadingLevel: 2,
-    maxHeadingLevel: 4,
-    displayPosition: 'left',
-    displayMode: 'hover',
-  }
-
-  if (!Array.isArray(FEATURES.toc) || !FEATURES.toc[0]) {
-    return defaultConfig
-  }
-
-  return { ...defaultConfig, ...FEATURES.toc[1] }
+interface Props {
+  isArticle: boolean
 }
 
-const isArticle = !!headings.length
-const { minHeadingLevel, maxHeadingLevel, displayPosition, displayMode } =
-  getTocConfig()
-const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
+const { isArticle } = Astro.props
+
+const { toc } = FEATURES
+if (!toc || (Array.isArray(toc) && !toc[0])) return
+const { minHeadingLevel, maxHeadingLevel } = toc[1]
 ---
 
-<aside>
-  <table-of-contents
-    data-min-h={isArticle ? minHeadingLevel : undefined}
-    data-max-h={isArticle ? maxHeadingLevel : undefined}
-  >
-    <!-- Greater than or equal to 1128px -->
-    <nav
-      class:list={{
-        'toc-desktop': true,
-        'toc-desktop-on': displayMode === 'always',
-        'toc-desktop-content': displayMode === 'content',
-        'toc-desktop-right': displayPosition === 'right',
-      }}
-      {style}
-    >
-      <div class="toc-desktop-anchor i-ri-menu-2-fill"></div>
-      <ul>
-        {
-          !!specHeadings.length &&
-            specHeadings.map((heading) => <TocItem {heading} />)
-        }
-        {!!anchors.length && <TocItem {anchors} />}
-      </ul>
-    </nav>
-    <!-- less than 1128px -->
-    <TocButton>
-      {
-        !!specHeadings.length &&
-          specHeadings.map((heading) => <TocItem {heading} />)
-      }
-      {!!anchors.length && <TocItem {anchors} />}
-    </TocButton>
-  </table-of-contents>
-</aside>
+<table-of-contents
+  data-min-h={isArticle ? minHeadingLevel : undefined}
+  data-max-h={isArticle ? maxHeadingLevel : undefined}
+  data-pagefind-ignore="all"
+>
+  <slot />
+</table-of-contents>
 
 <script>
   class Toc extends HTMLElement {

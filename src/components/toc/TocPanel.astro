@@ -1,0 +1,66 @@
+---
+import TocItem from '~/components/toc/TocItem.astro'
+import { generateToc } from '~/utils/toc'
+import { FEATURES } from '~/config'
+
+import type { MarkdownHeading } from 'astro'
+
+type Props =
+  | {
+      headings: MarkdownHeading[]
+      anchors?: never
+      style?: string
+    }
+  | {
+      anchors: string[]
+      headings?: never
+      style?: string
+    }
+
+const { headings = [], anchors = [], style } = Astro.props
+
+const { toc } = FEATURES
+if (!toc || (Array.isArray(toc) && !toc[0])) return
+const { minHeadingLevel, maxHeadingLevel } = toc[1]
+const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
+---
+
+<!-- less than 1128px -->
+<nav
+  id="toc-panel"
+  class="hidden! z-200 fixed top-10% left-50% translate-x--50%
+    overflow-y-auto flex flex-col
+    w-90% max-h-80vh py-4 px-6 rounded-lg
+    bg-[var(--c-bg)] shadow-custom_0_0_10_0 text-[var(--c-text)]"
+  {style}
+>
+  <div class="pb-1 b-b b-[var(--c-text)] op-50">Table of Contents</div>
+  <ul class="text-sm">
+    {
+      !!specHeadings.length &&
+        specHeadings.map((heading) => <TocItem {heading} />)
+    }
+    {!!anchors.length && <TocItem {anchors} />}
+  </ul>
+</nav>
+
+<script>
+  import { toggleFadeEffect } from '~/utils/misc'
+
+  document.addEventListener('astro:page-load', () => {
+    /* Close toc panel when user click on link */
+    const handleClickToClose = (event: MouseEvent) => {
+      const target = event.target
+      const isClickedOnLink =
+        target instanceof HTMLElement && target.closest('a')
+
+      if (isClickedOnLink) {
+        toggleFadeEffect('toc-panel', false, 'hidden!')
+        toggleFadeEffect('backdrop', false, 'hidden')
+      }
+    }
+
+    const tocPanel = document.getElementById('toc-panel')
+    tocPanel?.addEventListener('click', handleClickToClose)
+  })
+</script>

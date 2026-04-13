@@ -1,0 +1,58 @@
+---
+import TocItem from '~/components/toc/TocItem.astro'
+import Link from '~/components/base/Link.astro'
+import { generateToc } from '~/utils/toc'
+import { FEATURES } from '~/config'
+
+import type { MarkdownHeading } from 'astro'
+
+type Props =
+  | {
+      headings: MarkdownHeading[]
+      anchors?: never
+      style?: string
+    }
+  | {
+      anchors: string[]
+      headings?: never
+      style?: string
+    }
+
+const { headings = [], anchors = [], style } = Astro.props
+
+const { toc } = FEATURES
+if (!toc || (Array.isArray(toc) && !toc[0])) return
+const { minHeadingLevel, maxHeadingLevel, displayPosition, displayMode } =
+  toc[1]
+const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
+---
+
+<!-- Greater than or equal to 1128px -->
+<nav
+  id="toc-sidebar"
+  class="flex flex-col w-15.625rem max-h-[74vh] overflow-hidden
+    op-0 op-transition-700 text-sm
+    data-[display-mode=always]:op-60
+    [.prose:hover_&[data-display-mode=content]]:op-60
+    group-hover/content:data-[display-mode=content]:op-60
+    data-[display-mode=hover]:hover:op-60"
+  aria-label="Table of contents"
+  data-position={displayPosition}
+  data-display-mode={displayMode}
+  {style}
+>
+  <Link
+    href="#skip-toc"
+    class="sr-only focus:(not-sr-only fixed start-1 top-1.5 op-20)"
+  >
+    Skip toc
+  </Link>
+  <ul class="h-full first-of-type:mt--2 overflow-y-auto">
+    {
+      !!specHeadings.length &&
+        specHeadings.map((heading) => <TocItem {heading} />)
+    }
+    {!!anchors.length && <TocItem {anchors} />}
+  </ul>
+  <div id="skip-toc" class="hidden"></div>
+</nav>

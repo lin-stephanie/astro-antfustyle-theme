@@ -1,0 +1,348 @@
+---
+import { FEATURES } from '~/config'
+
+export interface Props {
+  itemSelector?: string
+}
+
+const { itemSelector = '[data-tags]' } = Astro.props
+
+const { tag } = FEATURES
+if (!tag || (Array.isArray(tag) && !tag[0])) return
+const { filterMode } = tag[1]
+---
+
+<tag-filter data-filter-mode={filterMode} data-item-selector={itemSelector}>
+  <slot />
+</tag-filter>
+
+<script>
+  const STORAGE_KEY = 'tag-filter:selected'
+  const SYNC_EVENT = 'tag-filter:sync'
+
+  class TagFilter extends HTMLElement {
+    #instanceId = Math.random().toString(36).slice(2)
+
+    #filterSeq = 0
+    #selected = new Set<string>()
+    #graph = new Map<string, Set<string>>()
+
+    #selector = this.dataset.itemSelector || '[data-tags]'
+    #mode = this.dataset.filterMode || 'OR'
+
+    #suppressBroadcast = false
+
+    #items: HTMLElement[] = []
+    #buttons: HTMLButtonElement[] = []
+    #yearSections: HTMLElement[] = []
+    #yearTocMap = new Map<string, HTMLLIElement[]>()
+
+    connectedCallback() {
+      this.#onIdle(() => this.#init())
+    }
+
+    disconnectedCallback() {
+      this.removeEventListener('click', this.#handleClick)
+      document.removeEventListener(SYNC_EVENT, this.#handleSyncEvent)
+      this.#buttons = []
+    }
+
+    #init = () => {
+      this.#items = Array.from(document.querySelectorAll(this.#selector))
+      this.#buttons = Array.from(this.querySelectorAll('button[data-tag]'))
+      this.#yearSections = Array.from(
+        document.querySelectorAll('section[data-year]')
+      )
+
+      this.#buildYearTocMap()
+      this.#getTagGraph()
+      this.addEventListener('click', this.#handleClick)
+      document.addEventListener(SYNC_EVENT, this.#handleSyncEvent)
+      this.#restoreFromStorage()
+    }
+
+    #onIdle = (cb: IdleRequestCallback) =>
+      (window.requestIdleCallback || ((cb) => setTimeout(cb, 1)))(cb)
+
+    #buildYearTocMap() {
+      const map = new Map<string, HTMLLIElement[]>()
+      const tocLinks = Array.from(
+        document.querySelectorAll('table-of-contents a[href]')
+      ) as HTMLAnchorElement[]
+
+      for (const a of tocLinks) {
+        let hash = ''
+        try {
+          hash = new URL(a.href).hash
+        } catch {
+          continue
+        }
+        if (!hash) continue
+
+        const id = decodeURIComponent(hash.replace(/^#/, ''))
+        const li = a.closest('li') as HTMLLIElement | null
+        if (!li) continue
+
+        const arr = map.get(id)
+        if (arr) arr.push(li)
+        else map.set(id, [li])
+      }
+
+      this.#yearTocMap = map
+    }
+
+    #getTagGraph = () => {
+      for (const btn of this.#buttons) {
+        const tag = btn.dataset.tag
+        if (!tag) continue
+
+        const related = btn.dataset.related
+        this.#graph.set(
+          tag,
+          new Set(
+            (related || '')
+              .split(',')
+              .map((value) => value.trim())
+              .filter(Boolean)
+          )
+        )
+      }
+    }
+
+    #handleClick = (event: MouseEvent) => {
+      const target = event.target
+      if (!(target instanceof Element)) return
+      const button = target.closest(
+        'button[data-tag]'
+      ) as HTMLButtonElement | null
+      if (!button || !this.contains(button)) return
+
+      const tag = button.dataset.tag
+      if (!tag) return
+
+      if (this.#selected.has(tag)) this.#selected.delete(tag)
+      else this.#selected.add(tag)
+
+      this.#renderStates()
+    }
+
+    #handleSyncEvent = (event: Event) => {
+      const detail =
+        event instanceof CustomEvent ? (event.detail as unknown) : null
+      if (!detail || typeof detail !== 'object') return
+
+      const payload = detail as { sourceId?: string; selected?: string[] }
+      if (payload.sourceId === this.#instanceId) return
+      if (!Array.isArray(payload.selected)) return
+
+      const next = new Set(
+        payload.selected.filter((t) => typeof t === 'string')
+      )
+      if (this.#isSameSet(this.#selected, next)) return
+
+      console.debug('[tag-filter] sync from other instance', {
+        id: this.#instanceId,
+        sourceId: payload.sourceId,
+        selected: payload.selected,
+      })
+
+      this.#suppressBroadcast = true
+      this.#selected = next
+      this.#renderStates(true)
+      this.#suppressBroadcast = false
+    }
+
+    #renderStates = (isSync = false) => {
+      const available = this.#getAvailable()
+
+      for (const btn of this.#buttons) {
+        const tag = btn.dataset.tag
+        if (!tag) continue
+
+        if (this.#selected.has(tag)) {
+          btn.ariaSelected = 'true'
+          btn.disabled = false
+        } else if (available.has(tag)) {
+          btn.ariaSelected = 'false'
+          btn.disabled = false
+        } else {
+          btn.ariaSelected = 'false'
+          btn.disabled = true
+        }
+      }
+
+      this.#syncItemTagHighlights()
+      if (!isSync) this.#applyFilter()
+      if (!this.#suppressBroadcast) this.#broadcastSelection()
+    }
+
+    #broadcastSelection() {
+      const selected = Array.from(this.#selected)
+
+      try {
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(selected))
+      } catch {
+        // ignore storage errors
+      }
+
+      document.dispatchEvent(
+        new CustomEvent(SYNC_EVENT, {
+          detail: {
+            sourceId: this.#instanceId,
+            selected,
+          },
+        })
+      )
+    }
+
+    #restoreFromStorage() {
+      let raw: string | null = null
+      try {
+        raw = sessionStorage.getItem(STORAGE_KEY)
+      } catch {
+        raw = null
+      }
+      if (!raw) return
+
+      let parsed: unknown = null
+      try {
+        parsed = JSON.parse(raw)
+      } catch {
+        parsed = null
+      }
+      if (!Array.isArray(parsed)) return
+
+      const next = new Set(
+        parsed
+          .filter((t) => typeof t === 'string')
+          .map((t) => t.trim())
+          .filter(Boolean)
+      )
+
+      if (this.#isSameSet(this.#selected, next)) return
+
+      console.debug('[tag-filter] restore from storage', {
+        id: this.#instanceId,
+        selected: Array.from(next),
+      })
+
+      this.#suppressBroadcast = true
+      this.#selected = next
+      this.#renderStates()
+      this.#suppressBroadcast = false
+    }
+
+    #isSameSet(a: Set<string>, b: Set<string>) {
+      if (a.size !== b.size) return false
+      for (const v of a) if (!b.has(v)) return false
+      return true
+    }
+
+    #getAvailable() {
+      if (this.#selected.size === 0) {
+        return new Set(this.#graph.keys())
+      }
+
+      // OR mode: exclude selected
+      if (this.#mode === 'OR') {
+        const union = new Set(this.#graph.keys())
+        for (const sel of this.#selected) union.delete(sel)
+        return union
+      }
+
+      // AND mode: intersection of related sets for all selected
+      let intersection: Set<string> | null = null
+      for (const sel of this.#selected) {
+        const related = this.#graph.get(sel)
+        if (!related) continue
+        intersection = intersection
+          ? new Set(
+              Array.from<string>(intersection).filter((tag) => related.has(tag))
+            )
+          : new Set(related)
+      }
+      intersection = intersection ?? new Set()
+      for (const s of this.#selected) intersection.delete(s)
+      return intersection
+    }
+
+    #syncItemTagHighlights() {
+      const hasSelection = this.#selected.size > 0
+
+      for (const item of this.#items) {
+        const tags = item.querySelectorAll('[data-tag]')
+
+        for (const el of tags) {
+          if (!(el instanceof HTMLElement)) continue
+
+          const tag = el.dataset.tag
+          el.dataset.active =
+            hasSelection && tag && this.#selected.has(tag) ? 'true' : 'false'
+        }
+      }
+    }
+
+    #applyFilter() {
+      const seq = ++this.#filterSeq
+      const sel = [...this.#selected]
+
+      for (const i of this.#items) i.classList.add('hidden')
+
+      console.debug('[tag-filter] applyFilter', {
+        id: this.#instanceId,
+        seq,
+        mode: this.#mode,
+        selected: sel,
+      })
+
+      requestAnimationFrame(() => {
+        if (seq !== this.#filterSeq) return
+
+        if (sel.length === 0) {
+          for (const i of this.#items) i.classList.remove('hidden')
+          this.#syncYearToc()
+          return
+        }
+
+        for (const i of this.#items) {
+          const raw = i.dataset.tags || ''
+          const itemTags = new Set(
+            raw
+              .split(',')
+              .map((t) => t.trim())
+              .filter(Boolean)
+          )
+          const match =
+            this.#mode === 'OR'
+              ? sel.some((t) => itemTags.has(t))
+              : sel.every((t) => itemTags.has(t))
+          if (match) i.classList.remove('hidden')
+        }
+
+        this.#syncYearToc()
+      })
+    }
+
+    #syncYearToc() {
+      if (!this.#yearSections.length || !this.#yearTocMap.size) return
+
+      for (const section of this.#yearSections) {
+        const year = section.dataset.year
+        if (!year) continue
+
+        const tocLis = this.#yearTocMap.get(year)
+        if (!tocLis || !tocLis.length) continue
+
+        const hasVisibleItems = !!section.querySelector(
+          '[data-tags]:not(.hidden)'
+        )
+        for (const li of tocLis) {
+          li.classList.toggle('hidden', !hasVisibleItems)
+        }
+      }
+    }
+  }
+
+  if (!customElements.get('tag-filter'))
+    customElements.define('tag-filter', TagFilter)
+</script>

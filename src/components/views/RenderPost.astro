@@ -5,7 +5,8 @@ import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
 import PostMeta from '~/components/base/PostMeta.astro'
 import Warning from '~/components/base/Warning.astro'
-import Toc from '~/components/toc/Toc.astro'
+import DesktopAside from '~/components/base/DesktopAside.astro'
+import MobileControl from '~/components/base/MobileControl.astro'
 import PostCover from '~/components/base/PostCover.astro'
 import ShareLink from '~/components/widgets/ShareLink.astro'
 import Giscus from '~/components/widgets/Giscus.astro'
@@ -44,6 +45,7 @@ const cover = frontmatter.cover
 const coverAlt = frontmatter.coverAlt
 
 const tocEnabled = Array.isArray(toc) && toc[0] && frontmatter.toc
+const haveHeadings = tocEnabled && headings.length > 0
 const shareEnabled = Array.isArray(share) && share[0] && frontmatter.share
 const giscusEnabled =
   isCommentable && Array.isArray(giscus) && giscus[0] && frontmatter.giscus
@@ -69,7 +71,10 @@ frontmatter to <code>false</code> or remove it to publish the post.`
     </Fragment>
     <Fragment slot="article">
       {isDraft && <Warning html={WARNING} />}
-      {tocEnabled && <Toc {headings} />}
+      {haveHeadings && (
+        <DesktopAside {headings} />
+        <MobileControl {headings} />
+      )}
       <PostCover {cover} {coverAlt} />
       <Content />
     </Fragment>
@@ -77,13 +82,11 @@ frontmatter to <code>false</code> or remove it to publish the post.`
   <Fragment slot="share">
     {shareEnabled && <ShareLink config={share[1]} />}
   </Fragment>
-  {
-    giscusEnabled && (
-      <div slot="giscus" class="prose mx-auto mt-8">
-        <hr />
-        <Giscus />
-      </div>
-    )
-  }
+  {giscusEnabled && (
+    <div slot="giscus" class="prose mx-auto mt-8">
+      <hr />
+      <Giscus />
+    </div>
+  )}
   <ImageViewer selector="article" options={{ title: 0, navbar: 0 }} />
 </BaseLayout>

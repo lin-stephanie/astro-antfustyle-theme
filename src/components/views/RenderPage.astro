@@ -1,7 +1,8 @@
 ---
 import { getEntry, render } from 'astro:content'
 
-import Toc from '~/components/toc/Toc.astro'
+import DesktopAside from '~/components/base/DesktopAside.astro'
+import MobileControl from '~/components/base/MobileControl.astro'
 import { FEATURES } from '~/config'
 
 import type { CollectionKey } from 'astro:content'
@@ -22,7 +23,11 @@ const { Content, headings } = await render(content)
 /* Toc */
 const { toc } = FEATURES
 const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
+const haveHeadings = tocEnabled && headings.length > 0
 ---
 
-{tocEnabled && <Toc {headings} />}
+{haveHeadings && (
+  <DesktopAside headings={headings} />
+  <MobileControl headings={headings} />
+)}
 <Content />

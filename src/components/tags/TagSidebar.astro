@@ -1,0 +1,52 @@
+---
+import Link from '~/components/base/Link.astro'
+import Tag from '~/components/tags/Tag.astro'
+import { buildTagRelations } from '~/utils/data'
+import { FEATURES } from '~/config'
+
+export interface Props {
+  tags: string[][] | string[] | Record<string, string[]>
+  style?: string
+}
+
+const { tags, style } = Astro.props
+
+const { tag } = FEATURES
+if (!tag || (Array.isArray(tag) && !tag[0])) return
+const { displayPosition, displayMode } = tag[1]
+
+const { unique, relations } = buildTagRelations(tags)
+---
+
+<div
+  id="tag-sidebar"
+  class="flex flex-col gap-3 w-15.625rem max-h-[74vh] overflow-hidden
+    op-0 op-transition-700 text-sm color-[var(--c-text)]
+    data-[display-mode=always]:op-60
+    [.prose:hover_&[data-display-mode=content]]:op-60
+    group-hover/content:data-[display-mode=content]:op-60
+    data-[display-mode=hover]:hover:op-60"
+  aria-label="Tags filter"
+  data-position={displayPosition}
+  data-display-mode={displayMode}
+  {style}
+>
+  <Link
+    href="#skip-tags"
+    class="sr-only focus:(not-sr-only fixed start-1 top-1.5 op-20)"
+  >
+    Skip tags
+  </Link>
+  <div
+    role="listbox"
+    class="flex flex-wrap justify-start items-start content-start gap-y-3 gap-x-2.5 overflow-y-auto"
+    aria-multiselectable="true"
+  >
+    {
+      unique.map((tag) => (
+        <Tag tag={tag} relations={relations} interactive={true} />
+      ))
+    }
+    <div id="skip-tags" class="hidden"></div>
+  </div>
+</div>

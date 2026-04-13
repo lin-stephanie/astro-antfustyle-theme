@@ -15,19 +15,6 @@
   </div>
 </button>
 
-<nav
-  id="toc-panel"
-  class="hidden! z-200 fixed top-10% left-50% translate-x--50%
-    overflow-y-auto flex flex-col
-    w-90% max-h-80vh py-4 px-6 rounded-lg
-    bg-[var(--c-bg)] shadow-custom_0_0_10_0 text-[var(--c-text)]"
->
-  <div class="pb-1 b-b b-[var(--c-text)]">Table of Contents</div>
-  <ul class="text-sm">
-    <slot />
-  </ul>
-</nav>
-
 <script>
   import { toggleFadeEffect } from '~/utils/misc'
 
@@ -40,20 +27,5 @@
 
     const tocOpenButton = document.getElementById('toc-open-button')
     tocOpenButton?.addEventListener('click', handleBtnClickToOpen)
-
-    /* Close toc panel when user click on link */
-    const handleClickToClose = (event: MouseEvent) => {
-      const target = event.target
-      const isClickedOnLink =
-        target instanceof HTMLElement && target.closest('a')
-
-      if (isClickedOnLink) {
-        toggleFadeEffect('toc-panel', false, 'hidden!')
-        toggleFadeEffect('backdrop', false, 'hidden')
-      }
-    }
-
-    const tocPanel = document.getElementById('toc-panel')
-    tocPanel?.addEventListener('click', handleClickToClose)
   })
 </script>
