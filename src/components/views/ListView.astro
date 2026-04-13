@@ -3,7 +3,8 @@ import { getCollection, render } from 'astro:content'
 
 import Categorizer from '~/components/base/Categorizer.astro'
 import ListItem from '~/components/views/ListItem.astro'
-import Toc from '~/components/toc/Toc.astro'
+import DesktopAside from '~/components/base/DesktopAside.astro'
+import MobileControl from '~/components/base/MobileControl.astro'
 import Warning from '~/components/base/Warning.astro'
 
 import { FEATURES } from '~/config'
@@ -14,10 +15,11 @@ import type { CollectionEntry, CollectionKey } from 'astro:content'
 
 interface Props {
   collectionType: CollectionKey
-  pageToc: boolean
+  pageToc?: boolean
+  pageTag?: boolean
 }
 
-const { collectionType, pageToc } = Astro.props
+const { collectionType, pageToc = false, pageTag = false } = Astro.props
 
 const VALID_COLLECTION_TYPE = ['blog', 'changelog', 'streams', 'feeds']
 const WARNING = `The '${collectionType}' collection type is not built-in.
@@ -28,15 +30,58 @@ const { toc } = FEATURES
 const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
 let years: string[] = []
 
+/* Tag */
+const { tag } = FEATURES
+const tagEnabled = Array.isArray(tag) && tag[0] && pageTag
+let tags: string[][] = []
+
 /* Posts */
-let sortedBlogItems: CollectionEntry<'blog' | 'changelog'>[] = []
+const groupedBlogItems: {
+  year: string
+  items: {
+    idx: number
+    year: string
+    id: CollectionEntry<'blog' | 'changelog'>['id']
+    data: CollectionEntry<'blog' | 'changelog'>['data']
+    minutesRead: ReturnType<typeof getMinutesRead>
+  }[]
+}[] = []
 if (collectionType === 'blog' || collectionType === 'changelog') {
-  const blogItems = await getFilteredPosts(collectionType)
-  sortedBlogItems = getSortedPosts(blogItems)
+  const items = await getFilteredPosts(collectionType)
+  const sorted = getSortedPosts(items)
+
+  const enriched = await Promise.all(
+    sorted.map(async (item, idx) => {
+      const { data, id } = item
+      const { remarkPluginFrontmatter } = await render(item)
+
+      const minutesRead = getMinutesRead(
+        data.minutesRead,
+        remarkPluginFrontmatter.minutesRead
+      )
+
+      return {
+        idx,
+        year: getYear(data.pubDate).toString(),
+        id,
+        data,
+        minutesRead,
+      }
+    })
+  )
+
+  for (const item of enriched) {
+    const last = groupedBlogItems[groupedBlogItems.length - 1]
+    if (!last || last.year !== item.year) {
+      groupedBlogItems.push({ year: item.year, items: [item] })
+    } else {
+      last.items.push(item)
+    }
+  }
 
   if (tocEnabled) {
     const yearsSet = new Set<number>()
-    sortedBlogItems.forEach((item) => {
+    enriched.forEach((item) => {
       const year = getYear(item.data.pubDate)
       yearsSet.add(year)
     })
@@ -44,6 +89,14 @@ if (collectionType === 'blog' || collectionType === 'changelog') {
     years = Array.from(yearsSet)
       .sort((a, b) => b - a)
       .map((year) => year.toString())
+  }
+
+  if (tagEnabled) {
+    for (const item of enriched) {
+      const tag = item.data.tags
+      if (tag.length === 0) continue
+      tags.push(tag)
+    }
   }
 }
 
@@ -95,47 +148,41 @@ if (collectionType === 'feeds') {
 }
 ---
 
-{tocEnabled && <Toc anchors={years} />}
+<DesktopAside anchors={years} {tags} />
+<MobileControl anchors={years} {tags} />
 
 {
   (collectionType === 'blog' || collectionType === 'changelog') && (
     <div aria-label="Post list">
-      {sortedBlogItems.length === 0 ? (
+      {groupedBlogItems.length === 0 ? (
         <div class="py-2 op-50">nothing here yet</div>
       ) : (
-        sortedBlogItems.map(async (item, idx) => {
-          const { data, id } = item
-          const { remarkPluginFrontmatter } = await render(item)
-          const minutesRead = getMinutesRead(
-            data.minutesRead,
-            remarkPluginFrontmatter.minutesRead
-          )
+        groupedBlogItems.map((group) => {
+          const idx = group.items[0].idx
 
           return (
-            <>
-              {!isSameYear(
-                data.pubDate,
-                sortedBlogItems[idx - 1]?.data.pubDate
-              ) && (
-                <Categorizer
+            <section
+              class="[&:not(:has([data-tags]:not(.hidden)))]:hidden"
+              data-year={group.year}
+            >
+              <Categorizer {idx} needId={tocEnabled} text={group.year} />
+
+              {group.items.map(({ data, id, minutesRead, idx }) => (
+                <ListItem
                   {idx}
-                  needId={tocEnabled}
-                  text={getYear(data.pubDate).toString()}
+                  {collectionType}
+                  postSlug={id}
+                  title={data.title}
+                  tags={data.tags}
+                  date={data.pubDate}
+                  minutesRead={minutesRead}
+                  radio={data.radio}
+                  video={data.video}
+                  platform={data.platform}
+                  redirect={data.redirect}
                 />
-              )}
-              <ListItem
-                {idx}
-                {collectionType}
-                redirect={data.redirect}
-                postSlug={id}
-                title={data.title}
-                video={data.video}
-                radio={data.radio}
-                date={data.pubDate}
-                minutesRead={minutesRead}
-                platform={data.platform}
-              />
-            </>
+              ))}
+            </section>
           )
         })
       )}
@@ -188,34 +235,38 @@ if (collectionType === 'feeds') {
         <div class="py-2 op-50">nothing here yet</div>
       ) : (
         sortedFeedItems.map((item, idx) => {
-          const { data } = item
+          const { data, id } = item
           if (!data.link)
             throw new Error(
-              `Feed item with id '${item.id}' is missing 'link' field.`
+              `Feed item with id '${id}' is missing 'link' field.`
             )
           if (!data.title)
             throw new Error(
-              `Feed item with id '${item.id}' is missing 'title' field.`
+              `Feed item with id '${id}' is missing 'title' field.`
+            )
+          if (!data.pubdate)
+            throw new Error(
+              `Feed item with id '${id}' is missing 'pubdate' field.`
             )
 
           return (
             <>
               {!isSameYear(
-                item.data.pubdate as Date,
+                data.pubdate,
                 sortedFeedItems[idx - 1]?.data.pubdate as Date
               ) && (
                 <Categorizer
                   {idx}
                   needId={tocEnabled}
-                  text={getYear(item.data.pubdate as Date).toString()}
+                  text={getYear(data.pubdate).toString()}
                 />
               )}
               <ListItem
                 {idx}
                 {collectionType}
-                redirect={item.data.link as string}
-                title={item.data.title as string}
-                date={item.data.pubdate as Date | string}
+                title={data.title}
+                date={data.pubdate}
+                redirect={data.link}
               />
             </>
           )

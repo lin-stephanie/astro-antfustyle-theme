@@ -90,7 +90,9 @@ body {
 
 @media (prefers-reduced-motion: no-preference) {
   body:not([data-no-sliding]) .slide-enter,
-  body:not([data-no-sliding]) .slide-enter-content > *:not(aside) {
+  body:not([data-no-sliding])
+    .slide-enter-content
+    > *:not(#desktop-aside):not(#mobile-control) {
     --enter-initial: 0ms;
     --enter-stage: 0;
     animation: slide-enter 1s both 1;
@@ -348,4 +350,15 @@ mark.pagefind-highlight {
 #toc-sidebar [aria-current='true'],
 #toc-panel [aria-current='true'] {
   opacity: 1;
+}
+
+/* Tag */
+.inner-x-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: none;
+  touch-action: pan-x;
+  scrollbar-width: none;
 }

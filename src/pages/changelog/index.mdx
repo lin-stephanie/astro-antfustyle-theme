@@ -17,6 +17,6 @@ import ListView from '~/components/views/ListView.astro'
   ogImage={frontmatter.ogImage}
 >
   <TabbedLayout subtitle={frontmatter.subtitle}>
-    <ListView collectionType="changelog" />
+    <ListView collectionType="changelog" pageToc={true} pageTag={true} />
   </TabbedLayout>
 </BaseLayout>

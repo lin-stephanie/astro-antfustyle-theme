@@ -5,42 +5,46 @@ import { withBasePath } from '~/utils/path'
 import { formatDate } from '~/utils/datetime'
 
 interface Props {
-  idx: number
   collectionType: string
-  redirect?: string
+  idx: number
   postSlug?: string
   title: string
-  video?: boolean
-  radio?: boolean
-  date: string | Date
+  tags?: string[]
   minutesRead?: number
+  date: string | Date
+  radio?: boolean
+  video?: boolean
   platform?: string
+  redirect?: string
 }
 
 const {
-  idx,
-  redirect,
   collectionType,
+  idx,
   postSlug,
   title,
+  tags,
+  minutesRead,
+  date,
   video,
   radio,
-  date,
-  minutesRead,
   platform,
+  redirect,
 } = Astro.props
 ---
 
-<div class="slide-enter" style={{ '--enter-stage': idx }}>
+<div class="slide-enter" style={{ '--enter-stage': idx }} data-tags={tags}>
   <Link
-    u-flex="~ items-center lt-md:(col items-start) gap-2"
-    class="border-b-none! mb-6 mt-2 op-transition!"
+    u-flex={tags && tags.length > 0
+      ? '~ col items-start gap-2'
+      : '~ items-center lt-md:(col items-start) gap-2'}
+    class="border-b-none! mb-6 mt-2 op-transition! overflow-hidden"
     href={redirect ? redirect : withBasePath(`/${collectionType}/${postSlug}/`)}
     external={redirect ? true : false}
     enableNewTabWarning={redirect ? true : false}
   >
     <Fragment slot="title">{title}</Fragment>
-    <span slot="end" u-flex="~ gap-2 items-center">
+    <span slot="end" u-flex="~ gap-2 items-center" class="max-w-full">
       {
         video && (
           <span
@@ -73,6 +77,14 @@ const {
         )
       }
       {platform && <span class="op-40 text-sm ws-nowrap">· {platform}</span>}
+      {
+        tags && tags.length > 0 && (
+          <span class="op-40 text-sm">· </span>
+          <span class="op-40 text-sm ws-nowrap inner-x-scroll">
+            {tags.map((tag, idx) => (idx === 0 ? `# ${tag}` : ` / ${tag}`))}
+          </span>
+        )
+      }
     </span>
   </Link>
 </div>
