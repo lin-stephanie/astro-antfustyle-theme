@@ -190,8 +190,11 @@ if (tocPosition === 'right' && tagPosition === 'right') asidePosition = 'right'
 }
 
 <script>
+  const STORAGE_KEY_PREFIX = 'desktop-aside:active'
+
   document.addEventListener('astro:page-load', () => {
-    const STORAGE_KEY = 'desktop-aside:active-panel'
+    const pathname = location.pathname.replace(/\/$/, '') || '/'
+    const storageKey = `${STORAGE_KEY_PREFIX}:${pathname}`
 
     const tocButton = document.querySelector('[data-type="toc"]')
     const tagButton = document.querySelector('[data-type="tag"]')
@@ -212,7 +215,7 @@ if (tocPosition === 'right' && tagPosition === 'right') asidePosition = 'right'
       }
 
       try {
-        sessionStorage.setItem(STORAGE_KEY, panel)
+        sessionStorage.setItem(storageKey, panel)
       } catch {
         // ignore storage errors
       }
@@ -221,7 +224,7 @@ if (tocPosition === 'right' && tagPosition === 'right') asidePosition = 'right'
     if (!(tocButton && tagButton)) return
     let initialPanel: 'toc' | 'tag' = 'toc'
     try {
-      const stored = sessionStorage.getItem(STORAGE_KEY)
+      const stored = sessionStorage.getItem(storageKey)
       if (stored === 'toc' || stored === 'tag') initialPanel = stored
     } catch {
       initialPanel = 'toc'

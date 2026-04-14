@@ -17,7 +17,7 @@ const { filterMode } = tag[1]
 </tag-filter>
 
 <script>
-  const STORAGE_KEY = 'tag-filter:selected'
+  const STORAGE_KEY_PREFIX = 'tag-filter:selected'
   const SYNC_EVENT = 'tag-filter:sync'
 
   class TagFilter extends HTMLElement {
@@ -36,6 +36,11 @@ const { filterMode } = tag[1]
     #buttons: HTMLButtonElement[] = []
     #yearSections: HTMLElement[] = []
     #yearTocMap = new Map<string, HTMLLIElement[]>()
+
+    get #storageKey() {
+      const pathname = location.pathname.replace(/\/$/, '') || '/'
+      return `${STORAGE_KEY_PREFIX}:${pathname}`
+    }
 
     connectedCallback() {
       this.#onIdle(() => this.#init())
@@ -180,7 +185,7 @@ const { filterMode } = tag[1]
       const selected = Array.from(this.#selected)
 
       try {
-        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(selected))
+        sessionStorage.setItem(this.#storageKey, JSON.stringify(selected))
       } catch {
         // ignore storage errors
       }
@@ -198,7 +203,7 @@ const { filterMode } = tag[1]
     #restoreFromStorage() {
       let raw: string | null = null
       try {
-        raw = sessionStorage.getItem(STORAGE_KEY)
+        raw = sessionStorage.getItem(this.#storageKey)
       } catch {
         raw = null
       }
