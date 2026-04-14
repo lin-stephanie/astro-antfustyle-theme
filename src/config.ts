@@ -180,7 +180,7 @@ export const FEATURES: Features = {
   search: [
     true,
     {
-      includes: ['blog', 'changelog'],
+      includes: ['blog', 'shorts', 'changelog'],
       filter: true,
       navHighlight: true,
       batchLoadSize: [true, 5],

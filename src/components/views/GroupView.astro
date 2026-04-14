@@ -13,10 +13,10 @@ import type { GroupItemData } from '~/components/views/GroupItem.astro'
 
 interface Props {
   collectionType: CollectionKey
-  pageToc: boolean
+  pageToc?: boolean
 }
 
-const { collectionType, pageToc } = Astro.props
+const { collectionType, pageToc = false } = Astro.props
 
 const WARNING = `No content available for display.
   Please review and modify <code>GroupView.astro</code> as needed.`

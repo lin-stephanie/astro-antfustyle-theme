@@ -591,7 +591,7 @@ export interface TocConfig {
   maxHeadingLevel: HeadingLevel
 
   /**
-   * Sets the position of TOC on the page (either on the left or right).
+   * Sets the position of TOC on the page (left or right).
    */
   displayPosition: 'left' | 'right'
 
@@ -773,8 +773,6 @@ interface SearchConfig {
 interface TagConfig {
   /**
    * Sets the position of tag filter on the page (left or right).
-   *
-   * Note: When on the same side as the TOC, the tag filter appears below it.
    */
   displayPosition: 'left' | 'right'
 

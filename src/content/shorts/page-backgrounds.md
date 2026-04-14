@@ -3,7 +3,7 @@ title: Page Backgrounds
 description: FAQ about the theme background implementations, performance, and limitations.
 tags: [performance, backgrounds]
 pubDate: 2024-10-05
-lastModDate: ''
+lastModDate: 2024-10-23
 ogImage: false
 toc: false
 share: true
