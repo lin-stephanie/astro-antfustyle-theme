@@ -40,6 +40,7 @@ const minutesRead = getMinutesRead(
   frontmatter.minutesRead,
   remarkPluginFrontmatter.minutesRead as number
 )
+const tags = frontmatter.tags
 const isDraft = frontmatter.draft
 
 const cover = frontmatter.cover
@@ -68,7 +69,7 @@ frontmatter to <code>false</code> or remove it to publish the post.`
 <BaseLayout {title} {description} {ogImage} {pubDate} {lastModDate}>
   <StandardLayout {title} {subtitle} {isSearchable} {searchFilter}>
     <Fragment slot="head">
-      <PostMeta {pubDate} {lastModDate} {minutesRead} />
+      <PostMeta {pubDate} {lastModDate} {minutesRead} {tags} />
     </Fragment>
     <Fragment slot="article">
       {isDraft && <Warning html={WARNING} />}
