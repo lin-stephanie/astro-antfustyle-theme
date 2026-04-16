@@ -50,7 +50,7 @@ if (tocPosition === 'right' && tagPosition === 'right') asidePosition = 'right'
       id="desktop-aside"
       class="group/aside fixed top-8.875rem z-100 lt-lgp:hidden
         data-[position=left]:(left-2rem right-auto)
-        data-[position=right]:(left-auto right-2rem)"
+        data-[position=right]:(left-[calc(100vw-15.625rem-3.2rem)] right-auto)"
       data-position={asidePosition}
       {style}
     >
@@ -117,7 +117,7 @@ if (tocPosition === 'right' && tagPosition === 'right') asidePosition = 'right'
           id="desktop-aside"
           class="group/aside fixed top-8.875rem z-100 lt-lgp:hidden
             data-[position=left]:(left-2rem right-auto)
-            data-[position=right]:(left-auto right-2rem)
+            data-[position=right]:(left-[calc(100vw-15.625rem-3.2rem)] right-auto)
             flex flex-col gap-3"
           data-position={tocPosition}
           {style}
@@ -157,7 +157,7 @@ if (tocPosition === 'right' && tagPosition === 'right') asidePosition = 'right'
           id="desktop-aside"
           class="group/aside fixed top-8.875rem z-100 lt-lgp:hidden
             data-[position=left]:(left-2rem right-auto)
-            data-[position=right]:(left-auto right-2rem)
+            data-[position=right]:(left-[calc(100vw-15.625rem-3.2rem)] right-auto)
             flex flex-col gap-3"
           data-position={tagPosition}
           {style}

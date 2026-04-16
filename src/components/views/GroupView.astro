@@ -51,7 +51,9 @@ const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
         <DesktopAside
           anchors={Object.keys(data)}
           style={
-            toc[1].displayPosition === 'right' ? 'right: -5rem' : undefined
+            toc[1].displayPosition === 'right'
+              ? 'left: calc(100vw - 15.625rem + 5rem)'
+              : undefined
           }
         />
         <MobileControl anchors={Object.keys(data)} />
