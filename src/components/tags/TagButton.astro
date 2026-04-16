@@ -1,0 +1,35 @@
+---
+interface Props {
+  stacked?: boolean
+}
+
+const { stacked = false } = Astro.props
+---
+
+<button
+  id="tag-open-button"
+  style={{ bottom: stacked ? '7.5rem' : '4.5rem' }}
+  class="z-50 fixed right-5 w-10 h-10 rounded-full
+    op-0 bg-#8883 dark:bg-#8886 pointer-events-none op-transition
+    lt-lgp:(op-50 pointer-events-auto)
+    hover:op-100 print:hidden"
+  title="Open tags filter"
+>
+  <div u-i-ri-price-tag-3-line class="text-gray-700 dark:text-gray-200"></div>
+</button>
+
+<script>
+  import { toggleFadeEffect } from '~/utils/misc'
+
+  document.addEventListener('astro:page-load', () => {
+    /* Open tag panel when user click on button */
+    const handleBtnClickToOpen = () => {
+      console.debug('[tag] open panel')
+      toggleFadeEffect('backdrop', true, 'hidden')
+      toggleFadeEffect('tag-panel', true, 'hidden!')
+    }
+
+    const tagOpenButton = document.getElementById('tag-open-button')
+    tagOpenButton?.addEventListener('click', handleBtnClickToOpen)
+  })
+</script>

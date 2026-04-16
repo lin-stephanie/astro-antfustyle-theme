@@ -1,0 +1,50 @@
+---
+import Toc from '~/components/toc/Toc.astro'
+import TocButton from '~/components/toc/TocButton.astro'
+import TocPanel from '~/components/toc/TocPanel.astro'
+import TagFilter from '~/components/tags/TagFilter.astro'
+import TagButton from '~/components/tags/TagButton.astro'
+import TagPanel from '~/components/tags/TagPanel.astro'
+
+import type { MarkdownHeading } from 'astro'
+
+interface Props {
+  anchors?: string[]
+  headings?: MarkdownHeading[]
+  tags?: string[][]
+  style?: string
+  tocStyle?: string
+  tagStyle?: string
+}
+
+const {
+  anchors = [],
+  headings = [],
+  tags = [],
+  style,
+  tagStyle,
+  tocStyle,
+} = Astro.props
+
+const stacked = (anchors.length > 0 || headings.length > 0) && tags.length > 0
+---
+
+{
+  (anchors.length > 0 || headings.length > 0 || tags.length > 0) && (
+    <div id="mobile-control" {style}>
+      {(anchors.length > 0 || headings.length > 0) && (
+        <TocButton />
+        <Toc isArticle={headings.length > 0}>
+          {anchors.length > 0 && <TocPanel anchors={anchors} style={tocStyle} />}
+          {headings.length > 0 && <TocPanel headings={headings} style={tocStyle} />}
+        </Toc>
+      )}
+      {tags.length > 0 && (
+        <TagButton stacked={stacked} />
+        <TagFilter>
+          <TagPanel tags={tags} style={tagStyle}/>
+        </TagFilter>
+      )}
+    </div>
+  )
+}

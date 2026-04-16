@@ -1,0 +1,17 @@
+---
+import RenderPost from '~/components/views/RenderPost.astro'
+import { getFilteredPosts } from '~/utils/data'
+
+export async function getStaticPaths() {
+  const posts = await getFilteredPosts('shorts')
+
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }))
+}
+
+const { post } = Astro.props
+---
+
+<RenderPost {post} isCommentable={true} />

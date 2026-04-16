@@ -31,6 +31,10 @@ body {
   background: #8884;
 }
 
+:focus-visible:not(input) {
+  --uno: 'outline-none ring-3 ring-[#8884] ring-offset-2 ring-offset-[var(--c-bg)]';
+}
+
 /* NProgress */
 #nprogress {
   pointer-events: none;
@@ -57,7 +61,10 @@ body {
 
   #search-results,
   #nav-panel,
-  #toc-panel {
+  #toc-panel,
+  #tag-panel,
+  #toc-sidebar > ul,
+  #tag-sidebar > div {
     scrollbar-width: none;
   }
 }
@@ -83,7 +90,9 @@ body {
 
 @media (prefers-reduced-motion: no-preference) {
   body:not([data-no-sliding]) .slide-enter,
-  body:not([data-no-sliding]) .slide-enter-content > *:not(aside) {
+  body:not([data-no-sliding])
+    .slide-enter-content
+    > *:not(#desktop-aside):not(#mobile-control) {
     --enter-initial: 0ms;
     --enter-stage: 0;
     animation: slide-enter 1s both 1;
@@ -286,4 +295,70 @@ mark.pagefind-highlight {
   text-transform: uppercase;
 
   --uno: 'b-[#0000002e] bg-[#ffffffd9] dark:b-[#ffffff38] dark:bg-[#ffffff0F]';
+}
+
+/* Toc */
+#toc-panel ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#toc-sidebar ul > li::before,
+#toc-panel ul > li::before {
+  display: none;
+}
+
+#toc-sidebar ul > li,
+#toc-panel ul > li {
+  padding-left: 0.8rem;
+  margin-top: 0.5em;
+
+  line-height: 1.6em;
+}
+
+#toc-sidebar > ul > li,
+#toc-panel > ul > li {
+  padding-left: 0rem;
+}
+
+#toc-sidebar ul > li > a,
+#toc-panel ul > li > a {
+  display: block;
+  overflow-x: hidden;
+
+  border-bottom: 0px;
+
+  color: var(--c-text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  opacity: 0.75;
+
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#toc-panel ul > li > a {
+  color: inherit;
+  opacity: 0.5;
+}
+
+#toc-sidebar ul > li > a:hover,
+#toc-panel ul > li > a:hover {
+  border-bottom: 0px;
+}
+
+#toc-sidebar [aria-current='true'],
+#toc-panel [aria-current='true'] {
+  opacity: 1;
+}
+
+/* Tag */
+.inner-x-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: none;
+  touch-action: pan-x;
+  scrollbar-width: none;
 }

@@ -2,7 +2,8 @@
 import { getCollection } from 'astro:content'
 
 import Warning from '~/components/base/Warning.astro'
-import Toc from '~/components/toc/Toc.astro'
+import DesktopAside from '~/components/base/DesktopAside.astro'
+import MobileControl from '~/components/base/MobileControl.astro'
 import Categorizer from '~/components/base/Categorizer.astro'
 import GroupItem from '~/components/views/GroupItem.astro'
 import { FEATURES } from '~/config'
@@ -12,10 +13,10 @@ import type { GroupItemData } from '~/components/views/GroupItem.astro'
 
 interface Props {
   collectionType: CollectionKey
-  pageToc: boolean
+  pageToc?: boolean
 }
 
-const { collectionType, pageToc } = Astro.props
+const { collectionType, pageToc = false } = Astro.props
 
 const WARNING = `No content available for display.
   Please review and modify <code>GroupView.astro</code> as needed.`
@@ -47,12 +48,13 @@ const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
   ) : (
     <>
       {tocEnabled && (
-        <Toc
+        <DesktopAside
           anchors={Object.keys(data)}
           style={
             toc[1].displayPosition === 'right' ? 'right: -5rem' : undefined
           }
         />
+        <MobileControl anchors={Object.keys(data)} />
       )}
       {Object.keys(data).map((key, idx) => (
         <div class="slide-enter" style={{ '--enter-stage': idx }}>

@@ -3,6 +3,7 @@ import { Image } from 'astro:assets'
 
 import Link from '~/components/base/Link.astro'
 import ImageCarousel from '~/components/widgets/ImageCarousel.astro'
+import Tag from '~/components/tags/Tag.astro'
 import { formatDate } from '~/utils/datetime'
 
 import type { ImageMetadata } from 'astro'
@@ -48,6 +49,7 @@ export interface CardItemData {
   external?: ExternalData
   quote?: QuoteData
   details?: string[]
+  tags?: string[]
 }
 
 interface Props {
@@ -64,7 +66,18 @@ const { item, imageProps, videoProps, class: className } = Astro.props
 const COMPACT = false
 const MAX_DETAILS = 3
 
-const { date, text, html, link, images, video, external, quote, details } = item
+const {
+  date,
+  text,
+  html,
+  link,
+  images,
+  video,
+  external,
+  quote,
+  details,
+  tags,
+} = item
 
 const MediaContainer = link ? Link : 'div'
 const ContentContainer = details
@@ -101,7 +114,7 @@ if (images && images.length > 0) {
 }
 ---
 
-<section class={className}>
+<section class={className} data-tags={tags}>
   <div
     class={`overflow-hidden flex flex-col
       h-full b b-[#8884] rounded-lg bg-white dark:bg-black
@@ -221,6 +234,26 @@ if (images && images.length > 0) {
       {html && <div class="prose card-item-prose" set:html={html} />}
       {text && <p class="prose card-item-prose">{text}</p>}
       {
+        tags && tags.length > 0 && (
+          <>
+            <div class="grow" />
+            {date && <p class="text-sm op-60">{formatDate(date)}</p>}
+            <div
+              role="none"
+              class="w-[calc(100%+2rem)] h-[1px] my-3.5 ml--4 bg-[#8884]"
+            />
+            <div
+              class="flex justify-start items-start content-start gap-y-3 gap-x-2.5 mt-0.5 mb-1
+                text-sm color-[var(--c-text)] op-60 inner-x-scroll"
+            >
+              {tags.map((tag) => (
+                <Tag tag={tag} />
+              ))}
+            </div>
+          </>
+        )
+      }
+      {
         details && (
           <div
             class="card-item-details"
@@ -249,7 +282,7 @@ if (images && images.length > 0) {
         )
       }
       {
-        date && (
+        (!tags || tags.length === 0) && date && (
           <div class="flex justify-between items-center pt-3 text-sm">
             {link && html ? (
               <Link class="flex-auto op-transition" href={link}>

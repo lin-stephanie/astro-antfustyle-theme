@@ -1,0 +1,29 @@
+---
+interface Props {
+  tag: string
+  relations?: Record<string, string[]>
+  interactive?: boolean
+}
+
+const { tag, relations, interactive = false } = Astro.props
+
+const Container = interactive ? 'button' : 'span'
+---
+
+<Container
+  type={interactive ? 'button' : undefined}
+  role={interactive ? 'option' : undefined}
+  class={`py-0.4 px-1.2 rounded bg-[#88888825] dark:bg-[#88888840] op-transition
+    ${
+      interactive
+        ? `aria-[selected=true]:op-100 aria-[selected=false]:op-60 disabled:op-20
+           aria-[selected=false]:hover:op-100 disabled:cursor-not-allowed disabled:hover:op-50`
+        : 'op-60 data-[active=true]:op-100'
+    }`}
+  aria-selected={interactive ? 'false' : undefined}
+  data-active={interactive ? undefined : 'false'}
+  data-tag={tag}
+  data-related={relations?.[tag]}
+>
+  {tag}
+</Container>

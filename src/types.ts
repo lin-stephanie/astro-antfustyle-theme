@@ -591,7 +591,7 @@ export interface TocConfig {
   maxHeadingLevel: HeadingLevel
 
   /**
-   * Sets the position of TOC on the page (either on the left or right).
+   * Sets the position of TOC on the page (left or right).
    */
   displayPosition: 'left' | 'right'
 
@@ -770,6 +770,29 @@ interface SearchConfig {
   maxItemsPerPage: FeatureConfig<number>
 }
 
+interface TagConfig {
+  /**
+   * Sets the position of tag filter on the page (left or right).
+   */
+  displayPosition: 'left' | 'right'
+
+  /**
+   * Controls how the tag filter is displayed. Allowed values:
+   * - `'always'`: tag filter is always visible.
+   * - `'content'`: tag filter shows when hovering over the content area (element with class 'prose').
+   * - `'hover'`: tag filter shows only when hovering over the tag filter itself.
+   */
+  displayMode: 'always' | 'content' | 'hover'
+
+  /**
+   * Set the processing logic of the tag filter.
+   *
+   * - `'AND'`: shows posts that satisfy all selected tags.
+   * - `'OR'`: shows posts that satisfy at least one selected tag.
+   */
+  filterMode: 'AND' | 'OR'
+}
+
 export interface Features {
   /**
    * Whether to enable slide-in animation on each page
@@ -824,4 +847,11 @@ export interface Features {
    * For Pagefind’s built-in configuration, directly modify `src/components/widgets/SearchSwitch.astro`.
    */
   search: FeatureConfig<SearchConfig>
+
+  /**
+   * Whether to enable tag feature.
+   *
+   * To disable for a specific page, set the `tag` field in the frontmatter to `false`.
+   */
+  tag: FeatureConfig<TagConfig>
 }

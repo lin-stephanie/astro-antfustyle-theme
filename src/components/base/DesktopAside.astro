@@ -1,0 +1,242 @@
+---
+import Toc from '~/components/toc/Toc.astro'
+import TocSidebar from '~/components/toc/TocSidebar.astro'
+import TagFilter from '~/components/tags/TagFilter.astro'
+import TagSidebar from '~/components/tags/TagSidebar.astro'
+import { FEATURES } from '~/config'
+
+import type { MarkdownHeading } from 'astro'
+
+interface Props {
+  anchors?: string[]
+  headings?: MarkdownHeading[]
+  tags?: string[][]
+  style?: string
+  tocStyle?: string
+  tagStyle?: string
+  tocButtonText?: string
+  tagButtonText?: string
+}
+
+const {
+  anchors = [],
+  headings = [],
+  tags = [],
+  style,
+  tagStyle,
+  tocStyle,
+  tocButtonText,
+  tagButtonText,
+} = Astro.props
+
+const { toc } = FEATURES
+const tocPosition = Array.isArray(toc) && toc[0] && toc[1].displayPosition
+const tocDisplayMode = Array.isArray(toc) && toc[0] && toc[1].displayMode
+
+const { tag } = FEATURES
+const tagPosition = Array.isArray(tag) && tag[0] && tag[1].displayPosition
+const tagDisplayMode = Array.isArray(tag) && tag[0] && tag[1].displayMode
+
+let asidePosition: 'left' | 'right' | 'both' = 'both'
+if (tocPosition === 'left' && tagPosition === 'left') asidePosition = 'left'
+if (tocPosition === 'right' && tagPosition === 'right') asidePosition = 'right'
+---
+
+{
+  (anchors.length > 0 || headings.length > 0) &&
+  tags.length > 0 &&
+  asidePosition !== 'both' ? (
+    <aside
+      id="desktop-aside"
+      class="group/aside fixed top-8.875rem z-100 lt-lgp:hidden
+        data-[position=left]:(left-2rem right-auto)
+        data-[position=right]:(left-auto right-2rem)"
+      data-position={asidePosition}
+      {style}
+    >
+      <div role="tablist" class="flex items-center gap-4 mb-3">
+        <button
+          type="button"
+          role="tab"
+          class="flex-none flex items-center op-30 op-transition-700
+            data-[display-mode=always]:transition-none
+            data-[display-mode=always]:aria-[selected=true]:op-60
+            [.prose:hover_&]:data-[display-mode=content]:aria-[selected=true]:op-60
+            group-hover/content:data-[display-mode=content]:aria-[selected=true]:op-60
+            group-hover/aside:data-[display-mode=hover]:aria-[selected=true]:op-60"
+          aria-selected="true"
+          aria-label="Table of contents"
+          data-type="toc"
+          data-display-mode={tocDisplayMode}
+        >
+          {tocButtonText ? (
+            <span class="text-[#555] text-sm truncate op-100!">
+              {tocButtonText}
+            </span>
+          ) : (
+            <span u-i-ri-menu-2-fill aria-hidden="true" />
+          )}
+        </button>
+        <button
+          type="button"
+          role="tab"
+          class="flex-none flex items-center op-30 op-transition-700
+            data-[display-mode=always]:transition-none
+            data-[display-mode=always]:aria-[selected=true]:op-60
+            [.prose:hover_&]:data-[display-mode=content]:aria-[selected=true]:op-60
+            group-hover/content:data-[display-mode=content]:aria-[selected=true]:op-60
+            group-hover/aside:data-[display-mode=hover]:aria-[selected=true]:op-60"
+          aria-selected="false"
+          aria-label="Tags"
+          data-type="tag"
+          data-display-mode={tagDisplayMode}
+        >
+          {tagButtonText ? (
+            <span class="text-[#555] text-sm truncate op-100!">
+              {tagButtonText}
+            </span>
+          ) : (
+            <span u-i-ri-price-tag-3-line aria-hidden="true" />
+          )}
+        </button>
+      </div>
+      <Toc isArticle={false}>
+        <TocSidebar anchors={anchors} style={tocStyle} />
+      </Toc>
+      <TagFilter>
+        <TagSidebar
+          tags={tags}
+          style={tagStyle ? `display: none; ${tagStyle}` : 'display: none;'}
+        />
+      </TagFilter>
+    </aside>
+  ) : (
+    <>
+      {(anchors.length > 0 || headings.length > 0) && (
+        <aside
+          id="desktop-aside"
+          class="group/aside fixed top-8.875rem z-100 lt-lgp:hidden
+            data-[position=left]:(left-2rem right-auto)
+            data-[position=right]:(left-auto right-2rem)
+            flex flex-col gap-3"
+          data-position={tocPosition}
+          {style}
+        >
+          <button
+            type="button"
+            class={`flex-none flex items-center op-30 op-transition-700
+              data-[display-mode=always]:op-60
+              [.prose:hover_&]:data-[display-mode=content]:op-60
+              group-hover/content:data-[display-mode=content]:op-60
+              group-hover/aside:data-[display-mode=hover]:op-60
+              ${tocButtonText ? 'op-100!' : undefined}`}
+            aria-label="Table of contents"
+            title="Table of contents"
+            data-display-mode={tocDisplayMode}
+          >
+            {tocButtonText ? (
+              <span class="text-[#555] text-sm truncate op-100!">
+                {tocButtonText}
+              </span>
+            ) : (
+              <span u-i-ri-menu-2-fill aria-hidden="true" />
+            )}
+          </button>
+          <Toc isArticle={headings.length > 0}>
+            {anchors.length > 0 && (
+              <TocSidebar anchors={anchors} style={tocStyle} />
+            )}
+            {headings.length > 0 && (
+              <TocSidebar headings={headings} style={tocStyle} />
+            )}
+          </Toc>
+        </aside>
+      )}
+      {tags.length > 0 && (
+        <aside
+          id="desktop-aside"
+          class="group/aside fixed top-8.875rem z-100 lt-lgp:hidden
+            data-[position=left]:(left-2rem right-auto)
+            data-[position=right]:(left-auto right-2rem)
+            flex flex-col gap-3"
+          data-position={tagPosition}
+          {style}
+        >
+          <button
+            type="button"
+            class={`flex-none flex items-center op-30 op-transition-700
+              data-[display-mode=always]:op-60
+              [.prose:hover_&]:data-[display-mode=content]:op-60
+              group-hover/content:data-[display-mode=content]:op-60
+              group-hover/aside:data-[display-mode=hover]:op-60
+              ${tagButtonText ? 'op-100!' : undefined}`}
+            aria-label="Tags"
+            title="Tags"
+            data-display-mode={tagDisplayMode}
+          >
+            {tagButtonText ? (
+              <span class="text-[#555] text-sm truncate">{tagButtonText}</span>
+            ) : (
+              <span u-i-ri-price-tag-3-line aria-hidden="true" />
+            )}
+          </button>
+          <TagFilter>
+            <TagSidebar tags={tags} style={tagStyle} />
+          </TagFilter>
+        </aside>
+      )}
+    </>
+  )
+}
+
+<script>
+  const STORAGE_KEY_PREFIX = 'desktop-aside:active'
+
+  document.addEventListener('astro:page-load', () => {
+    const pathname = location.pathname.replace(/\/$/, '') || '/'
+    const storageKey = `${STORAGE_KEY_PREFIX}:${pathname}`
+
+    const tocButton = document.querySelector('[data-type="toc"]')
+    const tagButton = document.querySelector('[data-type="tag"]')
+    const toc = document.querySelector('#toc-sidebar')
+    const tag = document.querySelector('#tag-sidebar')
+
+    const setActivePanel = (panel: 'toc' | 'tag') => {
+      if (panel === 'toc') {
+        tocButton?.setAttribute('aria-selected', 'true')
+        tagButton?.setAttribute('aria-selected', 'false')
+        if (toc instanceof HTMLElement) toc.style.display = 'block'
+        if (tag instanceof HTMLElement) tag.style.display = 'none'
+      } else {
+        tagButton?.setAttribute('aria-selected', 'true')
+        tocButton?.setAttribute('aria-selected', 'false')
+        if (toc instanceof HTMLElement) toc.style.display = 'none'
+        if (tag instanceof HTMLElement) tag.style.display = 'flex'
+      }
+
+      try {
+        sessionStorage.setItem(storageKey, panel)
+      } catch {
+        // ignore storage errors
+      }
+    }
+
+    if (!(tocButton && tagButton)) return
+    let initialPanel: 'toc' | 'tag' = 'toc'
+    try {
+      const stored = sessionStorage.getItem(storageKey)
+      if (stored === 'toc' || stored === 'tag') initialPanel = stored
+    } catch {
+      initialPanel = 'toc'
+    }
+    if (toc || tag) setActivePanel(initialPanel)
+
+    tocButton?.addEventListener('click', () => {
+      setActivePanel('toc')
+    })
+
+    tagButton?.addEventListener('click', () => {
+      setActivePanel('tag')
+    })
+  })
+</script>

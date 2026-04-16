@@ -3,7 +3,6 @@ title: Projects
 subtitle: Tech Stack & Credits for the Astro AntfuStyle Theme
 description: Tech Stack & Credits for the Astro AntfuStyle Theme
 bgType: dot
-toc: true
 ogImage: true
 ---
 
@@ -21,7 +20,7 @@ import { withBasePath } from '~/utils/path'
   ogImage={frontmatter.ogImage}
 >
   <StandardLayout
-    class="max-w-300"
+    class="max-w-300 group/content"
     title={frontmatter.title}
     subtitle={frontmatter.subtitle}
     isCentered={true}
@@ -36,6 +35,6 @@ import { withBasePath } from '~/utils/path'
         <span class="ml-1.5">Recent Pull Requests</span>
       </Link>
     </div>
-    <GroupView collectionType="projects" pageToc={frontmatter.toc} />
+    <GroupView collectionType="projects" pageToc={true} />
   </StandardLayout>
 </BaseLayout>

@@ -5,7 +5,8 @@ import BaseLayout from '~/layouts/BaseLayout.astro'
 import StandardLayout from '~/layouts/StandardLayout.astro'
 import PostMeta from '~/components/base/PostMeta.astro'
 import Warning from '~/components/base/Warning.astro'
-import Toc from '~/components/toc/Toc.astro'
+import DesktopAside from '~/components/base/DesktopAside.astro'
+import MobileControl from '~/components/base/MobileControl.astro'
 import PostCover from '~/components/base/PostCover.astro'
 import ShareLink from '~/components/widgets/ShareLink.astro'
 import Giscus from '~/components/widgets/Giscus.astro'
@@ -17,11 +18,12 @@ import { FEATURES } from '~/config'
 import type { CollectionEntry } from 'astro:content'
 
 interface Props {
-  post: CollectionEntry<'blog' | 'changelog'>
+  post: CollectionEntry<'blog' | 'changelog' | 'shorts'>
   isCommentable?: boolean
+  pageToc?: boolean
 }
 
-const { post, isCommentable = false } = Astro.props
+const { post, isCommentable = false, pageToc = true } = Astro.props
 const { toc, share, giscus, search } = FEATURES
 
 const { data: frontmatter } = post
@@ -38,12 +40,14 @@ const minutesRead = getMinutesRead(
   frontmatter.minutesRead,
   remarkPluginFrontmatter.minutesRead as number
 )
+const tags = frontmatter.tags
 const isDraft = frontmatter.draft
 
 const cover = frontmatter.cover
 const coverAlt = frontmatter.coverAlt
 
-const tocEnabled = Array.isArray(toc) && toc[0] && frontmatter.toc
+const tocEnabled = Array.isArray(toc) && toc[0] && frontmatter.toc && pageToc
+const haveHeadings = tocEnabled && headings.length > 0
 const shareEnabled = Array.isArray(share) && share[0] && frontmatter.share
 const giscusEnabled =
   isCommentable && Array.isArray(giscus) && giscus[0] && frontmatter.giscus
@@ -65,11 +69,14 @@ frontmatter to <code>false</code> or remove it to publish the post.`
 <BaseLayout {title} {description} {ogImage} {pubDate} {lastModDate}>
   <StandardLayout {title} {subtitle} {isSearchable} {searchFilter}>
     <Fragment slot="head">
-      <PostMeta {pubDate} {lastModDate} {minutesRead} />
+      <PostMeta {pubDate} {lastModDate} {minutesRead} {tags} />
     </Fragment>
     <Fragment slot="article">
       {isDraft && <Warning html={WARNING} />}
-      {tocEnabled && <Toc {headings} />}
+      {haveHeadings && (
+        <DesktopAside {headings} />
+        <MobileControl {headings} />
+      )}
       <PostCover {cover} {coverAlt} />
       <Content />
     </Fragment>
@@ -77,13 +84,11 @@ frontmatter to <code>false</code> or remove it to publish the post.`
   <Fragment slot="share">
     {shareEnabled && <ShareLink config={share[1]} />}
   </Fragment>
-  {
-    giscusEnabled && (
-      <div slot="giscus" class="prose mx-auto mt-8">
-        <hr />
-        <Giscus />
-      </div>
-    )
-  }
+  {giscusEnabled && (
+    <div slot="giscus" class="prose mx-auto mt-8">
+      <hr />
+      <Giscus />
+    </div>
+  )}
   <ImageViewer selector="article" options={{ title: 0, navbar: 0 }} />
 </BaseLayout>

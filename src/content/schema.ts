@@ -33,12 +33,6 @@ export const pageSchema = z.object({
     .describe(
       'Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field or set to `true`. To disable it, set the field to `false`. To use a custom image, provide the full filename from `/public/og-images/`.'
     ),
-  toc: z
-    .boolean()
-    .default(false)
-    .describe(
-      'Controls whether the table of contents (TOC) is generated for the page.'
-    ),
 })
 
 /* Posts */
@@ -65,6 +59,12 @@ export const postSchema = ({ image }: SchemaContext) =>
         'Provides a brief description, used in meta tags for SEO and sharing purposes. If not needed, leave the field as an empty string or delete it, and the `SITE.description` will be used directly.'
       )
       .transform((value) => value.trim()),
+    tags: z
+      .array(z.string())
+      .default([])
+      .describe(
+        'Tags for the post. If not needed, leave the field as an empty array or delete it.'
+      ),
     cover: z
       .union([image(), z.string().url()])
       .default('')
