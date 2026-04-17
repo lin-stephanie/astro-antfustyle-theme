@@ -80,9 +80,7 @@ const {
       {
         tags && tags.length > 0 && (
           <span class="op-40 text-sm">· </span>
-          <span class="op-40 text-sm ws-nowrap inner-x-scroll">
-            {tags.map((tag, idx) => (idx === 0 ? `# ${tag}` : ` / ${tag}`))}
-          </span>
+          <span class="op-40 text-sm ws-nowrap inner-x-scroll">{tags.join(' / ')}</span>
         )
       }
     </span>
