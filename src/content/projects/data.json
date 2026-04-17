@@ -164,7 +164,7 @@
     "id": "rehype-wrap-all",
     "link": "https://github.com/florentb/rehype-wrap-all",
     "desc": "Rehype plugin to wrap all matching elements with a given element",
-    "icon": "i-tcarbon-element-picker",
+    "icon": "i-fluent-text-wrap-16-filled",
     "category": "HTML Handling"
   },
   {

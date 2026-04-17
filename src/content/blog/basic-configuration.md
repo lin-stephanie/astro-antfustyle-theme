@@ -2,7 +2,7 @@
 title: Basic Configuration
 description: How to configure Astro AntfuStyle Theme
 pubDate: 2024-10-02
-lastModDate: 2025-10-12
+lastModDate: 2026-04-17
 ogImage: true
 toc: true
 share: true
@@ -23,7 +23,7 @@ The `SITE` object is used to configure the basic information of your website, an
 | `title`        | `string`                                  | Specifies the site name for formatting the `title` in the frontmatter as `<pageTitle> - <siteTitle>`.                                                                                                                                                                                        | `Maybe Use Your Name`                                                                 |
 | `description`  | `string`                                  | Specifies the default content for meta tags.                                                                                                                                                                                                                                                 | `Introduce yourself`                                                                  |
 | `author`       | `string`                                  | Specifies your name for meta tags.                                                                                                                                                                                                                                                           | `Your Name`                                                                           |
-| `lang`         | `string`                                  | Specifies the primary language of the document content. It must be a single 'language tag' in the format defined in [RFC 5646: Tags for Identifying Languages ](https://datatracker.ietf.org/doc/html/rfc5646#appendix-A) (also known as BCP 47).                                            | `'zh-Hant'` (Chinese written using the Traditional Chinese script)<br>`'fr'` (French) |
+| `lang`         | `string`                                  | Specifies the primary language of the document content. It must be a single 'language tag' in the format defined in [RFC 5646: Tags for Identifying Languages ](https://datatracker.ietf.org/doc/html/rfc5646) (also known as BCP 47).                                            | `'zh-Hant'` (Chinese written using the Traditional Chinese script)<br>`'fr'` (French) |
 | `ogLocale`     | `string`                                  | Specifies the page content's language and region for better content display on social platforms. It must be in `language_TERRITORY` format, which you can find in [Language-Territory Information](https://www.unicode.org/cldr/charts/44/supplemental/language_territory_information.html). | `'zh_CN'`<br>`'fr_FR'`                                                                |
 | `imageDomains` | `string[]`                                | Specifies the allowed domains for **remote** image optimization, including those used with `![]()` and the `<Image />` or `<Picture />` components. This is passed to the [`image.domains`](https://docs.astro.build/en/reference/configuration-reference/#imagedomains) config in Astro. Set to `[]` if remote optimization is not needed.                                     | `['astro.build']`                                                                     |
 
@@ -48,12 +48,11 @@ The `UI` object allows you to configure navigation, social links, page views, an
 | [`internalNavs`](#internalnav)  | `InternalNav[]`                 | Configures internal navigation links. The configuration order matches the display order.                                                                                                   |
 | [`socialLinks`](#sociallink)    | `SocialLink[]`                  | Configures external social links. The configuration order matches the display order.                                                                                                       |
 | [`navBarLayout`](#navbarlayout) | `NavBarLayout`                  | Controls the layout of the navigation bar.                                                                                                                                                 |
-| `tabbedLayoutTabs`              | `false \| [Tab, Tab, ...Tab[]]` | Enables and configures for tabs within a tabbed layout. If your website does not use the `TabbedLayout`, you can set it to `false`. Otherwise, required before using this layout.          |
+| `tabbedLayoutTabs`              | `false \| [Tab, Tab, ...Tab[]]` | Enables and configures tabs within a tabbed layout. Set it to `false` if your site does not use `TabbedLayout`.                                                                          |
+| [`postView`](#postview)         | `PostView`                      | Configures post-related UIs, including metadata style and whether `coverAlt` should be shown as the cover caption.                                                                       |
 | [`groupView`](#groupview)       | `GroupView`                     | Configures the `/projects` UIs.                                                                                                                                                            |
-| [`githubView`](#githubview)     | `GitHubView`                    | Configures the `/releases` and `prs` UIs.                                                                                                                                                  |
+| [`githubView`](#githubview)     | `GitHubView`                    | Configures the `/releases` and `/prs` UIs.                                                                                                                                                 |
 | [`externalLink`](#externallink) | `ExternalLink`                  | Configures external links' behavior and appearance.                                                                                                                                        |
-| `postMetaStyle`                 | `'minimal' \| 'icon'`           | Controls the display style of post metadata (creation date, read time, modified date). On mobile devices, the modified date (if present) is hidden. |
-
 
 ### `internalNav`
 
@@ -61,9 +60,9 @@ The `UI` object allows you to configure navigation, social links, page views, an
 | ------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `path`        | `/${string}`                                                                                                   | Specifies the navigation path. It must start with `/`.                                                                                                 | `'/blog'`、`'/blog/'`                                                                                                                                                                                                                                             |
 | `title`       | `string`                                                                                                       | Sets the content displayed on hover for accessibility.                                                                                                 | `'Blog'`                                                                                                                                                                                                                                                         |
-| `displayMode` | `'alwaysText'` \| `'alwaysIcon'` \| `'textHiddenOnMobile'` \| `'iconHiddenOnMobile'` \| `'textToIconOnMobile'` | Defines how the navigation item is displayed responsively. Different modes control the visibility of text or icon depending on the viewport size.      | `'textToIconOnMobile'`                                                                                                                                                                                                                                           |
-| `text`        | `string`                                                                                                       | Sets the text displayed for the navigation item. Required for `displayMode` values `'alwaysText'`, `'textHiddenOnMobile'`, and `'textToIconOnMobile'`. | `'Blog'`                                                                                                                                                                                                                                                         |
-| `icon`        | `Icon`                                                                                                         | Sets the icon displayed for the navigation item. Required for `displayMode` values `'alwaysIcon'`, `'iconHiddenOnMobile'`, and `'textToIconOnMobile'`. | `'i-ri-article-line'`<br>（The icon format follows the `i-<collection>-<icon>` or `i-<collection>:<icon>` format as per [UnoCSS specs](https://unocss.dev/presets/icons). See [Icon Usage](../faqs-and-known-issues/#icon-usage) for details on setting up icons） |
+| `displayMode` | `'alwaysText'` \| `'alwaysIcon'` \| `'textHiddenOnMobile'` \| `'iconHiddenOnMobile'` \| `'textToIconOnMobile'` \| `'iconToTextOnMobile'` | Defines how the navigation item is displayed responsively. Different modes control the visibility of text or icon depending on the viewport size.      | `'iconToTextOnMobile'`                                                                                                                                                                                                                                           |
+| `text`        | `string`                                                                                                       | Sets the text displayed for the navigation item. Required for `displayMode` values `'alwaysText'`, `'textHiddenOnMobile'`, `'textToIconOnMobile'` or `'iconToTextOnMobile'`. | `'Blog'`                                                                                                                                                                                                                                                         |
+| `icon`        | `Icon`                                                                                                         | Sets the icon displayed for the navigation item. Required for `displayMode` values `'alwaysIcon'`, `'iconHiddenOnMobile'`, `'textToIconOnMobile'` or `'iconToTextOnMobile'`. | `'i-ri-article-line'`<br>(The icon format follows the `i-<collection>-<icon>` or `i-<collection>:<icon>` format as per [UnoCSS specs](https://unocss.dev/presets/icons). See [Icon Usage](../../shorts/icon-usage/) for details on setting up icons.) |
 
 ### `socialLink`
 
@@ -71,9 +70,9 @@ The `UI` object allows you to configure navigation, social links, page views, an
 | ------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `link`        | ``http://${string}` \| `https://${string}``                                                                    | Set the URL to the social platform.                                                                                                                | `'https://x.com/astrodotbuild'`                                                                                                                                                                                                                                  |
 | `title`       | `string`                                                                                                       | Sets the content displayed on hover for accessibility.                                                                                             | `Follow ${SITE.author} on Twitter`                                                                                                                                                                                                                               |
-| `displayMode` | `'alwaysText'` \| `'alwaysIcon'` \| `'textHiddenOnMobile'` \| `'iconHiddenOnMobile'` \| `'textToIconOnMobile'` | Defines how the social item is displayed responsively. Different modes control the visibility of text or icon depending on the viewport size.      | `'alwaysIcon'`                                                                                                                                                                                                                                                   |
-| `text`        | `string`                                                                                                       | Sets the text displayed for the social item. Required for `displayMode` values `'alwaysText'`, `'textHiddenOnMobile'`, and `'textToIconOnMobile'`. | `'GitHub'`                                                                                                                                                                                                                                                       |
-| `icon`        | `Icon`                                                                                                         | Sets the icon displayed for the social item. Required for `displayMode` values `'alwaysIcon'`, `'iconHiddenOnMobile'`, and `'textToIconOnMobile'`. | `'i-ri-article-line'`<br>（The icon format follows the `i-<collection>-<icon>` or `i-<collection>:<icon>` format as per [UnoCSS specs](https://unocss.dev/presets/icons). See [Icon Usage](../faqs-and-known-issues/#icon-usage) for details on setting up icons） |
+| `displayMode` | `'alwaysText'` \| `'alwaysIcon'` \| `'textHiddenOnMobile'` \| `'iconHiddenOnMobile'` \| `'textToIconOnMobile'` \| `'iconToTextOnMobile'` | Defines how the social item is displayed responsively. Different modes control the visibility of text or icon depending on the viewport size.      | `'alwaysIcon'`                                                                                                                                                                                                                                                   |
+| `text`        | `string`                                                                                                       | Sets the text displayed for the social item. Required for `displayMode` values `'alwaysText'`, `'textHiddenOnMobile'`, `'textToIconOnMobile'` or `'iconToTextOnMobile'`. | `'GitHub'`                                                                                                                                                                                                                                                       |
+| `icon`        | `Icon`                                                                                                         | Sets the icon displayed for the social item. Required for `displayMode` values `'alwaysIcon'`, `'iconHiddenOnMobile'`, `'textToIconOnMobile'` or `'iconToTextOnMobile'`. | `'i-ri-article-line'`<br>(The icon format follows the `i-<collection>-<icon>` or `i-<collection>:<icon>` format as per [UnoCSS specs](https://unocss.dev/presets/icons). See [Icon Usage](../../shorts/icon-usage/) for details on setting up icons.) |
 
 ### `navBarLayout`
 
@@ -82,6 +81,13 @@ The `UI` object allows you to configure navigation, social links, page views, an
 | `left`          | `NavBarComponentType[]` | Defines which components ('internalNavs', 'socialLinks', 'searchButton', 'themeButton', 'rssLink', 'hr') are positioned on the left side of the navigation bar.  | `[]` (Leave empty to place all components on the right)                                                                                                                                      |
 | `right`         | `NavBarComponentType[]` | Defines which components ('internalNavs', 'socialLinks', 'searchButton', 'themeButton', 'rssLink', 'hr') are positioned on the right side of the navigation bar. | `['internalNavs', 'hr', 'socialLinks', 'hr', 'searchButton', themeButton', 'rssLink']` (No duplicates allowed between `left` and `right`; use `'hr'` to insert a divider between components) |
 | `mergeOnMobile` | `boolean`               | Controls whether the 'internalNavs' and 'socialLinks' section are combined into a single navigation menu on mobile, managed through a hamburger icon.            | `true`                                                                                                                                                                                       |
+
+### `postView`
+
+| Option                  | Type                     | Description                                                                                                                                                     | Example    |
+| ----------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| `postMetaStyle`         | `'minimal' \| 'icon'`    | Controls the display style of post metadata (publication date, read time, modified date, and tags). On mobile devices, the modified date is hidden if present. | `'minimal'` |
+| `useCoverAltAsCaption`  | `boolean`                | Controls whether the custom frontmatter field `coverAlt` is rendered as a caption below the cover image.                                                       | `true`     |
 
 ### `groupView`
 
@@ -135,7 +141,7 @@ The `FEATURES` object globally controls the activation and configuration of spec
 | ----------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | `minHeadingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6`         | Sets the minimum heading level. Must be less than or equal to `maxHeadingLevel`.                                                                                                                                     | `2`         |
 | `maxHeadingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6`         | Sets the maximum heading level. Must be greater than or equal to `minHeadingLevel`.                                                                                                                                  | `4`         |
-| `displayPosition` | `'left' \| 'right'`                  | Sets the position of TOC on the page (either on the left or right).                                                                                                                                                  | `'left'`    |
+| `displayPosition` | `'left' \| 'right'`                  | Sets the position of TOC on the page (left or right).                                                                                                                                                               | `'left'`    |
 | `displayMode`     | `'always' \| 'content'` \| `'hover'` | Controls how the page TOC is displayed. Allowed values:<br>`'always'`: always visible.<br>`'content'`: when hovering over the content area (element with class 'prose').<br>`'hover'`: only when hovering over the TOC itself. | `'content'` |
 
 ### `share`
@@ -163,8 +169,8 @@ Refer to [Configure Giscus Comments](../advanced-configuration/#configure-giscus
 | `data-category`                        | `string`              | Discussion category name.                       | `'Giscus'`                               |
 | `data-category-id`<br><br><br><br><br> | `string`              | Unique ID of the discussion category.           | `'DIC_kwDOLylKbM4Cpugn'`                 |
 | `data-mapping`                         | `string`              | Mapping between pages and discussions.          | `'title'`                                |
-| `data-strict`                          | `boolean`             | Enable strict mapping (1 = true, 0 = false).    | `0`                                      |
-| `reddit`                               | `boolean`             | Enable reactions (1 = true, 0 = false).         | `1`                                      |
+| `data-strict`                          | `boolean`             | Enables strict mapping (1 = true, 0 = false).   | `0`                                      |
+| `data-reactions-enabled`               | `boolean`             | Enables reactions (1 = true, 0 = false).        | `1`                                      |
 | `data-emit-metadata`                   | `boolean`             | Emit discussion metadata (1 = true, 0 = false). | `0`                                      |
 | `data-input-position`                  | `'top' \| 'bottom'`   | Position of the comment input box.              | `'bottom'`                               |
 | `data-lang`                            | `string`              | Language for the Giscus widget UI.              | `'en'`                                   |
@@ -173,30 +179,41 @@ Refer to [Configure Giscus Comments](../advanced-configuration/#configure-giscus
 
 | Option            | Type                    | Description                                                                                         | Example                 |
 | ----------------- | ----------------------- | --------------------------------------------------------------------------------------------------- | ----------------------- |
-| `includes`        | `string[]`              | Specify which content collections rendered by `RenderPost.astro` are indexed.                       | `["blog", "changelog"]` |
+| `includes`        | `string[]`              | Specify which content collections rendered by `RenderPost.astro` are indexed.                       | `["blog", "shorts", "changelog"]` |
 | `filter`          | `boolean`               | Enables filtering by collection. Shows tabs per collection; if disabled, searches all together.     | `true`                  |
 | `navHighlight`    | `boolean`               | Enables Pagefind’s highlight on the target page after navigation.                                   | `true`                  |
 | `batchLoadSize`   | `FeatureConfig<number>` | Controls batch loading. `false` or `[false, N]` loads all; `[true, N]` loads in batches of N pages. | `[true, 3]`             |
 | `maxItemsPerPage` | `FeatureConfig<number>` | Limits shown matches per result. `false` or `[false, N]` shows all; `[true, N]` limits to N items.  | `[true, 5]`             |
+
+### `tag`
+
+| Option            | Type                                 | Description                                                                                                                                                                              | Example     |
+| ----------------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `displayPosition` | `'left' \| 'right'`                  | Sets the position of the tag filter on the page (left or right).                                                                                                                        | `'right'`   |
+| `displayMode`     | `'always' \| 'content' \| 'hover'`   | Controls how the tag filter is displayed. Allowed values:<br>`'always'`: always visible.<br>`'content'`: shown when hovering over the content area.<br>`'hover'`: shown on hover only. | `'content'` |
+| `filterMode`      | `'AND' \| 'OR'`                      | Controls tag matching logic. `'AND'` requires all selected tags. `'OR'` requires any selected tag.                                                                                    | `'AND'`     |
 
 After making these changes, ensure the project runs smoothly in the browser before moving on to [Advanced Configuration](../advanced-configuration/). 🧗‍♂️
  
 :::details
 ::summary[Changelog]
 2025-03-31
-- Update: `navBarLayout.left`, `navBarLayout.right` and `toc.displayMode`
+- Update `navBarLayout.left`, `navBarLayout.right`, and `toc.displayMode`
 
 2025-04-30
-- New: `SITE.imageDomains`
+- Add `SITE.imageDomains`
 
 2025-05-20
-- New: `UI.postMetaStyle` and `FEATURES.giscus`
+- Add `UI.postMetaStyle` and `FEATURES.giscus`
 
 2025-07-16
-- Update: Set the `SITE.imageDomains` option to enable optimization and responsive behavior for remote images
+- Update `SITE.imageDomains` guidance for remote image optimization and responsive behavior
 
 2025-10-12
-- Update: Add `search` configuration
+- Add `search` configuration
+
+2026-04-17
+- Add `UI.postView`, `UI.photoView`, and `FEATURES.tag`
 
 [View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/basic-configuration.md)
 :::

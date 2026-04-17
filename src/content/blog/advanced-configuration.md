@@ -45,22 +45,16 @@ Open the `plugins/og-template/markup.ts` file and replace the SVG section entire
 
 You may need to adjust the SVG element's `width`, `height`, and `viewBox` attributes to fit properly. It's recommended to paste the code below into the :link[Satori: OG Image Playground]{id=https://og-playground.vercel.app/} under the Tailwind (experimental) tab for testing.
 
-```xml
-<div
-    tw="relative flex justify-center items-center w-full h-full"
-    style="font-family: 'Inter'"
-  >
-    <div tw="absolute inset-0 w-full h-full bg-black" />
-    <div tw="flex items-center justify-start w-full px-18" style="gap: 20px">
-      <div tw="self-start flex justify-center items-center">
-        <!-- Replace Your SVG Logo Here -->
-      </div>
-      <div tw="flex flex-col" style="gap: 10px">
-        <div tw="text-[#858585] text-2.1rem">Astro AntfuStyle Theme</div>
-        <div tw="text-white text-3.1rem leading-relaxed mr-18">A customizable, feature-rich Astro theme for blog and portfolio</div>
-      </div>
-    </div>
+```xml {3}
+<div tw="flex items-center justify-start w-full px-18" style="gap: 20px">
+  <div tw="self-start flex justify-center items-center">
+    <!-- Replace Your SVG Logo Here -->
   </div>
+  <div tw="flex flex-col" style="gap: 10px">
+    <div tw="text-[#858585] text-2.1rem">${authorOrBrand}</div>
+    <div tw="text-white text-3.1rem leading-relaxed mr-18">${title}</div>
+  </div>
+</div>
 ```
 
 :::image-figure[Make sure to **adjust the parameters** as shown in the image.]
@@ -433,10 +427,10 @@ If you encounter any issues, find errors, or see opportunities for improvement, 
 :::details
 ::summary[Changelog]
 2025-05-20
-- Add: [Configure Giscus Comments](#configure-giscus-comments)
+- Add [Configure Giscus Comments](#configure-giscus-comments)
 
 2025-07-16
-- Add: Alternative way to make favicons respond to theme changes
+- Add an alternative way to make favicons respond to theme changes
 
 [View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/advanced-configuration.md)
 :::

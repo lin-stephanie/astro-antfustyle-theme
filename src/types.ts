@@ -43,11 +43,11 @@ export interface Site {
 
   /**
    * Specifies the primary language of the document content,
-   * found in `src/layouts/BaseLayout.astro` and `src/utils/datetime.ts`.
+   * found in `src/layouts/BaseLayout.astro`, `src/utils/data.ts` and `src/utils/datetime.ts`.
    *
    * It must be a single 'language tag' in the format defined in
-   * {@link https://datatracker.ietf.org/doc/html/rfc5646#appendix-A RFC 5646: Tags for Identifying Languages}
-   * (also known as BCP 47).
+   * {@link https://datatracker.ietf.org/doc/html/rfc5646 RFC 5646: Tags for Identifying Languages}
+   * (also known as {@link https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag BCP 47}).
    *
    * @example
    * 'zh-Hans' (Chinese written using the Simplified Chinese script)

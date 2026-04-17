@@ -1,7 +1,7 @@
 ---
 title: Icon Usage
 description: FAQ about using icons with UnoCSS preset-icons and Iconify in this theme.
-tags: [icons, markdown]
+tags: [markdown, icon]
 pubDate: 2024-10-05
 lastModDate: ''
 ogImage: false

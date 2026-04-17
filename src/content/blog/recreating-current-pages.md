@@ -2,7 +2,7 @@
 title: Recreating Current Pages
 description: How to edit existing pages in Astro AntfuStyle Theme
 pubDate: 2023-12-03
-lastModDate: 2025-07-01
+lastModDate: 2026-04-17
 ogImage: true
 toc: true
 share: true
@@ -30,7 +30,6 @@ The theme defined all `.mdx` files in `src/pages/` belong to the `pages` collect
 | `subtitle`            | `string` (`''`)                                                                         | Provides a page subtitle. If provided, it will be displayed below the title. If not needed, leave the field as an empty string or delete it.                                                                                                     |
 | `description`         | `string` (`''`)                                                                         | Provides a brief description, used in meta tags for SEO and sharing purposes. If not needed, leave the field as an empty string or delete it, and the `SITE.description` will be used directly.                                                  |
 | `bgType`              | `z.union([z.literal(false), z.enum(['plum', 'dot', 'rose', 'particle'])])`<br>(`false`) | Specifies whether to apply a background on this page and select its type. If not needed, delete the field or set to `false`.                                                                                                                     |
-| `toc`                 | `boolean` (`false`)                                                                     | Controls whether the table of contents (TOC) is generated for the page.                                                                                                                                                                          |
 | `ogImage`             | `z.union([z.string(), z.boolean()])`<br>(`true`)                                        | Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field or set to `true`. To disable it, set the field to `false`. To use a custom image, provide the full filename from `/public/og-images/`. |
 
 The theme includes a VS Code snippet for auto-generating this frontmatter (located in `.vscode/astro-antfustyle-theme.code-snippets`). Type `pageFrontmatter` and press `tab` to insert it (tab completion is enabled in `.vscode/settings.json`).
@@ -253,11 +252,13 @@ This is a sample highlight entry for the `/highlights` page.
 > 
 > The `/highlights` page displays remote images from `'cdn.bsky.app'`. The theme sets this domain in `SITE.imageDomains` so [Astro can optimize them](https://docs.astro.build/en/guides/images/#display-optimized-images-with-the-image--component) — feel free to change it if needed.
 
-> [!tip]- Use Astro loaders to fetch external data (may affect startup time)
+> [!tip]- Use Astro build-time loaders to fetch external data (may affect startup time)
 >  
-> `blueskyPostsLoader` and `feedLoader` (below) are both [Astro loaders](https://docs.astro.build/en/reference/content-loader-reference/#what-is-a-loader). Built with the [Content Loader API](https://docs.astro.build/en/reference/content-loader-reference/), Astro loaders enable seamless data fetching from various sources as content collections. This API was first introduced in [Astro 4.14](https://astro.build/blog/astro-4140/#experimental-content-layer-api) and became stable in [Astro 5](https://astro.build/blog/astro-5/#content-layer).
+> `blueskyPostsLoader` and `feedLoader` (below) are both [build-time loaders](https://docs.astro.build/en/reference/content-loader-reference/#build-time-loaders). Built with the [Content Loader API](https://docs.astro.build/en/reference/content-loader-reference/), Astro loaders enable seamless data fetching from various sources as content collections. This API was first introduced in [Astro 4.14](https://astro.build/blog/astro-4140/#experimental-content-layer-api) and became stable in [Astro 5](https://astro.build/blog/astro-5/#content-layer).
 > 
-> Starting in Astro 5, the dev server address is shown only after external resources are loaded and content is synced. Using Astro loaders may delay server startup.
+> Starting in Astro 5, the dev server address is shown only after external resources are loaded and content is synced. Using build-time loaders may delay server startup.
+>
+> Starting in [Astro 6](https://astro.build/blog/astro-6/#live-content-collections), you can create [live content collections](https://docs.astro.build/en/guides/content-collections/#live-content-collections) with [live loaders](https://docs.astro.build/en/reference/content-loader-reference/#live-loaders), which fetch content at request time (no rebuild). With [on-demand rendering](https://docs.astro.build/en/guides/on-demand-rendering/), use the plugins’ live loaders instead of build-time loaders.
 
 ### [`/photos`](../../photos/)
 
@@ -307,59 +308,21 @@ For remote images, `id` must start with `http` or `https`. To enable thumbnail g
 
 ### [`/shorts`](../../shorts/)
 
-The current `/shorts` page uses data from the `blog` collection. To create a standalone `shorts` collection, follow these steps:
+To recreate the `/shorts` page, please follow the [Adding New Posts](../adding-new-posts/). The content for the `/shorts` page, stored in `src/content/shorts/`, belongs to the `shorts` collection and uses `postSchema`.
 
-**Step 1: Define the `shorts` collection**
+In the current implementation, `/shorts` renders with `CardView` in `grid` mode and enables tag filtering on top of `CardItem` entries.
 
-```ts title='src/content.config.ts' ins={1-4,8}
-const shorts = defineCollection({
-  loader: glob({ base: './src/content/shorts', pattern: '**/[^_]*.{md,mdx}' }),
-  schema: postSchema,
-})
-
-export const collections = {
-  ...
-  shorts,
-}
-```
-
-**Step 2: Update `CardView` to query `shorts` instead of `blog`**
-
-```astro title='src/components/views/CardView.astro' del={4-7} ins={1-2,8-16}
-import { getFilteredPosts, getSortedPosts } from '~/utils/data'
-import { resolvePath } from '~/utils/path'
-
-if (collectionType === ('shorts' as CollectionKey)) {
-  const posts = await getCollection('blog')
-  dataForGrid = await getShortsFromBlog(posts)
-}
-if (collectionType === 'shorts') {
-  const shorts = await getFilteredPosts(collectionType)
-  const sortedShorts = getSortedPosts(shorts)
-  dataForGrid = sortedShorts.map((item)=>({
-    link: resolvePath(collectionType) + item.id,
-    text: item.data.title,
-    date: item.data.pubDate,
-  }))
-}
-```
-
-**Step 3: Create the `pages/shorts/` to generate pages**
-
-- Copy `src/pages/shorts/[...slug].astro` into the `pages/shorts/` directory, and update `'blog'` to `'shorts'` inside the file.
-- Move `src/pages/shorts.mdx` into the `pages/shorts/` directory and rename it to `index.mdx`.
-
-**Step 4: Create the `content/shorts/` to store content**
-
-> [!tip]- Switch Between `'masonry'` and `'grid'` with `CardView`
+> [!tip]- Switch between `'masonry'` and `'grid'` with `CardView`
 > 
 > The `CardView` component supports both `'masonry'` and `'grid'` layouts via the `mode` prop. 
 > 
-> For example, `/highlights` (`src/pages/highlights.mdx`) uses `'masonry'`, while `shorts` (`src/pages/shorts.mdx`) uses `'grid'`.  You can customize `CardView` based on your data and layout needs.
+> For example, `/highlights` (`src/pages/highlights.mdx`) uses `'masonry'`, while `/shorts` (`src/pages/shorts/index.mdx`) uses `'grid'`. You can customize `CardView` based on your data and layout needs.
 
 ### [`/changelog`](../../changelog/)
 
-To recreate the `/changelog` page, please follow the [Adding New Posts](../adding-new-posts/). The content for the `/changelog` page, stored in the `src/content/changelog/` directory, belongs to the `changelog` collection. This collection also uses `postSchema` for frontmatter types.
+To recreate the `/changelog` page, please follow the [Adding New Posts](../adding-new-posts/). The content for the `/changelog` page, stored in `src/content/changelog/`, belongs to the `changelog` collection and uses `postSchema`.
+
+In the current implementation, the `/changelog` index page renders `ListView` with both TOC grouping and tag filtering enabled.
 
 ### [`/streams`](../../streams/)
 
@@ -406,7 +369,7 @@ To update the 404 page, you can directly edit `src/pages/404.mdx`.
 
 Using remove the `/changelog` page as an example:
 
-- Delete `src/pages/changelog.mdx`.
+- Delete `src/pages/changelog` directory.
 - Delete `src/content/changelog` directory.
 - Update `src/content.config.ts` and `src/config.ts`:
 
@@ -461,16 +424,20 @@ If you encounter any issues, find errors, or see opportunities for improvement, 
 :::details
 ::summary[Changelog]
 2025-02-28
-- Add: [`/highlights`](#highlights)
+- Add [`/highlights`](#highlights)
 
 2025-03-31
-- Add: [`/shorts`](#shorts)
+- Add [`/shorts`](#shorts)
 
 2025-04-30
-- Changes for Astro 5.7
+- Update for Astro 5.7
 
 2025-07-01
-- Add: [`/photos`](#photos)
+- Add [`/photos`](#photos)
+
+2026-04-17
+- Update `pageSchema`
+- Sync `/shorts` and `/changelog` sections
 
 [View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/recreating-current-pages.md)
 :::

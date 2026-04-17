@@ -1,7 +1,7 @@
 ---
 title: Known Issues
 description: Known issues found during theme development.
-tags: [issues]
+tags: [mdx, background, image]
 pubDate: 2024-10-05
 lastModDate: ''
 ogImage: false
@@ -10,8 +10,6 @@ share: true
 giscus: true
 search: true
 ---
-
-## Known Issues
 
 Here are some unresolved issues found during theme development. If you have a solution, feel free to [submit a PR](https://github.com/lin-stephanie/astro-antfustyle-theme/pulls) — much appreciated!
 

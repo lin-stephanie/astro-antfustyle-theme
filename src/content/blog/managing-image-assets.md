@@ -108,10 +108,10 @@ I hope this post helps clarify image usage in Markdown/MDX within this theme. Fo
 :::details
 ::summary[Changelog]
 2025-04-30
-- Changes for Astro 5.7
+- Update for Astro 5.7
 
 2025-07-16
-- Update: [Supported Cases for Image Optimization and Responsive Processing](#supported-cases-for-image-optimization-and-responsive-processing)
+- Update [Supported Cases for Image Optimization and Responsive Processing](#supported-cases-for-image-optimization-and-responsive-processing)
 
 [View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/managing-image-assets.md)
 :::

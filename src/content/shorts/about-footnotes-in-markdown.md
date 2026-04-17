@@ -1,7 +1,7 @@
 ---
 title: About Footnotes in Markdown
 description: FAQ about removing the default Footnotes heading added by Astro.
-tags: [markdown, footnotes]
+tags: [markdown, footnote]
 pubDate: 2024-10-05
 lastModDate: ''
 ogImage: false

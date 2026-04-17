@@ -554,7 +554,7 @@ Thanks for checking out the theme. Have fun and enjoy creating! ⚡️
 :::details
 ::summary[Changelog]
 2025-03-31
-- Update: Image Caption & Link, Video Embedding, Styled Link and Badges
+- Update image captions and links, video embedding, styled links, and badges
 
 [View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/markdown-mdx-extended-features.md)
 :::

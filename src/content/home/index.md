@@ -5,24 +5,24 @@ This live demo will guide you through setup and customization, offering helpful 
 **Optimized Infrastructure**
 
 - Zero UI Framework
-- [SEO-Friendly](./blog/faqs-and-known-issues/#about-seo-and-accessibility)
-- [Auto-Generated RSS Feed](./blog/faqs-and-known-issues/#rss-subscription-scope)
+- [SEO-Friendly](./shorts/about-seo-and-accessibility/)
+- [Auto-Generated RSS Feed](./shorts/rss-subscription-scope/)
 - [Dynamic OG Image Generation](./blog/about-open-graph-images/)
 - [Subpath Deployment](./blog/basic-configuration/#configuring-site) Support
 - Optimized and Responsive Images
 - VS Code Snippets for Fast Coding
 - [Well-Structured Project](./blog/project-structure/)
-- High [Lighthouse Performance](./blog/faqs-and-known-issues/#lighthouse-scores)
+- High [Lighthouse Performance](./shorts/lighthouse-scores/)
 
 **Content Management**
 
 - Markdown & MDX Support
-- [Math Equations Rendering](./blog/faqs-and-known-issues/#choosing-a-math-rendering-engine)
+- [Math Equations Rendering](./shorts/choosing-a-math-rendering-engine/)
 - [Callouts (Alerts/Admonitions)](./blog/markdown-mdx-extended-features/#callouts-alerts--admonitions)
 - [Code Syntax Highlighting & Annotations](./blog/markdown-mdx-extended-features/#fully-featured-code-blocks)
 - Ready-To-Use [Remark Directives](./blog/markdown-mdx-extended-features/#image-caption--link-image)
 - Customizable Layouts, Views, and Navigation
-- [Configurable Animated Backgrounds](./blog/faqs-and-known-issues/#page-backgrounds) (Take a look around!)
+- [Configurable Animated Backgrounds](./shorts/page-backgrounds/) (Take a look around!)
 - [Showcase Your GitHub Releases and PRs](./blog/customizing-github-activity-pages)
 - [Highlight Your Creative Work or Curated Posts](./blog/recreating-current-pages/#highlights)
 - [Share Your Short Notes or Quick Thoughts](./blog/recreating-current-pages/#shorts)
@@ -32,14 +32,15 @@ This live demo will guide you through setup and customization, offering helpful 
 
 - Responsive Layout
 - Full-Platform TOC Support
+- [Flexible Tag Filtering](./shorts/tag-filter-in-list-and-card-views)
 - Light & Dark Modes Toggle
 - Smooth View Transitions
 - Loading Progress Indicator
-- [Search Functionality](./blog/faqs-and-known-issues/#search-functionality)
-- [Image Zoom Preview](./blog/faqs-and-known-issues/#image-zoom)
+- [Search Functionality](./shorts/search-functionality/)
+- [Image Zoom Preview](./shorts/image-zoom/)
 - Social Media Sharing
 - [Integrated Giscus Comments](./blog/advanced-configuration/#configure-giscus-comments)
-- [Accessibility Enhancements](./blog/faqs-and-known-issues/#about-seo-and-accessibility)
+- [Accessibility Enhancements](./shorts/about-seo-and-accessibility/)
 - Keyboard-Friendly
 
 > [More features](https://github.com/users/lin-stephanie/projects/4) are continuously being added! 🚀

@@ -1,7 +1,7 @@
 ---
 title: Page Backgrounds
 description: FAQ about the theme background implementations, performance, and limitations.
-tags: [performance, backgrounds]
+tags: [performance, background]
 pubDate: 2024-10-05
 lastModDate: 2024-10-23
 ogImage: false

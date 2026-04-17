@@ -2,7 +2,7 @@
 title: Customizing GitHub Activity Pages
 description: How to showcase your own GitHub releases or pull requests in Astro AntfuStyle Theme
 pubDate: 2023-12-01
-lastModDate: 2025-04-30
+lastModDate: 2026-04-17
 ogImage: true
 toc: true
 share: true
@@ -12,9 +12,9 @@ search: true
 
 This post guides you on recreating the [`/releases`](../../releases/) and [`/prs`](../../prs/) pages in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to showcase your GitHub releases and pull requests.
 
-## Configure the Loaders
+## Configure Build-time Loaders
 
-The `/releases` and `/prs` pages use [astro-loader-github-releases](https://www.npmjs.com/package/astro-loader-github-releases) and [astro-loader-github-prs](https://www.npmjs.com/package/astro-loader-github-prs) to fetch data for `releases` and `prs` content collections. In `src/content.config.ts`, configure these loaders to fetch your GitHub activity data as described in their README:
+The `/releases` and `/prs` pages use the build-time loaders provided by [astro-loader-github-releases](https://www.npmjs.com/package/astro-loader-github-releases) and [astro-loader-github-prs](https://www.npmjs.com/package/astro-loader-github-prs) to fetch data for the `releases` and `prs` content collections. In `src/content.config.ts`, configure these loaders to fetch your GitHub activity data as described in their README:
 
 ```ts title='src/content.config.ts'
 import { githubReleasesLoader } from 'astro-loader-github-releases'
@@ -48,11 +48,15 @@ export const collections = {
 > - Make sure `.env` is ignored by Git (it's included in `.gitignore` by default).
 > - Additional reference: [Setting Environment Variables](https://docs.astro.build/en/guides/environment-variables/#setting-environment-variables)
 
-> [!tip]- Use Astro loaders to fetch external data (may affect startup time)
+> [!tip]- Use Astro build-time loaders to fetch external data (may affect startup time)
 >  
-> `githubReleasesLoader` and `githubReleasesLoader` are both [Astro loaders](https://docs.astro.build/en/reference/content-loader-reference/#what-is-a-loader). Built with the [Content Loader API](https://docs.astro.build/en/reference/content-loader-reference/), Astro loaders enable seamless data fetching from various sources as content collections. This API was first introduced in [Astro 4.14](https://astro.build/blog/astro-4140/#experimental-content-layer-api) and became stable in [Astro 5](https://astro.build/blog/astro-5/#content-layer).
+> `githubReleasesLoader` and `githubPrsLoader` are both [build-time loaders](https://docs.astro.build/en/reference/content-loader-reference/#build-time-loaders). Built with the [Content Loader API](https://docs.astro.build/en/reference/content-loader-reference/), Astro loaders enable seamless data fetching from various sources as content collections. This API was first introduced in [Astro 4.14](https://astro.build/blog/astro-4140/#experimental-content-layer-api) and became stable in [Astro 5](https://astro.build/blog/astro-5/#content-layer).
 > 
-> Starting in Astro 5, the dev server address is shown only after external resources are loaded and content is synced. Using Astro loaders may delay server startup.
+> Starting in Astro 5, the dev server address is shown only after external resources are loaded and content is synced. Using build-time loaders may delay server startup.
+
+> Starting in Astro 5, the dev server address is shown only after external resources are loaded and content is synced. Using build-time loaders may delay server startup.
+>
+> Starting in [Astro 6](https://astro.build/blog/astro-6/#live-content-collections), you can create [live content collections](https://docs.astro.build/en/guides/content-collections/#live-content-collections) with [live loaders](https://docs.astro.build/en/reference/content-loader-reference/#live-loaders), which fetch content at request time (no rebuild). With [on-demand rendering](https://docs.astro.build/en/guides/on-demand-rendering/), use the plugins’ live loaders instead of build-time loaders.
 
 ## Update Page Content
 
@@ -102,17 +106,23 @@ Additionally, to remove a page, uninstall the loader, delete its collection from
 
 ## Wrapping Up
 
-The theme uses [SSG (Static Site Generation)](https://developer.mozilla.org/en-US/docs/Glossary/SSG), so `/releases` and `/prs` updates rely on periodic rebuilds, which may cause slight delays (acceptable for GitHub data). For real-time updates, keep the current UI but switch to [SSR (Server-side Rendering)](https://docs.astro.build/en/guides/on-demand-rendering/). Check the official docs for details. 
+The theme uses [SSG (Static Site Generation)](https://developer.mozilla.org/en-US/docs/Glossary/SSG), so the data shown on `/releases` and `/prs` is refreshed through build-time loaders that rely on periodic rebuilds, which may cause slight delays. For GitHub activity data, this is usually acceptable.
 
-Looking forward, the theme will continue leveraging Astro loaders to enable showcasing diverse external personal data. 🧩
+Starting with [Astro 6](https://astro.build/blog/astro-6/#live-content-collections), Astro also supports fetching [live content collections](https://docs.astro.build/en/guides/content-collections/#live-content-collections) at request time through [live loaders](https://docs.astro.build/en/reference/content-loader-reference/#live-loaders), without a rebuild step. So if you want to show near real-time GitHub activity, you can consider switching to [`liveGithubReleasesLoader`](https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-releases#livegithubreleasesloader-live-collection) and [`liveGithubPrsLoader`](https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-prs#livegithubprsloader-live-collection), together with an adapter that supports [on-demand rendering](https://docs.astro.build/en/guides/on-demand-rendering/).
+
+If you take that route, your site will no longer be a fully static SSG site, because those pages will depend on SSR (server-side rendering). 📶
 
 :::details
 ::summary[Changelog]
 2025-03-31
-- Add: A GitHub PAT Is Needed for PRs and for Releases in `mode: 'repoList'`
+- Add the GitHub PAT requirement for PRs and releases in `mode: 'repoList'`
 
 2025-04-30
-- Changes for Astro 5.7
+- Update for Astro 5.7
+
+2026-04-17
+- Update terminology
+- Add notes about Astro 6 live loaders
 
 [View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/customizing-github-activity-pages.md)
 :::

@@ -41,6 +41,7 @@ AntfuStyle is a flexible and feature-rich [Astro 5](https://astro.build/) theme 
 
 - Responsive Layout
 - Full-Platform TOC Support
+- Flexible Tag Filtering
 - Light & Dark Modes Toggle
 - Smooth View Transitions
 - Loading Progress Indicator

@@ -110,7 +110,7 @@ You can explore the current theme freely. Additionally, the following commands a
 > 
 > Alternatively, you can [enable `corepack`](https://github.com/nodejs/corepack) (allows you to manage package manager versions directly via Node.js) or [install the `ni` tool](https://github.com/antfu-collective/ni) (simplifies running commands across different package managers).
 >
-> If you want to use a different package manager, make sure to [convert the project to your chosen package manager](../faqs-and-known-issues/#revert-from-pnpm-to-npm-or-yarn) before running its commands.
+> If you want to use a different package manager, make sure to [convert the project to your chosen package manager](../../shorts/revert-from-pnpm-to-npm-or-yarn/) before running its commands.
 
 ## Configure the Project
 
@@ -149,7 +149,7 @@ You can dive deeper into the theme through the following sections:
 
 - [**Managing Image Assets**](../managing-image-assets/): Best practices for using images in Markdown/MDX.
 - [**About Open Graph Images**](../about-open-graph-images/): How to customize or auto-generate Open Graph images.
-- [**FAQs and Known Issues**](../faqs-and-known-issues/): Get more insights into the theme's details.
+- [**FAQs and Known Issues**](../../shorts/): Get more insights into the theme's details.
 
 Additionally, feel free to explore the theme's [tech stack](../../projects/). For parts not mentioned or clarified in the guide, you might find answers in the [Astro Docs](https://docs.astro.build/en/getting-started/). You can also follow the [Astro Blog](https://astro.build/blog/) or join the [Astro Lounge](https://discord.com/invite/grF4GTXXYm) community.
 
