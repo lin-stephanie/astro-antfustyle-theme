@@ -5,45 +5,13 @@
 <button
   id="theme-switch"
   class="op-60 hover:op-100 op-transition"
-  title="Toggles light & dark"
-  aria-label="Toggles light & dark"
+  title="Toggle theme"
+  role="switch"
+  aria-label="Dark mode"
+  aria-checked="false"
 >
   <div u-i-ri-sun-line u-dark:i-ri-moon-line></div>
 </button>
-
-<!-- Initialize as inline scripts for faster response, avoiding FOUC  -->
-<script is:inline data-astro-rerun>
-  function initTheme() {
-    let theme
-    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-      theme = localStorage.theme
-    } else {
-      theme = window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light'
-      window.localStorage.setItem('theme', theme)
-    }
-
-    const toggleThemeButton = document.getElementById('theme-switch')
-    toggleThemeButton.setAttribute('role', 'switch')
-
-    if (theme === 'light') {
-      document.documentElement.classList.remove('dark')
-      toggleThemeButton.setAttribute('aria-label', 'light')
-      toggleThemeButton.setAttribute('aria-checked', 'false')
-    } else {
-      document.documentElement.classList.add('dark')
-      toggleThemeButton.setAttribute('aria-label', 'dark')
-      toggleThemeButton.setAttribute('aria-checked', 'true')
-    }
-
-    const colorThemeMetaTag = document.querySelector("meta[name='theme-color']")
-    const bgColor = getComputedStyle(document.body).getPropertyValue('--c-bg')
-    colorThemeMetaTag?.setAttribute('content', bgColor)
-  }
-
-  initTheme()
-</script>
 
 <script>
   // related to #45
@@ -62,59 +30,79 @@
   }
   const fill = chooseFill()
 
-  document.addEventListener('astro:page-load', () => {
-    let isDark: boolean
+  const changeGiscusTheme = (isDark: boolean) => {
+    const newTheme = isDark
+      ? `${location.origin}/giscus/dark.css`
+      : `${location.origin}/giscus/light.css`
 
-    const changeGiscusTheme = (isDark: boolean) => {
-      const newTheme = isDark
-        ? `${location.origin}/giscus/dark.css`
-        : `${location.origin}/giscus/light.css`
-
-      const giscusScript = document.getElementById('giscus-script')
-      if (giscusScript) {
-        giscusScript.setAttribute('data-theme', newTheme)
-        const iframe = document.querySelector('iframe.giscus-frame')
-        if (
-          iframe &&
-          iframe instanceof HTMLIFrameElement &&
-          iframe.contentWindow
-        ) {
-          iframe.contentWindow.postMessage(
-            { giscus: { setConfig: { theme: newTheme } } },
-            'https://giscus.app'
-          )
-        }
+    const giscusScript = document.getElementById('giscus-script')
+    if (giscusScript) {
+      giscusScript.setAttribute('data-theme', newTheme)
+      const iframe = document.querySelector('iframe.giscus-frame')
+      if (
+        iframe &&
+        iframe instanceof HTMLIFrameElement &&
+        iframe.contentWindow
+      ) {
+        iframe.contentWindow.postMessage(
+          { giscus: { setConfig: { theme: newTheme } } },
+          'https://giscus.app'
+        )
       }
     }
+  }
 
-    const updateAria = (buttonElement: HTMLElement) => {
-      buttonElement.setAttribute('aria-label', isDark ? 'dark' : 'light')
-      buttonElement.setAttribute('aria-checked', isDark ? 'true' : 'false')
-    }
+  const updateAria = (isDark: boolean, buttonElement: HTMLElement | null) => {
+    buttonElement?.setAttribute('aria-checked', isDark ? 'true' : 'false')
+  }
 
-    const setColorTheme = () => {
-      const colorThemeMetaTag = document.querySelector(
-        "meta[name='theme-color']"
-      )
-      const bgColor = getComputedStyle(document.body).getPropertyValue('--c-bg')
-      colorThemeMetaTag?.setAttribute('content', bgColor)
-    }
+  const setColorScheme = (isDark: boolean) => {
+    const colorScheme = document.querySelector("meta[name='color-scheme']")
+    colorScheme?.setAttribute('content', isDark ? 'dark light' : 'light dark')
+  }
 
-    const saveTheme = () => {
-      window.localStorage.setItem('theme', isDark ? 'dark' : 'light')
-    }
+  const setThemeColor = () => {
+    const themeColor = document.querySelector("meta[name='theme-color']")
+    const bgColor = getComputedStyle(document.body).getPropertyValue('--c-bg')
+    themeColor?.setAttribute('content', bgColor)
+  }
 
-    /* Handle user toggle button */
+  const saveTheme = (isDark: boolean) => {
+    window.localStorage.setItem('theme', isDark ? 'dark' : 'light')
+  }
+
+  const getThemeSwitchButton = () => {
+    return document.getElementById('theme-switch')
+  }
+
+  const syncTheme = (
+    isDark: boolean,
+    buttonElement = getThemeSwitchButton()
+  ) => {
+    document.documentElement.classList.toggle('dark', isDark)
+    changeGiscusTheme(isDark)
+    updateAria(isDark, buttonElement)
+    setColorScheme(isDark)
+    setThemeColor()
+    saveTheme(isDark)
+  }
+
+  /* Listening system changes */
+  window
+    .matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change', ({ matches }) => {
+      syncTheme(matches)
+    })
+
+  /* Handle user toggle button */
+  document.addEventListener('astro:page-load', () => {
     const handleToggle = (event: MouseEvent) => {
       const currentTarget = event.currentTarget
+      if (!(currentTarget instanceof HTMLElement)) return
 
       const toggle = () => {
-        document.documentElement.classList.toggle('dark')
-        isDark = document.documentElement.classList.contains('dark')
-        changeGiscusTheme(isDark)
-        updateAria(currentTarget as HTMLElement)
-        setColorTheme()
-        saveTheme()
+        isDark = !document.documentElement.classList.contains('dark')
+        syncTheme(isDark, currentTarget)
       }
 
       const isAppearanceTransition =
@@ -158,18 +146,9 @@
       })
     }
 
-    const toggleThemeButton = document.getElementById('theme-switch')
+    const toggleThemeButton = getThemeSwitchButton()
+    let isDark = document.documentElement.classList.contains('dark')
+    updateAria(isDark, toggleThemeButton)
     toggleThemeButton?.addEventListener('click', handleToggle)
-
-    /* Listening system changes */
-    window
-      .matchMedia('(prefers-color-scheme: dark)')
-      .addEventListener('change', ({ matches }) => {
-        isDark = matches
-        document.documentElement.classList.toggle('dark', isDark)
-        changeGiscusTheme(isDark)
-        if (toggleThemeButton) updateAria(toggleThemeButton)
-        saveTheme()
-      })
   })
 </script>

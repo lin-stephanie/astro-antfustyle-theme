@@ -89,8 +89,35 @@ const webPageData = {
 <meta name="author" content={SITE.author} />
 
 <!-- Color -->
+<meta name="color-scheme" content="" />
 <meta name="theme-color" content="" />
-<meta name="color-scheme" content="light dark" />
+<!-- Initialize as inline scripts for faster response, avoiding FOUC  -->
+<script is:inline data-astro-rerun>
+  ;(() => {
+    const storedTheme = localStorage.getItem('theme')
+    const prefersDark = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches
+    const theme = storedTheme || (prefersDark ? 'dark' : 'light')
+    const themeColor = theme === 'dark' ? '#050505' : '#fff'
+
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+    window.localStorage.setItem('theme', theme)
+
+    const colorScheme = document.querySelector("meta[name='color-scheme']")
+    colorScheme?.setAttribute(
+      'content',
+      theme === 'dark' ? 'dark light' : 'light dark'
+    )
+
+    const themeColorMeta = document.querySelector("meta[name='theme-color']")
+    themeColorMeta?.setAttribute('content', themeColor)
+  })()
+</script>
 
 <!-- Open Graph & Facebook -->
 <meta property="og:type" content={pubDate ? 'article' : 'website'} />
