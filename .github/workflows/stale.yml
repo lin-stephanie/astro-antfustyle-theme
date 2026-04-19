@@ -5,6 +5,7 @@ on:
     - cron: '59 23 * * 0'
 
 permissions:
+  actions: write
   issues: write
   pull-requests: write
 
@@ -14,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/stale@v9
+      - uses: actions/stale@v10
         with:
           days-before-stale: 30
           days-before-close: 7
