@@ -73,10 +73,14 @@ frontmatter to <code>false</code> or remove it to publish the post.`
     </Fragment>
     <Fragment slot="article">
       {isDraft && <Warning html={WARNING} />}
-      {haveHeadings && (
-        <DesktopAside {headings} />
-        <MobileControl {headings} />
-      )}
+      {
+        haveHeadings && (
+          <>
+            <DesktopAside {headings} />
+            <MobileControl {headings} />
+          </>
+        )
+      }
       <PostCover {cover} {coverAlt} />
       <Content />
     </Fragment>
@@ -84,11 +88,13 @@ frontmatter to <code>false</code> or remove it to publish the post.`
   <Fragment slot="share">
     {shareEnabled && <ShareLink config={share[1]} />}
   </Fragment>
-  {giscusEnabled && (
-    <div slot="giscus" class="prose mx-auto mt-8">
-      <hr />
-      <Giscus />
-    </div>
-  )}
+  {
+    giscusEnabled && (
+      <div slot="giscus" class="prose mx-auto mt-8">
+        <hr />
+        <Giscus />
+      </div>
+    )
+  }
   <ImageViewer selector="article" options={{ title: 0, navbar: 0 }} />
 </BaseLayout>

@@ -49,6 +49,16 @@ if (collectionType === 'releases') {
 
   const pkgCountMap: Record<string, number> = {}
   extendedReleases = releases
+    .filter(
+      (
+        item
+      ): item is typeof item & {
+        data: typeof item.data & {
+          versionNum: string
+          publishedAt: string
+        }
+      } => !!item.data.versionNum && !!item.data.publishedAt
+    )
     .map((item) => {
       const isInMonorepo = monorepos.includes(
         item.data.repoNameWithOwner as RepoWithOwner
@@ -137,9 +147,9 @@ if (collectionType === 'prs') {
             idx={idx}
             item={item}
             isDiffMonth={isDiffMonth(
-              item.publishedAt,
+              item.publishedAt!,
               extendedReleases[idx - 1]
-                ? extendedReleases[idx - 1].publishedAt
+                ? extendedReleases[idx - 1].publishedAt!
                 : undefined
             )}
           />

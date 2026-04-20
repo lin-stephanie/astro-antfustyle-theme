@@ -42,7 +42,7 @@ const secondLinkText =
     ? item.repoNameWithOwner
     : item.repository.nameWithOwner
 
-const time = collectionType === 'releases' ? item.publishedAt : item.createdAt
+const time = collectionType === 'releases' ? item.publishedAt! : item.createdAt
 const content =
   collectionType === 'releases' ? item.descriptionHTML : item.bodyHTML
 ---

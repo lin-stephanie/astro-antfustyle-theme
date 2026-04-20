@@ -26,8 +26,12 @@ const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
 const haveHeadings = tocEnabled && headings.length > 0
 ---
 
-{haveHeadings && (
-  <DesktopAside headings={headings} />
-  <MobileControl headings={headings} />
-)}
+{
+  haveHeadings && (
+    <>
+      <DesktopAside headings={headings} />
+      <MobileControl headings={headings} />
+    </>
+  )
+}
 <Content />

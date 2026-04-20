@@ -48,15 +48,17 @@ const tocEnabled = Array.isArray(toc) && toc[0] && pageToc
   ) : (
     <>
       {tocEnabled && (
-        <DesktopAside
-          anchors={Object.keys(data)}
-          style={
-            toc[1].displayPosition === 'right'
-              ? 'left: calc(100vw - 15.625rem + 5rem)'
-              : undefined
-          }
-        />
-        <MobileControl anchors={Object.keys(data)} />
+        <>
+          <DesktopAside
+            anchors={Object.keys(data)}
+            style={
+              toc[1].displayPosition === 'right'
+                ? 'left: calc(100vw - 15.625rem + 5rem)'
+                : undefined
+            }
+          />
+          <MobileControl anchors={Object.keys(data)} />
+        </>
       )}
       {Object.keys(data).map((key, idx) => (
         <div class="slide-enter" style={{ '--enter-stage': idx }}>

@@ -110,6 +110,10 @@ html.dark .prose {
   margin: 1em 0;
 }
 
+.expressive-code .copy {
+  align-items: center;
+}
+
 .expressive-code .copy button::before {
   display: none;
 }
@@ -172,7 +176,7 @@ html.dark .prose {
   border: 1px solid #000;
 }
 
-article img:not(.no-zoom) {
+article img:not(.no-zoom):not(a img) {
   cursor: zoom-in;
 }
 

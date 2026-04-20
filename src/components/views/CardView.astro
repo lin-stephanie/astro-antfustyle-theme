@@ -121,32 +121,32 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
         </div>
       )}
       {mode === 'grid' && haveTags && (
-        <div
-          class="grid items-start gap-8 grid-cols-[minmax(0,1fr)_15.625rem] lt-lgp:(grid-cols-1)
-              mx-20 lt-lgp:mx-10 lt-md:mx-1 fade-in"
-        >
-          <div
-            class="grid items-stretch auto-rows-[minmax(12.5rem,1fr)]"
-            style={{
-              '--fade-in-duration': '0.6s',
-              'gap': `${gap}px`,
-              'grid-template-columns': `repeat(auto-fill, minmax(${minCardWidth ? `${minCardWidth}px` : '180px'}, ${maxCardWidth ? `${maxCardWidth}px` : '1fr'}))`,
-            }}
-          >
-            {dataForGrid.map((item) => (
-              <CardItem class="card-grid" item={item} />
-            ))}
-          </div>
-          {tagEnabled && tags.length > 0 && (
-            <DesktopAside
-              tags={tags}
-              style="position: sticky"
-              tagStyle="max-height: 54vh; opacity: 0.6"
-              tagButtonText="Choose Tags"
-            />
-          )}
-        </div>
         <>
+          <div
+            class="grid items-start gap-8 grid-cols-[minmax(0,1fr)_15.625rem] lt-lgp:(grid-cols-1)
+              mx-20 lt-lgp:mx-10 lt-md:mx-1 fade-in"
+          >
+            <div
+              class="grid items-stretch auto-rows-[minmax(12.5rem,1fr)]"
+              style={{
+                '--fade-in-duration': '0.6s',
+                'gap': `${gap}px`,
+                'grid-template-columns': `repeat(auto-fill, minmax(${minCardWidth ? `${minCardWidth}px` : '180px'}, ${maxCardWidth ? `${maxCardWidth}px` : '1fr'}))`,
+              }}
+            >
+              {dataForGrid.map((item) => (
+                <CardItem class="card-grid" item={item} />
+              ))}
+            </div>
+            {tagEnabled && tags.length > 0 && (
+              <DesktopAside
+                tags={tags}
+                style="position: sticky"
+                tagStyle="max-height: 54vh; opacity: 0.6"
+                tagButtonText="Choose Tags"
+              />
+            )}
+          </div>
           {/* Move out of the fade-in element to avoid layering issues causing the panel to be below the backdrop */}
           {tagEnabled && tags.length > 0 && <MobileControl tags={tags} />}
         </>
