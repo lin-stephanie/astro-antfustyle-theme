@@ -1,4 +1,4 @@
-import { z } from 'astro:content'
+import { z } from 'astro/zod'
 import type { SchemaContext } from 'astro:content'
 
 /* Pages */
@@ -47,18 +47,18 @@ export const postSchema = ({ image }: SchemaContext) =>
       .transform((value) => value.trim()),
     subtitle: z
       .string()
-      .default('')
       .describe(
         'Provides a post subtitle. If provided, it will be displayed below the title. If not needed, leave the field as an empty string or delete it.'
       )
-      .transform((value) => value.trim()),
+      .transform((value) => value.trim())
+      .default(''),
     description: z
       .string()
-      .default('')
       .describe(
         'Provides a brief description, used in meta tags for SEO and sharing purposes. If not needed, leave the field as an empty string or delete it, and the `SITE.description` will be used directly.'
       )
-      .transform((value) => value.trim()),
+      .transform((value) => value.trim())
+      .default(''),
     tags: z
       .array(z.string())
       .default([])
@@ -66,7 +66,7 @@ export const postSchema = ({ image }: SchemaContext) =>
         'Tags for the post. If not needed, leave the field as an empty array or delete it.'
       ),
     cover: z
-      .union([image(), z.string().url()])
+      .union([image(), z.url()])
       .default('')
       .describe(
         'Cover image for the post. Specify either a URL or a path relative to the current directory. If not needed, leave the field as an empty string or delete it.'
@@ -139,7 +139,7 @@ export const postSchema = ({ image }: SchemaContext) =>
         'Controls whether search is available for the post. If `true`, search will be enabled; otherwise, it will be disabled.'
       ),
     redirect: z
-      .union([z.string().url('Invalid url.'), z.literal('')])
+      .union([z.url(), z.literal('')])
       .default('')
       .describe(
         'Defines a URL to redirect the post. If not needed, leave the field as an empty string or delete it.'
@@ -156,8 +156,7 @@ export const postSchema = ({ image }: SchemaContext) =>
 export const projectSchema = z.object({
   id: z.string().describe('**Required**. Name of the project to be displayed.'),
   link: z
-    .string()
-    .url('Invalid url.')
+    .url()
     .describe('**Required**. URL linking to the project page or repository.'),
   desc: z
     .string()
@@ -192,10 +191,7 @@ export const streamSchema = z.object({
     .describe(
       '**Required**. Specifies the publication date. See supported formats [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#examples).'
     ),
-  link: z
-    .string()
-    .url('Invalid url.')
-    .describe('**Required**. Specifies the URL link to the stream.'),
+  link: z.url().describe('**Required**. Specifies the URL link to the stream.'),
   radio: z
     .boolean()
     .default(false)
