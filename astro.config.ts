@@ -35,11 +35,21 @@ export default defineConfig({
     layout: 'constrained',
     responsiveStyles: true,
   },
+  security: {
+    // Allow Giscus iframe to load local styles
+    // First layer: allow Giscus through Astro's dev request filter without warning
+    allowedDomains: [
+      {
+        hostname: 'giscus.app',
+        protocol: 'https',
+      },
+    ],
+  },
   vite: {
     server: {
       headers: {
-        // Enable CORS for dev: allow Giscus iframe to load local styles
-        'Access-Control-Allow-Origin': '*',
+        // Second layer: satisfy the browser's CORS check for theme CSS
+        'Access-Control-Allow-Origin': 'https://giscus.app',
       },
     },
     build: { chunkSizeWarningLimit: 1200 },
