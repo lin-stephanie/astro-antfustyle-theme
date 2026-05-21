@@ -47,9 +47,6 @@ export default defineConfig({
   // https://docs.astro.build/en/reference/experimental-flags/
   experimental: {
     contentIntellisense: true,
-    preserveScriptOrder: true,
-    headingIdCompat: true,
     chromeDevtoolsWorkspace: true,
-    failOnPrerenderConflict: true,
   },
 })
