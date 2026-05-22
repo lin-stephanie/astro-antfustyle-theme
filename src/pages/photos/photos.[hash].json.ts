@@ -9,6 +9,7 @@ import {
   generatePlaceholder,
   getThumbnail,
 } from '~/utils/image'
+import { getErrorMessage } from '~/utils/misc'
 
 import type { APIRoute } from 'astro'
 
@@ -27,10 +28,23 @@ export interface PhotoItem {
 }
 
 const VERSION = 1
-const photos = (await getCollection('photos')).map((p) => ({
-  id: p.data.id,
-  desc: p.data.desc,
-}))
+const photoConfig = JSON.parse(
+  readFileSync('src/content/photos/data.json', 'utf-8')
+) as {
+  id: string
+  desc?: string
+}[]
+const photoOrder = new Map(photoConfig.map((photo, index) => [photo.id, index]))
+const photos = (await getCollection('photos'))
+  .map((p) => ({
+    id: p.data.id,
+    desc: p.data.desc,
+  }))
+  .sort(
+    (a, b) =>
+      (photoOrder.get(a.id) ?? Number.MAX_SAFE_INTEGER) -
+      (photoOrder.get(b.id) ?? Number.MAX_SAFE_INTEGER)
+  )
 
 export const hash = crypto
   .createHash('sha256')
@@ -50,10 +64,16 @@ for (const photo of photos) {
 
   // remote image
   if (id.startsWith('http://') || id.startsWith('https://')) {
-    // try to load from cache first
     const uuid = shorthash(id + PLACEHOLDER_PIXEL_TARGET)
+
+    // try to load from cache first
+    let cache: { placeholder: string; aspectRatio: number } | null = null
     try {
-      const cache = JSON.parse(readFileSync(CACHE_PATH + uuid, 'utf-8'))
+      cache = JSON.parse(readFileSync(CACHE_PATH + uuid, 'utf-8'))
+    } catch {
+      // ignore cache miss
+    }
+    if (cache) {
       const thumbnail = await getThumbnail(
         id,
         THUMBNAIL_WIDTH,
@@ -68,8 +88,6 @@ for (const photo of photos) {
         aspectRatio: cache.aspectRatio,
       })
       continue
-    } catch (_) {
-      // ignore cache miss
     }
 
     // get placeholder
@@ -78,33 +96,39 @@ for (const photo of photos) {
       console.warn(`[photos.${hash}.json.ts] Skipping invalid image: ${id}`)
       continue
     }
-    const placeholder = await generatePlaceholder(
-      remoteImage.data,
-      remoteImage.width,
-      remoteImage.height,
-      PLACEHOLDER_PIXEL_TARGET
-    )
 
-    // get thumbnail
-    const aspectRatio = remoteImage.width / remoteImage.height
-    const thumbnail = await getThumbnail(id, THUMBNAIL_WIDTH, aspectRatio)
+    try {
+      const placeholder = await generatePlaceholder(
+        remoteImage.data,
+        remoteImage.width,
+        remoteImage.height,
+        PLACEHOLDER_PIXEL_TARGET
+      )
 
-    data.push({
-      uuid,
-      src: id,
-      desc,
-      thumbnail,
-      placeholder,
-      aspectRatio,
-    })
+      // get thumbnail
+      const aspectRatio = remoteImage.width / remoteImage.height
+      const thumbnail = await getThumbnail(id, THUMBNAIL_WIDTH, aspectRatio)
 
-    // save to cache
-    mkdirSync(CACHE_PATH, { recursive: true })
-    writeFileSync(
-      CACHE_PATH + uuid,
-      JSON.stringify({ placeholder, aspectRatio })
-    )
+      data.push({
+        uuid,
+        src: id,
+        desc,
+        thumbnail,
+        placeholder,
+        aspectRatio,
+      })
 
+      // save to cache
+      mkdirSync(CACHE_PATH, { recursive: true })
+      writeFileSync(
+        CACHE_PATH + uuid,
+        JSON.stringify({ placeholder, aspectRatio })
+      )
+    } catch (err) {
+      console.warn(
+        `[photos.${hash}.json.ts] Skipping invalid image: ${id} (${getErrorMessage(err)})`
+      )
+    }
     continue
   }
 

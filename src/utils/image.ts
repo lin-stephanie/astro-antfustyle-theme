@@ -1,6 +1,8 @@
 import { getImage } from 'astro:assets'
 import sharp from 'sharp'
 
+import { getErrorMessage } from '~/utils/misc'
+
 import type { SharpInput } from 'sharp'
 
 interface RemoteImageSuccess {
@@ -17,7 +19,7 @@ interface RemoteImageFail {
   height: null
 }
 
-const TIMEOUT_MS = 10_000
+const TIMEOUT_MS = 60_000
 const MAX_BYTES = 10_000_000
 
 /**
@@ -67,11 +69,15 @@ export async function generatePlaceholder(
 /**
  * Creates an `AbortSignal` that aborts after a specified timeout.
  */
-function makeTimeout(ms: number): AbortSignal {
+function makeTimeout(ms: number): { signal: AbortSignal; clear: () => void } {
   const ctrl = new AbortController()
-  setTimeout(() => ctrl.abort(), ms).unref()
+  const timer = setTimeout(() => ctrl.abort(), ms)
+  timer.unref?.()
 
-  return ctrl.signal
+  return {
+    signal: ctrl.signal,
+    clear: () => clearTimeout(timer),
+  }
 }
 
 /**
@@ -112,11 +118,12 @@ export async function fetchRemoteImageWithSharp(
   }
 
   // 1. HEAD pre-check (saves a large download)
+  const headTimeout = makeTimeout(timeoutMs)
   try {
     const head = await fetch(url, {
       method: 'HEAD',
       redirect: 'follow',
-      signal: makeTimeout(timeoutMs),
+      signal: headTimeout.signal,
     })
     const ctype = head.headers.get('content-type') ?? ''
 
@@ -137,42 +144,56 @@ export async function fetchRemoteImageWithSharp(
     }
   } catch {
     // some cdns don't support HEAD: ignore and continue with GET
+  } finally {
+    headTimeout.clear()
   }
 
   // 2. GET + download & metadata
-  const res = await fetch(url, {
-    method: 'GET',
-    redirect: 'follow',
-    signal: makeTimeout(timeoutMs),
-  })
+  let buffer: Uint8Array
+  const getTimeout = makeTimeout(timeoutMs)
+  try {
+    const res = await fetch(url, {
+      method: 'GET',
+      redirect: 'follow',
+      signal: getTimeout.signal,
+    })
 
-  if (!res.ok || !res.body) {
-    console.warn(
-      `[fetchRemoteImageWithSharp] Download failed: HTTP ${res.status}`
-    )
-    return { isImage: false, data: null, width: null, height: null }
-  }
-
-  // cache bytes and monitor size
-  const chunks: Uint8Array[] = []
-  let total = 0
-
-  // stream reading to monitor size
-  const reader = res.body.getReader()
-  while (true) {
-    const { done, value } = await reader.read()
-    if (done) break
-    total += value.byteLength
-    if (total > maxBytes) {
+    if (!res.ok || !res.body) {
       console.warn(
-        `[fetchRemoteImageWithSharp] Exceeded size limit ${maxBytes}B`
+        `[fetchRemoteImageWithSharp] Download failed: HTTP ${res.status}`
       )
       return { isImage: false, data: null, width: null, height: null }
     }
-    chunks.push(value)
-  }
 
-  const buffer = concat(chunks, total)
+    // cache bytes and monitor size
+    const chunks: Uint8Array[] = []
+    let total = 0
+
+    // stream reading to monitor size
+    const reader = res.body.getReader()
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+      total += value.byteLength
+      if (total > maxBytes) {
+        console.warn(
+          `[fetchRemoteImageWithSharp] Exceeded size limit ${maxBytes}B`
+        )
+        await reader.cancel().catch(() => undefined)
+        return { isImage: false, data: null, width: null, height: null }
+      }
+      chunks.push(value)
+    }
+
+    buffer = concat(chunks, total)
+  } catch (err) {
+    console.warn(
+      `[fetchRemoteImageWithSharp] Download failed: ${getErrorMessage(err)}`
+    )
+    return { isImage: false, data: null, width: null, height: null }
+  } finally {
+    getTimeout.clear()
+  }
 
   // 3. use sharp to validate + get dimensions
   try {

@@ -56,3 +56,11 @@ export function toggleFadeEffect(
     )
   }
 }
+
+/**
+ * Gets the error message from an error object.
+ */
+export function getErrorMessage(err: unknown): string {
+  if (err instanceof Error) return `${err.name}: ${err.message}`
+  return String(err)
+}
