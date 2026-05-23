@@ -12,7 +12,7 @@ import {
   projectSchema,
   streamSchema,
   photoSchema,
-} from '~/content/schema'
+} from '~/schema'
 
 const pages = defineCollection({
   loader: glob({ base: './src/pages', pattern: '**/*.mdx' }),
