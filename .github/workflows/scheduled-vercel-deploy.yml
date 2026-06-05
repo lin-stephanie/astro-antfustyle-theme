@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '0 1 * * 6'
 
+permissions: {}
+
 jobs:
   deploy:
     if: github.repository == 'lin-stephanie/astro-antfustyle-theme'
