@@ -128,5 +128,9 @@ const content =
       </div>
     </div>
   </summary>
-  <div class="prose github-item-prose" set:html={content} />
+  <div class="prose [&>:first-child]:mt-[1.6em] [&>:last-child]:mb-[1.25em]
+        [&_h1]:(text-1em lt-sm:text-sm) [&_h2]:(text-1em lt-sm:text-sm)
+        [&_h3]:(text-1em lt-sm:text-sm) [&_h4]:(text-1em lt-sm:text-sm)
+        [&_h5]:(text-1em lt-sm:text-sm) [&_h5_a]:text-[0.875em]
+        [&_li]:lt-sm:text-sm" set:html={content} />
 </details>

@@ -226,13 +226,13 @@ if (images && images.length > 0) {
     >
       {
         Astro.slots.has('default') && (
-          <div class="prose card-item-prose">
+          <div class="prose [&_p]:my-[1.1em]">
             <slot />
           </div>
         )
       }
-      {html && <div class="prose card-item-prose" set:html={html} />}
-      {text && <p class="prose card-item-prose">{text}</p>}
+      {html && <div class="prose [&_p]:my-[1.1em]" set:html={html} />}
+      {text && <p class="prose [&_p]:my-[1.1em]">{text}</p>}
       {
         tags && tags.length > 0 && (
           <>
@@ -268,10 +268,10 @@ if (images && images.length > 0) {
                       bg-gray-200 dark:bg-gray-700"
                   />
                   {idx < MAX_DETAILS && (
-                    <div class="prose card-item-prose" set:html={detail} />
+                    <div class="prose [&_p]:my-[1.1em]" set:html={detail} />
                   )}
                   {link && idx === MAX_DETAILS && (
-                    <Link class="prose card-item-prose op-100!" href={link}>
+                    <Link class="prose op-100! [&_p]:my-[1.1em]" href={link}>
                       View more...
                     </Link>
                   )}

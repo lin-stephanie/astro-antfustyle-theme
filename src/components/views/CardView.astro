@@ -98,7 +98,8 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
           >
             {dataForMasonry.map((item) => (
               <CardItem
-                class="card-masonry absolute top-0 left-0"
+                class="card-masonry absolute top-0 left-0
+                  [&>*:first-child]:rounded-lg [&>*:first-child:hover]:shadow-custom_0_3_20_-5"
                 item={item}
               />
             ))}
@@ -116,7 +117,11 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
           }}
         >
           {dataForGrid.map((item) => (
-            <CardItem class="card-grid min-h-40 lt-md:min-h-0" item={item} />
+            <CardItem
+              class="min-h-40 lt-md:min-h-0
+                [&>*:first-child]:rounded-xl [&:hover>*:first-child]:(shadow-custom_0_0_15_-3 scale-103 transition-transform)"
+              item={item}
+            />
           ))}
         </div>
       )}
@@ -135,7 +140,10 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
               }}
             >
               {dataForGrid.map((item) => (
-                <CardItem class="card-grid" item={item} />
+                <CardItem
+                  class="[&>*:first-child]:rounded-xl [&:hover>*:first-child]:(shadow-custom_0_0_15_-3 scale-103 transition-transform)"
+                  item={item}
+                />
               ))}
             </div>
             {tagEnabled && tags.length > 0 && (
