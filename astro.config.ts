@@ -58,5 +58,6 @@ export default defineConfig({
   experimental: {
     contentIntellisense: true,
     chromeDevtoolsWorkspace: true,
+    logger: logHandlers.node(),
   },
 })
