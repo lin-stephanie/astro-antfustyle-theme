@@ -6,9 +6,10 @@
 
 <script>
   import { FEATURES } from '~/config'
+  import { withClientBasePath } from '~/utils/misc'
 
-  const giscusThemeLight = `${location.origin}/giscus/light.css`
-  const giscusThemeDark = `${location.origin}/giscus/dark.css`
+  const giscusThemeLight = withClientBasePath('giscus/light.css')
+  const giscusThemeDark = withClientBasePath('giscus/dark.css')
 
   const giscusConfig = Array.isArray(FEATURES.giscus) && FEATURES.giscus[1]
   const giscusTemplateScript = document.createElement('script')

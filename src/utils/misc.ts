@@ -56,3 +56,18 @@ export function toggleFadeEffect(
     )
   }
 }
+
+/**
+ * Resolves a browser URL with Astro's configured base path.
+ *
+ * base: "/base" + trailingSlash: "ignore" -> BASE_URL: "/base"
+ * base: "/base/" + trailingSlash: "ignore" -> BASE_URL: "/base/"
+ */
+export function withClientBasePath(path: string): string {
+  const resolvedPath = `/${import.meta.env.BASE_URL}/${path}`.replace(
+    /\/+/,
+    '/'
+  )
+
+  return new URL(resolvedPath, location.origin).href
+}

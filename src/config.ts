@@ -113,7 +113,8 @@ export const UI: Ui = {
     subLogoMatches: [
       [/theme/, 'i-unjs-theme-colors'],
       [/github/, 'https://github.githubassets.com/favicons/favicon.svg'],
-      [/tweet/, 'i-logos-twitter'],
+      [/tweet/, 'i-prime-twitter'],
+      [/ins/, 'i-skill-icons-instagram'],
       [/bluesky/, 'i-logos-bluesky'],
     ],
   },

@@ -237,8 +237,7 @@ export function processBlueskyPosts(data: CollectionEntryList<'highlights'>) {
           if (AppBskyEmbedVideo.isView(media))
             card.video = {
               src: `https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${author.did}&cid=${media.cid}`,
-              // @ts-expect-error (ignore)
-              alt: media.alt,
+              alt: media.alt ?? '',
               poster: media.thumbnail ?? '',
             }
 
