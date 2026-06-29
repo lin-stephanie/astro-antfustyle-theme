@@ -5,18 +5,21 @@ import type { SchemaContext } from 'astro:content'
 export const pageSchema = z.object({
   title: z
     .string()
+    .trim()
     .default('')
     .describe(
-      'Sets the page title, formatted with `SITE.title` as `<pageTitle> - <siteTitle>` for metadata and automatic OG image generation. If undefined or empty, only `<siteTitle>` is displayed, and OG image generation is skipped.'
+      'Sets the page title, formatted with `SITE.title` as `<pageTitle> - <siteTitle>` for metadata. If empty or the same as `SITE.title`, only `<siteTitle>` is displayed. Page-specific OG images also require a non-empty title different from `FEATURES.ogImage[1].authorOrBrand`; otherwise the fallback OG image is used.'
     ),
   subtitle: z
     .string()
+    .trim()
     .default('')
     .describe(
       'Provides a page subtitle. If provided, it will be displayed below the title. If not needed, leave the field as an empty string or delete it.'
     ),
   description: z
     .string()
+    .trim()
     .default('')
     .describe(
       'Provides a brief description, used in meta tags for SEO and sharing purposes. If not needed, leave the field as an empty string or delete it, and the `SITE.description` will be used directly.'
@@ -25,13 +28,13 @@ export const pageSchema = z.object({
     .union([z.literal(false), z.enum(['plum', 'dot', 'rose', 'particle'])])
     .default(false)
     .describe(
-      'Specifies whether to apply a background on this page and select its type. If not needed, delete the field or set to `false`.'
+      'Specifies whether to apply a background on this page and select its type. It is also used as the page-specific OG image background; if not needed, delete the field or set to `false`.'
     ),
   ogImage: z
-    .union([z.string(), z.boolean()])
+    .union([z.literal('fallback'), z.string(), z.boolean()])
     .default(true)
     .describe(
-      'Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field or set to `true`. To disable it, set the field to `false`. To use a custom image, provide the full filename from `/public/og-images/`.'
+      "Controls OG image metadata. Set to `true` or omit the field to generate a page-specific OG image from the final pathname, such as `/blog/foo/` -> `/og-images/blog/foo.png`; if the `title` is empty or matches `FEATURES.ogImage[1].authorOrBrand`, the fallback is used. Set to 'fallback' to use `/og-images/og-image.png`, or false to omit OG image metadata. To use a custom image, place it in `public/og-images/` and set this field to its relative path (for example, `custom.png` or `blog/custom.png`). Missing images fall back to `/og-images/og-image.png`."
     ),
 })
 
@@ -40,25 +43,26 @@ export const postSchema = ({ image }: SchemaContext) =>
   z.object({
     title: z
       .string()
+      .trim()
+      .min(1)
       .max(60)
       .describe(
-        "**Required**. Sets the post title, limited to **60 characters**. This follows Moz's recommendation, ensuring approximately 90% of titles display correctly in SERPs and preventing truncation on smaller screens or social platforms. [Learn more](https://moz.com/learn/seo/title-tag)."
-      )
-      .transform((value) => value.trim()),
+        "**Required**. Sets the post title, limited to **60 characters**. This follows [Moz's recommendation](https://moz.com/learn/seo/title-tag), ensuring approximately 90% of titles display correctly in SERPs and preventing truncation on smaller screens or social platforms. Page-specific OG images also require a title different from `FEATURES.ogImage[1].authorOrBrand`; otherwise the fallback OG image is used."
+      ),
     subtitle: z
       .string()
+      .trim()
+      .default('')
       .describe(
         'Provides a post subtitle. If provided, it will be displayed below the title. If not needed, leave the field as an empty string or delete it.'
-      )
-      .transform((value) => value.trim())
-      .default(''),
+      ),
     description: z
       .string()
+      .trim()
+      .default('')
       .describe(
         'Provides a brief description, used in meta tags for SEO and sharing purposes. If not needed, leave the field as an empty string or delete it, and the `SITE.description` will be used directly.'
-      )
-      .transform((value) => value.trim())
-      .default(''),
+      ),
     tags: z
       .array(z.string())
       .default([])
@@ -73,6 +77,7 @@ export const postSchema = ({ image }: SchemaContext) =>
       ),
     coverAlt: z
       .string()
+      .trim()
       .default('')
       .describe(
         'Cover image alt text for the post. If not needed, leave the field as an empty string or delete it. '
@@ -108,15 +113,22 @@ export const postSchema = ({ image }: SchemaContext) =>
       ),
     platform: z
       .string()
+      .trim()
       .default('')
       .describe(
         'Specifies the platform where the audio or video content is published. If provided, the platform name will be displayed. If not needed, leave the field as an empty string or delete it.'
       ),
+    bgType: z
+      .union([z.literal(false), z.enum(['plum', 'dot', 'rose', 'particle'])])
+      .default(false)
+      .describe(
+        'Specifies whether to apply a background on this post and select its type. It is also used as the page-specific OG image background; if not needed, delete the field or set to `false`.'
+      ),
     ogImage: z
-      .union([z.string(), z.boolean()])
+      .union([z.literal('fallback'), z.string(), z.boolean()])
       .default(true)
       .describe(
-        'Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field or set to `true`. To disable it, set the field to `false`. To use a custom image, provide the full filename from `/public/og-images/`.'
+        "Controls OG image metadata. Set to `true` or omit the field to generate a page-specific OG image from the final pathname, such as `/blog/foo/` -> `/og-images/blog/foo.png`; if the `title` is empty or matches `FEATURES.ogImage[1].authorOrBrand`, the fallback is used. Set to 'fallback' to use `/og-images/og-image.png`, or false to omit OG image metadata. To use a custom image, place it in `public/og-images/` and set this field to its relative path (for example, `custom.png` or `blog/custom.png`). Missing images fall back to `/og-images/og-image.png`."
       ),
     toc: z
       .boolean()

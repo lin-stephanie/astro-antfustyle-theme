@@ -5,7 +5,6 @@ import remarkDirectiveSugar from 'remark-directive-sugar'
 import remarkImgattr from 'remark-imgattr'
 import remarkMath from 'remark-math'
 import remarkReadingTime from './remark-reading-time'
-import remarkGenerateOgImage from './remark-generate-og-image'
 
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import rehypeCallouts from 'rehype-callouts'
@@ -15,7 +14,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 // @ts-expect-error(rehype-wrap-all is not typed)
 import rehypeWrapAll from 'rehype-wrap-all'
 
-import { UI, FEATURES } from '../src/config'
+import { UI } from '../src/config'
 
 import type { RemarkPlugins, RehypePlugins } from 'astro'
 import type { PropertiesFromTextDirective } from 'remark-directive-sugar'
@@ -57,9 +56,6 @@ export const remarkPlugins: RemarkPlugins = [
   // https://github.com/remarkjs/remark-math/tree/main/packages/remark-math
   remarkMath,
   remarkReadingTime,
-  ...(Array.isArray(FEATURES.ogImage) && FEATURES.ogImage[0]
-    ? [remarkGenerateOgImage]
-    : []),
 ]
 
 export const rehypePlugins: RehypePlugins = [

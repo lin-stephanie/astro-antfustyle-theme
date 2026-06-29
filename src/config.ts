@@ -137,6 +137,11 @@ export const FEATURES: Features = {
       authorOrBrand: `${SITE.title}`,
       fallbackTitle: `${SITE.description}`,
       fallbackBgType: 'plum',
+      collections: [
+        { collection: 'blog', pathnamePrefix: '/blog' },
+        { collection: 'changelog', pathnamePrefix: '/changelog' },
+        { collection: 'shorts', pathnamePrefix: '/shorts' },
+      ],
     },
   ],
   toc: [

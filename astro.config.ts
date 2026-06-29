@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config'
+import { defineConfig, logHandlers } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
 import robotsTxt from 'astro-robots-txt'
 import unocss from 'unocss/astro'

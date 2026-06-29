@@ -1,0 +1,33 @@
+import { getOgImageManifest } from '~/utils/og-image/manifest'
+import { generateOgImageBuffer } from '~/utils/og-image/generator'
+import { silentLogger } from '~/utils/server'
+
+import type { APIRoute } from 'astro'
+import type { OgImageManifestItem } from '~/utils/og-image/manifest'
+
+export const GET: APIRoute = async ({ props, logger = silentLogger }) => {
+  const { target } = props as { target: OgImageManifestItem }
+
+  logger.info(`Generating OG image for ${target.slug}.png...`)
+
+  const pngBuffer = await generateOgImageBuffer(
+    target.authorOrBrand,
+    target.title,
+    target.bgType
+  )
+
+  return new Response(new Uint8Array(pngBuffer), {
+    headers: {
+      'Content-Type': 'image/png',
+    },
+  })
+}
+
+export async function getStaticPaths() {
+  const manifest = await getOgImageManifest()
+
+  return manifest.map((target) => ({
+    params: { slug: target.slug },
+    props: { target },
+  }))
+}

@@ -1,3 +1,5 @@
+import type { CollectionKey } from 'astro:content'
+
 /* SITE */
 export type Url = `http://${string}` | `https://${string}`
 type Path = `/${string}`
@@ -549,6 +551,25 @@ interface slideEnterAnimConfig {
   enterStep: number
 }
 
+export interface OgImageCollectionConfig {
+  /**
+   * Sets the content collection defined in `content.config.ts`.
+   *
+   * @example 'blog'
+   */
+  collection: Exclude<CollectionKey, 'page'>
+
+  /**
+   * Sets the URL prefix where entries from this collection are rendered.
+   *
+   * @example
+   * collection: 'articles'
+   * pathnamePrefix: '/writing'
+   * // maps the `articles` entry `hello` to `/writing/hello/`
+   */
+  pathnamePrefix: Path
+}
+
 interface OgImageConfig {
   /**
    * Sets your name or brand name that will be displayed on the OG image.
@@ -556,23 +577,26 @@ interface OgImageConfig {
   authorOrBrand: string
 
   /**
-   * Sets the fallback title for OG images.
+   * Sets the title used to generate the fallback OG image.
    *
-   * Used when the `title` in the frontmatter is missing or invalid.
+   * Used by the fallback image endpoint, and when a page-specific image is not
+   * generated because the frontmatter title is missing, empty, or matches
+   * `authorOrBrand`.
    */
   fallbackTitle: string
 
   /**
-   * Sets the fallback background for OG images.
+   * Sets the background used to generate the fallback OG image.
    *
-   * By default, the background used for auto-generated OG images is based on the `bgType` set in frontmatter.
-   * This value is only used for the fallback OG image (stored at `/public/og-images/og-image.png`)
-   * and as the background when `bgType` is not specified.
-   *
-   * A fallback OG image is the default image used when the specified or auto-generated OG image is missing.
-   * You can delete the existing file to regenerate a new one.
+   * Used by the fallback image endpoint, and when a page-specific image is
+   * generated without a valid frontmatter `bgType`.
    */
   fallbackBgType: BgType
+
+  /**
+   * Sets the content collections collected by the OG image endpoint.
+   */
+  collections: OgImageCollectionConfig[]
 }
 
 export interface TocConfig {
@@ -801,14 +825,16 @@ export interface Features {
   slideEnterAnim: FeatureConfig<slideEnterAnimConfig>
 
   /**
-   * Whether to enable OG image auto-generation.
+   * Controls OG image generation and metadata.
    *
-   * - Automatically generates OG images for Markdown/MDX files when:
-   *   - The `ogImage` field is absent in frontmatter, or
-   *   - The `ogImage` field is set to `true`.
-   * - To disable for a specific post or page, set `ogImage: false` in the frontmatter.
-   * - Generated images are saved in `/public/og-images`.
-   * - If disabled, deleting `/public/og-images/og-image.png` won't regenerate it.
+   * - `true` or missing frontmatter `ogImage`: generate a page-specific image from the final page pathname.
+   * - `'fallback'`: use `/og-images/og-image.png` instead of generating a page-specific image.
+   * - `false`: output no `og:image`, `twitter:image`, or JSON-LD `image`.
+   * - `string`: use a custom image from `public/og-images/`; if it is missing, use the fallback image.
+   *
+   * Page-specific images require a non-empty title different from `authorOrBrand`.
+   * Generated images are served from `/og-images` by the endpoint.
+   * If this feature is disabled, no OG images or image metadata are produced.
    */
   ogImage: FeatureConfig<OgImageConfig>
 

@@ -1,4 +1,7 @@
 import { inspect } from 'node:util'
+import { join } from 'node:path'
+import { existsSync } from 'node:fs'
+import { cwd } from 'node:process'
 
 /**
  * Minimal logger interface used by build-time helpers.
@@ -48,4 +51,26 @@ export function getErrorMessage(err: unknown): string {
   }).trim()
 
   return message || 'Unknown error'
+}
+
+/**
+ * Resolves path segments relative to the current working directory.
+ *
+ * @example
+ * cwd /repo + public/og-images + blog.png -> /repo/public/og-images/blog.png
+ * cwd /repo + src/utils + og-image/template -> /repo/src/utils/og-image/template
+ * cwd /repo + dist + og-images/blog/post.png -> /repo/dist/og-images/blog/post.png
+ */
+export function resolveCwdPath(...paths: string[]) {
+  return join(cwd(), ...paths)
+}
+
+/**
+ * Checks if a file exists in a specified directory.
+ * This path is relative to the current working directory.
+ */
+export function checkFileExistsInDir(path: string, filename: string) {
+  const fullPath = resolveCwdPath(path, filename)
+
+  return existsSync(fullPath)
 }

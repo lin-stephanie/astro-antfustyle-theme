@@ -1,4 +1,4 @@
-import type { BgType } from '../../src/types'
+import type { BgType } from '~/types'
 
 type BackgroundBase64 = Record<BgType, string>
 
