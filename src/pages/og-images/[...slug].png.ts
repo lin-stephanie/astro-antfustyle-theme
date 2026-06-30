@@ -5,7 +5,10 @@ import { silentLogger } from '~/utils/server'
 import type { APIRoute } from 'astro'
 import type { OgImageManifestItem } from '~/utils/og-image/manifest'
 
-export const GET: APIRoute = async ({ props, logger = silentLogger }) => {
+/**
+ * Generates an Open Graph image (PNG format) for a given path slug.
+ */
+export const GET: APIRoute = async ({ props, url, logger = silentLogger }) => {
   const { target } = props as { target: OgImageManifestItem }
 
   logger.info(`Generating OG image for ${target.slug}.png...`)
@@ -13,7 +16,8 @@ export const GET: APIRoute = async ({ props, logger = silentLogger }) => {
   const pngBuffer = await generateOgImageBuffer(
     target.authorOrBrand,
     target.title,
-    target.bgType
+    target.bgType,
+    url
   )
 
   return new Response(new Uint8Array(pngBuffer), {

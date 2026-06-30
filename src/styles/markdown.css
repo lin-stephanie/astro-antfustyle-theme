@@ -12,6 +12,13 @@
   color: var(--fg);
 }
 
+html.dark .prose {
+  --fg-light: #888;
+  --fg: #bbb;
+  --fg-deep: #ddd;
+  --fg-deeper: var(--c-text);
+}
+
 .prose a {
   border-bottom: 1px solid rgba(125, 125, 125, 0.3);
   transition: border 0.3s ease-in-out;
@@ -30,15 +37,8 @@
   margin: 2em auto;
 }
 
-html.dark .prose {
-  --fg-light: #888;
-  --fg: #bbb;
-  --fg-deep: #ddd;
-  --fg-deeper: var(--c-text);
-}
-
 .prose blockquote {
-  font-weight: normal;
+  font-weight: 400;
   font-style: normal;
   line-height: 1.6em;
   padding: 0.5em 1em;
@@ -272,7 +272,7 @@ html:not(.dark) .img-dark {
   border-radius: 9999px;
   border-width: 0px !important;
 
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: var(--font-condensed);
   color: var(--fg-light) !important;
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -301,7 +301,7 @@ html:not(.dark) .img-dark {
   border-radius: 0.25rem;
   border-width: 0px !important;
 
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: var(--font-condensed);
   color: var(--fg-light) !important;
   line-height: 100%;
 
@@ -332,9 +332,7 @@ html:not(.dark) .img-dark {
 
 [data-link='github-repo'].github,
 [data-link='npm-pkg'] {
-  font-family:
-    'DM Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
+  font-family: var(--font-mono);
 }
 
 [data-link='custom-url'] > img,

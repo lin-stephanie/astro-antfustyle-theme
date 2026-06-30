@@ -3,7 +3,6 @@ import {
   presetWind3,
   presetAttributify,
   presetIcons,
-  presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
@@ -11,6 +10,7 @@ import {
 import { UI } from './src/config'
 import projecstData from './src/content/projects/data.json'
 
+import type { PresetWind3Theme } from 'unocss'
 import type {
   IconNavItem,
   ResponsiveNavItem,
@@ -47,7 +47,7 @@ const githubVersionClass = Object.keys(githubVersionColor).map(
 )
 const githubSubLogos = githubView.subLogoMatches.map((item) => item[1])
 
-export default defineConfig({
+export default defineConfig<PresetWind3Theme>({
   // Astro 5 no longer pipes `src/content/**/*.{md,mdx}` through Vite
   content: {
     filesystem: ['./src/{content,pages}/**/*.{md,mdx}'],
@@ -60,6 +60,12 @@ export default defineConfig({
       breakpoints: {
         ...theme.breakpoints,
         lgp: '1128px',
+      },
+      fontFamily: {
+        ...theme.fontFamily,
+        sans: 'var(--font-sans)',
+        mono: 'var(--font-mono)',
+        condensed: 'var(--font-condensed)',
       },
     }
   },
@@ -104,13 +110,6 @@ export default defineConfig({
         'height': '1.2em',
         'width': '1.2em',
         'vertical-align': 'text-bottom',
-      },
-    }),
-    presetWebFonts({
-      fonts: {
-        sans: 'Inter:400,600,800',
-        mono: 'DM Mono:400,600',
-        condensed: 'Roboto Condensed',
       },
     }),
   ],

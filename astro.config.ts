@@ -1,4 +1,4 @@
-import { defineConfig, logHandlers } from 'astro/config'
+import { defineConfig, fontProviders, logHandlers } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
 import robotsTxt from 'astro-robots-txt'
 import unocss from 'unocss/astro'
@@ -7,6 +7,27 @@ import mdx from '@astrojs/mdx'
 
 import { remarkPlugins, rehypePlugins } from './plugins'
 import { SITE } from './src/config'
+
+const sansFallbacks = [
+  'ui-sans-serif',
+  'system-ui',
+  '"Apple Color Emoji"',
+  '"Segoe UI Emoji"',
+  '"Segoe UI Symbol"',
+  '"Noto Color Emoji"',
+  'sans-serif',
+]
+
+const monoFallbacks = [
+  'ui-monospace',
+  'SFMono-Regular',
+  'Menlo',
+  'Monaco',
+  'Consolas',
+  '"Liberation Mono"',
+  '"Courier New"',
+  'monospace',
+]
 
 // https://docs.astro.build/en/reference/configuration-reference/
 export default defineConfig({
@@ -27,6 +48,55 @@ export default defineConfig({
     remarkPlugins,
     rehypePlugins,
   },
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: 'Inter',
+      cssVariable: '--font-sans',
+      weights: ['100 900'],
+      styles: ['normal'],
+      subsets: ['latin'],
+      formats: ['woff2'],
+      fallbacks: sansFallbacks,
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: 'DM Mono',
+      cssVariable: '--font-mono',
+      weights: [400],
+      styles: ['normal'],
+      subsets: ['latin'],
+      formats: ['woff2'],
+      fallbacks: monoFallbacks,
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: 'Roboto Condensed',
+      cssVariable: '--font-condensed',
+      weights: [400],
+      styles: ['normal'],
+      subsets: ['latin'],
+      formats: ['woff2'],
+      fallbacks: sansFallbacks,
+    },
+    {
+      provider: fontProviders.google(),
+      name: 'Inter',
+      cssVariable: '--font-og-sans',
+      weights: [400],
+      styles: ['normal'],
+      subsets: ['latin'],
+      formats: ['woff'],
+      fallbacks: sansFallbacks,
+      options: {
+        experimental: {
+          variableAxis: {
+            opsz: ['24'],
+          },
+        },
+      },
+    },
+  ],
   image: {
     domains: SITE.imageDomains,
     // https://docs.astro.build/en/guides/images/#responsive-image-behavior
@@ -48,7 +118,7 @@ export default defineConfig({
   vite: {
     server: {
       headers: {
-        // Second layer: satisfy the browser's CORS check for theme CSS
+        // Second layer: satisfy the browser's CORS check for Giscus theme CSS and fonts
         'Access-Control-Allow-Origin': 'https://giscus.app',
       },
     },
