@@ -127,10 +127,10 @@ export default defineConfig({
     },
     build: { chunkSizeWarningLimit: 1200 },
   },
+  logger: logHandlers.node({ level: 'info' }),
   // https://docs.astro.build/en/reference/experimental-flags/
   experimental: {
     contentIntellisense: true,
     chromeDevtoolsWorkspace: true,
-    logger: logHandlers.node(),
   },
 })
