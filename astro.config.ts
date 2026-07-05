@@ -4,6 +4,7 @@ import robotsTxt from 'astro-robots-txt'
 import unocss from 'unocss/astro'
 import astroExpressiveCode from 'astro-expressive-code'
 import mdx from '@astrojs/mdx'
+import { unified } from '@astrojs/markdown-remark'
 
 import { remarkPlugins, rehypePlugins } from './plugins'
 import { SITE } from './src/config'
@@ -45,8 +46,10 @@ export default defineConfig({
   ],
   markdown: {
     syntaxHighlight: false,
-    remarkPlugins,
-    rehypePlugins,
+    processor: unified({
+      remarkPlugins: remarkPlugins,
+      rehypePlugins: rehypePlugins,
+    }),
   },
   fonts: [
     {
