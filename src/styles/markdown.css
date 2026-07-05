@@ -109,6 +109,12 @@ html.dark .prose code:not(.expressive-code code) {
   overflow-x: auto;
 }
 
+.prose code:not(.expressive-code code):not(table td code) {
+  overflow-wrap: anywhere;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
 /* Expressive Code */
 .expressive-code {
   margin: 1em 0;
