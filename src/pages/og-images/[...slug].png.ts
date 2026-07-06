@@ -1,6 +1,6 @@
 import { getOgImageManifest } from '~/utils/og-image/manifest'
 import { generateOgImageBuffer } from '~/utils/og-image/generator'
-import { silentLogger } from '~/utils/server'
+import { silentLogger, formatLoggerInfoMessage } from '~/utils/server'
 
 import type { APIRoute } from 'astro'
 import type { OgImageManifestItem } from '~/utils/og-image/manifest'
@@ -11,7 +11,12 @@ import type { OgImageManifestItem } from '~/utils/og-image/manifest'
 export const GET: APIRoute = async ({ props, url, logger = silentLogger }) => {
   const { target } = props as { target: OgImageManifestItem }
 
-  logger.info(`Generating OG image for ${target.slug}.png...`)
+  logger.info(
+    formatLoggerInfoMessage(
+      'og-images',
+      `Generating OG image for ${target.slug}.png...`
+    )
+  )
 
   const pngBuffer = await generateOgImageBuffer(
     target.authorOrBrand,

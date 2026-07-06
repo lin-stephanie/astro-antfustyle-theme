@@ -28,7 +28,7 @@ export const silentLogger: Logger = {
  * Single-line details are appended inline in parentheses,
  * while multi-line details are appended on a new line.
  */
-export function formatLogMessage(message: string, detail?: string) {
+export function formatLoggerWarnMessage(message: string, detail?: string) {
   const normalizedDetail = detail?.trim()
 
   if (!normalizedDetail) return message
@@ -36,6 +36,13 @@ export function formatLogMessage(message: string, detail?: string) {
   return normalizedDetail.includes('\n')
     ? `${message}\n${normalizedDetail}`
     : `${message} (${normalizedDetail})`
+}
+
+/**
+ * Formats an inline info label to match Astro's blue logger prefixes.
+ */
+export function formatLoggerInfoMessage(label: string, message: string) {
+  return import.meta.env.DEV ? `\x1b[34m[${label}]\x1b[39m ${message}` : message
 }
 
 /**

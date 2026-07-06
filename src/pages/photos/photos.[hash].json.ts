@@ -9,7 +9,12 @@ import {
   generatePlaceholder,
   getThumbnail,
 } from '~/utils/image'
-import { silentLogger, formatLogMessage, getErrorMessage } from '~/utils/server'
+import {
+  silentLogger,
+  formatLoggerWarnMessage,
+  formatLoggerInfoMessage,
+  getErrorMessage,
+} from '~/utils/server'
 
 import type { APIRoute } from 'astro'
 import type { Logger } from '~/utils/server'
@@ -28,7 +33,10 @@ const CACHE_PATH = './node_modules/.astro/photos/'
 const PLACEHOLDER_PIXEL_TARGET = 100
 const THUMBNAIL_WIDTH = 720 // balance high pixel density and file size
 
-// keep Astro collection order aligned with the source JSON fil
+/**
+ * Parse the photo data from the JSON file.
+ * Sort the photos according to the order defined in the JSON file.
+ */
 const photoConfig = JSON.parse(
   readFileSync('src/content/photos/data.json', 'utf-8')
 ) as {
@@ -47,7 +55,9 @@ const photos = (await getCollection('photos'))
       (photoOrder.get(b.id) ?? Number.MAX_SAFE_INTEGER)
   )
 
-// `PhotoView` imports this hash to fetch a content-addressed JSON endpoint
+/**
+ * `PhotoView` imports this hash to fetch a content-addressed JSON endpoint.
+ */
 export const hash = crypto
   .createHash('sha256')
   .update(`${VERSION}-${JSON.stringify(photos)}`)
@@ -98,7 +108,7 @@ async function buildPhotoData(logger: Logger): Promise<{
       if (!remoteImage.ok) {
         skippedCount++
         logger.warn(
-          formatLogMessage(`Skipping photo: ${id}`, remoteImage.reason)
+          formatLoggerWarnMessage(`Skipping photo: ${id}`, remoteImage.reason)
         )
         continue
       }
@@ -134,7 +144,7 @@ async function buildPhotoData(logger: Logger): Promise<{
       } catch (err) {
         skippedCount++
         logger.warn(
-          formatLogMessage(`Skipping photo: ${id}`, getErrorMessage(err))
+          formatLoggerWarnMessage(`Skipping photo: ${id}`, getErrorMessage(err))
         )
       }
       continue
@@ -152,7 +162,10 @@ async function buildPhotoData(logger: Logger): Promise<{
     if (!localImagePath) {
       skippedCount++
       logger.warn(
-        formatLogMessage(`Skipping photo: ${id}`, 'Local image not found')
+        formatLoggerWarnMessage(
+          `Skipping photo: ${id}`,
+          'Local image not found'
+        )
       )
       continue
     }
@@ -164,7 +177,7 @@ async function buildPhotoData(logger: Logger): Promise<{
     } catch (err) {
       skippedCount++
       logger.warn(
-        formatLogMessage(`Skipping photo: ${id}`, getErrorMessage(err))
+        formatLoggerWarnMessage(`Skipping photo: ${id}`, getErrorMessage(err))
       )
       continue
     }
@@ -236,7 +249,7 @@ async function buildPhotoData(logger: Logger): Promise<{
     } catch (err) {
       skippedCount++
       logger.warn(
-        formatLogMessage(`Skipping photo: ${id}`, getErrorMessage(err))
+        formatLoggerWarnMessage(`Skipping photo: ${id}`, getErrorMessage(err))
       )
     }
   }
@@ -244,12 +257,18 @@ async function buildPhotoData(logger: Logger): Promise<{
   return { data, skippedCount }
 }
 
-// cache only complete builds so skipped photos can be retried in later requests
+/**
+ * Retrieve photo data from cache or build it from scratch.
+ * The `photoData` cache is initialized only when all photos are successfully processed.
+ */
 let photoData: PhotoItem[] | undefined
 async function getPhotoData(logger: Logger) {
   if (photoData) {
     logger.info(
-      `[photos] Photo data ready: ${photoData.length} photos, 0 skipped`
+      formatLoggerInfoMessage(
+        'photos',
+        `Photo data ready: ${photoData.length} photos, 0 skipped`
+      )
     )
 
     return photoData
@@ -261,14 +280,22 @@ async function getPhotoData(logger: Logger) {
   }
 
   logger.info(
-    `[photos] Photo data ready: ${
-      data.length + skippedCount
-    } photos, ${skippedCount} skipped`
+    formatLoggerInfoMessage(
+      'photos',
+      `Photo data ready: ${
+        data.length + skippedCount
+      } photos, ${skippedCount} skipped`
+    )
   )
 
   return data
 }
 
+/**
+ * `GET` handler for the `/photos/:hash.json` endpoint.
+ * Returns a JSON response containing the hash and the photo data.
+ * The response is cached for 1 year in production mode and is not cached in development mode.
+ */
 export const GET: APIRoute = async ({ params, logger }) => {
   const data = await getPhotoData(logger ?? silentLogger)
 
@@ -278,6 +305,7 @@ export const GET: APIRoute = async ({ params, logger }) => {
       'Cache-Control': import.meta.env.DEV
         ? 'no-store'
         : 'public, max-age=31536000, immutable',
+      // : 'public, max-age=0, stale-while-revalidate=31536000, stale-if-error=31536000',
     },
   })
 }

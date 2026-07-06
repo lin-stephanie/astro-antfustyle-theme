@@ -138,14 +138,9 @@ const {
     }
 
     #fetchData = async () => {
-      try {
-        const res = await fetch(`/photos/photos.${this.dataset.hash}.json`)
-        const [_v, data] = (await res.json()) as [string, PhotoItem[]]
-        this.#allItems = data
-        // if (import.meta.env.DEV) console.log(this.#allItems)
-      } catch (err) {
-        console.error('[PhotoView] fetch error:', err)
-      }
+      const res = await fetch(`/photos/photos.${this.dataset.hash}.json`)
+      const [_v, data] = (await res.json()) as [string, PhotoItem[]]
+      this.#allItems = data
     }
 
     #getLayout = () => {
