@@ -3,10 +3,10 @@ import Link from '~/components/base/Link.astro'
 import { UI } from '~/config'
 
 export interface GroupItemData {
-    id: string;
-    link: string;
-    desc: string;
-    icon: string;
+  id: string
+  link: string
+  desc: string
+  icon: string
 }
 
 interface Props {
@@ -47,4 +47,3 @@ const { maxGroupColumns, showGroupItemColorOnHover } = UI.groupView
     ))
   }
 </div>
-

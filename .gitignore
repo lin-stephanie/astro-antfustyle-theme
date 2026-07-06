@@ -26,5 +26,12 @@ pnpm-debug.log*
 # eslint cache
 .eslintcache
 
+# vibe coding tools
+.agent/
+.cursor/
+.windsurf/
+.codex/
+.claude/
+
 # local archive
-.local
+.local/

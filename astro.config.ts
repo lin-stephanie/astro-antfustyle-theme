@@ -101,16 +101,16 @@ export default defineConfig({
     },
   ],
   image: {
-    domains: SITE.imageDomains,
     // https://docs.astro.build/en/guides/images/#responsive-image-behavior
     // Used for all local (except `/public`) and authorized remote images using `![]()` syntax; not configurable per-image
     // Used for all `<Image />` and `<Picture />` components unless overridden with `layout` prop
     layout: 'constrained',
     responsiveStyles: true,
+    domains: SITE.imageDomains,
   },
   security: {
     // Allow Giscus iframe to load local styles
-    // First layer: allow Giscus through Astro's dev request filter without warning
+    // 1. Allow Giscus through Astro's dev request filter without warning
     allowedDomains: [
       {
         hostname: 'giscus.app',
@@ -119,16 +119,16 @@ export default defineConfig({
     ],
   },
   vite: {
+    logLevel: 'warn',
+    build: { chunkSizeWarningLimit: 1200 },
     server: {
       headers: {
-        // Second layer: satisfy the browser's CORS check for Giscus theme CSS and fonts
+        // 2. Satisfy the browser's CORS check for Giscus theme CSS and fonts
         'Access-Control-Allow-Origin': 'https://giscus.app',
       },
     },
-    build: { chunkSizeWarningLimit: 1200 },
   },
   logger: logHandlers.node({ level: 'info' }),
-  // https://docs.astro.build/en/reference/experimental-flags/
   experimental: {
     contentIntellisense: true,
     chromeDevtoolsWorkspace: true,
