@@ -149,6 +149,14 @@ html.dark .prose code:not(.expressive-code code) {
   border-width: 0;
 }
 
+.expressive-code .ec-section summary {
+  list-style: none;
+}
+
+.expressive-code .ec-section summary::-webkit-details-marker {
+  display: none;
+}
+
 .expressive-code .ec-section summary .code {
   display: flex;
   align-items: center;

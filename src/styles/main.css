@@ -40,10 +40,6 @@ body {
     var(--un-shadow, 0 0 #0000);
 }
 
-summary::-webkit-details-marker {
-  display: none;
-}
-
 /* NProgress */
 #nprogress {
   pointer-events: none;
