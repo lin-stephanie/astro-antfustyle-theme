@@ -128,9 +128,16 @@ const content =
       </div>
     </div>
   </summary>
-  <div class="prose [&>:first-child]:mt-[1.6em] [&>:last-child]:mb-[1.25em]
-        [&_h1]:(text-1em lt-sm:text-sm) [&_h2]:(text-1em lt-sm:text-sm)
-        [&_h3]:(text-1em lt-sm:text-sm) [&_h4]:(text-1em lt-sm:text-sm)
-        [&_h5]:(text-1em lt-sm:text-sm) [&_h5_a]:text-[0.875em]
-        [&_li]:lt-sm:text-sm" set:html={content} />
+  <div
+    class="prose
+      [&.prose>:first-child]:mt-[1.6em] [&.prose>:last-child]:mb-[1.25em]
+      [&.prose_h1]:text-1em [&.prose_h1]:lt-sm:text-sm
+      [&.prose_h2]:text-1em [&.prose_h2]:lt-sm:text-sm
+      [&.prose_h3]:text-1em [&.prose_h3]:lt-sm:text-sm
+      [&.prose_h4]:text-1em [&.prose_h4]:lt-sm:text-sm
+      [&.prose_h5]:text-1em [&.prose_h5]:lt-sm:text-sm
+      [&.prose_h5_a]:text-[0.875em]
+      [&.prose_li]:lt-sm:text-sm"
+    set:html={content}
+  />
 </details>
