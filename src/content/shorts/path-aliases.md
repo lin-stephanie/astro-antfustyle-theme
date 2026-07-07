@@ -13,11 +13,13 @@ search: true
 
 Path alias configuration:
 
-```ts title='tsconfig.json' {6}
+```ts title='tsconfig.json' {7-9}
 {
   "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist", "node_modules", ".local"],
+  "types": ["node"],
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]
     }
@@ -25,9 +27,9 @@ Path alias configuration:
 }
 ```
 
-Aliases work in files processed by Vite and TypeScript under `src/`, but not in files like `plugins/remark-generate-og-image.ts` or `unocss.config.ts` unless you use [tsconfig-paths](https://www.npmjs.com/package/tsconfig-paths).
+Aliases work in files processed by Astro, Vite, and TypeScript under the normal project pipeline. Config files (e.g., `vite.config.ts`, `unocss.config.ts` and `plugins.ts`) that run before Vite alias resolution may need relative imports instead.
 
-**Example:**
+Example:
 
 ```typescript title='src/components/MyComponent.tsx'
 import { formatDate } from '~/utils/helpers';

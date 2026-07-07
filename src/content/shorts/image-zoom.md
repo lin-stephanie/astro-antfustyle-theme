@@ -3,7 +3,7 @@ title: Image Zoom
 description: FAQ about how image zoom works and how to configure/disable it.
 tags: [markdown, image]
 pubDate: 2024-10-05
-lastModDate: 2025-07-02
+lastModDate: ''
 ogImage: false
 toc: false
 share: true

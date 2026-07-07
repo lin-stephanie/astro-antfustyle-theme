@@ -11,7 +11,7 @@ giscus: true
 search: true
 ---
 
-If you update `plugins/index.ts` or `src/content/schema.ts`, but `pnpm dev` does not reflect the changes, try deleting these cache directories first:
+If you update `plugins.ts` or `src/schema.ts`, but `pnpm dev` does not reflect the changes, try deleting these cache directories first:
 
 - `.astro/`
 - `node_modules/.astro/`

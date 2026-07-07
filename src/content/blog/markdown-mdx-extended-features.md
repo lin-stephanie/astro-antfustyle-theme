@@ -2,7 +2,7 @@
 title: Markdown/MDX Extended Features
 description: The special syntax available in Astro AntfuStyle Theme to extend Markdown/MDX features
 pubDate: 2022-03-02
-lastModDate: 2025-03-31
+lastModDate: 2026-07-07
 ogImage: true
 toc: true
 share: true
@@ -12,9 +12,11 @@ search: true
 
 This post introduces some handy tricks for using special syntax in the [Astro AntfuStyle Theme](https://github.com/lin-stephanie/astro-antfustyle-theme) to enhance your Markdown/MDX content. These shortcuts let the theme’s built-in integrations or plugins handle the heavy lifting, automatically converting everything into HTML — _no need to write complex code yourself!_ 🎨
 
+The theme keeps a custom Markdown pipeline in `astro.config.ts` with `processor: unified(...)`, so the remark and rehype plugins registered in `plugins.ts` remain the source of truth for these features.
+
 ## Callouts (Alerts/Admonitions)
 
-Supported by :link[rehype-callouts]{id=lin-stephanie/rehype-callouts class='github'}, you can modify [the plugin's configuration](https://github.com/lin-stephanie/rehype-callouts?tab=readme-ov-file#useroptions) in `plugins/index.ts`. 
+Supported by :link[rehype-callouts]{id=lin-stephanie/rehype-callouts class='github'}, you can modify [the plugin's configuration](https://github.com/lin-stephanie/rehype-callouts?tab=readme-ov-file#useroptions) in `plugins.ts`. 
 
 If you change the `theme` configuration (default: `'vitepress'`), you will also need to update the imported CSS file in `src/styles/markdown.css` (`@import 'rehype-callouts/theme/yourconfig'`).
 
@@ -321,7 +323,7 @@ console.log('I am on line 6')
 
 ## Image Caption & Link (`:::image`)
 
-Use the [`:::image`](https://github.com/lin-stephanie/remark-directive-sugar?tab=readme-ov-file#image-) directive from :link[remark-directive-sugar]{#lin-stephanie/remark-directive-sugar .github} to wrap images in a container for captions, clickable links, and more. Customize via the `image` option in `plugins/index.ts` (`remarkDirectiveSugar`) and style under `/* :::image */` in `src/styles/markdown.css`.
+Use the [`:::image`](https://github.com/lin-stephanie/remark-directive-sugar?tab=readme-ov-file#image-) directive from :link[remark-directive-sugar]{#lin-stephanie/remark-directive-sugar .github} to wrap images in a container for captions, clickable links, and more. Customize via the `image` option in `plugins.ts` (`remarkDirectiveSugar`) and style under `/* :::image */` in `src/styles/markdown.css`.
 
 ### `:::image-figure`
 
@@ -433,7 +435,7 @@ The custom directive wraps an image inside a link, making it clickable.
 
 ## Video Embedding（`::video`）
 
-Use the [`::video`](https://github.com/lin-stephanie/remark-directive-sugar?tab=readme-ov-file#video-) directive from :link[remark-directive-sugar]{id=lin-stephanie/remark-directive-sugar .github} for consistent video embedding across different platforms. Customize via the `video` option in `plugins/index.ts` and style under `/* ::video */` in `src/styles/markdown.css`.
+Use the [`::video`](https://github.com/lin-stephanie/remark-directive-sugar?tab=readme-ov-file#video-) directive from :link[remark-directive-sugar]{id=lin-stephanie/remark-directive-sugar .github} for consistent video embedding across different platforms. Customize via the `video` option in `plugins.ts` and style under `/* ::video */` in `src/styles/markdown.css`.
 
 Say `example.md` contains:
 
@@ -465,7 +467,7 @@ Then `example.mdx` renders as:
 
 ## Styled Link（`:link`）
 
-Use the [`:link`](https://github.com/lin-stephanie/remark-directive-sugar?tab=readme-ov-file#link) directive from :link[remark-directive-sugar]{id=lin-stephanie/remark-directive-sugar .github} to add links with avatars or favicons for GitHub, npm, or custom URLs. Customize via the `link` option in `plugins/index.ts` and style under `/* :link */` in `src/styles/markdown.css`.
+Use the [`:link`](https://github.com/lin-stephanie/remark-directive-sugar?tab=readme-ov-file#link) directive from :link[remark-directive-sugar]{id=lin-stephanie/remark-directive-sugar .github} to add links with avatars or favicons for GitHub, npm, or custom URLs. Customize via the `link` option in `plugins.ts` and style under `/* :link */` in `src/styles/markdown.css`.
 
 **Link to a GitHub user or organization (prepend `id` with `@`)**
 
@@ -513,7 +515,7 @@ Thanks for making it this far! Writing is no easy task — maybe you'd like to  
 
 Use the [`:badge`](https://github.com/lin-stephanie/remark-directive-sugar?tab=readme-ov-file#badge-) directive from :link[remark-directive-sugar]{id=lin-stephanie/remark-directive-sugar .github} to display small pieces of information, such as status or category.
 
-The theme provides the following three predefined badges. You can customize them via the `badge` option in `plugins/index.ts` and style them under `/* :badge */` in `src/styles/markdown.css`.
+The theme provides the following three predefined badges. You can customize them via the `badge` option in `plugins.ts` and style them under `/* :badge */` in `src/styles/markdown.css`.
 
 - `badge-n`: :badge-n
 - `badge-a`: :badge-a
@@ -555,6 +557,10 @@ Thanks for checking out the theme. Have fun and enjoy creating! ⚡️
 ::summary[Changelog]
 2025-03-31
 - Update image captions and links, video embedding, styled links, and badges
+
+2026-07-07
+- Update plugin entrypoint references to `plugins.ts`
+- Note the explicit unified Markdown processor used by the theme
 
 [View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/markdown-mdx-extended-features.md)
 :::

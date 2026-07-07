@@ -67,20 +67,20 @@ export const postSchema = ({ image }: SchemaContext) =>
       .array(z.string())
       .default([])
       .describe(
-        'Tags for the post. If not needed, leave the field as an empty array or delete it.'
+        'Adds tags to the post. These are displayed in post metadata and can also be used by list/card view tag filters on pages that enable them. If not needed, leave the field as an empty array or delete it.'
       ),
     cover: z
       .union([image(), z.url()])
       .default('')
       .describe(
-        'Cover image for the post. Specify either a URL or a path relative to the current directory. If not needed, leave the field as an empty string or delete it.'
+        'Defines a cover image for the post. Specify either a URL or a path relative to the current directory. If not needed, leave the field as an empty string or delete it.'
       ),
     coverAlt: z
       .string()
       .trim()
       .default('')
       .describe(
-        'Cover image alt text for the post. If not needed, leave the field as an empty string or delete it. '
+        'Defines the cover image alt text. If `UI.postView.useCoverAltAsCaption` is `true`, it is also shown below the cover image as a caption. If not needed, leave the field as an empty string or delete it.'
       ),
     pubDate: z.coerce
       .date()
@@ -97,7 +97,7 @@ export const postSchema = ({ image }: SchemaContext) =>
       .union([z.number(), z.boolean()])
       .default(true)
       .describe(
-        'Provides an estimated reading time in minutes. To auto-generate, delete the field or set to `true`; to hide it on the page, enter 0 or `false`'
+        'Provides an estimated reading time. Set a positive number to override it manually, set `true` or delete the field to auto-generate it, and set `false` to hide it.'
       ),
     radio: z
       .boolean()
@@ -192,10 +192,15 @@ export const photoSchema = z.object({
     .describe(
       '**Required**. File (name/path) of the image in the `src/content/photos/` directory or a remote image URL.'
     ),
-  desc: z.string().default('').describe('Optional description for the image.'),
+  desc: z
+    .string()
+    .default('')
+    .describe(
+      'Optional description for the image. If not needed, leave the field as an empty string or delete it.'
+    ),
 })
 
-/* Stremas */
+/* Streams */
 export const streamSchema = z.object({
   id: z.string().describe('**Required**. Sets the stream title.'),
   pubDate: z.coerce
@@ -219,5 +224,7 @@ export const streamSchema = z.object({
   platform: z
     .string()
     .default('')
-    .describe('Specifies the platform where the stream is published.'),
+    .describe(
+      'Specifies the platform where the stream is published. If not needed, leave the field as an empty string or delete it.'
+    ),
 })

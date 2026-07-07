@@ -7,7 +7,7 @@
 
 ![cover image](https://raw.githubusercontent.com/lin-stephanie/assets/refs/heads/main/astro-antfustyle-theme/cover_2x.png)
 
-AntfuStyle is a flexible and feature-rich [Astro 5](https://astro.build/) theme for developers and creators, inspired by the minimalist style of [antfu.me](https://antfu.me/). I like this design and have recreated and expanded its functionality.
+AntfuStyle is a flexible and feature-rich [Astro 7](https://astro.build/) theme for developers and creators, inspired by the minimalist style of [antfu.me](https://antfu.me/). I like this design and have recreated and expanded its functionality.
 
 ## Features
 
@@ -18,6 +18,7 @@ AntfuStyle is a flexible and feature-rich [Astro 5](https://astro.build/) theme 
 - Auto-Generated RSS Feed
 - Dynamic OG Image Generation
 - Subpath Deployment Support
+- Unified Font Management
 - Optimized and Responsive Images
 - VS Code Snippets for Fast Coding
 - Well-Structured Project

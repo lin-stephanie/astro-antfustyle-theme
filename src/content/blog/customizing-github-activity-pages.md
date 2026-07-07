@@ -51,16 +51,14 @@ export const collections = {
 > [!tip]- Use Astro build-time loaders to fetch external data (may affect startup time)
 >  
 > `githubReleasesLoader` and `githubPrsLoader` are both [build-time loaders](https://docs.astro.build/en/reference/content-loader-reference/#build-time-loaders). Built with the [Content Loader API](https://docs.astro.build/en/reference/content-loader-reference/), Astro loaders enable seamless data fetching from various sources as content collections. This API was first introduced in [Astro 4.14](https://astro.build/blog/astro-4140/#experimental-content-layer-api) and became stable in [Astro 5](https://astro.build/blog/astro-5/#content-layer).
-> 
-> Starting in Astro 5, the dev server address is shown only after external resources are loaded and content is synced. Using build-time loaders may delay server startup.
-
+>
 > Starting in Astro 5, the dev server address is shown only after external resources are loaded and content is synced. Using build-time loaders may delay server startup.
 >
 > Starting in [Astro 6](https://astro.build/blog/astro-6/#live-content-collections), you can create [live content collections](https://docs.astro.build/en/guides/content-collections/#live-content-collections) with [live loaders](https://docs.astro.build/en/reference/content-loader-reference/#live-loaders), which fetch content at request time (no rebuild). With [on-demand rendering](https://docs.astro.build/en/guides/on-demand-rendering/), use the plugins’ live loaders instead of build-time loaders.
 
 ## Update Page Content
 
-Depending on your loader configuration, you can modify the settings in `src/config.ts` that affect the UI of these two pages. Refer to the [`UI.githubView` option](./basic-configuration/#githubview) for specific details.
+Depending on your loader configuration, you can modify the settings in `src/config.ts` that affect the UI of these two pages. Refer to the [`UI.githubView` option](../basic-configuration/#githubview) for specific details.
 
 In `src/pages/releases.mdx` and `src/pages/prs.mdx`, you can update the frontmatter and directly modify the titles and subtitles rendered on the pages.
 
@@ -108,7 +106,7 @@ Additionally, to remove a page, uninstall the loader, delete its collection from
 
 The theme uses [SSG (Static Site Generation)](https://developer.mozilla.org/en-US/docs/Glossary/SSG), so the data shown on `/releases` and `/prs` is refreshed through build-time loaders that rely on periodic rebuilds, which may cause slight delays. For GitHub activity data, this is usually acceptable.
 
-Starting with [Astro 6](https://astro.build/blog/astro-6/#live-content-collections), Astro also supports fetching [live content collections](https://docs.astro.build/en/guides/content-collections/#live-content-collections) at request time through [live loaders](https://docs.astro.build/en/reference/content-loader-reference/#live-loaders), without a rebuild step. So if you want to show near real-time GitHub activity, you can consider switching to [`liveGithubReleasesLoader`](https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-releases#livegithubreleasesloader-live-collection) and [`liveGithubPrsLoader`](https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-prs#livegithubprsloader-live-collection), together with an adapter that supports [on-demand rendering](https://docs.astro.build/en/guides/on-demand-rendering/).
+Astro also supports fetching [live content collections](https://docs.astro.build/en/guides/content-collections/#live-content-collections) at request time through [live loaders](https://docs.astro.build/en/reference/content-loader-reference/#live-loaders), without a rebuild step. So if you want to show near real-time GitHub activity, you can consider switching to [`liveGithubReleasesLoader`](https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-releases#livegithubreleasesloader-live-collection) and [`liveGithubPrsLoader`](https://github.com/lin-stephanie/astro-loaders/tree/main/packages/astro-loader-github-prs#livegithubprsloader-live-collection), together with an adapter that supports [on-demand rendering](https://docs.astro.build/en/guides/on-demand-rendering/).
 
 If you take that route, your site will no longer be a fully static SSG site, because those pages will depend on SSR (server-side rendering). 📶
 

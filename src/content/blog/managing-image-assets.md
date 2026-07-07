@@ -2,7 +2,7 @@
 title: Managing Image Assets
 description: How to organize and use images in the Astro AntfuStyle Theme
 pubDate: 2020-01-03
-lastModDate: 2025-07-16
+lastModDate: 2026-07-07
 ogImage: true
 toc: true
 share: true
@@ -14,10 +14,10 @@ This post provides a brief guide on how to organize and use images in the [Astro
 
 ## Supported Cases for Image Optimization and Responsive Processing
 
-Astro supports optimizing images and generating responsive images via the [Image Service API](https://docs.astro.build/en/reference/image-service-reference/) (:link[sharp]{id=lovell/sharp .github} is the [default service](https://docs.astro.build/en/guides/images/#default-image-service)). This enables optimizations such as converting to WebP, compressing, adding attributes, inferring dimensions to prevent CLS, lazy loading and async decoding. With responsive image properties, [Astro internally automatically generate the required `srcset` and `sizes` values for your images](https://docs.astro.build/en/guides/images/#responsive-image-behavior). These optimizations apply in the following cases:
+Astro supports optimizing images and generating responsive images via the [Image Service API](https://docs.astro.build/en/reference/image-service-reference/) (:link[sharp]{id=lovell/sharp .github} is the [default service](https://docs.astro.build/en/guides/images/#default-image-service)). This enables optimizations such as converting to WebP, compressing, adding attributes, inferring dimensions to prevent CLS, lazy loading and async decoding. With responsive image properties, [Astro internally generates the required `srcset` and `sizes` values for your images](https://docs.astro.build/en/guides/images/#responsive-image-behavior). These optimizations apply in the following cases:
 
-- [Local images stored in `src/`](https://docs.astro.build/en/guides/images/#where-to-store-images) (Images in `public/` are not processed.)
-- [**Authorized** remote images](https://docs.astro.build/en/guides/images/#authorizing-remote-images) (including those used with `![]()`, `<Image />`, `<Picture />` and `getImage()`)
+- [Local images stored in `src/`](https://docs.astro.build/en/guides/images/#where-to-store-images) (images in `public/` are not processed)
+- [**Authorized** remote images](https://docs.astro.build/en/guides/images/#authorizing-remote-images), including those used with `![]()`, [`<Image />`](https://docs.astro.build/en/reference/modules/astro-assets/#image-), [`<Picture />`](https://docs.astro.build/en/reference/modules/astro-assets/#picture-) and [`getImage()`](https://docs.astro.build/en/reference/modules/astro-assets/#getimage)
 
 ## Images in Markdown Files
 
@@ -35,8 +35,8 @@ It is recommended to store the local images used in the post under the `src/asse
 <!-- Use the file path relative to `public/` -->
 <!-- Served as-is; Astro does NOT optimize -->
 
-![Public image](/public/og-images/og-image.png)
-<img src="/public/og-images/og-image.png" alt="Public image" />
+![Public image](/icon-512.png)
+<img src="/icon-512.png" alt="Public image" />
 
 <!-- Remote images -->
 <!-- Full URL with `![]()` or `<img>` tag -->
@@ -62,19 +62,19 @@ It is recommended to store the local images used in the post under the `src/asse
 
 ## Images in MDX Files
 
-In addition to supporting the standard Markdown `![alt](src)` syntax as demonstrated above, you can also use Astro’s `<Image />` component and JSX `<img />` tags in your `.mdx` files by importing both the component and your image.
+In addition to supporting the standard Markdown `![alt](src)` syntax as demonstrated above, you can also use Astro’s `<Image />` component and JSX `<img />` tags in your `.mdx` files. Import local images from `src/` when passing them to `<Image />` or `<img />`. For images in `public/`, pass the path relative to `public/` and provide `width` and `height` because Astro cannot infer those dimensions.
 
 ```mdx title='src/content/blog/post-name.mdx'
-# MDX Post
-
 ---
 title: My Page title
 ---
 
 import { Image } from 'astro:assets';
-import plum from '../assets/about-open-graph-images/plum.png';
+import plum from '../../assets/about-open-graph-images/plum.png';
 
-{/* Local image stored in the the same folder */}
+# MDX Post
+
+{/* Local image stored in the same folder */}
 
 ![Local image](local-image.png)
 
@@ -82,13 +82,13 @@ import plum from '../assets/about-open-graph-images/plum.png';
 
 <Image src={plum} alt="A rocketship in space." />
 <img src={plum.src} alt="A rocketship in space." />
-![A rocketship in space](../assets/about-open-graph-images/plum.png)
+![A rocketship in space](../../assets/about-open-graph-images/plum.png)
 
 {/* Image stored in `public/` */}
 
-![Public image](/og-images/og-image.png)
-<img src="/og-images/og-image.png" alt="Public image" />
-<Image src="/og-images/og-image.png" alt="Public image" width='1200' height='630'/>
+![Public image](/icon-512.png)
+<img src="/icon-512.png" alt="Public image" />
+<Image src="/icon-512.png" alt="Public image" width={512} height={512} />
 
 {/* Remote image on another server */}
 
@@ -103,7 +103,7 @@ As mentioned, Astro can compress images from the `src/` folder. However, for ima
 
 ## Wrapping Up
 
-I hope this post helps clarify image usage in Markdown/MDX within this theme. For anything not covered here, check out the [Astro Images Docs](https://docs.astro.build/en/guides/images/) . 📖
+I hope this post helps clarify image usage in Markdown/MDX within this theme. For anything not covered here, check out the [Astro Images Docs](https://docs.astro.build/en/guides/images/). 📖
 
 :::details
 ::summary[Changelog]
@@ -112,6 +112,9 @@ I hope this post helps clarify image usage in Markdown/MDX within this theme. Fo
 
 2025-07-16
 - Update [Supported Cases for Image Optimization and Responsive Processing](#supported-cases-for-image-optimization-and-responsive-processing)
+
+2026-07-07
+- Replace removed `public/og-images/og-image.png` examples with current public icon examples
 
 [View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/managing-image-assets.md)
 :::

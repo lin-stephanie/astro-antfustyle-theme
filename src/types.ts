@@ -17,7 +17,7 @@ export interface Site {
   /**
    * Specifies the base path for your site, which must start with `/`.
    *
-   * It wiil be passed to the
+   * It will be passed to the
    * {@link https://docs.astro.build/en/reference/configuration-reference/#base `base`}
    * config in Astro, used when deploying to a subdirectory.
    *
@@ -75,7 +75,7 @@ export interface Site {
    * Specifies the allowed domains for optimizing remote images,
    * including those used with `![]()` and the `<Image />` or `<Picture />` components.
    *
-   * It wiil be passed to the
+   * It will be passed to the
    * {@link https://docs.astro.build/en/reference/configuration-reference/#imagedomains `image.domains`}
    * config in Astro.
    *
@@ -115,7 +115,7 @@ interface TextNavItem extends BaseNavItem {
   /**
    * Defines how the navigation item is displayed responsively. Allowed values:
    *  - `'alwaysText'`: Always display text, regardless of screen size.
-   *  - `'alwaysIcon'`: Always display as a chart, regardless of screen size.
+   *  - `'alwaysIcon'`: Always display as an icon, regardless of screen size.
    *  - `'textHiddenOnMobile'`: Display text when viewport is ≥768px, hide text when <768px.
    *  - `'iconHiddenOnMobile'`: Display icon when viewport is ≥768px, hide icon when <768px.
    *  - `'textToIconOnMobile'`: Display text when viewport is ≥768px, switch to icon when <768px.
@@ -141,7 +141,7 @@ export interface IconNavItem extends BaseNavItem {
   /**
    * Defines how the navigation item is displayed responsively. Allowed values:
    *  - `'alwaysText'`: Always display text, regardless of screen size.
-   *  - `'alwaysIcon'`: Always display as a chart, regardless of screen size.
+   *  - `'alwaysIcon'`: Always display as an icon, regardless of screen size.
    *  - `'textHiddenOnMobile'`: Display text when viewport is ≥768px, hide text when <768px.
    *  - `'iconHiddenOnMobile'`: Display icon when viewport is ≥768px, hide icon when <768px.
    *  - `'textToIconOnMobile'`: Display text when viewport is ≥768px, switch to icon when <768px.
@@ -175,7 +175,7 @@ export interface ResponsiveNavItem extends BaseNavItem {
   /**
    * Defines how the navigation item is displayed responsively. Allowed values:
    *  - `'alwaysText'`: Always display text, regardless of screen size.
-   *  - `'alwaysIcon'`: Always display as a chart, regardless of screen size.
+   *  - `'alwaysIcon'`: Always display as an icon, regardless of screen size.
    *  - `'textHiddenOnMobile'`: Display text when viewport is ≥768px, hide text when <768px.
    *  - `'iconHiddenOnMobile'`: Display icon when viewport is ≥768px, hide icon when <768px.
    *  - `'textToIconOnMobile'`: Display text when viewport is ≥768px, switch to icon when <768px.
@@ -236,7 +236,7 @@ interface TextSocialItem extends BaseSocialItem {
   /**
    * Defines how the social item is displayed responsively. Allowed values:
    *  - `'alwaysText'`: Always display text, regardless of screen size.
-   *  - `'alwaysIcon'`: Always display as a chart, regardless of screen size.
+   *  - `'alwaysIcon'`: Always display as an icon, regardless of screen size.
    *  - `'textHiddenOnMobile'`: Display text when viewport is ≥768px, hide text when <768px.
    *  - `'iconHiddenOnMobile'`: Display icon when viewport is ≥768px, hide icon when <768px.
    *  - `'textToIconOnMobile'`: Display text when viewport is ≥768px, switch to icon when <768px.
@@ -262,7 +262,7 @@ export interface IconSocialItem extends BaseSocialItem {
   /**
    * Defines how the social item is displayed responsively. Allowed values:
    *  - `'alwaysText'`: Always display text, regardless of screen size.
-   *  - `'alwaysIcon'`: Always display as a chart, regardless of screen size.
+   *  - `'alwaysIcon'`: Always display as an icon, regardless of screen size.
    *  - `'textHiddenOnMobile'`: Display text when viewport is ≥768px, hide text when <768px.
    *  - `'iconHiddenOnMobile'`: Display icon when viewport is ≥768px, hide icon when <768px.
    *  - `'textToIconOnMobile'`: Display text when viewport is ≥768px, switch to icon when <768px.
@@ -276,7 +276,7 @@ export interface IconSocialItem extends BaseSocialItem {
   displayMode: 'alwaysIcon' | 'iconHiddenOnMobile'
 
   /**
-   * Sets the icon displayed the social platform.
+   * Sets the icon displayed for the social item.
    *
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
    * as per {@link https://unocss.dev/presets/icons UnoCSS} specs.
@@ -296,7 +296,7 @@ export interface ResponsiveSocialItem extends BaseSocialItem {
   /**
    * Defines how the social item is displayed responsively. Allowed values:
    *  - `'alwaysText'`: Always display text, regardless of screen size.
-   *  - `'alwaysIcon'`: Always display as a chart, regardless of screen size.
+   *  - `'alwaysIcon'`: Always display as an icon, regardless of screen size.
    *  - `'textHiddenOnMobile'`: Display text when viewport is ≥768px, hide text when <768px.
    *  - `'iconHiddenOnMobile'`: Display icon when viewport is ≥768px, hide icon when <768px.
    *  - `'textToIconOnMobile'`: Display text when viewport is ≥768px, switch to icon when <768px.
@@ -319,7 +319,7 @@ export interface ResponsiveSocialItem extends BaseSocialItem {
   text: string
 
   /**
-   * Sets the icon displayed the social platform.
+   * Sets the icon displayed for the social item.
    *
    * Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>`
    * as per {@link https://unocss.dev/presets/icons UnoCSS} specs.
@@ -393,7 +393,7 @@ export type Tabs = [Tab, Tab, ...Tab[]]
 
 interface PostView {
   /**
-   * Controls the display style of post metadata (creation date, read time, modified date):
+   * Controls the display style of post metadata (publication date, read time, modified date, and tags):
    * - `'minimal'`: Plain text with middle dots.
    * - `'icon'`: Includes icons before each metadata item.
    *
@@ -532,8 +532,7 @@ export interface Ui {
   /**
    * Configures external links' behavior and appearance.
    *
-   * Used in `plugins/index.ts`, `src/components/base/Link.astro`
-   * and `src/layouts/BaseLayout.astro`.
+   * Used in `plugins.ts`, `src/components/base/Link.astro` and `src/layouts/BaseLayout.astro`.
    */
   externalLink: ExternalLink
 }
@@ -835,13 +834,16 @@ export interface Features {
    * Page-specific images require a non-empty title different from `authorOrBrand`.
    * Generated images are served from `/og-images` by the endpoint.
    * If this feature is disabled, no OG images or image metadata are produced.
+   *
+   * More details: https://astro-antfustyle-theme.vercel.app/blog/about-open-graph-images/
    */
   ogImage: FeatureConfig<OgImageConfig>
 
   /**
    * Whether to enable TOC feature.
    *
-   * To disable for a specific post or page, set the `toc` field in the frontmatter to `false`.
+   * To disable for a specific post, set the `toc` field in the frontmatter to `false`.
+   * For list/group/custom content pages, pass `pageToc={false}` to the view component.
    *
    * Note: The feature is not supported on the `/highlights`, `/photos`, `/shorts`, `/releases`
    * and `/prs` pages.
@@ -858,10 +860,10 @@ export interface Features {
   /**
    * Whether to enable Giscus comment feature.
    *
-   * - Generate your configuration: https://giscus.app/
-   * - For more details: https://astro-antfustyle-theme.vercel.app/blog/advanced-configuration/#configure-giscus-comments
-   *
    * To disable for a specific post, set the `giscus` field in the frontmatter to `false`.
+   *
+   * Generate your configuration: https://giscus.app/
+   * More details: https://astro-antfustyle-theme.vercel.app/blog/advanced-configuration/#configure-giscus-comments
    */
   giscus: FeatureConfig<GiscusConfig>
 
@@ -869,15 +871,19 @@ export interface Features {
    * Whether to enable Pagefind search feature.
    *
    * To disable for a specific post, set the `search` field in the frontmatter to `false`.
-   *
    * For Pagefind’s built-in configuration, directly modify `src/components/widgets/SearchSwitch.astro`.
+   *
+   * More details: https://astro-antfustyle-theme.vercel.app/shorts/search-functionality/
    */
   search: FeatureConfig<SearchConfig>
 
   /**
    * Whether to enable tag feature.
    *
-   * To disable for a specific page, set the `tag` field in the frontmatter to `false`.
+   * To disable for a specific post, set the `tags` field in the frontmatter to an empty array or delete it.
+   * For list/card pages, pass `pageTag={false}` to the view component.
+   *
+   * More details: https://astro-antfustyle-theme.vercel.app/shorts/tag-filter-in-list-and-card-views
    */
   tag: FeatureConfig<TagConfig>
 }

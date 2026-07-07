@@ -3,7 +3,7 @@ title: Choosing a Math Rendering Engine
 description: FAQ on math rendering options supported by the theme.
 tags: [math, markdown]
 pubDate: 2024-10-05
-lastModDate: 2025-02-28
+lastModDate: ''
 ogImage: false
 toc: false
 share: true

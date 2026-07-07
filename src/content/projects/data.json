@@ -91,6 +91,13 @@
     "category": "CSS & Icons"
   },
   {
+    "id": "@unocss/astro",
+    "link": "https://www.npmjs.com/package/@unocss/astro",
+    "desc": "UnoCSS integration for Astro",
+    "icon": "i-logos-unocss",
+    "category": "CSS & Icons"
+  },
+  {
     "id": "@unocss/reset",
     "link": "https://www.npmjs.com/package/@unocss/reset",
     "desc": "UnoCSS reset styles",
@@ -130,6 +137,27 @@
     "link": "https://github.com/remarkjs/remark-math/tree/main/packages/remark-math",
     "desc": "Remark plugin to support math (`$C_L$`)",
     "icon": "i-mynaui-math-square",
+    "category": "Markdown Handling"
+  },
+  {
+    "id": "reading-time",
+    "link": "https://github.com/ngryman/reading-time",
+    "desc": "Estimate reading time for text",
+    "icon": "i-ep-reading",
+    "category": "Markdown Handling"
+  },
+  {
+    "id": "unist-util-visit",
+    "link": "https://github.com/syntax-tree/unist-util-visit",
+    "desc": "Utility to recursively walk through unist nodes",
+    "icon": "i-gravity-ui-nodes-down",
+    "category": "Markdown Handling"
+  },
+  {
+    "id": "mdast-util-to-string",
+    "link": "https://github.com/syntax-tree/mdast-util-to-string",
+    "desc": "Utility to get the text content of an MDAST node",
+    "icon": "i-vscode-icons-file-type-light-remark",
     "category": "Markdown Handling"
   },
   {
@@ -245,10 +273,10 @@
     "category": "Utilities"
   },
   {
-    "id": "reading-time",
-    "link": "https://github.com/ngryman/reading-time",
-    "desc": "Estimate reading time for text",
-    "icon": "i-ep-reading",
+    "id": "del-cli",
+    "link": "https://github.com/sindresorhus/del-cli",
+    "desc": "Delete files/folders using globs",
+    "icon": "i-icon-park-delete",
     "category": "Utilities"
   },
   {
@@ -341,34 +369,6 @@
     "desc": "Run linters on staged git files",
     "icon": "i-devicon-git",
     "category": "Linting & Formatting"
-  },
-  {
-    "id": "chalk",
-    "link": "https://github.com/chalk/chalk",
-    "desc": "Terminal string styling done right",
-    "icon": "i-logos-chalk",
-    "category": "CLI & Terminal"
-  },
-  {
-    "id": "del-cli",
-    "link": "https://github.com/sindresorhus/del-cli",
-    "desc": "Delete files/folders using globs",
-    "icon": "i-icon-park-delete",
-    "category": "CLI & Terminal"
-  },
-  {
-    "id": "unist-util-visit",
-    "link": "https://github.com/syntax-tree/unist-util-visit",
-    "desc": "Utility to recursively walk through unist nodes",
-    "icon": "i-gravity-ui-nodes-down",
-    "category": "Remark Utilities"
-  },
-  {
-    "id": "mdast-util-to-string",
-    "link": "https://github.com/syntax-tree/mdast-util-to-string",
-    "desc": "Utility to get the text content of an MDAST node",
-    "icon": "i-vscode-icons-file-type-light-remark",
-    "category": "Remark Utilities"
   },
   {
     "id": "antfu/antfu.me",
