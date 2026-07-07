@@ -35,6 +35,7 @@ const ogImage = frontmatter.ogImage
 const pubDate = frontmatter.pubDate.toISOString()
 const lastModDate =
   frontmatter.lastModDate && frontmatter.lastModDate.toISOString()
+const bgType = frontmatter.bgType
 const subtitle = frontmatter.subtitle
 const minutesRead = getMinutesRead(
   frontmatter.minutesRead,
@@ -66,7 +67,7 @@ in production. Set the post's <code>draft</code> property in
 frontmatter to <code>false</code> or remove it to publish the post.`
 ---
 
-<BaseLayout {title} {description} {ogImage} {pubDate} {lastModDate}>
+<BaseLayout {title} {description} {ogImage} {pubDate} {lastModDate} {bgType}>
   <StandardLayout {title} {subtitle} {isSearchable} {searchFilter}>
     <Fragment slot="head">
       <PostMeta {pubDate} {lastModDate} {minutesRead} {tags} />
