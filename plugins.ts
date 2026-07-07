@@ -1,11 +1,11 @@
 import { visit } from 'unist-util-visit'
+import { toString } from 'mdast-util-to-string'
+import getReadingTime from 'reading-time'
 
 import remarkDirective from 'remark-directive'
 import remarkDirectiveSugar from 'remark-directive-sugar'
 import remarkImgattr from 'remark-imgattr'
 import remarkMath from 'remark-math'
-import remarkReadingTime from './remark-reading-time'
-import remarkGenerateOgImage from './remark-generate-og-image'
 
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import rehypeCallouts from 'rehype-callouts'
@@ -15,11 +15,26 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 // @ts-expect-error(rehype-wrap-all is not typed)
 import rehypeWrapAll from 'rehype-wrap-all'
 
-import { UI, FEATURES } from '../src/config'
+import { UI } from './src/config'
 
 import type { RemarkPlugins, RehypePlugins } from 'astro'
 import type { PropertiesFromTextDirective } from 'remark-directive-sugar'
 import type { CreateProperties } from 'rehype-external-links'
+
+// https://docs.astro.build/en/recipes/reading-time/
+function remarkReadingTime() {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  return (tree, file) => {
+    const { frontmatter } = file.data.astro
+    if (frontmatter.minutesRead || frontmatter.minutesRead === 0) return
+
+    const textOnPage = toString(tree)
+    const readingTime = getReadingTime(textOnPage)
+
+    frontmatter.minutesRead = Math.max(1, Math.round(readingTime.minutes))
+  }
+}
 
 export const remarkPlugins: RemarkPlugins = [
   // https://github.com/remarkjs/remark-directive
@@ -57,14 +72,11 @@ export const remarkPlugins: RemarkPlugins = [
   // https://github.com/remarkjs/remark-math/tree/main/packages/remark-math
   remarkMath,
   remarkReadingTime,
-  ...(Array.isArray(FEATURES.ogImage) && FEATURES.ogImage[0]
-    ? [remarkGenerateOgImage]
-    : []),
 ]
 
 export const rehypePlugins: RehypePlugins = [
   // https://docs.astro.build/en/guides/markdown-content/#heading-ids-and-plugins
-  [rehypeHeadingIds, { headingIdCompat: true }],
+  rehypeHeadingIds,
   // https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex
   rehypeKatex,
   // https://github.com/lin-stephanie/rehype-callouts

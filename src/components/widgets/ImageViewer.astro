@@ -65,11 +65,7 @@ const {
       if (!container) return
 
       let userOptions: Viewer.Options = {}
-      try {
-        if (this.dataset.options) userOptions = JSON.parse(this.dataset.options)
-      } catch (err) {
-        console.error('[ImageViewer] Failed to parse options:', err)
-      }
+      if (this.dataset.options) userOptions = JSON.parse(this.dataset.options)
 
       const initOrUpdateViewer = () => {
         if (this.#viewer) {

@@ -52,10 +52,12 @@ const content =
   style={{ '--enter-stage': idx }}
 >
   {/* Logo */}
-  <summary class="flex items-center gap-4 lt-sm:gap-2 cursor-pointer">
+  <summary
+    class="flex items-center gap-4 lt-sm:gap-2 cursor-pointer [&::-webkit-details-marker]:hidden"
+  >
     <div class="flex-none relative">
       <img
-        class={`size-11 lt-sm:size-10 border mt-0.2 border-gray-1 dark:border-gray-8
+        class={`size-11 lt-sm:size-10 border mt-0.2 border-gray-100 dark:border-gray-800
             ${isOrg ? 'rounded-lg' : 'rounded-full transform-scale-108'}`}
         src={mainLogoSrc}
         alt={mainLogoAlt}
@@ -116,7 +118,10 @@ const content =
           {
             collectionType === 'releases' && (
               <span>
-                v{item.versionParts[0]}<span class={`github-${item.versionType}`}>{item.versionParts[1]}</span>
+                v{item.versionParts[0]}
+                <span class={`github-${item.versionType}`}>
+                  {item.versionParts[1]}
+                </span>
               </span>
             )
           }
@@ -128,5 +133,16 @@ const content =
       </div>
     </div>
   </summary>
-  <div class="prose github-item-prose" set:html={content} />
+  <div
+    class="prose
+      [&.prose>:first-child]:mt-[1.6em] [&.prose>:last-child]:mb-[1.25em]
+      [&.prose_h1]:text-1em [&.prose_h1]:lt-sm:text-sm
+      [&.prose_h2]:text-1em [&.prose_h2]:lt-sm:text-sm
+      [&.prose_h3]:text-1em [&.prose_h3]:lt-sm:text-sm
+      [&.prose_h4]:text-1em [&.prose_h4]:lt-sm:text-sm
+      [&.prose_h5]:text-1em [&.prose_h5]:lt-sm:text-sm
+      [&.prose_h5_a]:text-[0.875em]
+      [&.prose_li]:lt-sm:text-sm"
+    set:html={content}
+  />
 </details>

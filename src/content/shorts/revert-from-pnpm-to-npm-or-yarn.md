@@ -11,6 +11,6 @@ giscus: true
 search: true
 ---
 
-- Delete the `node_modules` directory and `pnpm_lock.yaml` from the project root.
+- Delete the `node_modules` directory, `pnpm-lock.yaml`, and `pnpm-workspace.yaml` from the project root.
 - Replace `pnpm` with `npm/yarn` in `package.json` (this step isn't needed for this project).
 - Run `npm install` or `yarn install`.

@@ -25,6 +25,28 @@ This post outlines the essential steps to quickly set up your personal website u
 
 These are ideal conditions, but feel free to substitute with tools you're comfortable with.
 
+> [!note]- Node.js `>=22.12.0` is enough for Astro dev/build
+>
+> `package.json` requires Node.js `>=22.12.0`, matching the minimum required by [Astro’s current setup](https://docs.astro.build/en/install-and-setup/#prerequisites). This is the baseline for Astro-related scripts such as `pnpm dev` and `pnpm build`.
+>
+> Some development tools used by commands like `pnpm lint` may require a newer Node.js version through their own dependencies. If you see a Node.js version warning while running those tools, handle it according to the terminal message.
+
+> [!note]- Use `pnpm >=10.26.0`
+>
+> This theme recommends `pnpm >=10.26.0`. The project uses [`allowBuilds`](https://pnpm.io/settings#allowbuilds) in `pnpm-workspace.yaml` to approve required install scripts, and that setting is supported from pnpm 10.26.0.
+>
+> With pnpm 9, installation may still work, but this approval list is ignored. pnpm 9 follows the older behavior where dependency install scripts usually run automatically. Starting from pnpm 10, [pnpm blocks dependency lifecycle scripts by default](https://pnpm.io/supply-chain-security) and asks you to approve trusted ones for better supply chain safety.
+>
+> With pnpm 10.0-10.25, you may see ignored-build warnings or be asked to approve build scripts manually. With pnpm 8 or older, the current lockfile and workspace config may not be fully compatible.
+
+> [!tip]- Using `pnpm` or switching to another package manager
+> 
+> This project uses `pnpm` as the package manager, so you’ll need to install it if you haven’t yet. You can execute `npm install -g pnpm` to [install `pnpm`](https://pnpm.io/installation) globally. 
+> 
+> Alternatively, you can [enable `corepack`](https://github.com/nodejs/corepack) (allows you to manage package manager versions directly via Node.js) or [install the `ni` tool](https://github.com/antfu-collective/ni) (simplifies running commands across different package managers).
+>
+> If you want to use a different package manager, make sure to [convert the project to your chosen package manager](../../shorts/revert-from-pnpm-to-npm-or-yarn/) before running its commands.
+
 ## Create Your Project
 
 Start with the latest theme version using one of two methods:
@@ -103,14 +125,6 @@ You can explore the current theme freely. Additionally, the following commands a
 > To remove these pages, see [Removing Pages](../recreating-current-pages/#removing-pages).  
 >
 > To show GitHub activity, see [Customizing GitHub Activity Pages](../customizing-github-activity-pages/).  
-
-> [!tip]- Using `pnpm` or switching to another package manager
-> 
-> This project uses `pnpm` as the package manager, so you’ll need to install it if you haven’t yet. You can execute `npm install -g pnpm` to [install `pnpm`](https://pnpm.io/installation) globally. 
-> 
-> Alternatively, you can [enable `corepack`](https://github.com/nodejs/corepack) (allows you to manage package manager versions directly via Node.js) or [install the `ni` tool](https://github.com/antfu-collective/ni) (simplifies running commands across different package managers).
->
-> If you want to use a different package manager, make sure to [convert the project to your chosen package manager](../../shorts/revert-from-pnpm-to-npm-or-yarn/) before running its commands.
 
 ## Configure the Project
 

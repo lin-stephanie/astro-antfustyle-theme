@@ -1,8 +1,12 @@
 ---
+import { Font } from 'astro:assets'
 import { ClientRouter } from 'astro:transitions'
-import { basename } from 'node:path'
 
-import { checkFileExistsInDir } from '../../../plugins/remark-generate-og-image'
+import {
+  getOgImageConfig,
+  resolveOgImagePathname,
+} from '~/utils/og-image/routing'
+import { silentLogger } from '~/utils/server'
 import { withBasePath } from '~/utils/path'
 import { SITE } from '~/config'
 
@@ -16,42 +20,32 @@ interface Props {
 
 const { title, description, ogImage, pubDate, lastModDate } = Astro.props
 
-const siteName = new URL(SITE.website).hostname
-
 const pageTitle =
   title && title !== SITE.title ? `${title} - ${SITE.title}` : SITE.title
-
 const pageDescription = description || SITE.description
 
+const siteName = new URL(SITE.website).hostname
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
-
-const generatedOgImage = checkFileExistsInDir(
-  'public/og-images',
-  `${basename(Astro.url.pathname)}.png`
-)
-  ? withBasePath('og-images', `${basename(Astro.url.pathname)}.png`)
+const ogImageConfig = getOgImageConfig()
+const ogImagePathname = ogImageConfig
+  ? resolveOgImagePathname({
+      ogImage,
+      title,
+      authorOrBrand: ogImageConfig.authorOrBrand,
+      pathname: Astro.url.pathname,
+      logger: Astro.logger ?? silentLogger,
+    })
   : undefined
-
-const assignedOgImage =
-  ogImage &&
-  ogImage !== true &&
-  checkFileExistsInDir('public/og-images', ogImage)
-    ? withBasePath('og-images', ogImage)
-    : undefined
-
-const ogImageURL = new URL(
-  assignedOgImage ||
-    generatedOgImage ||
-    withBasePath('og-images', 'og-image.png'),
-  Astro.url
-).href
+const ogImageURL = ogImagePathname
+  ? new URL(withBasePath(ogImagePathname), Astro.url).href
+  : undefined
 
 // https://jsonld.com/blog-post/
 const blogPostingData = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
   'headline': pageTitle,
-  'image': ogImageURL,
+  ...(ogImageURL && { image: ogImageURL }),
   'url': canonicalURL,
   'datePublished': pubDate,
   ...(lastModDate && { dateModified: lastModDate }),
@@ -81,6 +75,11 @@ const webPageData = {
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="generator" content={Astro.generator} />
+
+<!-- Font -->
+<Font cssVariable="--font-sans" preload />
+<Font cssVariable="--font-mono" />
+<Font cssVariable="--font-condensed" />
 
 <!-- Primary Metadata -->
 <title>{pageTitle}</title>
@@ -124,7 +123,7 @@ const webPageData = {
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={pageDescription} />
-<meta property="og:image" content={ogImageURL} />
+{ogImageURL && <meta property="og:image" content={ogImageURL} />}
 <meta property="og:site_name" content={siteName} />
 <meta property="og:locale" content={SITE.ogLocale} />
 {
@@ -142,7 +141,7 @@ const webPageData = {
 <meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={pageTitle} />
 <meta property="twitter:description" content={pageDescription} />
-<meta property="twitter:image" content={ogImageURL} />
+{ogImageURL && <meta property="twitter:image" content={ogImageURL} />}
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -183,4 +182,5 @@ const webPageData = {
   )
 }
 
+<!-- Router -->
 <ClientRouter />

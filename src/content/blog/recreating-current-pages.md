@@ -2,7 +2,7 @@
 title: Recreating Current Pages
 description: How to edit existing pages in Astro AntfuStyle Theme
 pubDate: 2023-12-03
-lastModDate: 2026-04-17
+lastModDate: 2026-07-07
 ogImage: true
 toc: true
 share: true
@@ -22,15 +22,15 @@ In [Project Structure](../project-structure/), it is mentioned that the theme’
 
 Open any `.mdx` file in `src/pages/`, and you'll notice a similar structure: YAML frontmatter + imported Astro components + JSX with layout components nesting view components.
 
-The theme defined all `.mdx` files in `src/pages/` belong to the `pages` collection. The frontmatter fields for `pages` collection are defined by `pageSchema` in `src/content/schema.ts` as follows:
+All `.mdx` files in `src/pages/` belong to the `pages` collection. The frontmatter fields for the `pages` collection are defined by `pageSchema` in `src/schema.ts` as follows:
 
 | Property | Type (default)                                                                          | Description                                                                                                                                                                                                                                      |
 | --------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `title`               | `string` (`''`)                                                                         | Sets the page title, formatted with `SITE.title` as `<pageTitle> - <siteTitle>` for metadata and automatic OG image generation. If undefined or empty, only `<siteTitle>` is displayed, and OG image generation is skipped.                      |
+| `title`               | `string` (`''`)                                                                         | Sets the page title, formatted with `SITE.title` as `<pageTitle> - <siteTitle>` for metadata. If empty or the same as `SITE.title`, only `<siteTitle>` is displayed. Page-specific OG images also require a non-empty title different from `FEATURES.ogImage[1].authorOrBrand`; otherwise the fallback OG image is used. |
 | `subtitle`            | `string` (`''`)                                                                         | Provides a page subtitle. If provided, it will be displayed below the title. If not needed, leave the field as an empty string or delete it.                                                                                                     |
 | `description`         | `string` (`''`)                                                                         | Provides a brief description, used in meta tags for SEO and sharing purposes. If not needed, leave the field as an empty string or delete it, and the `SITE.description` will be used directly.                                                  |
-| `bgType`              | `z.union([z.literal(false), z.enum(['plum', 'dot', 'rose', 'particle'])])`<br>(`false`) | Specifies whether to apply a background on this page and select its type. If not needed, delete the field or set to `false`.                                                                                                                     |
-| `ogImage`             | `z.union([z.string(), z.boolean()])`<br>(`true`)                                        | Specifies the Open Graph (OG) image for social media sharing. To auto-generate OG image, delete the field or set to `true`. To disable it, set the field to `false`. To use a custom image, provide the full filename from `/public/og-images/`. |
+| `bgType`              | `z.union([z.literal(false), z.enum(['plum', 'dot', 'rose', 'particle'])])`<br>(`false`) | Specifies whether to apply a background on this page and select its type. It is also used as the page-specific OG image background; if not needed, delete the field or set to `false`.                                                                                                                     |
+| `ogImage`             | `z.union([z.literal('fallback'), z.string(), z.boolean()])`<br>(`true`)                 | Controls OG image metadata. Set to `true` or omit the field to generate a page-specific endpoint image from the final pathname, such as `/blog/foo/` -> `/og-images/blog/foo.png`; if the `title` is empty or matches `FEATURES.ogImage[1].authorOrBrand`, the fallback is used. Set to 'fallback' to use `/og-images/og-image.png`, or false to omit OG image metadata. To use a custom image, place it in `public/og-images/` and set this field to its relative path (for example, `custom.png` or `blog/custom.png`). Missing images fall back to `/og-images/og-image.png`. |
 
 The theme includes a VS Code snippet for auto-generating this frontmatter (located in `.vscode/astro-antfustyle-theme.code-snippets`). Type `pageFrontmatter` and press `tab` to insert it (tab completion is enabled in `.vscode/settings.json`).
 
@@ -65,9 +65,9 @@ The fields for each entry in the `projects` collection are defined by `projectSc
 | Property (* required) | Type     | Description                                                                                                                            |
 | --------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | `id`*                 | `string` | Name of the project to be displayed.                                                                                                   |
-| `link`*               | `string` | URL linking to the project page or repository.                                                                                         |
+| `link`*               | `z.url()` | URL linking to the project page or repository.                                                                                        |
 | `desc`*               | `string` | A brief description summarizing the project.                                                                                           |
-| `icon`*               | `Icon`   | Icon must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [UnoCSS](https://unocss.dev/presets/icons) specs. |
+| `icon`*               | `Icon`   | Icon representing the project. It must be in the format `i-<collection>-<icon>` or `i-<collection>:<icon>` as per [UnoCSS](https://unocss.dev/presets/icons) specs. [Check all available icons here](https://icones.js.org/). |
 | `category`*           | `string` | Category of the project.                                                                                                               |
 
 The theme includes a code snippet for generating `projectSchema`. Type `projectData` to trigger it, then use `tab` to modify the values.
@@ -105,7 +105,7 @@ Of course, if you prefer to fetch data locally for display, you can follow these
 
 **Step 1: Define the Zod schema for the `highlights` collection**
 
-```ts title='src/content/schema.ts'
+```ts title='src/schema.ts'
 // Define the schema based on `CardItemData` in `src/components/views/CardItem.astro`
 // Include only necessary properties. 
 // Exclude `html` and `text`, as content is written in Markdown rather than frontmatter.
@@ -140,14 +140,15 @@ export const highlightSchema = z.object({
 
 **Step 2: Redefine the `highlights` collection**
 
-```ts title='src/content.config.ts' del={10-19} ins={6,20-21}
+```ts title='src/content.config.ts' del={11-20} ins={7,21-22}
+import { glob } from 'astro/loaders'
 import {
   pageSchema,
   postSchema,
-  projectsSchema,
-  streamsSchema,
+  projectSchema,
+  streamSchema,
   highlightSchema,
-} from './schema'
+} from '~/schema'
 
 const highlights = defineCollection({
   loader: blueskyPostsLoader({
@@ -160,7 +161,7 @@ const highlights = defineCollection({
     threadDepth: 4,
     fetchOnlyAuthorReplies: true,
   }),
-  type: 'content',
+  loader: glob({ base: './src/content/highlights', pattern: '**/[^_]*.{md,mdx}' }),
   schema: highlightSchema,
 })
 ```
@@ -255,7 +256,7 @@ This is a sample highlight entry for the `/highlights` page.
 > [!tip]- Use Astro build-time loaders to fetch external data (may affect startup time)
 >  
 > `blueskyPostsLoader` and `feedLoader` (below) are both [build-time loaders](https://docs.astro.build/en/reference/content-loader-reference/#build-time-loaders). Built with the [Content Loader API](https://docs.astro.build/en/reference/content-loader-reference/), Astro loaders enable seamless data fetching from various sources as content collections. This API was first introduced in [Astro 4.14](https://astro.build/blog/astro-4140/#experimental-content-layer-api) and became stable in [Astro 5](https://astro.build/blog/astro-5/#content-layer).
-> 
+>
 > Starting in Astro 5, the dev server address is shown only after external resources are loaded and content is synced. Using build-time loaders may delay server startup.
 >
 > Starting in [Astro 6](https://astro.build/blog/astro-6/#live-content-collections), you can create [live content collections](https://docs.astro.build/en/guides/content-collections/#live-content-collections) with [live loaders](https://docs.astro.build/en/reference/content-loader-reference/#live-loaders), which fetch content at request time (no rebuild). With [on-demand rendering](https://docs.astro.build/en/guides/on-demand-rendering/), use the plugins’ live loaders instead of build-time loaders.
@@ -269,7 +270,7 @@ The fields for each entry in the `photos` collection are defined by `photoSchema
 | Property (* required) | Type     | Description                                                                                 |
 | --------------------- | -------- | ------------------------------------------------------------------------------------------- |
 | `id`*                 | `string` | File (name/path) of the image in the `src/content/photos/` directory or a remote image URL. |
-| `desc`                | `string` | Optional description for the image.                                                         |
+| `desc`                | `string` | Optional description for the image. If not needed, leave the field as an empty string or delete it. |
 
 For local images, files must be placed in `src/content/photos/`, and `id` must be configured such that it can be correctly matched in the following code:
 
@@ -286,6 +287,7 @@ For remote images, `id` must start with `http` or `https`. To enable thumbnail g
 **Page implementation details**
 
 - At build time, a `photos.[hash].json` file is generated based on your `data.json` config. When the `/photos` page loads, it fetches this file and renders the images dynamically.
+- The JSON file name includes a short hash based on the photo config, so browser caches are refreshed when the photo list changes.
 - The file is served by `src/pages/photos/photos.[hash].json.ts` as a [static file endpoint](https://docs.astro.build/en/guides/endpoints/#static-file-endpoints), which does the following:
   - Loads remote or local images to extract metadata.
   - Uses :link[sharp]{id=lovell/sharp .github} to generate a blurred placeholder as a Data URL (cached in `'./node_modules/.astro/photos/'` during development).
@@ -334,10 +336,10 @@ The fields for each entry in the `streams` collection are defined by `streamSche
 | ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `id`*           | `string`  | Sets the stream title.                                                                                                                                              |
 | `pubDate`*         | `date`    | Specifies the publication date. See supported formats [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#examples). |
-| `link`*           | `string`  | Specifies the URL link to the stream.                                                                                                                               |
+| `link`*           | `z.url()` | Specifies the URL link to the stream.                                                                                                                               |
 | `radio`            | `boolean` | Indicates whether the stream is a radio broadcast. If `true`, an icon will be added to the stream item in the list.                                                 |
 | `video`            | `boolean` | Indicates whether the stream is a video broadcast. If `true`, an icon will be added to the stream item in the list.                                                 |
-| `platform`         | `string`  | Specifies the platform where the stream is published.                                                                                                               |
+| `platform`         | `string`  | Specifies the platform where the stream is published. If not needed, leave the field as an empty string or delete it.                                               |
 
 The theme includes a code snippet for generating `streamSchema`. Type `streamData` to trigger it, then use `tab` to modify the values.
 
@@ -373,17 +375,20 @@ Using remove the `/changelog` page as an example:
 - Delete `src/content/changelog` directory.
 - Update `src/content.config.ts` and `src/config.ts`:
 
-```ts title='src/content.config.ts' del={8-11} del='changelog,'
+```ts title='src/content.config.ts' del={8-14} del='changelog,'
 
 import { glob } from 'astro/loaders'
 import { defineCollection } from 'astro:content'
 import { feedLoader } from '@ascorbic/feed-loader'
-import { pageSchema, postSchema, projectsSchema, streamsSchema } from './schema'
+import { pageSchema, postSchema, projectSchema, streamSchema } from '~/schema'
 
 // Define other collections...
 
 const changelog = defineCollection({
-  type: 'content',
+  loader: glob({
+    base: './src/content/changelog',
+    pattern: '**/[^_]*.{md,mdx}',
+  }),
   schema: postSchema,
 })
 
@@ -438,6 +443,10 @@ If you encounter any issues, find errors, or see opportunities for improvement, 
 2026-04-17
 - Update `pageSchema`
 - Sync `/shorts` and `/changelog` sections
+
+2026-07-07
+- Update schema paths and loader examples for the current Content Layer setup
+- Update `title`, `bgType` and `ogImage` guidance for route-generated OG images
 
 [View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/recreating-current-pages.md)
 :::

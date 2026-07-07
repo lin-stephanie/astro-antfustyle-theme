@@ -14,6 +14,8 @@
 </button>
 
 <script>
+  import { withClientBasePath } from '~/utils/misc'
+
   // related to #45
   const chooseFill = (): FillMode => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,8 +34,8 @@
 
   const changeGiscusTheme = (isDark: boolean) => {
     const newTheme = isDark
-      ? `${location.origin}/giscus/dark.css`
-      : `${location.origin}/giscus/light.css`
+      ? withClientBasePath('giscus/dark.css')
+      : withClientBasePath('giscus/light.css')
 
     const giscusScript = document.getElementById('giscus-script')
     if (giscusScript) {

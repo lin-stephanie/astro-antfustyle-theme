@@ -1,7 +1,7 @@
 import { html } from 'satori-html'
 import backgroundBase64 from './base64'
 
-import type { BgType } from '../../src/types'
+import type { BgType } from '~/types'
 
 export const ogImageMarkup = (
   authorOrBrand: string,

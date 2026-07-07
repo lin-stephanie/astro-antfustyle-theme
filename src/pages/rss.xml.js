@@ -27,7 +27,7 @@ export async function GET() {
 
     items: sortedBlogItems.map((item) => ({
       title: `${item.data.title}`,
-      link: withBasePath(`/blog/${item.id}`),
+      link: withBasePath(`/blog/${item.id}/`),
       pubDate: item.data.pubDate,
       description: item.data.description,
       author: SITE.author,

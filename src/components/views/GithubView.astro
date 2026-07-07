@@ -86,6 +86,9 @@ if (collectionType === 'releases') {
         versionParts,
       }
     })
+    .sort((a, b) => {
+      return +new Date(b.publishedAt) - +new Date(a.publishedAt)
+    })
     // filters releases to ensure each pkg has no more than a specified maximum number
     .filter((item) => {
       if ((pkgCountMap[item.pkgName] || 0) < MAX_PER_PKG) {
@@ -93,9 +96,6 @@ if (collectionType === 'releases') {
         return true
       }
       return false
-    })
-    .sort((a, b) => {
-      return +new Date(b.publishedAt) - +new Date(a.publishedAt)
     })
 
   isEmpty = releases.length === 0 || extendedReleases.length === 0
@@ -171,7 +171,7 @@ if (collectionType === 'prs') {
         <hr class="mt-3em!" />
         <p class="flex lt-sm:flex-col items-center my-0! lt-sm:my-1.5!">
           <span>
-            Last fetched:
+            Last fetched:{' '}
             <time
               class="inline-block text-[var(--fg-deeper)]"
               datetime={new Date().toISOString()}
@@ -182,22 +182,22 @@ if (collectionType === 'prs') {
           </span>
           <span class="lt-sm:hidden">&nbsp;|&nbsp;</span>
           <span>
-            Scheduled refresh:
+            Scheduled refresh:{' '}
             <span class="text-[var(--fg-deeper)]">Every Saturday</span>
           </span>
         </p>
         <p class="my-0! lt-sm:my-1.5!">
-          See
+          See{' '}
           <Link
             class="op-100!"
             href={withBasePath('/blog/customizing-github-activity-pages/')}
           >
             Customizing GitHub Activity Pages
-          </Link>
+          </Link>{' '}
           to configure your own
         </p>
         <p class="my-0! lt-sm:my-1.5!">
-          Inspired by
+          Inspired by{' '}
           <Link
             class="op-100!"
             href={

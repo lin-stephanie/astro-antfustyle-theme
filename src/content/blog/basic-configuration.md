@@ -2,7 +2,7 @@
 title: Basic Configuration
 description: How to configure Astro AntfuStyle Theme
 pubDate: 2024-10-02
-lastModDate: 2026-04-17
+lastModDate: 2026-07-07
 ogImage: true
 toc: true
 share: true
@@ -10,7 +10,7 @@ giscus: true
 search: true
 ---
 
-This post is an basic guide on how to configure the `src/config.ts` file. If you’ve already set it up or feel confident configuring it (a simple task with type hints appearing on hover), you can skip ahead to [Advanced Configuration](../advanced-configuration/).
+This post is a basic guide on how to configure the `src/config.ts` file. If you’ve already set it up or feel confident configuring it (a simple task with type hints appearing on hover), you can skip ahead to [Advanced Configuration](../advanced-configuration/).
 
 ## Configuring `SITE`
 
@@ -19,7 +19,7 @@ The `SITE` object is used to configure the basic information of your website, an
 | Option         | Type                                      | Description                                                                                                                                                                                                                                                                                  | Example                                                                               |
 | -------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
 | `website`      | `http://${string}` \| `https://${string}` | Specifies the final deployed URL, which must start with `http://` or `https://`. It will be passed to the [`site`](https://docs.astro.build/en/reference/configuration-reference/#site) config in Astro,<br>used for generating canonical URLs, `rss.xml` and other features.                | `'https://example.com'`, `'https://example.com/base'`                                                               |
-| `base`         | `/${string}`                              | Specifies the base path for your site, which must start with `/`. It wiil be passed to the [`base`](https://docs.astro.build/en/reference/configuration-reference/#base) config in Astro, used when deploying to a subdirectory.                                                             | `/base`, `/base/` (for a site deployed to `https://example.com/base`)                   |
+| `base`         | `/${string}`                              | Specifies the base path for your site, which must start with `/`. It will be passed to the [`base`](https://docs.astro.build/en/reference/configuration-reference/#base) config in Astro, used when deploying to a subdirectory.                                                             | `/base`, `/base/` (for a site deployed to `https://example.com/base`)                   |
 | `title`        | `string`                                  | Specifies the site name for formatting the `title` in the frontmatter as `<pageTitle> - <siteTitle>`.                                                                                                                                                                                        | `Maybe Use Your Name`                                                                 |
 | `description`  | `string`                                  | Specifies the default content for meta tags.                                                                                                                                                                                                                                                 | `Introduce yourself`                                                                  |
 | `author`       | `string`                                  | Specifies your name for meta tags.                                                                                                                                                                                                                                                           | `Your Name`                                                                           |
@@ -79,7 +79,7 @@ The `UI` object allows you to configure navigation, social links, page views, an
 | Option          | Type                    | Description                                                                                                                                                      | Example                                                                                                                                                                                      |
 | --------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `left`          | `NavBarComponentType[]` | Defines which components ('internalNavs', 'socialLinks', 'searchButton', 'themeButton', 'rssLink', 'hr') are positioned on the left side of the navigation bar.  | `[]` (Leave empty to place all components on the right)                                                                                                                                      |
-| `right`         | `NavBarComponentType[]` | Defines which components ('internalNavs', 'socialLinks', 'searchButton', 'themeButton', 'rssLink', 'hr') are positioned on the right side of the navigation bar. | `['internalNavs', 'hr', 'socialLinks', 'hr', 'searchButton', themeButton', 'rssLink']` (No duplicates allowed between `left` and `right`; use `'hr'` to insert a divider between components) |
+| `right`         | `NavBarComponentType[]` | Defines which components ('internalNavs', 'socialLinks', 'searchButton', 'themeButton', 'rssLink', 'hr') are positioned on the right side of the navigation bar. | `['internalNavs', 'hr', 'socialLinks', 'hr', 'searchButton', 'themeButton', 'rssLink']` (No duplicates allowed between `left` and `right`; use `'hr'` to insert a divider between components) |
 | `mergeOnMobile` | `boolean`               | Controls whether the 'internalNavs' and 'socialLinks' section are combined into a single navigation menu on mobile, managed through a hamburger icon.            | `true`                                                                                                                                                                                       |
 
 ### `postView`
@@ -102,7 +102,7 @@ The `UI` object allows you to configure navigation, social links, page views, an
 | ------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
 | `monorepos`         | `${string}/${string}[]`                    | Defines monorepo repositories using `<owner>/<repo>` format. For monorepos, the tag name is used as the primary text for `/releases` page. | `['withastro/astro']` (If you want all components to appear on the right side, leave this array empty) |
 | `mainLogoOverrides` | `[RepoWithOwner \| RegExp, Url \| Icon][]` | Configures main logos for repositories or packages (for monorepos). Defaults to the owner's avatar if no custom logo is set.               | `[/starlight/, 'https://starlight.astro.build/favicon.svg']` (Prioritized by order)                    |
-| `subLogoMatches`    | `[RepoWithOwner \| RegExp, Url \| Icon][]` | Configures auxiliary logos for rrepositories or packages (for monorepos). No logo is shown if unmatched.                                   | `[/tweet/, 'i-logos-twitter']`  (Prioritized by order)                                                 |
+| `subLogoMatches`    | `[RepoWithOwner \| RegExp, Url \| Icon][]` | Configures auxiliary logos for repositories or packages (for monorepos). No logo is shown if unmatched.                                   | `[/tweet/, 'i-logos-twitter']`  (Prioritized by order)                                                 |
 
 ### `externalLink`
 
@@ -132,8 +132,9 @@ The `FEATURES` object globally controls the activation and configuration of spec
 | Option          | Type                                     | Description                                                                                                                                         | Example              |
 | ---------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
 | `authorOrBrand`  | `string`                                 | Defines your name or brand name that will be displayed on the OG image.                                                                             | `'Your name'`        |
-| `fallbackTitle`  | `string`                                 | Sets the fallback title for OG images. Used when the `title` in the frontmatter is missing or invalid.                                              | `'Site Description'` |
-| `fallbackBgType` | `'plum' \| 'dot' \| 'rose' \|'particle'` | Sets the fallback background for OG images. This value is only used for the fallback OG image and as the background when `bgType` is not specified. | `'plum'`             |
+| `fallbackTitle`  | `string`                                 | Sets the title used to generate the fallback OG image. Used by the fallback image endpoint, and when a page-specific image is not generated because the frontmatter title is missing, empty, or matches `authorOrBrand`. | `'Site Description'` |
+| `fallbackBgType` | `'plum' \| 'dot' \| 'rose' \|'particle'` | Sets the background used to generate the fallback OG image. Used by the fallback image endpoint, and when a page-specific image is generated without a valid frontmatter `bgType`. | `'plum'`             |
+| `collections`    | `{ collection: Exclude<CollectionKey, 'page'>, pathnamePrefix: string }[]` | Sets the content collections collected by the OG image endpoint. `collection` is the content collection defined in `content.config.ts`; `pathnamePrefix` is the URL prefix where entries from this collection are rendered. | `[{ collection: 'articles', pathnamePrefix: '/writing' }]` maps the `articles` entry `hello` to `/writing/hello/` |
 
 ### `toc`
 
@@ -169,9 +170,9 @@ Refer to [Configure Giscus Comments](../advanced-configuration/#configure-giscus
 | `data-category`                        | `string`              | Discussion category name.                       | `'Giscus'`                               |
 | `data-category-id`<br><br><br><br><br> | `string`              | Unique ID of the discussion category.           | `'DIC_kwDOLylKbM4Cpugn'`                 |
 | `data-mapping`                         | `string`              | Mapping between pages and discussions.          | `'title'`                                |
-| `data-strict`                          | `boolean`             | Enables strict mapping (1 = true, 0 = false).   | `0`                                      |
-| `data-reactions-enabled`               | `boolean`             | Enables reactions (1 = true, 0 = false).        | `1`                                      |
-| `data-emit-metadata`                   | `boolean`             | Emit discussion metadata (1 = true, 0 = false). | `0`                                      |
+| `data-strict`                          | `'0' \| '1'`          | Enables strict mapping (1 = true, 0 = false).   | `'0'`                                    |
+| `data-reactions-enabled`               | `'0' \| '1'`          | Enables reactions (1 = true, 0 = false).        | `'1'`                                    |
+| `data-emit-metadata`                   | `'0' \| '1'`          | Emit discussion metadata (1 = true, 0 = false). | `'0'`                                    |
 | `data-input-position`                  | `'top' \| 'bottom'`   | Position of the comment input box.              | `'bottom'`                               |
 | `data-lang`                            | `string`              | Language for the Giscus widget UI.              | `'en'`                                   |
 
@@ -214,6 +215,9 @@ After making these changes, ensure the project runs smoothly in the browser befo
 
 2026-04-17
 - Add `UI.postView`, `UI.photoView`, and `FEATURES.tag`
+
+2026-07-07
+- Add `ogImage.collections` for route-generated OG images
 
 [View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/basic-configuration.md)
 :::

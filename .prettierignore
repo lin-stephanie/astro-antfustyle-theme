@@ -1,15 +1,13 @@
-# exclude formatting
+# Exclude formatting
 pnpm-lock.yaml
 *.md
 
-# avoid error due to incorrect processing
+# Avoid incorrect processing
 SearchSwitch.astro
-GroupItem.astro
-GithubItem.astro
 
-# avoid HTML mismatches
+# Avoid HTML mismatches
 releases.mdx
 prs.mdx
 
-# avoid whitespace affecting style
+# Avoid whitespace affecting style
 Link.astro

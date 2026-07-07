@@ -2,17 +2,18 @@
 import { getCollection } from 'astro:content'
 
 import CardItem from '~/components/views/CardItem.astro'
-import Loader from '~/components/widgets/Loader.astro'
+import Loader from '~/components/base/Loader.astro'
 import Warning from '~/components/base/Warning.astro'
 import DesktopAside from '~/components/base/DesktopAside.astro'
 import MobileControl from '~/components/base/MobileControl.astro'
 
-import { FEATURES } from '~/config'
 import {
   processBlueskyPosts,
   getFilteredPosts,
   sortPostsByField,
 } from '~/utils/data'
+import { withBasePath } from '~/utils/path'
+import { FEATURES } from '~/config'
 
 import type { CollectionKey } from 'astro:content'
 import type { CardItemData } from '~/components/views/CardItem.astro'
@@ -63,7 +64,7 @@ if (collectionType === 'shorts') {
   const items = await getFilteredPosts(collectionType)
   const sorted = sortPostsByField(items, 'title')
   dataForGrid = sorted.map((item) => ({
-    link: item.data.redirect || `/${collectionType}/${item.id}`,
+    link: item.data.redirect || withBasePath(`/${collectionType}/${item.id}/`),
     text: item.data.title,
     date: item.data.pubDate,
     tags: item.data.tags,
@@ -98,7 +99,8 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
           >
             {dataForMasonry.map((item) => (
               <CardItem
-                class="card-masonry absolute top-0 left-0"
+                class="card-masonry absolute top-0 left-0
+                  [&>*:first-child]:rounded-lg [&>*:first-child:hover]:shadow-custom_0_3_20_-5"
                 item={item}
               />
             ))}
@@ -116,7 +118,11 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
           }}
         >
           {dataForGrid.map((item) => (
-            <CardItem class="card-grid min-h-40 lt-md:min-h-0" item={item} />
+            <CardItem
+              class="min-h-40 lt-md:min-h-0
+                [&>*:first-child]:rounded-xl [&:hover>*:first-child]:(shadow-custom_0_0_15_-3 scale-103 transition-transform)"
+              item={item}
+            />
           ))}
         </div>
       )}
@@ -135,7 +141,10 @@ if (dataForMasonry.length === 0 && dataForGrid.length === 0) isEmpty = true
               }}
             >
               {dataForGrid.map((item) => (
-                <CardItem class="card-grid" item={item} />
+                <CardItem
+                  class="[&>*:first-child]:rounded-xl [&:hover>*:first-child]:(shadow-custom_0_0_15_-3 scale-103 transition-transform)"
+                  item={item}
+                />
               ))}
             </div>
             {tagEnabled && tags.length > 0 && (

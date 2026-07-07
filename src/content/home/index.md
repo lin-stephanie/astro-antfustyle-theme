@@ -1,4 +1,4 @@
-Glad you made it here! This is a flexible and feature-rich :link[Astro 5]{id=withastro/astro} theme for developers and creators, inspired by the minimalist style of :link[antfu.me]{id=https://antfu.me/ img=https://github.com/antfu.png .rounded}. The design has been refined and its functionality expanded for greater flexibility.
+Glad you made it here! This is a flexible and feature-rich :link[Astro 7]{id=withastro/astro} theme for developers and creators, inspired by the minimalist style of :link[antfu.me]{id=https://antfu.me/ img=https://github.com/antfu.png .rounded}. The design has been refined and its functionality expanded for greater flexibility.
 
 This live demo will guide you through setup and customization, offering helpful insights along the way. Enjoy exploring all the features this theme provides! ✨
 
@@ -9,6 +9,7 @@ This live demo will guide you through setup and customization, offering helpful 
 - [Auto-Generated RSS Feed](./shorts/rss-subscription-scope/)
 - [Dynamic OG Image Generation](./blog/about-open-graph-images/)
 - [Subpath Deployment](./blog/basic-configuration/#configuring-site) Support
+- [Unified Font Management](./shorts/font-setup-and-usage/)
 - Optimized and Responsive Images
 - VS Code Snippets for Fast Coding
 - [Well-Structured Project](./blog/project-structure/)
@@ -18,7 +19,7 @@ This live demo will guide you through setup and customization, offering helpful 
 
 - Markdown & MDX Support
 - [Math Equations Rendering](./shorts/choosing-a-math-rendering-engine/)
-- [Callouts (Alerts/Admonitions)](./blog/markdown-mdx-extended-features/#callouts-alerts--admonitions)
+- [Callouts (Alerts/Admonitions)](./blog/markdown-mdx-extended-features/#callouts-alertsadmonitions)
 - [Code Syntax Highlighting & Annotations](./blog/markdown-mdx-extended-features/#fully-featured-code-blocks)
 - Ready-To-Use [Remark Directives](./blog/markdown-mdx-extended-features/#image-caption--link-image)
 - Customizable Layouts, Views, and Navigation

@@ -208,7 +208,7 @@ if (images && images.length > 0) {
               sizes="1em"
             />
             <p class="truncate">
-              <span class="font-600">{quote.author.name}</span>
+              <span class="font-600">{quote.author.name}</span>{' '}
               <Link class="op-transition" href={quote.author.link}>
                 {`@${quote.author.handle}`}
               </Link>
@@ -226,13 +226,20 @@ if (images && images.length > 0) {
     >
       {
         Astro.slots.has('default') && (
-          <div class="prose card-item-prose">
+          <div class="prose [&.prose_p]:my-[1.1em] [&.prose>:first-child]:mt-0 [&.prose>:last-child]:mb-0">
             <slot />
           </div>
         )
       }
-      {html && <div class="prose card-item-prose" set:html={html} />}
-      {text && <p class="prose card-item-prose">{text}</p>}
+      {
+        html && (
+          <div
+            class="prose [&.prose_p]:my-[1.1em] [&.prose>:first-child]:mt-0 [&.prose>:last-child]:mb-0"
+            set:html={html}
+          />
+        )
+      }
+      {text && <p class="prose">{text}</p>}
       {
         tags && tags.length > 0 && (
           <>
@@ -268,10 +275,13 @@ if (images && images.length > 0) {
                       bg-gray-200 dark:bg-gray-700"
                   />
                   {idx < MAX_DETAILS && (
-                    <div class="prose card-item-prose" set:html={detail} />
+                    <div
+                      class="prose [&.prose_p]:my-[1.1em] [&.prose>:first-child]:mt-0 [&.prose>:last-child]:mb-0"
+                      set:html={detail}
+                    />
                   )}
                   {link && idx === MAX_DETAILS && (
-                    <Link class="prose card-item-prose op-100!" href={link}>
+                    <Link class="prose op-100!" href={link}>
                       View more...
                     </Link>
                   )}

@@ -113,7 +113,8 @@ export const UI: Ui = {
     subLogoMatches: [
       [/theme/, 'i-unjs-theme-colors'],
       [/github/, 'https://github.githubassets.com/favicons/favicon.svg'],
-      [/tweet/, 'i-logos-twitter'],
+      [/tweet/, 'i-prime-twitter'],
+      [/ins/, 'i-skill-icons-instagram'],
       [/bluesky/, 'i-logos-bluesky'],
     ],
   },
@@ -130,13 +131,18 @@ export const UI: Ui = {
  *  - Set to `[true, {...}]` to enable and configure the feature.
  */
 export const FEATURES: Features = {
-  slideEnterAnim: [true, { enterStep: 60 }],
+  slideEnterAnim: [true, { enterStep: 80 }],
   ogImage: [
     true,
     {
       authorOrBrand: `${SITE.title}`,
       fallbackTitle: `${SITE.description}`,
       fallbackBgType: 'plum',
+      collections: [
+        { collection: 'blog', pathnamePrefix: '/blog' },
+        { collection: 'changelog', pathnamePrefix: '/changelog' },
+        { collection: 'shorts', pathnamePrefix: '/shorts' },
+      ],
     },
   ],
   toc: [

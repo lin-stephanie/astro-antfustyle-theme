@@ -6,6 +6,12 @@
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "https://giscus.app" }
       ]
+    },
+    {
+      "source": "/_astro/fonts/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "https://giscus.app" }
+      ]
     }
   ]
 }

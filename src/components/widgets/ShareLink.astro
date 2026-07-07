@@ -96,13 +96,14 @@ const links = Object.entries(config)
 
 <span class="font-mono op-50">&gt; </span>
 <span class="op-50">share on</span>
+{' '}
 {
   links.map((link, idx) => (
     <>
       <Link class="op-50!" href={link.url} title={link.title} external={true}>
         {link.label}
       </Link>
-      {idx < links.length - 1 && <span class="op-25">/</span>}
+      {idx < links.length - 1 && <span class="op-25"> / </span>}
     </>
   ))
 }

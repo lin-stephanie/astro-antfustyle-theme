@@ -2,7 +2,7 @@
 title: Project Structure
 description: Introduces the structure of the Astro AntfuStyle Theme
 pubDate: 2024-10-03
-lastModDate: 2026-04-17
+lastModDate: 2026-07-07
 ogImage: true
 toc: true
 share: true
@@ -22,24 +22,13 @@ astro-antfustyle-theme
 | |-extensions.json                         // List of recommended extensions for the project
 | |-launch.json                             // Debug configuration
 | |-settings.json                           // Workspace-specific settings
-|-plugins                                   // Custom remark/rehype plugins and OG image template files
-| |-index.ts                                // Entry point for remark/rehype plugin registration
-| |-og-template                             // Files related to generating Open Graph images
-| | |-Inter-Regular-24pt.ttf                // Font file used in Open Graph image generation
-| | |-base64.ts                             // Base64-encoded backgrounds for OG image generation
-| | |-markup.ts                             // Template for OG image generation
-| |-remark-generate-og-image.ts             // Plugin for automatically generating OG images
-| |-remark-reading-time.ts                  // Plugin for calculating eading times
 |-public                                    // Static assets copied as-is
 | |-apple-touch-icon.png                    // Apple touch icon for iOS devices
-| |-giscus                                  // Stylesheet for Giscus comments
 | |-favicon.ico                             // Favicon for browsers
 | |-favicon.svg                             // SVG version of the favicon
 | |-icon-192.png                            // 192x192px icon for web apps
 | |-icon-512.png                            // 512x512px icon for web apps
 | |-icon-mask.png                           // Maskable icon for web apps
-| |-og-images                               // Stores automatically generated OG images
-| | |-og-image.png                          // Fallback Open Graph image
 | |-rss-styles.xsl                          // Stylesheet for RSS feed transformation
 |-src                                       // Source directory
 | |-assets                                  // Recommended for storing images used in posts
@@ -59,7 +48,6 @@ astro-antfustyle-theme
 | | |-projects                              // Project list JSON data
 | | |-shorts                                // Short notes / FAQ-style standalone entries
 | | |-streams                               // Stream list JSON data
-| | |-schema.ts                             // Zod schemas for content collections
 | |-layouts                                 // Page layouts
 | | |-BaseLayout.astro                      // Base layout used across the site
 | | |-StandardLayout.astro                  // Standard layout for most pages
@@ -71,6 +59,10 @@ astro-antfustyle-theme
 | | |-changelog                             // Changelog routes
 | | | |-[slug].astro                        // Dynamic route for individual changelog posts
 | | | |-index.mdx                           // Changelog index page
+| | |-giscus                                // Giscus theme CSS endpoints
+| | | |-[theme].css.ts                      // Dynamic light/dark Giscus theme endpoint with self-hosted font CSS
+| | |-og-images                             // Generated OG image routes
+| | | |-[...slug].png.ts                    // Dynamic endpoint for route-based OG images
 | | |-photos                                // Photo routes
 | | | |-index.mdx                           // Photos index page
 | | | |-photos.[hash].json.ts               // Build-time generated `photos.[hash].json` endpoint for client-side retrieval
@@ -88,20 +80,31 @@ astro-antfustyle-theme
 | | |-rss.xml.js                            // RSS feed endpoint
 | | |-streams.mdx                           // Example page for displaying Astro Streams with local JSON data
 | |-styles                                  // Stylesheets
+| | |-giscus                                // Source styles for generated Giscus theme CSS
+| | | |-dark.css                            // Dark Giscus theme source
+| | | |-light.css                           // Light Giscus theme source
 | | |-main.css                              // Main styles
 | | |-markdown.css                          // Styles for rendering Markdown content
-| | |-page.css                              // Styles for specific page
 | | |-prose.css                             // Prose styles for text content
 | |-utils                                   // Utility helpers
-| | |-data.ts                               // For handling psots and GitHub/Bluesky data
+| | |-og-image                              // OG image endpoint helpers and template
+| | | |-template                            // Files related to generating Open Graph images
+| | | | |-base64.ts                         // Base64-encoded backgrounds for OG image generation
+| | | | |-markup.ts                         // Template for OG image generation
+| | | |-generator.ts                        // Renders OG image PNG buffers
+| | | |-manifest.ts                         // Collects build-time OG image endpoint targets
+| | | |-routing.ts                          // Resolves OG image config, metadata paths, and route-based slugs
+| | |-data.ts                               // For handling posts and GitHub/Bluesky data
 | | |-datetime.ts                           // For handling date and time
 | | |-image.ts                              // For handling image
 | | |-misc.ts                               // For handling misc
 | | |-path.ts                               // For handling path-related operations
+| | |-server.ts                             // For handling server-side operations
 | | |-toc.ts                                // For generating tables of contents
 | |-config.ts                               // Theme configuration
 | |-content.config.ts                       // Astro content collection definitions and loaders
 | |-env.d.ts                                // Environment variable typings
+| |-schema.ts                               // Zod schemas for content collections
 | |-types.ts                                // Type definitions used by `config.ts`
 |-.editorconfig                             // EditorConfig rules for consistent formatting
 |-.env                                      // Local environment variables (if needed)
@@ -115,7 +118,9 @@ astro-antfustyle-theme
 |-eslint.config.js                          // ESLint config
 |-LICENSE                                   // Project license
 |-package.json                              // Scripts, metadata, and dependencies
+|-plugins.ts                                // Entry point for remark/rehype plugin registration
 |-pnpm-lock.yaml                            // pnpm lockfile
+|-pnpm-workspace.yaml                       // pnpm build-script approval config
 |-README.md                                 // Project documentation
 |-tsconfig.json                             // TypeScript config
 |-unocss.config.ts                          // UnoCSS config
@@ -151,17 +156,17 @@ The current page-to-collection mapping is:
 | `/highlights`                                         | `src/pages/highlights.mdx`          | [Via build-time loader](../recreating-current-pages/#highlights) | Default by loader       |
 | `/photos`                                             | `src/pages/photos/index.mdx`        | `src/content/photos/`                                            | `photoSchema`           |
 | `/shorts`                                             | `src/pages/shorts/index.mdx`        | `src/content/shorts/`                                            | `postSchema`            |
-| `/shorts/post-name` <br>`/shorts/sequences/one/two/three`                                   | `src/pages/shorts/[...slug].astro`  | `src/content/shorts/`                                            | `postSchema`            |
+| `/shorts/post-name` <br>`/shorts/sequences/one/two/three` | `src/pages/shorts/[...slug].astro`  | `src/content/shorts/`                                            | `postSchema`            |
 | `/changelog`                                          | `src/pages/changelog/index.mdx`     | `src/content/changelog/`                                         | `postSchema`            |
-| `/changelog/post-name`                                      | `src/pages/changelog/[slug].astro`  | `src/content/changelog/`                                         | `postSchema`            |
-| `/feeds`                                              | `src/pages/feeds.mdx`               | [Via build-time loader](../recreating-current-pages/#feeds)           | Default by loader       |
+| `/changelog/post-name`                                | `src/pages/changelog/[slug].astro`  | `src/content/changelog/`                                         | `postSchema`            |
+| `/feeds`                                              | `src/pages/feeds.mdx`               | [Via build-time loader](../recreating-current-pages/#feeds)      | Default by loader       |
 | `/streams`                                            | `src/pages/streams.mdx`             | `src/content/streams/`                                           | `streamSchema`          |
 
 ## File Usage Conventions
 
 In this theme, the common file roles are:
 
-- `.astro`: reusable components (`src/components/`), constructing page layouts (`src/layouts/`), and [dynamic routes]((https://docs.astro.build/en/guides/routing/#static-ssg-mode)) that need [Astro APIs](https://docs.astro.build/en/reference/routing-reference/#getstaticpaths) (`src/pages/blog/[...slug].astro`).
+- `.astro`: reusable components (`src/components/`), constructing page layouts (`src/layouts/`), and [dynamic routes](https://docs.astro.build/en/guides/routing/#static-ssg-mode) that need [Astro APIs](https://docs.astro.build/en/reference/routing-reference/#getstaticpaths) (`src/pages/blog/[...slug].astro`).
 - `.mdx`: [static route](https://docs.astro.build/en/guides/routing/#static-routes) entry files in `src/pages/` and content files that need imports or component-style authoring.
 - `.md`: text-heavy content that does not need MDX features (`src/content/blog/xxx.md`, `src/content/home/index.md`, `src/content/changelog/xxx.md`).
 - `.json`: structured list data (`src/content/projects/data.json`, `src/content/streams/data.json`).
@@ -172,7 +177,7 @@ This convention is recommended because it keeps content authoring straightforwar
 >
 > `.mdx` route files can import layouts and views directly, which keeps each page entry concise.
 >
-> They also pass through the theme’s remark/rehype pipeline, so page frontmatter and [OG image generation]((../about-open-graph-images/#how-this-theme-automatically-generates-og-images)) stay aligned with the rest of the site.
+> They are also loaded as the `pages` content collection in `src/content.config.ts`. This gives the OG image endpoint a structured way to query static pages, read their frontmatter, and [register page-specific image targets](../about-open-graph-images/#how-this-theme-automatically-generates-og-images) without relying on route files one by one.
 
 ## Other Notes
 
@@ -199,6 +204,10 @@ Thank you for your interest in this project! 😊
 
 2026-04-17
 - Sync project structure with the latest committed tree
+
+2026-07-07
+- Sync project structure with the latest committed tree
+- Update "Why `.mdx` is used in `src/pages/`" section
 
 [View full history](https://github.com/lin-stephanie/astro-antfustyle-theme/commits/main/src/content/blog/project-structure.md)
 :::
