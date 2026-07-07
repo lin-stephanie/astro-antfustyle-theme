@@ -39,8 +39,8 @@ importers:
         specifier: ^0.44.0
         version: 0.44.0
       '@iconify/json':
-        specifier: ^2.2.495
-        version: 2.2.495
+        specifier: ^2.2.496
+        version: 2.2.496
       '@types/node':
         specifier: ^24.7.2
         version: 24.13.2
@@ -66,14 +66,14 @@ importers:
         specifier: ^0.44.0
         version: 0.44.0(astro@7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0))
       astro-loader-bluesky-posts:
-        specifier: ^1.2.4
-        version: 1.2.4(astro@7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0))
+        specifier: ^1.2.5
+        version: 1.2.5(astro@7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0))
       astro-loader-github-prs:
-        specifier: ^2.0.0
-        version: 2.0.0(astro@7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0))
+        specifier: ^2.0.1
+        version: 2.0.1(astro@7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0))
       astro-loader-github-releases:
-        specifier: ^3.0.0
-        version: 3.0.0(astro@7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0))
+        specifier: ^3.0.1
+        version: 3.0.1(astro@7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0))
       astro-robots-txt:
         specifier: ^1.0.0
         version: 1.0.0
@@ -698,8 +698,8 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
-  '@iconify/json@2.2.495':
-    resolution: {integrity: sha512-fMsuwnkXQwlcdiBe6U9eV1eO3JX7/4GzBPN5Etb6XKtpiJHNiZrtyCE3B32Mf+Qr2Q6FVmzhGF03SMEc1iOGwA==}
+  '@iconify/json@2.2.496':
+    resolution: {integrity: sha512-wjgusv8jfx8fL5KpFBKP2cTdDjGv9oywiXFeoCIWUQYtp+wcrdzUNvw43anbaDcEs7jIgdNDSWZJsIh8WsJhEQ==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -1671,20 +1671,20 @@ packages:
     peerDependencies:
       astro: ^4.0.0-beta || ^5.0.0-beta || ^3.3.0 || ^6.0.0-beta || ^7.0.0
 
-  astro-loader-bluesky-posts@1.2.4:
-    resolution: {integrity: sha512-iz1BZCEE25GTnYlX1vZW7fkMRfl87ZIE8prq7ggRXm5b9Y0eWfSPYTeCcXXQLalU174vIdTZrCcjOX4uRsTQtA==}
+  astro-loader-bluesky-posts@1.2.5:
+    resolution: {integrity: sha512-/jIrHYNx9dbjUQ4GG4ZJt52bzuf90Ppk57hHO00E1g/dZCC5dDx6Urz6qFCXvvp48uPYDR7bCFgoq7Hrjzgz5w==}
     peerDependencies:
-      astro: '>=4.14.0 <7.0.0'
+      astro: '>=4.14.0 <8.0.0'
 
-  astro-loader-github-prs@2.0.0:
-    resolution: {integrity: sha512-nsgSmN3SwHnpHsfwO5UnIcjmfSf2HclBrLXzfDOTJVgTMqrEnH3FtTukyHyHtSdQivlPOgHoFccD6lsX3r9lGw==}
+  astro-loader-github-prs@2.0.1:
+    resolution: {integrity: sha512-Nl8Es5sFnVPCU6AqS6jBBUrzvkXfviguF/4EyFbTfKLnYPFeFHXBVgc4AlH9ZbGOdz2RGvlEzkOQw4yP7rO1Pg==}
     peerDependencies:
-      astro: '>=4.14.0 <7.0.0'
+      astro: '>=4.14.0 <8.0.0'
 
-  astro-loader-github-releases@3.0.0:
-    resolution: {integrity: sha512-K82CYHNCn7IL7B6LmPFYkSuQqAFWZnWMXRVcowrX8pZw+v/qg2WOEWM2lzh2iePN6OajYr1K/C0N0Bi7C3jI4w==}
+  astro-loader-github-releases@3.0.1:
+    resolution: {integrity: sha512-9dHOnMqa9jTZK2fYPfmhC7DStAH9gjNS688LrexDgpXwy4V2RS047ym5WSTWK6EEzjepE7+ztY4oqVPbXCwGrg==}
     peerDependencies:
-      astro: '>=4.14.0 <7.0.0'
+      astro: '>=4.14.0 <8.0.0'
 
   astro-robots-txt@1.0.0:
     resolution: {integrity: sha512-6JQSLid4gMhoWjOm85UHLkgrw0+hHIjnJVIUqxjU2D6feKlVyYukMNYjH44ZDZBK1P8hNxd33PgWlHzCASvedA==}
@@ -3773,8 +3773,8 @@ packages:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
 
-  toad-cache@3.7.1:
-    resolution: {integrity: sha512-5DXWzE4Vz7xNHsv+xQ+MGfJYyC78Aok3tEr0MNwHoRf7vZnga1mQXZ4/Nsodld4VR6Wd+VhfmqnNrsRJyYPfrQ==}
+  toad-cache@3.7.4:
+    resolution: {integrity: sha512-m1TdR/rvT7kgGJZhspNtXdsdYk0fddFpJJFlG5s+UkPFo6lkLoZ3YLOaovPYjq1R75NP5JfeTlSHaOsE09peCg==}
     engines: {node: '>=20'}
 
   totalist@3.0.1:
@@ -4836,7 +4836,7 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@iconify/json@2.2.495':
+  '@iconify/json@2.2.496':
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 2.0.3
@@ -5049,7 +5049,7 @@ snapshots:
       '@octokit/request': 10.0.11
       '@octokit/request-error': 7.1.0
       '@octokit/types': 16.0.0
-      toad-cache: 3.7.1
+      toad-cache: 3.7.4
       universal-github-app-jwt: 2.2.2
       universal-user-agent: 7.0.3
 
@@ -5847,17 +5847,17 @@ snapshots:
       rehype-expressive-code: 0.44.0
       url-extras: 0.1.0
 
-  astro-loader-bluesky-posts@1.2.4(astro@7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0)):
+  astro-loader-bluesky-posts@1.2.5(astro@7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0)):
     dependencies:
       '@atproto/api': 0.20.25
       astro: 7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0)
 
-  astro-loader-github-prs@2.0.0(astro@7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0)):
+  astro-loader-github-prs@2.0.1(astro@7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0)):
     dependencies:
       astro: 7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0)
       octokit: 5.0.5
 
-  astro-loader-github-releases@3.0.0(astro@7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0)):
+  astro-loader-github-releases@3.0.1(astro@7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0)):
     dependencies:
       astro: 7.0.6(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(yaml@2.9.0)
       octokit: 5.0.5
@@ -8759,7 +8759,7 @@ snapshots:
     dependencies:
       is-number: 7.0.0
 
-  toad-cache@3.7.1: {}
+  toad-cache@3.7.4: {}
 
   totalist@3.0.1: {}
 
