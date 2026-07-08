@@ -1,2 +1,3 @@
 * text=auto eol=lf
 public/rss-styles.xsl linguist-detectable=false
+src/utils/og-image/template/base64.ts linguist-generated
